@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "api",
+
 ]
 
 MIDDLEWARE = [
@@ -79,12 +80,44 @@ WSGI_APPLICATION = "backend.wsgi.application"
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
-    }
-}
+    #  'default': {
+    #     'ENGINE': 'djongo',
+    #     'ENFORCE_SCHEMA': True,
+    #     'LOGGING': {
+    #         'version': 1,
+    #         'loggers': {
+    #             'djongo': {
+    #                 'level': 'DEBUG',
+    #                 'propogate': False,                        
+    #             }
+    #         },
+    #      },
+    #     'NAME': 'test-db',
+    #     'CLIENT': {
+    #         'host': 'localhost:27017',
+    #         'port': 27017,
+    #         'username': 'S07P22B307',
+    #         'password': "ilRiOqQfhB",
+    #         'authSource': 'admin',
+    #         'authMechanism': 'SCRAM-SHA-1'
+    #     }
+    # }
+       'default': {
+        'ENGINE': 'djongo',
+        'NAME': 'test_db',
+        'HOST': 'localhost:27017',
+        'PORT': 27017,
+    },
 
+      
+    #    'default': {
+    #        'ENGINE': 'djongo',
+    #        'NAME': 'myapp-djongo-db',
+    #    }
+   
+
+}
+# mogodb+srv://S07P22B307:ilRiOqQfhB@ssafy.ngivl.mongodb.net/S07P22B307?authSource=admin
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
