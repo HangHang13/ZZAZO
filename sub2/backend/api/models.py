@@ -1,5 +1,5 @@
 from django.utils import timezone
-from django.db import models
+# from django.db import models
 from djongo import models
 
 class Store(models.Model):
@@ -18,31 +18,17 @@ class Store(models.Model):
         return self.category.split("|") if self.category else []
 
 
-# class Blog(models.Model):
-#     name = models.CharField(max_length=100)
-#     tagline = models.TextField()
+class Blog(models.Model):
+    name = models.CharField(max_length=100)
+    tagline = models.TextField()
 
-#     class Meta:
-#         abstract = True
+    class Meta:
+        abstract = True
 
-# class Entry(models.Model):
-#     blog = models.EmbeddedField(
-#         model_container=Blog,
-#     )
+class Entry(models.Model):
+    blog = models.EmbeddedField(
+        model_container=Blog,
+    )
     
-#     headline = models.CharField(max_length=255)
+    headline = models.CharField(max_length=255)
 
-# e = Entry()
-# e.blog = {
-#     'name': 'Djongo'
-# }
-# e.headline = 'The Django MongoDB connector'
-# e.save()
-
-
-# e = Entry()
-# e.blog = [
-#     {'name': 'Djongo'}, {'name': 'Django'}, {'name': 'MongoDB'}
-# ]
-# e.headline = 'Djongo is the best Django and MongoDB connector'
-# e.save()
