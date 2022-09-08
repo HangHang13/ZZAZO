@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser, PermissionsMixin, AbstractUser
 )
+from django.utils import timezone
 # from django.utils.translation import ugettext_lazy as _
 class UserManager(BaseUserManager):
     # def create_user(self, userEmail, username, password, alias=None):
@@ -11,10 +12,10 @@ class UserManager(BaseUserManager):
     #     user.set_password(password)
     #     user.save()
     #     return user
-    def create_user(self, userEmail, username, password, alias=None):
+    def create_user(self, userEmail, userName, password, alias=None):
         user = self.model(
-        userEmail = self.normalize_userEmail(userEmail),
-                username = username,)
+        userEmail = self.normalize_email(userEmail),
+                userName = userName,)
         user.set_password(password)
         user.save()
         return user
@@ -34,11 +35,11 @@ class UserManager(BaseUserManager):
     #     user.is_superuser = True
     #     user.save(using=self._db)
     #     return user
-    def create_superuser(self, userEmail, username, password):
-        self.create_user(userEmail, username, password)
+    def create_superuser(self, userEmail, userName, password):
+        self.create_user(userEmail, userName, password)
         user = self.model(
-        userEmail = self.normalize_userEmail(userEmail),
-                username = username,)
+        userEmail = self.normalize_email(userEmail),
+                userName = userName,)
         user.is_staff()
         user.is_superuser = True
         user.save()
@@ -49,7 +50,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     userEmail = models.EmailField(null=False, unique=True)
     userName = models.CharField(max_length=25, unique=True)
     userNickName = models.CharField(max_length=25, unique=True)
-    userBirth = models.DateTimeField(auto_now=False, auto_now_add=False)
+    # userBirth = models.DateTimeField(auto_now=False, auto_now_add=False, default=timezone.now)
 
     GENDER_CHOICES = (
         (u'M', u'Male'),
