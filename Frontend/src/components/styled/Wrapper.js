@@ -12,7 +12,7 @@ export const BaseFlexColWrapper = styled(BaseFlexWrapper)`
 
 export const Wrapper = styled(BaseFlexWrapper)`
   background-color: ${({ color }) => color};
-  width: 90vw;
+  width: 100vw;
   min-height: 100vh;
   align-items: ${({ alignItems }) => alignItems};
 
