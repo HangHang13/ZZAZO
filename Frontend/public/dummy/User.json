@@ -1,0 +1,24 @@
+[
+  {
+    "userEmail": "aaa@naver.com",
+    "userName": "홍길동",
+    "userPassword": "1q2w3e4r!@",
+    "userNickName": "닉네임1",
+    "userPhone": "010-0000-0000",
+    "userBirth": "1999-01-01",
+    "userGender": 1,
+    "userCategory": "한식,일식,PC방,노래방",
+    "userRadius": 10
+  },
+  {
+    "userEmail": "String",
+    "userName": "String",
+    "userPassword": "String",
+    "userNickName": "String",
+    "userPhone": "010-0000-0000",
+    "userBirth": "yy-mm-dd",
+    "userGender": 0,
+    "userCategory": "한식,일식,PC방,노래방",
+    "userRadius": 10
+  }
+]
