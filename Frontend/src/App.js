@@ -8,6 +8,7 @@ import MyPage from "./pages/mypage/MyPage";
 import Home from "./pages/home/Home";
 import Signup from "./pages/auth/Signup";
 import Login from "./pages/auth/Login";
+import NotFound from "./pages/error/NotFound";
 
 function App() {
   //useEffect(async () => {}, []);
@@ -21,6 +22,7 @@ function App() {
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
+            <Route path="*" element={<NotFound />}></Route>
           </Routes>
         </BrowserRouter>
       </div>

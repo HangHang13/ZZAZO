@@ -12,13 +12,19 @@ export const BaseFlexColWrapper = styled(BaseFlexWrapper)`
 
 export const Wrapper = styled(BaseFlexWrapper)`
   background-color: ${({ color }) => color};
-  width: 90vw;
+  width: 100vw;
   min-height: 100vh;
   align-items: ${({ alignItems }) => alignItems};
 
   @media screen and (max-width: 500px) {
     width: 100vw;
   }
+`;
+
+export const MobileSizeWrapper = styled(Wrapper)`
+  display: flex;
+  flex-direction: column;
+  width: 400px;
 `;
 
 export const RoundedWrapper = styled(BaseFlexWrapper)`
@@ -35,26 +41,45 @@ export const RoundedWrapper = styled(BaseFlexWrapper)`
   }
 `;
 
-export const InputWrapper = styled.div`
-  justify-content: space-between;
-  width: 380px;
-  height: 64px;
-  border-radius: 36px;
-  border: 1px solid black;
-  background-color: #676775;
-  margin: 14px;
+export const InputWrapper = styled.input`
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
+  border-radius: 8px;
+  border: 1px solid #d0d0d0;
+  background-color: white;
+  padding-left: 0.5rem;
   position: relative;
-  @media screen and (max-width: 500px) {
-    width: 250px;
-    height: 42px;
-  }
 `;
+
+export const ButtonWrapper = styled.button`
+  display: flex;
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
+  border-radius: 8px;
+  border: 1px solid #767676;
+  background-color: #ffffff;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: bold;
+`;
+
+InputWrapper.defaultProps = {
+  width: "270px",
+  height: "52px",
+};
+
+ButtonWrapper.defaultProps = {
+  width: "100px",
+  height: "52px",
+};
 
 RoundedWrapper.defaultProps = {
   flexDirection: "row",
 };
 
 Wrapper.defaultProps = {
-  color: "black",
+  color: "white",
   alignItems: "center",
 };
