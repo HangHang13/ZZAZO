@@ -55,9 +55,10 @@ export const ButtonWrapper = styled.button`
   display: flex;
   width: ${({ width }) => width};
   height: ${({ height }) => height};
+  color: ${({ color }) => color};
+  background-color: ${({ bg }) => bg};
   border-radius: 8px;
   border: 1px solid #767676;
-  background-color: #ffffff;
   text-align: center;
   justify-content: center;
   align-items: center;
@@ -73,6 +74,8 @@ InputWrapper.defaultProps = {
 ButtonWrapper.defaultProps = {
   width: "100px",
   height: "52px",
+  color: "#000000",
+  bg: "#ffffff",
 };
 
 RoundedWrapper.defaultProps = {
