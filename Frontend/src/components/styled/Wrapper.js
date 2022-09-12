@@ -44,9 +44,9 @@ export const RoundedWrapper = styled(BaseFlexWrapper)`
 export const InputWrapper = styled.input`
   width: ${({ width }) => width};
   height: ${({ height }) => height};
+  background-color: ${({ bg }) => bg};
   border-radius: 8px;
   border: 1px solid #d0d0d0;
-  background-color: white;
   padding-left: 0.5rem;
   position: relative;
 `;
@@ -64,11 +64,17 @@ export const ButtonWrapper = styled.button`
   align-items: center;
   font-size: 1rem;
   font-weight: bold;
+
+  &:hover {
+    background-color: #c0f0b0;
+    border: 1px solid #80e080;
+  }
 `;
 
 InputWrapper.defaultProps = {
   width: "270px",
   height: "52px",
+  bg: "white",
 };
 
 ButtonWrapper.defaultProps = {
