@@ -1,9 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { client } from "./../../utils/client";
 import { Wrapper, MobileSizeWrapper, InputWrapper, ButtonWrapper } from "./../../components/styled/Wrapper";
 import { BaseForm } from "../../components/common/forms/Form";
 import InputCheckButton from "./../../components/common/buttons/InputCheckButton";
+import DivButton from "./../../components/common/buttons/DivButton";
+import { useNavigate } from "react-router-dom";
 
 const SignupHeader = styled.div`
 	display: flex;
@@ -66,6 +68,16 @@ const AlertTag = styled.div`
 	font-size: 0.8rem;
 `;
 
+const BirthSelectBox = styled.select`
+	width: 30%;
+	height: 52px;
+	background-color: white;
+	border-radius: 8px;
+	border: 1px solid #d0d0d0;
+	text-align: center;
+	font-size: 0.9rem;
+`;
+
 const Signup = () => {
 	const [state, setState] = useState({
 		userEmail: "",
@@ -90,8 +102,16 @@ const Signup = () => {
 		passwordNotMatch: false,
 	});
 
+	const [birthDate, setBirthDate] = useState({
+		year: "2022",
+		month: "01",
+		day: "01",
+	});
+
 	const emailConfirmRef = useRef([]);
 	const passwordRef = useRef([]);
+
+	const navigate = useNavigate();
 
 	// input 창 입력 시 이벤트
 	const onHandleInput = (e) => {
@@ -237,11 +257,76 @@ const Signup = () => {
 		}
 	};
 
-	const onSubmit = (e) => {
-		e.preventDefault();
-
-		// 비밀번호 : 길이 8이상, notmatch랑 notvalid 모두 아닌가 확인
+	// 성별 변경
+	const changeGender = (val) => {
+		setState({ ...state, userGender: val });
 	};
+
+	// 최종 폼 제출
+	const submitState = () => {
+		// 이메일 인증 여부 확인
+		if (!state.userEmailChecked || !state.userEmailConfirmed) {
+			alert("아이디를 다시 확인해주세요.");
+			return;
+		}
+		// 비밀번호 : 길이 8이상, notmatch랑 notvalid 모두 아닌가 확인
+		if (state.userPassword.length < 8 || state.userPasswordRe.length < 8 || valid.passwordNotMatch || valid.passwordNotValid) {
+			alert("비밀번호를 다시 확인해주세요.");
+			return;
+		}
+		// 이름 : 입력 여부
+		if (state.userName.length < 1) {
+			alert("이름을 입력해주세요.");
+			return;
+		}
+		// 닉네임 : 중복 확인 여부
+		if (!state.userNickNameChecked) {
+			alert("닉네임 중복 확인을 해주세요.");
+			return;
+		}
+		// 휴대폰번호
+		const phoneRegex = /^[0-9]+$/;
+		if (!phoneRegex.test(state.userPhone)) {
+			alert("휴대폰 번호를 올바르게 입력해주세요.");
+			return;
+		}
+
+		// 제출
+		navigate("/signupinterests", { state: state });
+	};
+
+	useEffect(() => {
+		setState({ ...state, userBirth: birthDate.year + "-" + birthDate.month + "-" + birthDate.day });
+	}, [birthDate]);
+
+	/* 날짜 구하는 부분 시작 */
+	const now = new Date();
+
+	let years = [];
+	for (let y = now.getFullYear(); y >= 1930; y -= 1) {
+		years.push(y);
+	}
+
+	let month = [];
+	for (let m = 1; m <= 12; m += 1) {
+		if (m < 10) {
+			// 날짜가 2자리로 나타나야 했기 때문에 1자리 월에 0을 붙혀준다
+			month.push("0" + m.toString());
+		} else {
+			month.push(m.toString());
+		}
+	}
+	let days = [];
+	let date = new Date(birthDate.year, birthDate.month, 0).getDate();
+	for (let d = 1; d <= date; d += 1) {
+		if (d < 10) {
+			// 날짜가 2자리로 나타나야 했기 때문에 1자리 일에 0을 붙혀준다
+			days.push("0" + d.toString());
+		} else {
+			days.push(d.toString());
+		}
+	}
+	/* 날짜 구하는 부분 끝 */
 
 	return (
 		<Wrapper>
@@ -339,6 +424,79 @@ const Signup = () => {
 							<ButtonWrapper>중복 확인</ButtonWrapper>
 						</InputBlock>
 					</BaseForm>
+					<InputTag>생년월일</InputTag>
+					<InputBlock>
+						<BirthSelectBox
+							value={birthDate.year}
+							onChange={(e) => {
+								setBirthDate({ ...birthDate, year: e.target.value });
+							}}
+						>
+							{years.map((item) => (
+								<option value={item} key={item}>
+									{item}
+								</option>
+							))}
+						</BirthSelectBox>
+						<BirthSelectBox
+							value={birthDate.month}
+							onChange={(e) => {
+								setBirthDate({ ...birthDate, month: e.target.value });
+							}}
+						>
+							{month.map((item) => (
+								<option value={item} key={item}>
+									{item}
+								</option>
+							))}
+						</BirthSelectBox>
+						<BirthSelectBox
+							value={birthDate.day}
+							onChange={(e) => {
+								setBirthDate({ ...birthDate, day: e.target.value });
+							}}
+						>
+							{days.map((item) => (
+								<option value={item} key={item}>
+									{item}
+								</option>
+							))}
+						</BirthSelectBox>
+					</InputBlock>
+					<InputTag>성별</InputTag>
+					<InputBlock>
+						<DivButton
+							message="남"
+							value="0"
+							width="45%"
+							bg={state.userGender === 0 ? "#c0f0b0" : "#ffffff"}
+							borderColor={state.userGender === 0 ? "#80e080" : "#767676"}
+							clickEvent={() => changeGender(0)}
+						/>
+						<DivButton
+							message="여"
+							value="1"
+							width="45%"
+							bg={state.userGender === 1 ? "#c0f0b0" : "#ffffff"}
+							borderColor={state.userGender === 1 ? "#80e080" : "#767676"}
+							clickEvent={() => changeGender(1)}
+						/>
+					</InputBlock>
+					<InputTag>휴대폰 번호</InputTag>
+					<InputBlock>
+						<InputWrapper
+							name="userPhone"
+							type="text"
+							value={state.userPhone}
+							placeholder="휴대폰 번호를 입력해주세요. (ex. 01012341234)"
+							onChange={onHandleInput}
+							width="100%"
+						/>
+					</InputBlock>
+					<InputTag></InputTag>
+					<DivButton message="다 음" width="100%" borderColor="#80E080" color="#80C0A0" clickEvent={() => submitState()}></DivButton>
+					<InputTag></InputTag>
+					<InputTag></InputTag>
 				</SignupBody>
 			</MobileSizeWrapper>
 		</Wrapper>

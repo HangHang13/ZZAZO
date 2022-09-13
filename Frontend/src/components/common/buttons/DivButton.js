@@ -1,6 +1,7 @@
+import React from "react";
 import styled from "styled-components";
 
-const ButtonWrapper = styled.button`
+const DivBtn = styled.div`
 	display: flex;
 	width: ${({ width }) => width};
 	height: ${({ height }) => height};
@@ -13,14 +14,9 @@ const ButtonWrapper = styled.button`
 	align-items: center;
 	font-size: 1rem;
 	font-weight: bold;
-
-	&:hover {
-		background-color: #c0f0b0;
-		border: 1px solid #80e080;
-	}
 `;
 
-ButtonWrapper.defaultProps = {
+DivBtn.defaultProps = {
 	width: "100px",
 	height: "52px",
 	color: "#000000",
@@ -28,12 +24,12 @@ ButtonWrapper.defaultProps = {
 	borderColor: "#767676",
 };
 
-const InputCheckButton = ({ message, width, height, color, bg, borderColor }) => {
+const DivButton = ({ message, width, height, color, bg, borderColor, clickEvent }) => {
 	return (
-		<ButtonWrapper width={width} height={height} color={color} bg={bg} borderColor={borderColor}>
+		<DivBtn width={width} height={height} color={color} bg={bg} borderColor={borderColor} onClick={clickEvent}>
 			{message}
-		</ButtonWrapper>
+		</DivBtn>
 	);
 };
 
-export default InputCheckButton;
+export default DivButton;
