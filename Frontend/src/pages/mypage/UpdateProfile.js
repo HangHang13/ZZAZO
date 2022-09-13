@@ -74,12 +74,18 @@ const InputLine = styled.div`
   justify-content: center;
   text-align: center;
   margin: auto;
+  width: 50%;
+  align-items: center;
 `;
 const BirthLine = styled.div`
   display: flex;
+  width: 50%;
+  justify-content: center;
 `;
 const PhoneLine = styled.div`
   display: flex;
+  width: 50%;
+  justify-content: center;
 `;
 const UpdateProfile = () => {
   const [profileState, setProfileState] = useState({
@@ -110,6 +116,9 @@ const UpdateProfile = () => {
     userCategory: "한식,일식,PC방,노래방",
     userRadius: 10,
   };
+  const [profileImgState, setProfileImgState] = useState(
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJ6yI5v-1UCyMx8CdTpABg9QzItPHcPLZh7_1ZnzOpTg&s"
+  );
   useEffect(() => {
     const userProfile = {
       userEmail: profileState.userEmail,
@@ -137,16 +146,17 @@ const UpdateProfile = () => {
       return { ...prevState, ...userProfile };
     });
   }, []);
-
+  console.log({ profileImgState });
   return (
     <>
       <FirstLine>
         <ProfileImageLine>
           <LineTitle>프로필 이미지</LineTitle>
-          <ProfileImage alt="profile" src={"assets/logo.png"} />
+          <ProfileImage alt="profile" src={profileImgState} />
           <ProfileUploadButton>업로드</ProfileUploadButton>
         </ProfileImageLine>
         <UserEmailLine>
+          <h2>{profileState.userName}</h2>
           {profileState.userEmail}
           <DefaultProfileButton>기본 이미지로 변경</DefaultProfileButton>
         </UserEmailLine>
@@ -158,7 +168,7 @@ const UpdateProfile = () => {
             width={"180px"}
             height={"30px"}
             placeholder="이름"
-            value={profileState.userName}
+            defaultValue={profileState.userName}
           ></InputWrapper>
         </InputLine>
         <InputLine>
@@ -167,7 +177,7 @@ const UpdateProfile = () => {
             width={"180px"}
             height={"30px"}
             placeholder="닉네임"
-            value={profileState.userNickName}
+            defaultValue={profileState.userNickName}
           ></InputWrapper>
         </InputLine>
       </SeccondLine>
@@ -178,19 +188,19 @@ const UpdateProfile = () => {
             <InputWrapper
               width={"80px"}
               height={"30px"}
-              value={profileState.year}
+              defaultValue={profileState.year}
             ></InputWrapper>
             년
             <InputWrapper
               width={"40px"}
               height={"30px"}
-              value={profileState.month}
+              defaultValue={profileState.month}
             ></InputWrapper>
             월
             <InputWrapper
               width={"40px"}
               height={"30px"}
-              value={profileState.day}
+              defaultValue={profileState.day}
             ></InputWrapper>
             일
           </BirthLine>
@@ -201,19 +211,19 @@ const UpdateProfile = () => {
             <InputWrapper
               width={"30px"}
               height={"30px"}
-              value={profileState.userPhone.substr(0, 3)}
+              defaultValue={profileState.userPhone.substr(0, 3)}
             ></InputWrapper>
             -
             <InputWrapper
               width={"40px"}
               height={"30px"}
-              value={profileState.userPhone.substr(4, 4)}
+              defaultValue={profileState.userPhone.substr(4, 4)}
             ></InputWrapper>
             -
             <InputWrapper
               width={"40px"}
               height={"30px"}
-              value={profileState.userPhone.substr(9, 4)}
+              defaultValue={profileState.userPhone.substr(9, 4)}
             ></InputWrapper>
           </PhoneLine>
         </InputLine>
