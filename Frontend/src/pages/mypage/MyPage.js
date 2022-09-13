@@ -6,7 +6,8 @@ import TabItem from "../../components/mypage/TabItem";
 const EditWrapper = styled.div`
   width: 100%;
   max-width: 81.25rem;
-  min-height: 53.75rem;
+  min-height: 35.75rem;
+  /* 53.75rem */
   margin: 6.25rem 5rem;
   background-color: white;
   border: 1px solid #80c0a0;

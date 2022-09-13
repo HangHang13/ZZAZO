@@ -12,6 +12,7 @@ import NotFound from "./pages/error/NotFound";
 import UpdateProfile from "./pages/mypage/UpdateProfile";
 import UpdatePassword from "./pages/mypage/UpdatePassword";
 import DeleteProfile from "./pages/mypage/DeleteProfile";
+import Scedule from "./pages/scedule/Scedule";
 
 function App() {
   //useEffect(async () => {}, []);
@@ -30,6 +31,7 @@ function App() {
             </Route>
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/scedule" element={<Scedule />} />
             <Route path="*" element={<NotFound />}></Route>
           </Routes>
         </BrowserRouter>
