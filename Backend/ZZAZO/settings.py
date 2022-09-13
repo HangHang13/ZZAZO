@@ -27,9 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 # AUTH_USER_MODEL = '{app-name}.{User-model-name}'
-# AUTH_USER_MODEL = 'api.User'
+AUTH_USER_MODEL = "accounts.User"
 
-
+# AUTH_USER_MODEL = "users_management.UserManage" 
 # Application definition
 
 INSTALLED_APPS = [
@@ -53,18 +53,18 @@ INSTALLED_APPS = [
 
 
     # DRF auth
-    'dj_rest_auth',  # signup 제외 auth 관련 담당
-    'dj_rest_auth.registration',  # signup 담당
+    # 'dj_rest_auth',  # signup 제외 auth 관련 담당
+    # 'dj_rest_auth.registration',  # signup 담당
     
     # signup 담당을 위해 필요 
-    'allauth', 
-    'allauth.account',
-    'allauth.socialaccount',
+    # 'allauth', 
+    # 'allauth.account',
+    # 'allauth.socialaccount',
     #jwt 
     # 'rest_framework_simplejwt.authentication.JWTAuthentication',
     'rest_framework_simplejwt',
-    'rest_framework.authtoken',
-    'rest_framework_jwt'
+    'rest_framework',
+
 
     # native apps
     'django.contrib.admin',
@@ -92,13 +92,13 @@ from datetime import timedelta
 ## DRF 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated', # 인증된 사용자만 접근 가능
-        'rest_framework.permissions.IsAdminUser', # 관리자만 접근 가능
+        # 'rest_framework.permissions.IsAuthenticated', # 인증된 사용자만 접근 가능
+        # 'rest_framework.permissions.IsAdminUser', # 관리자만 접근 가능
         'rest_framework.permissions.AllowAny', # 누구나 접근 가능
     ),
 	
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
         # 'rest_framework.authentication.TokenAuthentication',
         # 'rest_framework.authentication.SessionAuthentication',
         # 'rest_framework.authentication.BasicAuthentication',
@@ -178,12 +178,12 @@ DATABASES = {
                 }
             },
          },
-        'NAME': 'S05P31B103',
+        'NAME': 'S07P22B307',
         'CLIENT': {
-            'host': 'mongodb+srv://S05P31B103:6bqIN7398L@ssafy.ngivl.mongodb.net/S05P31B103?authSource=admin',
+            'host': 'mongodb+srv://S07P22B307:6bqIN7398L@ssafy.ngivl.mongodb.net/S07P22B307?authSource=admin',
             'port': 27017,
-            'username': 'S05P31B103',
-            'password': "6bqIN7398L",
+            'username': 'S07P22B307',
+            'password': "ilRiOqQfhB",
             'authSource': 'admin',
             'authMechanism': 'SCRAM-SHA-1'
         }
