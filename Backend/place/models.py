@@ -1,4 +1,4 @@
-from django.db import models
+from djongo import models
 
 # Create your models here.
 class Place(models.Model):
@@ -9,4 +9,4 @@ class Place(models.Model):
     Type = models.CharField(max_length=100)
     regist = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
-    # appointed_card = models.ManyToManyField(Card, related_name='place')
+
