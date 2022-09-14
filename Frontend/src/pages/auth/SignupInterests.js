@@ -77,10 +77,26 @@ const SignupInterests = () => {
 		}
 	};
 
+	function concatCategories() {
+		return new Promise(function (resolve, reject) {
+			let categoryStr = "";
+			form.userCategory.map((item) => {
+				categoryStr.concat(item).concat(",");
+			});
+			resolve(categoryStr);
+		}).then((str) => {
+			setForm({ ...form, userCategory: str });
+		});
+	}
+
 	const submitForm = async () => {
 		if (!confirm("가입을 완료하시겠습니까?")) {
 			return;
 		}
+
+		// category 전부 이어붙이기!
+		await concatCategories();
+		console.log("aaa => " + form.userCategory);
 
 		// const response = client.post(`/auth/signup`, {
 		// 	userEmail: form.userEmail,
@@ -94,7 +110,6 @@ const SignupInterests = () => {
 		// 	userCategory: form.userCategory,
 		// });
 
-		console.log(form);
 		const response = {
 			code: 200,
 		};
@@ -102,6 +117,7 @@ const SignupInterests = () => {
 		if (response.code === 200) {
 			alert("회원가입이 완료되었습니다.");
 			navigate("/");
+			console.log(form.userCategory);
 		} else {
 			alert("회원가입에 실패했습니다.");
 		}
