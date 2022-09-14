@@ -7,7 +7,8 @@ from rest_framework.response import Response
 # Create your views here.
 @api_view(['GET'])
 def list(request):
-    card_list = Card.objects.filter(user = request.user)
+    # card_list = Card.objects.filter(user = request.user)
+    card_list = Card.objects.all()
     serializer = CardListSerializer(card_list, many=True)
     data = {'cards': serializer.data}
     code = 200
