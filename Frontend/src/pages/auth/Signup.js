@@ -6,49 +6,8 @@ import { BaseForm } from "../../components/common/forms/Form";
 import InputCheckButton from "./../../components/common/buttons/InputCheckButton";
 import DivButton from "./../../components/common/buttons/DivButton";
 import { useNavigate } from "react-router-dom";
-
-const SignupHeader = styled.div`
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	height: 200px;
-	// background-color: beige;
-`;
-
-const SignupBody = styled.div`
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	//background-color: aqua;
-`;
-
-const ProgressBlock = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-`;
-
-const NumberCircle = styled.div`
-	display: flex;
-	border-radius: 50%;
-	background-color: ${({ color }) => color};
-	color: white;
-	width: 5rem;
-	height: 5rem;
-	margin-left: 2rem;
-	margin-right: 2rem;
-	align-items: center;
-	justify-content: center;
-	font-size: 2.2rem;
-`;
-
-const ProgressDescription = styled.div`
-	margin-top: 0.5rem;
-	text-align: center;
-`;
+import NumberCircle from "./../../components/auth/NumberCircle";
+import { ProgressBlock, ProgressDescription, SignupBody, SignupHeader } from "../../components/auth/signup/Signup";
 
 const InputBlock = styled.div`
 	display: flex;
@@ -90,7 +49,6 @@ const Signup = () => {
 		userBirth: "",
 		userGender: 0,
 		userCategory: [],
-		userRadius: 0,
 		userEmailChecked: false,
 		userEmailConfirmed: false,
 		userPasswordChecked: false,
@@ -333,11 +291,11 @@ const Signup = () => {
 			<MobileSizeWrapper>
 				<SignupHeader>
 					<ProgressBlock>
-						<NumberCircle color="#C0F0B0">1</NumberCircle>
+						<NumberCircle color="#C0F0B0" number="1" />
 						<ProgressDescription>회원정보 입력</ProgressDescription>
 					</ProgressBlock>
 					<ProgressBlock>
-						<NumberCircle color="#D0D0D0">2</NumberCircle>
+						<NumberCircle color="#D0D0D0" number="2" />
 						<ProgressDescription>관심정보 입력</ProgressDescription>
 					</ProgressBlock>
 				</SignupHeader>
