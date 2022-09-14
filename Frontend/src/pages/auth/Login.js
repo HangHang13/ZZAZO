@@ -86,6 +86,7 @@ const Login = () => {
 		setCheck({ ...check, [n]: !check.n });
 	};
 
+	// 로그인 폼 제출 시
 	const LoginSubmit = () => {
 		console.log(state);
 	};
