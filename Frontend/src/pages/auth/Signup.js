@@ -109,7 +109,7 @@ const Signup = () => {
 				emailConfirmRef.current[1].style.backgroundColor = "#ffffff";
 			}
 		} else if (response.code === 401) {
-			alert(response.message);
+			alert("이미 가입된 이메일입니다.");
 		} else {
 			alert("오류가 발생했습니다.");
 		}
@@ -232,13 +232,24 @@ const Signup = () => {
 			alert("비밀번호를 다시 확인해주세요.");
 			return;
 		}
-		// 이름 : 입력 여부
-		if (state.userName.length < 1) {
-			alert("이름을 입력해주세요.");
+		// 이름 : 길이 체크
+		if (state.userName.length < 1 || state.userName.length > 12) {
+			alert("이름은 1글자 이상 12글자 이하여야 합니다.");
 			return;
 		}
-		// 닉네임 : 중복 확인 여부
+		// 이름 : 유효성 체크
+		const nameRegex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|]+$/;
+		if (!nameRegex.test(state.userName)) {
+			alert("이름을 올바르게 입력해주세요.");
+			return;
+		}
+		// 닉네임 : 길이 체크
+		if (state.userNickName.length < 1 || state.userName.length > 12) {
+			alert("닉네임은 1글자 이상 12글자 이하여야 합니다.");
+			return;
+		}
 		if (!state.userNickNameChecked) {
+			// 닉네임 : 중복 확인 여부
 			alert("닉네임 중복 확인을 해주세요.");
 			return;
 		}

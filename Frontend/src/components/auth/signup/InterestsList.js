@@ -12,7 +12,6 @@ const InterestsBody = styled.div`
 	grid-template-rows: 1fr;
 	grid-template-columns: 1fr 1fr 1fr;
 `;
-//mainCategoryId={item.mainCategoryId} subCategoryId={item.subCategoryId} categoryName={item.name}
 
 const InterestsList = React.memo(({ intList, onHandleInterestClick }) => {
 	return (
