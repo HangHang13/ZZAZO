@@ -29,6 +29,7 @@ const ProfileUploadButton = styled.button`
   border: 0;
 `;
 const LineTitle = styled.div`
+  min-width: 6rem;
   max-width: 8.25rem;
   border-bottom: 1px solid #80c0a0;
   text-align: center;
@@ -146,7 +147,7 @@ const UpdateProfile = () => {
       return { ...prevState, ...userProfile };
     });
   }, []);
-  console.log({ profileImgState });
+
   return (
     <>
       <FirstLine>
@@ -188,19 +189,19 @@ const UpdateProfile = () => {
             <InputWrapper
               width={"80px"}
               height={"30px"}
-              defaultValue={profileState.year}
+              value={profileState.year}
             ></InputWrapper>
             년
             <InputWrapper
               width={"40px"}
               height={"30px"}
-              defaultValue={profileState.month}
+              value={profileState.month}
             ></InputWrapper>
             월
             <InputWrapper
               width={"40px"}
               height={"30px"}
-              defaultValue={profileState.day}
+              value={profileState.day}
             ></InputWrapper>
             일
           </BirthLine>

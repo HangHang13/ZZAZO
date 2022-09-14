@@ -7,6 +7,7 @@ const EditWrapper = styled.div`
   width: 100%;
   max-width: 61.25rem;
   min-height: 35.75rem;
+  max-height: 40.75rem;
   /* 53.75rem */
   margin: 6.25rem 5rem;
   background-color: white;
