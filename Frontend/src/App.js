@@ -14,6 +14,8 @@ import UpdatePassword from "./pages/mypage/UpdatePassword";
 import DeleteProfile from "./pages/mypage/DeleteProfile";
 import Scedule from "./pages/scedule/Scedule";
 import SignupInterests from "./pages/auth/SignupInterests";
+import FindIdMain from "./pages/auth/find/FindIdMain";
+import FindPwMain from "./pages/auth/find/FindPwMain";
 
 function App() {
 	//useEffect(async () => {}, []);
@@ -33,6 +35,8 @@ function App() {
 						<Route path="/signup" element={<Signup />} />
 						<Route path="/signupinterests" element={<SignupInterests />} />
 						<Route path="/login" element={<Login />} />
+						<Route path="/findid" element={<FindIdMain />} />
+						<Route path="/findpw" element={<FindPwMain />} />
 						<Route path="/scedule" element={<Scedule />} />
 						<Route path="*" element={<NotFound />}></Route>
 					</Routes>
