@@ -8,6 +8,11 @@ import MyPage from "./pages/mypage/MyPage";
 import Home from "./pages/home/Home";
 import Signup from "./pages/auth/Signup";
 import Login from "./pages/auth/Login";
+import NotFound from "./pages/error/NotFound";
+import UpdateProfile from "./pages/mypage/UpdateProfile";
+import UpdatePassword from "./pages/mypage/UpdatePassword";
+import DeleteProfile from "./pages/mypage/DeleteProfile";
+import Scedule from "./pages/scedule/Scedule";
 
 function App() {
   //useEffect(async () => {}, []);
@@ -18,9 +23,16 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/mypage" element={<MyPage />}>
+              <Route index element={<UpdateProfile />} />
+              <Route path="update/profile" element={<UpdateProfile />} />
+              <Route path="update/password" element={<UpdatePassword />} />
+              <Route path="delete/profile" element={<DeleteProfile />} />
+            </Route>
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/scedule" element={<Scedule />} />
+            <Route path="*" element={<NotFound />}></Route>
           </Routes>
         </BrowserRouter>
       </div>
