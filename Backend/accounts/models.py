@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser, PermissionsMixin, AbstractUser
 )
+from django.conf import settings
 from django.utils import timezone
 # from django.utils.translation import ugettext_lazy as _
 class UserManager(BaseUserManager):
@@ -12,10 +13,15 @@ class UserManager(BaseUserManager):
     #     user.set_password(password)
     #     user.save()
     #     return user
-    def create_user(self, userEmail, userName, password, alias=None):
+    def create_user(self, userEmail, userName, userNickName, userBirth,userPhone,userGender,password=None, password2=None):
         user = self.model(
         userEmail = self.normalize_email(userEmail),
-                userName = userName,)
+                userName = userName,
+                userNickName=userNickName,
+                userBirth=userBirth,
+                userPhone=userPhone,
+                userGender=userGender
+                )
         user.set_password(password)
         user.save()
         return user
@@ -33,34 +39,44 @@ class UserManager(BaseUserManager):
     #     user.is_superuser = True
     #     user.save(using=self._db)
     #     return user
-    def create_superuser(self, userEmail, userName, password):
-        self.create_user(userEmail, userName, password)
-        user = self.model(
-        userEmail = self.normalize_email(userEmail),
-                userName = userName,)
-        user.is_staff()
-        user.is_superuser = True
-        user.save()
-        return user
+    # def create_superuser(self, userEmail, userName, password):
+    #     self.create_user(userEmail, userName, password)
+    #     user = self.model(
+    #     userEmail = self.normalize_email(userEmail),
+    #             userName = userName,)
+    #     user.is_staff()
+    #     user.is_superuser = True
+    #     user.save()
+    #     return user
 
+##카테고리는 엄밀하지 않음
 
+class Category(models.Model):
+    user = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='category')
+    categoryName = models.CharField(max_length=20,null=True,blank=True)
+    categoryNumber = models.CharField(max_length=20,null=True,blank=True)
+   
 class User(AbstractBaseUser, PermissionsMixin):
     userEmail = models.EmailField(null=False, unique=True)
-    userName = models.CharField(max_length=25, unique=True)
+    userName = models.CharField(max_length=25)
     userNickName = models.CharField(max_length=25, unique=True)
     # userBirth = models.DateTimeField(auto_now=False, auto_now_add=False, default=timezone.now)
-
+    profileUrl = models.CharField(max_length=255)
     GENDER_CHOICES = (
         (u'M', u'Male'),
         (u'F', u'Female'),
     )
-
+    userBirth = models.DateTimeField()
+    userPhone = models.CharField(max_length=12)
     userGender = models.CharField(max_length=2, choices=GENDER_CHOICES)
-    is_active = models.BooleanField(default=True)
+    userUpdate = models.DateTimeField(auto_now=True)
+    userRegist = models.DateTimeField(auto_now_add=True)
+
+  
+
+    is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
 
-    userUpdate = models.DateTimeField(auto_now=True)
-    userRegist = models.DateTimeField(auto_now_add=True) 
     objects = UserManager()
     #로그인 아이디
     USERNAME_FIELD = "userEmail"

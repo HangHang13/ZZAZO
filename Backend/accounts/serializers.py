@@ -35,19 +35,28 @@
 #         return user
 
 
+from urllib import response
 from rest_framework import serializers
-from accounts.models import User
+from accounts.models import Category, User
 from django.utils.encoding import smart_str, force_bytes, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from accounts.utils import Util
+from rest_framework.response import Response
+
+class UserCategorySerializer(serializers.ModelSerializer):
+  categoryName = serializers.CharField(max_length=100, write_only=True)
+  
+  class Meta:
+    model = Category
+    fields = ('id','categoryName')
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
   # We are writing this becoz we need confirm password field in our Registratin Request
   password2 = serializers.CharField(style={'input_type':'password'}, write_only=True)
   class Meta:
     model = User
-    fields=['userEmail', 'userName', 'userNickName', 'password','password2', 'userBirth','userPhone','userCategory','userRadius','userGender']
+    fields=['userEmail', 'userName', 'userNickName', 'password','password2', 'userBirth','userPhone','userGender']
     extra_kwargs={
       'password':{'write_only':True}
     }
@@ -56,11 +65,15 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
   def validate(self, attrs):
     password = attrs.get('password')
     password2 = attrs.get('password2')
+    print('atttr' , attrs)
     if password != password2:
-      raise serializers.ValidationError("Password and Confirm Password doesn't match")
+    
+      raise serializers.ValidationError("비밀번호가 일치하지 않습니다.")
+    
     return attrs
 
   def create(self, validate_data):
+    
     return User.objects.create_user(**validate_data)
 
 class UserLoginSerializer(serializers.ModelSerializer):
@@ -70,9 +83,15 @@ class UserLoginSerializer(serializers.ModelSerializer):
     fields = ['userEmail', 'password']
 
 class UserProfileSerializer(serializers.ModelSerializer):
+
+  class UserSerializerCate(serializers.ModelSerializer):
+        class Meta:
+            model = Category
+            fields = ('categoryName')
+  categoryName = UserCategorySerializer(read_only=True)
   class Meta:
     model = User
-    fields = ['id', 'userEmail', 'name']
+    fields = ['id', 'userEmail', 'userName','categoryName']
 
 class UserChangePasswordSerializer(serializers.Serializer):
   password = serializers.CharField(max_length=255, style={'input_type':'password'}, write_only=True)
@@ -103,19 +122,19 @@ class SendPasswordResetEmailSerializer(serializers.Serializer):
       print('Encoded UID', uid)
       token = PasswordResetTokenGenerator().make_token(user)
       print('Password Reset Token', token)
-      link = 'http://localhost:3000/api/user/reset/'+uid+'/'+token
+      link = 'http://localhost:8000/api/v1/accounts/reset-password/'+uid+'/'+token
       print('Password Reset Link', link)
       # Send EMail
-      body = 'Click Following Link to Reset Your Password '+link
+      body = '링크를 눌러 비밀번호를 변경하세요 '+link
       data = {
         'subject':'Reset Your Password',
         'body':body,
         'to_email':user.userEmail
       }
-      # Util.send_email(data)
+      Util.send_email(data)
       return attrs
     else:
-      raise serializers.ValidationError('You are not a Registered User')
+      raise serializers.ValidationError('가입되지 않은 사용자 입니다.')
 
 class UserPasswordResetSerializer(serializers.Serializer):
   password = serializers.CharField(max_length=255, style={'input_type':'password'}, write_only=True)
