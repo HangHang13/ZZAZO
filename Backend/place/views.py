@@ -4,10 +4,70 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .serializers.place import PlaceDetailSerializer
+from .serializers.place import PlaceDetailSerializer, PlaceListSerializer
 from .serializers.review import ReviewCreateSerializer
 
 from place.models import Place, Review
+
+from django.db.models import Q
+import haversine
+
+@api_view(['POST'])
+def place_recommend(request):
+    longitude = float(request.data['longitude'])
+    latitude  = float(request.data['latitude'])
+    position  = (latitude, longitude)
+    condition = (
+                # 1km 기준
+                Q(latitude__range  = (latitude - 0.01, latitude + 0.01)) &
+                Q(longitude__range = (longitude - 0.015, longitude + 0.015))
+            )
+    place_list = (
+                Place
+                .objects
+                .filter(condition)
+            )
+    near_place_list = [info for info in place_list
+                                if haversine(position, (info.latitude, info.longitude)) <= 2]
+    serializer = PlaceListSerializer(near_place_list, many=True)
+    data = {'Place': serializer.data}
+    code = 200
+    message = "추천 목록"
+    res = {
+        "code": code,
+        "message": message,
+        "data": data
+    }
+    return Response(res)
+
+@api_view(['POST'])
+def place_list(request, place_type):
+    longitude = float(request.data['longitude'])
+    latitude  = float(request.data['latitude'])
+    position  = (latitude,longitude)
+    condition = (
+                # 1km 기준
+                Q(latitude__range  = (latitude - 0.01, latitude + 0.01)) &
+                Q(longitude__range = (longitude - 0.015, longitude + 0.015)) &
+                Q(place_type__contains=place_type)
+            )
+    place_list = (
+                Place
+                .objects
+                .filter(condition)
+            )
+    near_place_list = [info for info in place_list
+                                if haversine(position, (info.latitude, info.longitude)) <= 2]
+    serializer = PlaceListSerializer(near_place_list, many=True)
+    data = {'Place': serializer.data}
+    code = 200
+    message = "장소 목록"
+    res = {
+        "code": code,
+        "message": message,
+        "data": data
+    }
+    return Response(res)
 
 @api_view(['GET'])
 def place_detail(request, place_id):
@@ -80,4 +140,3 @@ def place_review_update_or_delete(request, place_id, review_id):
     elif request.method == 'DELETE':
         return review_delete()
 
-    

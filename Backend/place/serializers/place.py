@@ -1,13 +1,22 @@
 from rest_framework import serializers
 from ..models import Place
 
-'''
-class CardListSerializer(serializers.ModelSerializer):
 
+class PlaceListSerializer(serializers.ModelSerializer):
+
+    placeScore = serializers.IntegerField(source='review.score.average')
+    
     class Meta:
         model = Place
-        fields = ('id','title', 'date', 'appointed_time', 'place')
-'''
+        fields = ('id', 'placeName', 'placeAddress', 'placeScore')
+
+class PlaceRecommendListSerializer(serializers.ModelSerializer):
+
+    placeScore = serializers.IntegerField(source='review.score.average')
+    
+    class Meta:
+        model = Place
+        fields = ('id', 'placeName', 'placeAddress', 'placeScore', 'placeType')
 
 class PlaceDetailSerializer(serializers.ModelSerializer):
     
