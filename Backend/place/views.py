@@ -17,3 +17,25 @@ def place_detail(request, place_id):
         "data": data
     }
     return Response(res)
+
+@api_view(['POST'])
+def place_review_create(request):
+        serializer = CardSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            # serializer.save(user=request.user)
+            code = 200
+            message = "리뷰 생성"
+            res = {
+                "code": code,
+                "message": message,
+            }
+            return Response(res, status=status.HTTP_201_CREATED)
+        
+        else:
+            code = 401
+            message = "리뷰 생성 실패"
+            res = {
+                "code": code,
+                "message": message,
+            }
+            return Response(res)
