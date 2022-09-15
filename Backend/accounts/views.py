@@ -121,10 +121,10 @@ class UserRegistrationView(APIView):
     user = serializer.save()
     token = get_tokens_for_user(user)
    
-    print('token',token)
+   
 
     if user:
-      return Response({'token': token , 'code':200,  'message':'회원가입에 성공하였습니다.', 'userEmail' : user.userEmail}, status=status.HTTP_201_CREATED)
+      return Response({ 'code':200,  'message':'회원가입에 성공하였습니다.', 'userEmail' : user.userEmail}, status=status.HTTP_201_CREATED)
     else:
       return Response({'code':401,  'message':'회원가입에 실패하였습니다.', }, status=status.HTTP_401_UNAUTHORIZED)
 
@@ -134,13 +134,15 @@ class UserLoginView(APIView):
   def post(self, request, format=None):
     serializer = UserLoginSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
-    email = serializer.data.get('userEmail')
+    username= serializer.data.get('userEmail')
     password = serializer.data.get('password')
-    print(email, password)
+    print(username, password)
+
+    user = User.objects.get(userEmail=username)
+    print(user.check_password(f'{password}'))
    
    
-    user = authenticate(username = email, password = password)
- 
+    user = authenticate(username = username, password = f'{password}')
     print('유저',user)
     if user is not None:
       token = get_tokens_for_user(user)
