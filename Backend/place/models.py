@@ -8,7 +8,7 @@ class Place(models.Model):
     address = models.CharField(max_length=100)
     longitude = models.FloatField()
     latitude = models.FloatField()
-    Type = models.CharField(max_length=100)
+    place_type = models.CharField(max_length=100)
     regist = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
 
