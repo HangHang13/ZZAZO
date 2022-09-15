@@ -44,6 +44,11 @@ from django.views.decorators.csrf import csrf_exempt
 
 # Generate Token Manually
 
+
+#이메일 인증 확인
+# @csrf_exempt
+# @api_view(['GET'])
+# def verificationEmail() 
 @csrf_exempt
 @api_view(['GET'])
 def check_userEmail(request, userEmail):
@@ -200,5 +205,4 @@ class UserPasswordResetView(APIView):
     serializer = UserPasswordResetSerializer(data=request.data, context={'uid':uid, 'token':token})
     serializer.is_valid(raise_exception=True)
     return Response({'msg':'Password Reset Successfully'}, status=status.HTTP_200_OK)
-
 
