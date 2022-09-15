@@ -89,6 +89,12 @@ const Login = () => {
     setCheck({ ...check, [n]: !check.n });
   };
 
+  const handleOnKeyPress = (e) => {
+    if (e.key === "Enter") {
+      LoginSubmit();
+    }
+  };
+
   // 로그인 폼 제출 시
   const LoginSubmit = async () => {
     console.log(state);
@@ -114,19 +120,21 @@ const Login = () => {
             <LoginInput
               name="userEmail"
               value={state.userEmail}
-              onChange={onHandleInput}
               width="80%"
               height="52px"
               placeholder="아이디"
+              onChange={onHandleInput}
+              onKeyPress={handleOnKeyPress}
             />
             <LoginInput
               name="password"
               value={state.password}
-              onChange={onHandleInput}
               width="80%"
               height="52px"
               placeholder="비밀번호"
               type="password"
+              onChange={onHandleInput}
+              onKeyPress={handleOnKeyPress}
             />
             <Options>
               <Checkbox

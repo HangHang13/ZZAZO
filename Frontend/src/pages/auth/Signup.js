@@ -24,6 +24,7 @@ import {
 } from "../../api/AuthAPI";
 import axios from "axios";
 import Header from "./../../components/layout/Header";
+import Button from "./../../components/common/buttons/Button";
 
 const InputBlock = styled.div`
   display: flex;
@@ -467,7 +468,7 @@ const Signup = () => {
             </InputBlock>
             <InputTag>성별</InputTag>
             <InputBlock>
-              <DivButton
+              <Button
                 message="남"
                 value="M"
                 width="45%"
@@ -475,7 +476,7 @@ const Signup = () => {
                 borderColor={state.userGender === "M" ? "#80e080" : "#767676"}
                 clickEvent={() => changeGender("M")}
               />
-              <DivButton
+              <Button
                 message="여"
                 value="F"
                 width="45%"
@@ -496,13 +497,13 @@ const Signup = () => {
               />
             </InputBlock>
             <InputTag></InputTag>
-            <DivButton
+            <Button
               message="다 음"
               width="100%"
               borderColor="#80E080"
               color="#80C0A0"
               clickEvent={() => submitState()}
-            ></DivButton>
+            ></Button>
             <InputTag></InputTag>
             <InputTag></InputTag>
           </SignupBody>
