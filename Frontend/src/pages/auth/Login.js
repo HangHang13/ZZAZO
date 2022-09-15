@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Checkbox from "../../components/common/inputs/Checkbox";
 import { InputWrapper, Wrapper } from "./../../components/styled/Wrapper";
-import Button from "../../components/common/buttons/Button";
 import { useNavigate } from "react-router-dom";
 import AuthButton from "./../../components/common/buttons/AuthButton";
 import { login } from "../../api/AuthAPI";
+import Header from "./../../components/layout/Header";
 
 const ColWrapper = styled.div`
   display: flex;
@@ -16,6 +16,7 @@ const LoginWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 480px;
+  margin-top: -8rem;
   padding-top: 2rem;
   padding-bottom: 2rem;
   margin-bottom: 1rem;
@@ -104,50 +105,53 @@ const Login = () => {
   };
 
   return (
-    <Wrapper>
-      <ColWrapper>
-        <LoginWrapper>
-          <LogoImage src="/assets/logo.png" />
-          <LoginInput
-            name="userEmail"
-            value={state.userEmail}
-            onChange={onHandleInput}
-            width="80%"
-            height="52px"
-            placeholder="아이디"
-          />
-          <LoginInput
-            name="password"
-            value={state.password}
-            onChange={onHandleInput}
-            width="80%"
-            height="52px"
-            placeholder="비밀번호"
-            type="password"
-          />
+    <>
+      <Header />
+      <Wrapper>
+        <ColWrapper>
+          <LoginWrapper>
+            <LogoImage src="/assets/logo.png" />
+            <LoginInput
+              name="userEmail"
+              value={state.userEmail}
+              onChange={onHandleInput}
+              width="80%"
+              height="52px"
+              placeholder="아이디"
+            />
+            <LoginInput
+              name="password"
+              value={state.password}
+              onChange={onHandleInput}
+              width="80%"
+              height="52px"
+              placeholder="비밀번호"
+              type="password"
+            />
+            <Options>
+              <Checkbox
+                text="자동 로그인"
+                tagName="autoLogin"
+                onCheckHandler={onCheckHandler}
+              />
+              <Checkbox
+                text="아이디 저장"
+                tagName="idSave"
+                onCheckHandler={onCheckHandler}
+              />
+            </Options>
+            <AuthButton message="로 그 인" clickEvent={LoginSubmit} />
+          </LoginWrapper>
           <Options>
-            <Checkbox
-              text="자동 로그인"
-              tagName="autoLogin"
-              onCheckHandler={onCheckHandler}
-            />
-            <Checkbox
-              text="아이디 저장"
-              tagName="idSave"
-              onCheckHandler={onCheckHandler}
-            />
+            <Option onClick={() => navigate("/findid")}>아이디 찾기</Option>
+            <OptionBorder />
+            <Option onClick={() => navigate("/findpw")}>비밀번호 찾기</Option>
+            <OptionBorder />
+            <Option onClick={() => navigate("/signup")}>회원가입</Option>
           </Options>
-          <AuthButton message="로 그 인" clickEvent={LoginSubmit} />
-        </LoginWrapper>
-        <Options>
-          <Option onClick={() => navigate("/findid")}>아이디 찾기</Option>
-          <OptionBorder />
-          <Option onClick={() => navigate("/findpw")}>비밀번호 찾기</Option>
-          <OptionBorder />
-          <Option onClick={() => navigate("/signup")}>회원가입</Option>
-        </Options>
-      </ColWrapper>
-    </Wrapper>
+        </ColWrapper>
+      </Wrapper>
+    </>
   );
 };
 
