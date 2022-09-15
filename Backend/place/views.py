@@ -10,6 +10,10 @@ from .serializers.review import ReviewCreateSerializer
 from place.models import Place, Review
 
 @api_view(['GET'])
+def place_list(request):
+    pass
+
+@api_view(['GET'])
 def place_detail(request, place_id):
     place = get_object_or_404(Place, pk = place_id)
     serializer = PlaceDetailSerializer(place)
@@ -80,4 +84,3 @@ def place_review_update_or_delete(request, place_id, review_id):
     elif request.method == 'DELETE':
         return review_delete()
 
-    
