@@ -1,9 +1,19 @@
 import { client } from "./../utils/client";
 
+// 회원가입
+const signup = async (data) => {
+  const result = await client
+    .post(`/users/signup/`, data)
+    .then((response) => response.data)
+    .catch((error) => error.response);
+
+  return result;
+};
+
 // 로그인
 const login = async (data) => {
   const result = await client
-    .post(`/users/login`, data)
+    .post(`/users/login/`, data)
     .then((response) => response.data)
     .catch((error) => error.response);
   return result;
@@ -37,4 +47,10 @@ const emailConfirm = async (data) => {
   alert(data);
 };
 
-export { login, emailDuplicateCheck, nickNameDuplicateCheck, emailConfirm };
+export {
+  login,
+  emailDuplicateCheck,
+  nickNameDuplicateCheck,
+  emailConfirm,
+  signup,
+};
