@@ -56,7 +56,7 @@ const Menubar = styled.a`
   }
 `;
 
-const Navbar = () => {
+const Header = () => {
   const [menu, setmenu] = useState(false);
 
   return (
@@ -82,4 +82,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Header;
