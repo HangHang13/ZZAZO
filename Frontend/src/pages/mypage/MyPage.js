@@ -3,7 +3,7 @@ import { MobileSizeWrapper, Wrapper } from "../../components/styled/Wrapper";
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import TabItem from "../../components/mypage/TabItem";
-import Navbar from "./../../components/layout/Navbar";
+import Header from "./../../components/layout/Header";
 const EditWrapper = styled.div`
   width: 100%;
   max-width: 61.25rem;
@@ -56,7 +56,7 @@ const MyPage = () => {
   return (
     <>
       {/* 헤더 */}
-      <Navbar></Navbar>
+      <Header></Header>
       <Wrapper>
         {/* <MobileSizeWrapper> */}
         <EditWrapper>
