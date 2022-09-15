@@ -35,7 +35,7 @@
 #         return user
 
 
-from urllib import response
+
 from rest_framework import serializers
 from accounts.models import Category, User
 from django.utils.encoding import smart_str, force_bytes, DjangoUnicodeDecodeError
