@@ -12,6 +12,21 @@ from place.models import Place, Review
 from django.db.models import Q
 import haversine
 
+@api_view(['GET'])
+def home(request):
+    place_list = Place.objects.all()[:10]
+    serializer = PlaceListSerializer(place_list, many=True)
+    data = {'Place': serializer.data}
+    code = 200
+    message = "추천 목록"
+    res = {
+        "code": code,
+        "message": message,
+        "data": data
+    }
+    return Response(res)
+    
+    
 @api_view(['POST'])
 def place_recommend(request):
     longitude = float(request.data['longitude'])
