@@ -39,7 +39,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 # AUTH_USER_MODEL = '{app-name}.{User-model-name}'
-AUTH_USER_MODEL = "accounts.User"
+AUTH_USER_MODEL = 'accounts.User'
 
 # AUTH_USER_MODEL = "users_management.UserManage" 
 # Application definition
@@ -91,7 +91,9 @@ MIDDLEWARE = [
 ]
 
 
-
+AUTHENTICATION_BACKENDS = (
+        'django.contrib.auth.backends.ModelBackend',
+    )
 ## DRF 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (

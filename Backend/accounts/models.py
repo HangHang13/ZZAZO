@@ -13,7 +13,7 @@ class UserManager(BaseUserManager):
     #     user.set_password(password)
     #     user.save()
     #     return user
-    def create_user(self, userEmail, userName, userNickName, userBirth,userPhone,userGender,password=None, password2=None):
+    def create_user(self, userEmail, userName, userNickName, userBirth, userPhone,userGender, password=None, password2=None):
         user = self.model(
         userEmail = self.normalize_email(userEmail),
                 userName = userName,
@@ -26,10 +26,21 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
-    def create_superuser(self, userEmail, password, **extra_fields):
-        extra_fields.setdefault('is_active', True)
-        extra_fields.setdefault('is_staff', True)
-
+    def create_superuser(self, userEmail, userName, userNickName, userBirth, userPhone,userGender, password=None, password2=None):
+        # extra_fields.setdefault('is_active', True)
+        # extra_fields.setdefault('is_staff', True)
+        user = self.model(
+        userEmail = self.normalize_email(userEmail),
+                userName = userName,
+                userNickName=userNickName,
+                userBirth=userBirth,
+                userPhone=userPhone,
+                userGender=userGender,
+                is_staff= True
+                )
+        user.set_password(password)
+        user.save()
+        return user
     #     user = self.create_user(
     #         userEmail=userEmail,
     #         password=password,
@@ -60,7 +71,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     userEmail = models.EmailField(null=False, unique=True)
     userName = models.CharField(max_length=25)
     userNickName = models.CharField(max_length=25, unique=True)
-    # userBirth = models.DateTimeField(auto_now=False, auto_now_add=False, default=timezone.now)
     profileUrl = models.CharField(max_length=255)
     GENDER_CHOICES = (
         (u'M', u'Male'),

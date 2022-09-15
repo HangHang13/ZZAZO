@@ -1,40 +1,3 @@
-# from django.contrib.auth import authenticate
-# from django.contrib.auth.models import update_last_login
-
-# from rest_framework import serializers
-# from rest_framework_simplejwt.tokens import RefreshToken
-
-# from .models import User
-
-
-# class UserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = '__all__'
-#         extra_kwargs = {'password': {'write_only': True}}
-
-#     def create(self, validated_data):
-#         password = validated_data.pop('password')
-#         user = User(**validated_data)
-#         user.set_password(password)
-#         user.save()
-#         return user
-
-# class UserSerializer2(serializers.ModelSerializer):
-
-#     class Meta:
-#         model = User
-#         fields = '__all__'
-
-#     def create(self, validated_data):
-#         user = User.objects.create(email=validated_data['email'],
-#                                        name=validated_data['name']
-#                                          )
-#         user.set_password(validated_data['password'])
-#         user.save()
-#         return user
-
-
 
 from rest_framework import serializers
 from accounts.models import Category, User
@@ -70,6 +33,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     
       raise serializers.ValidationError("비밀번호가 일치하지 않습니다.")
     
+
     return attrs
 
   def create(self, validate_data):
@@ -78,7 +42,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
 class UserLoginSerializer(serializers.ModelSerializer):
   userEmail = serializers.EmailField(max_length=255)
-  # print('시리얼라이져',userEmail)
+ 
   class Meta:
     model = User
     fields = ['userEmail', 'password']
