@@ -10,6 +10,7 @@ import Modal from "../../components/modals/Modal";
 import ProfileImageListContent from "../../components/modals/contents/ProfileImageListContent";
 import ProfileTitle from "./../../components/mypage/ProfileTitle";
 import { nickNameDuplicateCheck } from "../../api/AuthAPI";
+import { getUser } from "../../api/mypage/MyPage";
 
 const InputTag = styled.div`
   margin-top: 2rem;
@@ -20,6 +21,9 @@ const InputBlock = styled.div`
   justify-content: space-between;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+  @media screen and (max-width: 500px) {
+    width: 130%;
+  }
 `;
 const BirthSelectBox = styled.select`
   width: 30%;
@@ -73,6 +77,13 @@ const DefaultProfileButton = styled.button`
   color: #80c0a0;
 `;
 const UpdateProfile = () => {
+  const token =
+    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY2MzMzMDk2NCwiaWF0IjoxNjYzMjQ0NTY0LCJqdGkiOiIxYWQxOTZjZTJmMTc0ZmVkYTE0MDViMjBiYjBkYTViNyIsInVzZXJfaWQiOjF9.wDzpt9zCAyBQCTMWf8bR9kRw_vZ8TJMZQmTrda725hY";
+  const GetUser = async () => {
+    const user = await getUser(token);
+    console.log(user);
+  };
+  GetUser();
   const [profile, setProfile] = useState({
     userEmail: "aaa@naver.com",
     userPassword: "1q2w3e4r!@",

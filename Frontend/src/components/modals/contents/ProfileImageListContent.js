@@ -9,6 +9,10 @@ for (let i = 1; i <= 25; i++) {
 const ProfileImageWrapper = styled.div`
   width: 70px;
   height: 70px;
+  @media screen and (max-width: 500px) {
+    width: 40px;
+    height: 40px;
+  }
 `;
 
 const StyledProfileImage = styled.img`

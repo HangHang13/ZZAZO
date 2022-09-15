@@ -15,6 +15,10 @@ const EditWrapper = styled.div`
   border-radius: 3px;
   display: flex;
   height: 70%;
+  @media screen and (max-width: 500px) {
+    margin: 0;
+    flex-direction: column;
+  }
 `;
 
 const TabWrapper = styled.div`
@@ -24,6 +28,10 @@ const TabWrapper = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
+  @media screen and (max-width: 500px) {
+    flex-direction: row;
+    width: 100%;
+  }
 `;
 
 const EditorWrapper = styled.div`
@@ -31,6 +39,9 @@ const EditorWrapper = styled.div`
   padding: 5%;
   max-height: 860px;
   border-left: 1px solid #80c0a0;
+  @media screen and (max-width: 500px) {
+    width: 70%;
+  }
   /* background-color: green; */
 `;
 
