@@ -11,11 +11,22 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-import os
+import os, json
 from datetime import timedelta
+from django.core.exceptions import ImproperlyConfigured
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+secret_file = os.path.join(BASE_DIR, 'secrets.json')
+with open(secret_file) as f:
+    secrets = json.loads(f.read())
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+def get_secret(setting, secrets=secrets):
+    try:
+        return secrets[setting]
+    except KeyError:
+        error_msg = "Set the {} environment variable".format(setting)
+        raise ImproperlyConfigured(error_msg)
+SECRET_KEY = get_secret("SECRET_KEY")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -44,7 +55,7 @@ INSTALLED_APPS = [
     #django-rest-auth
     'rest_framework',
     'rest_framework_simplejwt',
-    # 'rest_framework_simplejwt.token_blacklist',
+    'rest_framework_simplejwt.token_blacklist',
     # 'dj_rest_auth',
     # 'dj_rest_auth.registration',
     # 'rest_framework.authtoken',
@@ -67,6 +78,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -74,6 +86,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+
 ]
 
 
@@ -142,12 +156,13 @@ ROOT_URLCONF = 'django_rest_role_jwt.urls'
 
 # Email Configuration
 EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = 'dhkdwlsgod@naver.com'
+EMAIL_HOST = 'smtp.naver.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
+EMAIL_HOST_USER = "hanghangjin@naver.com"
+EMAIL_HOST_PASSWORD = SECRET_KEY
 EMAIL_USE_TLS = True
 REST_USE_JWT = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=20),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
