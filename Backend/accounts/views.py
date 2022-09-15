@@ -1,31 +1,3 @@
-
-# from rest_framework import generics
-# from .models import User
-# from rest_framework.permissions import AllowAny
-# from django.shortcuts import render
-# from rest_framework.views import APIView
-# from rest_framework.response import Response
-
-
-# class UserCreate(generics.CreateAPIView):
-
-#     queryset = User.objects.all()
-#     print(queryset)
-#     serializer_class = UserSerializer
-#     permission_classes = (AllowAny, )
-    
-
-
-# # view for registering users
-# class RegisterView(APIView):
-#     def post(self, request):
-#         serializer = UserSerializer2(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         serializer.save()
-#         return Response(serializer.data)
-
-
-import email
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
@@ -46,8 +18,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 #이메일 인증 확인
-@csrf_exempt
-@api_view(['GET'])
+
 # def verificationEmail() 
 @csrf_exempt
 @api_view(['GET'])
@@ -149,7 +120,7 @@ class UserRegistrationView(APIView):
     serializer.is_valid(raise_exception=True)
     user = serializer.save()
     token = get_tokens_for_user(user)
-
+   
     print('token',token)
 
     if user:
