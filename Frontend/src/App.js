@@ -13,6 +13,7 @@ import UpdateProfile from "./pages/mypage/UpdateProfile";
 import UpdatePassword from "./pages/mypage/UpdatePassword";
 import DeleteProfile from "./pages/mypage/DeleteProfile";
 import Scedule from "./pages/scedule/Scedule";
+import Navbar from "./components/layout/Navbar";
 import SignupInterests from "./pages/auth/SignupInterests";
 import FindIdMain from "./pages/auth/find/FindIdMain";
 import FindPwMain from "./pages/auth/find/FindPwMain";
