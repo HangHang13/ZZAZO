@@ -1,5 +1,6 @@
 import { client } from "./../utils/client";
 
+// 로그인
 const login = async (data) => {
   const result = await client
     .post(`/users/login`, data)
@@ -8,6 +9,7 @@ const login = async (data) => {
   return result;
 };
 
+// 이메일 중복 검사
 const emailDuplicateCheck = async (data) => {
   const result = await client
     .get(`/users/checkemail/${data}/`)
@@ -16,6 +18,7 @@ const emailDuplicateCheck = async (data) => {
   return result;
 };
 
+// 닉네임 중복 검사
 const nickNameDuplicateCheck = async (data) => {
   const result = await client
     .get(`/users/checkNickName/${data}/`)
@@ -24,6 +27,12 @@ const nickNameDuplicateCheck = async (data) => {
   return result;
 };
 
+// 이메일 인증 메일 발송
+const emailSendConfirm = async (data) => {
+  alert(data);
+};
+
+// 이메일 인증
 const emailConfirm = async (data) => {
   alert(data);
 };
