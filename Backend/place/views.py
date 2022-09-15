@@ -11,7 +11,7 @@ from place.models import Place, Review
 
 @api_view(['GET'])
 def place_detail(request, place_id):
-    place = Place.objects.get(id=place_id)
+    place = get_object_or_404(Place, pk = place_id)
     serializer = PlaceDetailSerializer(place)
     data = {'Place': serializer.data}
     code = 200
@@ -26,7 +26,7 @@ def place_detail(request, place_id):
 @api_view(['POST'])
 def place_review_create(request, place_id):
     serializer = ReviewCreateSerializer(data=request.data)
-    place = Place.objects.get(id = place_id)
+    place = get_object_or_404(Place, pk = place_id)
     if serializer.is_valid(raise_exception=True):
         # serializer.save(user=request.user, place=place)
         code = 200
