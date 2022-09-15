@@ -47,10 +47,11 @@ from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 @api_view(['GET'])
 def check_userEmail(request, userEmail):
-
+  _id= None
   try:
         # 중복 검사 실패
-      _id = User.objects.filter(userEmail=userEmail)
+      _id = User.objects.get(userEmail=userEmail)
+      print(_id)
   except:
         # 중복 검사 성공
       _id = None
@@ -71,9 +72,10 @@ def check_nickName(request, userNickName):
   #  user = request.GET.get('userNickName')
    user = userNickName
    print(user)
+   _id= None
    try:
         # 중복 검사 실패
-      _id = User.objects.filter(userNickName=f'{user}')
+      _id = User.objects.get(userNickName=f'{user}')
    except:
         # 중복 검사 성공
       _id = None
