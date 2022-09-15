@@ -9,6 +9,7 @@ import DivButton from "./../../components/common/buttons/DivButton";
 import Modal from "../../components/modals/Modal";
 import ProfileImageListContent from "../../components/modals/contents/ProfileImageListContent";
 import ProfileTitle from "./../../components/mypage/ProfileTitle";
+import { nickNameDuplicateCheck } from "../../api/AuthAPI";
 
 const InputTag = styled.div`
   margin-top: 2rem;
@@ -80,7 +81,7 @@ const UpdateProfile = () => {
     userPhone: "01000000000",
     userBirth: "1999-01-01",
     profileUrl: "1",
-    userNickNameChecked: true,
+    userNickNameChecked: false,
   });
   const OriginProfile = {
     userEmail: "aaa@naver.com",
@@ -90,7 +91,7 @@ const UpdateProfile = () => {
     userPhone: "01000000000",
     userBirth: "1999-01-01",
     profileUrl: "1",
-    userNickNameChecked: true,
+    userNickNameChecked: false,
   };
   const [profileImgState, setProfileImgState] = useState("1");
   const [birthDate, setBirthDate] = useState({
@@ -116,10 +117,23 @@ const UpdateProfile = () => {
   const onHandleInput = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
   };
-
+  const onHandleNickNameDuplicateUpdate = async (e) => {
+    console.log(e.target.name);
+    console.log(e.target.value);
+    const nickNameDuplicate = await nickNameDuplicateCheck(e.target.value);
+    console.log(nickNameDuplicate.code);
+    if (e.target.name === "userNickName" && nickNameDuplicate.code === 200) {
+      setProfile({ ...profile, userNickNameChecked: true });
+      console.log(profile.userNickNameChecked);
+    } else {
+      setProfile({ ...profile, userNickNameChecked: false });
+      console.log(profile.userNickNameChecked);
+    }
+  };
   //닉네임 중복 체크
   const onHandleNickNameDuplicateCheck = (e) => {
     e.preventDefault();
+
     if (profile.userNickNameChecked) {
       alert("중복 확인이 완료된 닉네임입니다.");
       nickNameConfirmRef.current.disabled = true;
@@ -139,7 +153,7 @@ const UpdateProfile = () => {
 
     if (response.code === 200) {
       const finish = confirm(
-        "사용 가능한 닉네임입니다. 이 닉네임으로 가입을 진행하시겠습니까?"
+        "사용 가능한 닉네임입니다. 이 닉네임으로 변경하시겠습니까?"
       );
       if (finish) {
         setProfile({ ...profile, ["userNickNameChecked"]: true });
@@ -278,6 +292,7 @@ const UpdateProfile = () => {
               value={profile.userNickName}
               placeholder="닉네임을 입력해주세요."
               onChange={onHandleInput}
+              onKeyUp={onHandleNickNameDuplicateUpdate}
               ref={(el) => (nickNameConfirmRef.current = el)}
               width="80%"
             />
