@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Button from "../../components/common/buttons/Button";
 import Introduce from "../../components/common/home/introduce/introduce";
 import { Wrapper } from "../../components/styled/Wrapper";
+import RecCard from "../../components/common/home/recommendation/RecCard";
+
 import App from "./../../App";
 
 const Home = () => {
@@ -100,7 +102,45 @@ const Home = () => {
         </Introduce>
       </IntroduceList>
       <RecTitle>이런 장소는 어때요?</RecTitle>
-      <RecArea></RecArea>
+      <RecArea>
+        <CardWrapper>
+          <RecCard
+            src="../assets/introduce/introduce1.png"
+            text="광화문"
+          ></RecCard>
+          <RecCard
+            src="../assets/introduce/introduce2.png"
+            text="광화문"
+          ></RecCard>
+          <RecCard
+            src="../assets/introduce/introduce3.png"
+            text="광화문"
+          ></RecCard>
+          <RecCard
+            src="../assets/introduce/introduce4.png"
+            text="광화문"
+          ></RecCard>
+        </CardWrapper>
+        <CardWrapper>
+          <RecCard
+            src="../assets/introduce/introduce1.png"
+            text="광화문"
+          ></RecCard>
+          <RecCard
+            src="../assets/introduce/introduce2.png"
+            text="광화문"
+          ></RecCard>
+          <RecCard
+            src="../assets/introduce/introduce3.png"
+            text="광화문"
+          ></RecCard>
+          <RecCard
+            src="../assets/introduce/introduce4.png"
+            text="광화문"
+          ></RecCard>
+        </CardWrapper>
+      </RecArea>
+
       <BtnWrapper>
         <Button
           message="약속잡기"
@@ -119,6 +159,10 @@ const HomeWrapper = styled.div`
   content-direction: column;
   margin: 0 auto;
   width: 70%;
+`;
+
+const CardWrapper = styled.div`
+  display: flex;
 `;
 
 const HomeNav = styled.div`
@@ -154,7 +198,7 @@ const HomeBanner = styled.div`
   justify-content: space-evenly;
   background-color: rgba(192, 240, 176, 0.2);
   align-items: center;
-  height: 30rem;
+  height: 40rem;
 `;
 
 const HomeBannerArea = styled.div`
@@ -163,6 +207,7 @@ const HomeBannerArea = styled.div`
 `;
 const HomeBannerText = styled.div`
   font-size: 4rem;
+  font-weight: 200;
   display: flex;
   align-items: flex-end;
 `;
@@ -193,15 +238,16 @@ const RecTitle = styled.div`
   text-align: center;
   font-size: 4rem;
   color: #b7e769;
-  margin: 7rem 0;
+  margin: 5rem 0;
 `;
 
 const RecArea = styled.div`
   display: flex;
   justify-content: space-evenly;
+  flex-direction: column;
   background-color: rgba(192, 240, 176, 0.2);
   align-items: center;
-  height: 30rem;
+  height: 35rem;
   margin-bottom: 5rem;
 `;
 const Text = styled.p`
