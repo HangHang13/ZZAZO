@@ -5,6 +5,7 @@ import { InputWrapper, Wrapper } from "./../../components/styled/Wrapper";
 import Button from "../../components/common/buttons/Button";
 import { useNavigate } from "react-router-dom";
 import AuthButton from "./../../components/common/buttons/AuthButton";
+import { login } from "../../api/AuthAPI";
 
 const ColWrapper = styled.div`
   display: flex;
@@ -42,8 +43,6 @@ const LoginInput = styled(InputWrapper)`
   margin-bottom: 0.75rem;
 `;
 
-const LoginButton = styled(Button)``;
-
 const Options = styled.div`
   display: flex;
   flex-direction: row;
@@ -70,7 +69,7 @@ const OptionBorder = styled.div`
 const Login = () => {
   const [state, setState] = useState({
     userEmail: "",
-    userPassword: "",
+    password: "",
   });
 
   const [check, setCheck] = useState({
@@ -90,16 +89,18 @@ const Login = () => {
   };
 
   // 로그인 폼 제출 시
-  const LoginSubmit = () => {
+  const LoginSubmit = async () => {
     console.log(state);
     if (state.userEmail.length < 1) {
       alert("아이디를 입력해주세요.");
       return;
     }
-    if (state.userPassword.length < 1) {
+    if (state.password.length < 1) {
       alert("비밀번호를 입력해주세요.");
       return;
     }
+
+    const response = await login(state);
   };
 
   return (
@@ -116,8 +117,8 @@ const Login = () => {
             placeholder="아이디"
           />
           <LoginInput
-            name="userPassword"
-            value={state.userPassword}
+            name="password"
+            value={state.password}
             onChange={onHandleInput}
             width="80%"
             height="52px"
