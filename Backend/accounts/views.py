@@ -46,8 +46,8 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 #이메일 인증 확인
-# @csrf_exempt
-# @api_view(['GET'])
+@csrf_exempt
+@api_view(['GET'])
 # def verificationEmail() 
 @csrf_exempt
 @api_view(['GET'])
