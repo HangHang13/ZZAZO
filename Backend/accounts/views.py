@@ -124,7 +124,7 @@ class UserRegistrationView(APIView):
     print('token',token)
 
     if user:
-      return Response({'code':200,  'message':'회원가입에 성공하였습니다.', 'userEmail' : user.userEmail}, status=status.HTTP_201_CREATED)
+      return Response({'token': token , 'code':200,  'message':'회원가입에 성공하였습니다.', 'userEmail' : user.userEmail}, status=status.HTTP_201_CREATED)
     else:
       return Response({'code':401,  'message':'회원가입에 실패하였습니다.', }, status=status.HTTP_401_UNAUTHORIZED)
 
@@ -137,10 +137,11 @@ class UserLoginView(APIView):
     email = serializer.data.get('userEmail')
     password = serializer.data.get('password')
     print(email, password)
-    a='hanghang12'
-    user = authenticate(userEmail		=email, password=f'{password}')
-
-    # print('유저',user)
+   
+   
+    user = authenticate(username = email, password = password)
+ 
+    print('유저',user)
     if user is not None:
       token = get_tokens_for_user(user)
       return Response({'code': '200', 'message':'로그인', 'token': token }, status=status.HTTP_200_OK)
