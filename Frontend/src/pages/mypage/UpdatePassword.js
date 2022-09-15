@@ -44,21 +44,21 @@ const UpdatePassword = () => {
   const userPwRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,12}$/i;
   const userPwCheck = (e) => {
     onHandleInput(e);
-    if (!userPwCheck.text(state.newPassword)) {
-      setValid({ ...valid, passwordNotMatch: false });
+    if (!userPwRegex.test(state.newPassword)) {
+      // setValid({ ...valid, passwordNotMatch: false });
       setValid({ ...valid, passwordNotValid: true });
     } else {
-      setValid({ ...valid, passwordNotMatch: false });
+      // setValid({ ...valid, passwordNotMatch: false });
       setValid({ ...valid, passwordNotValid: false });
     }
   };
   const userPwMatch = (e) => {
     onHandleInput(e);
     if (state.newPassword !== state.confirmPassword) {
-      setValid({ ...valid, passwordNotValid: false });
+      // setValid({ ...valid, passwordNotValid: false });
       setValid({ ...valid, passwordNotMatch: true });
     } else {
-      setValid({ ...valid, passwordNotValid: false });
+      // setValid({ ...valid, passwordNotValid: false });
       setValid({ ...valid, passwordNotMatch: false });
     }
   };
@@ -79,6 +79,11 @@ const UpdatePassword = () => {
               ref={(el) => (passwordRef.current[0] = el)}
             />
           </InputBlock>
+          {valid.passwordNotValid ? (
+            <AlertTag color="red">사용할 수 없는 비밀번호입니다.</AlertTag>
+          ) : (
+            <AlertTag></AlertTag>
+          )}
           <InputBlock>
             <InputWrapper
               name="confirmPassword"
@@ -90,11 +95,7 @@ const UpdatePassword = () => {
               ref={(el) => (passwordRef.current[1] = el)}
             />
           </InputBlock>
-          {valid.passwordNotValid ? (
-            <AlertTag color="red">사용할 수 없는 비밀번호입니다.</AlertTag>
-          ) : (
-            <AlertTag></AlertTag>
-          )}
+
           {valid.passwordNotMatch ? (
             <AlertTag color="red">비밀번호가 일치하지 않습니다.</AlertTag>
           ) : (
@@ -105,7 +106,7 @@ const UpdatePassword = () => {
             width="100%"
             borderColor="#80E080"
             color="#80C0A0"
-            clickEvent={() => submitState()}
+            // clickEvent={() => submitState()}
           ></DivButton>
         </SignupBody>
       </Body>
