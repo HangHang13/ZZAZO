@@ -59,7 +59,7 @@ const Signup = () => {
     userEmail: "",
     userEmailCode: "",
     password: "",
-    passwordRe: "",
+    password2: "",
     userName: "",
     userNickName: "",
     userPhone: "",
@@ -108,7 +108,6 @@ const Signup = () => {
     }
 
     const response = await emailDuplicateCheck(state.userEmail);
-    console.log(response);
 
     if (response.code === 200) {
       const finish = confirm(
@@ -183,7 +182,7 @@ const Signup = () => {
   const userPwMatch = (e) => {
     onHandleInput(e);
 
-    if (state.password !== state.passwordRe) {
+    if (state.password !== state.password2) {
       setValid({ ...valid, passwordNotValid: false });
       setValid({ ...valid, passwordNotMatch: true });
     } else {
@@ -224,7 +223,6 @@ const Signup = () => {
     } else {
       alert("오류가 발생했습니다.");
     }
-    console.log(response);
   };
 
   // 성별 변경
@@ -242,7 +240,7 @@ const Signup = () => {
     // 비밀번호 : 길이 8이상, notmatch랑 notvalid 모두 아닌가 확인
     if (
       state.password.length < 8 ||
-      state.passwordRe.length < 8 ||
+      state.password2.length < 8 ||
       valid.passwordNotMatch ||
       valid.passwordNotValid
     ) {
@@ -377,9 +375,9 @@ const Signup = () => {
             </InputBlock>
             <InputBlock>
               <InputWrapper
-                name="passwordRe"
+                name="password2"
                 type="password"
-                value={state.passwordRe}
+                value={state.password2}
                 placeholder="비밀번호 재입력"
                 onChange={userPwMatch}
                 onKeyUp={userPwMatch}

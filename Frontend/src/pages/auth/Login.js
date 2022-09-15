@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import Checkbox from "../../components/common/inputs/Checkbox";
 import { InputWrapper, Wrapper } from "./../../components/styled/Wrapper";
@@ -80,6 +80,9 @@ const Login = () => {
 
   const navigate = useNavigate();
 
+  const idRef = useRef();
+  const pwRef = useRef();
+
   const onHandleInput = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
@@ -100,14 +103,28 @@ const Login = () => {
     console.log(state);
     if (state.userEmail.length < 1) {
       alert("아이디를 입력해주세요.");
+      idRef.current.focus();
       return;
     }
     if (state.password.length < 1) {
       alert("비밀번호를 입력해주세요.");
+      pwRef.current.focus();
       return;
     }
 
     const response = await login(state);
+
+    if (response.code === 200) {
+      alert("로그인에 성공했습니다!");
+    } else if (response.code === 404) {
+      alert(response.message);
+      return;
+    } else {
+      alert("로그인 중 오류가 발생했습니다.");
+      return;
+    }
+
+    // 로그인 성공 후 do something....
   };
 
   return (
@@ -125,6 +142,7 @@ const Login = () => {
               placeholder="아이디"
               onChange={onHandleInput}
               onKeyPress={handleOnKeyPress}
+              ref={idRef}
             />
             <LoginInput
               name="password"
@@ -135,6 +153,7 @@ const Login = () => {
               type="password"
               onChange={onHandleInput}
               onKeyPress={handleOnKeyPress}
+              ref={pwRef}
             />
             <Options>
               <Checkbox
