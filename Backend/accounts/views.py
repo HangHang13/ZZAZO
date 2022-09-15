@@ -47,7 +47,7 @@ from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 @api_view(['GET'])
 def check_userEmail(request, userEmail):
-  _id= None
+
   try:
         # 중복 검사 실패
       _id = User.objects.get(userEmail=userEmail)
@@ -68,11 +68,9 @@ def check_userEmail(request, userEmail):
 @csrf_exempt
 @api_view(['GET'])
 def check_nickName(request, userNickName):
-   print(userNickName)
   #  user = request.GET.get('userNickName')
    user = userNickName
-   print(user)
-   _id= None
+
    try:
         # 중복 검사 실패
       _id = User.objects.get(userNickName=f'{user}')
@@ -80,7 +78,7 @@ def check_nickName(request, userNickName):
         # 중복 검사 성공
       _id = None
    if _id is None:
-      duplicate = "사용 가능한 넥네임입니다"
+      duplicate = "사용 가능한 닉네임입니다"
       context = {'code': 200,
        'message': duplicate}
    else:
@@ -109,7 +107,8 @@ class APILogoutView(APIView):
         refresh_token = self.request.data.get('refresh_token')
         token = RefreshToken(token=refresh_token)
         token.blacklist()
-        return Response({"status": "OK, goodbye"})
+        return Response({"code": 200,
+                          "message": "로그아웃 되었습니다.",})
 
 # @api_view(['POST'])
 # def create_category(request):
@@ -155,20 +154,22 @@ class UserRegistrationView(APIView):
 
 class UserLoginView(APIView):
   renderer_classes = [UserRenderer]
+ 
   def post(self, request, format=None):
-    print(request.data)
     serializer = UserLoginSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     email = serializer.data.get('userEmail')
     password = serializer.data.get('password')
-    print('이메일',email, "비번", password)
-    user = authenticate(userEmail=email, password=password)
-    print('유저',user)
+    print(email, password)
+    user = authenticate(userEmail=email,password=password)
+ 
+    # print('유저',user)
     if user is not None:
       token = get_tokens_for_user(user)
       return Response({'code': '200', 'message':'로그인', 'token': token }, status=status.HTTP_200_OK)
     else:
-      return Response({'errors':{'non_field_errors':['Email or Password is not Valid']}}, status=status.HTTP_404_NOT_FOUND)
+      return Response({"code": 404,
+                      "message": "아이디 혹은 비밀번호를 확인해주세요."}, status=status.HTTP_404_NOT_FOUND)
 
 class UserProfileView(APIView):
   renderer_classes = [UserRenderer]

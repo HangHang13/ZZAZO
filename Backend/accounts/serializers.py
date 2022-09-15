@@ -78,6 +78,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
 class UserLoginSerializer(serializers.ModelSerializer):
   userEmail = serializers.EmailField(max_length=255)
+  # print('시리얼라이져',userEmail)
   class Meta:
     model = User
     fields = ['userEmail', 'password']
