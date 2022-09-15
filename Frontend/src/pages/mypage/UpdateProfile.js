@@ -1,11 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
-import {
-  ButtonWrapper,
-  InputWrapper,
-  Wrapper,
-} from "../../components/styled/Wrapper";
+import { SignupBody } from "../../components/auth/signup/Signup";
+import { BaseForm } from "../../components/common/forms/Form";
+import { client } from "./../../utils/client";
+import { ButtonWrapper, InputWrapper } from "../../components/styled/Wrapper";
+import InputCheckButton from "../../components/common/buttons/InputCheckButton";
+import DivButton from "./../../components/common/buttons/DivButton";
+import Modal from "../../components/modals/Modal";
+import ProfileImageListContent from "../../components/modals/contents/ProfileImageListContent";
+import ProfileTitle from "./../../components/mypage/ProfileTitle";
 
+const InputTag = styled.div`
+  margin-top: 2rem;
+`;
+const InputBlock = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+`;
+const BirthSelectBox = styled.select`
+  width: 30%;
+  height: 52px;
+  background-color: white;
+  border-radius: 8px;
+  border: 1px solid #d0d0d0;
+  text-align: center;
+  font-size: 0.9rem;
+`;
 const ProfileImageLine = styled.div`
   margin-left: 4.125rem;
   margin-top: 2.75rem;
@@ -29,6 +52,7 @@ const ProfileUploadButton = styled.button`
   border: 0;
 `;
 const LineTitle = styled.div`
+  min-width: 6rem;
   max-width: 8.25rem;
   border-bottom: 1px solid #80c0a0;
   text-align: center;
@@ -41,199 +65,290 @@ const UserEmailLine = styled.div`
   flex-direction: column;
   text-align: center;
   justify-content: center;
-  margin: 1.75rem;
-`;
-const FirstLine = styled.div`
-  display: flex;
-  justify-content: space-around;
 `;
 const DefaultProfileButton = styled.button`
   border: 0;
   background-color: #ffffff;
   color: #80c0a0;
 `;
-const SeccondLine = styled.div`
-  margin: auto;
-  margin-top: 5%;
-  display: flex;
-`;
-const ThirdLine = styled.div`
-  margin: auto;
-  margin-top: 5%;
-  display: flex;
-`;
-const SubmitLine = styled.div`
-  margin: auto;
-  justify-content: space-around;
-  margin-top: 5%;
-  display: flex;
-`;
-const InputLine = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  margin: auto;
-  width: 50%;
-  align-items: center;
-`;
-const BirthLine = styled.div`
-  display: flex;
-  width: 50%;
-  justify-content: center;
-`;
-const PhoneLine = styled.div`
-  display: flex;
-  width: 50%;
-  justify-content: center;
-`;
 const UpdateProfile = () => {
-  const [profileState, setProfileState] = useState({
+  const [profile, setProfile] = useState({
     userEmail: "aaa@naver.com",
-    userName: "홍길동",
     userPassword: "1q2w3e4r!@",
+    userName: "홍길동",
     userNickName: "닉네임1",
-    userPhone: "010-0000-0000",
+    userPhone: "01000000000",
     userBirth: "1999-01-01",
-    year: 0,
-    month: 0,
-    day: 0,
-    userGender: 1,
-    userCategory: "한식,일식,PC방,노래방",
-    userRadius: 10,
+    profileUrl: "1",
+    userNickNameChecked: true,
   });
   const OriginProfile = {
     userEmail: "aaa@naver.com",
-    userName: "홍길동",
     userPassword: "1q2w3e4r!@",
+    userName: "홍길동",
     userNickName: "닉네임1",
-    userPhone: "010-0000-0000",
+    userPhone: "01000000000",
     userBirth: "1999-01-01",
-    year: 0,
-    month: 0,
-    day: 0,
-    userGender: 1,
-    userCategory: "한식,일식,PC방,노래방",
-    userRadius: 10,
+    profileUrl: "1",
+    userNickNameChecked: true,
   };
-  const [profileImgState, setProfileImgState] = useState(
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJ6yI5v-1UCyMx8CdTpABg9QzItPHcPLZh7_1ZnzOpTg&s"
-  );
-  useEffect(() => {
-    const userProfile = {
-      userEmail: profileState.userEmail,
-      userName: profileState.userName,
-      userPassword: profileState.userPassword,
-      userNickName: profileState.userNickName,
-      userPhone: profileState.userPhone,
-      year:
-        profileState.userBirth !== null
-          ? profileState.userBirth.substr(0, 4)
-          : "0000",
-      month:
-        profileState.userBirth !== null
-          ? profileState.userBirth.substr(5, 2)
-          : "00",
-      day:
-        profileState.userBirth !== null
-          ? profileState.userBirth.substr(8, 2)
-          : "00",
-      userGender: profileState.userGender,
-      userCategory: profileState.userCategory,
-      userRadius: profileState.userRadius,
+  const [profileImgState, setProfileImgState] = useState("1");
+  const [birthDate, setBirthDate] = useState({
+    year: "1999",
+    month: "01",
+    day: "01",
+  });
+
+  const nickNameConfirmRef = useRef([]);
+  const [modalState, setModalState] = useState(false);
+  const openModal = () => {
+    setModalState(true);
+  };
+  const closeModal = () => {
+    setModalState(false);
+  };
+  const onHandleChangeProfileImage = (profileImageId) => {
+    setProfileImgState((prev) => profileImageId);
+    console.log(profileImageId);
+    closeModal();
+  };
+  //input 창 입력 시 이벤트
+  const onHandleInput = (e) => {
+    setProfile({ ...profile, [e.target.name]: e.target.value });
+  };
+
+  //닉네임 중복 체크
+  const onHandleNickNameDuplicateCheck = (e) => {
+    e.preventDefault();
+    if (profile.userNickNameChecked) {
+      alert("중복 확인이 완료된 닉네임입니다.");
+      nickNameConfirmRef.current.disabled = true;
+      nickNameConfirmRef.current.style.backgroundColor = "#f0f0f0";
+      return;
+    }
+    if (profile.userNickName.length < 1) {
+      alert("닉네임을 입력해주세요.");
+      return;
+    }
+    // const response = await client.get(
+    //   `/users/checkemail?userEmail=${profile.userEmail}`
+    // );
+    const response = {
+      code: 200,
     };
-    setProfileState((prevState) => {
-      return { ...prevState, ...userProfile };
+
+    if (response.code === 200) {
+      const finish = confirm(
+        "사용 가능한 닉네임입니다. 이 닉네임으로 가입을 진행하시겠습니까?"
+      );
+      if (finish) {
+        setProfile({ ...profile, ["userNickNameChecked"]: true });
+      }
+    } else if (response.code === 401) {
+      alert(response.message);
+    } else {
+      alert("오류가 발생했습니다.");
+    }
+  };
+  const returnState = () => {
+    nickNameConfirmRef.current.disabled = false;
+    nickNameConfirmRef.current.style.backgroundColor = "#ffffff";
+    setProfile(OriginProfile);
+  };
+  const submitState = async () => {
+    if (!confirm("변경을 완료하시겠습니까?")) {
+      return;
+    }
+    // 이름 : 길이 체크
+    if (profile.userName.length < 1 || profile.userName.length > 12) {
+      alert("이름은 1글자 이상 12글자 이하여야 합니다.");
+      return;
+    }
+    // 이름 : 유효성 체크
+    const nameRegex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|]+$/;
+    if (!nameRegex.test(profile.userName)) {
+      alert("이름을 올바르게 입력해주세요.");
+      return;
+    }
+    // 닉네임 : 길이 체크
+    if (profile.userNickName.length < 1 || profile.userName.length > 12) {
+      alert("닉네임은 1글자 이상 12글자 이하여야 합니다.");
+      return;
+    }
+    if (!profile.userNickNameChecked) {
+      // 닉네임 : 중복 확인 여부
+      alert("닉네임 중복 확인을 해주세요.");
+      return;
+    }
+    // 휴대폰번호
+    const phoneRegex = /^[0-9]+$/;
+    if (!phoneRegex.test(profile.userPhone)) {
+      alert("휴대폰 번호를 올바르게 입력해주세요.");
+      return;
+    }
+    console.log(profile);
+  };
+  useEffect(() => {
+    setProfileImgState(profileImgState);
+    setProfile({
+      ...profile,
+      userBirth: birthDate.year + "-" + birthDate.month + "-" + birthDate.day,
+      profileUrl: profileImgState,
     });
-  }, []);
-  console.log({ profileImgState });
+  }, [birthDate, profileImgState]);
+
+  //날짜 구하는 로직
+  const now = new Date();
+
+  let years = [];
+  for (let y = now.getFullYear(); y >= 1930; y -= 1) {
+    years.push(y);
+  }
+  let month = [];
+  for (let m = 1; m <= 12; m += 1) {
+    if (m < 10) {
+      // 날짜가 2자리로 나타나야 했기 때문에 1자리 월에 0을 붙혀준다
+      month.push("0" + m.toString());
+    } else {
+      month.push(m.toString());
+    }
+  }
+  let days = [];
+  let date = new Date(birthDate.year, birthDate.month, 0).getDate();
+  for (let d = 1; d <= date; d += 1) {
+    if (d < 10) {
+      // 날짜가 2자리로 나타나야 했기 때문에 1자리 일에 0을 붙혀준다
+      days.push("0" + d.toString());
+    } else {
+      days.push(d.toString());
+    }
+  }
+  //날짜 구하기 로직 종료
   return (
     <>
-      <FirstLine>
-        <ProfileImageLine>
-          <LineTitle>프로필 이미지</LineTitle>
-          <ProfileImage alt="profile" src={profileImgState} />
-          <ProfileUploadButton>업로드</ProfileUploadButton>
-        </ProfileImageLine>
-        <UserEmailLine>
-          <h2>{profileState.userName}</h2>
-          {profileState.userEmail}
-          <DefaultProfileButton>기본 이미지로 변경</DefaultProfileButton>
-        </UserEmailLine>
-      </FirstLine>
-      <SeccondLine>
-        <InputLine>
-          <LineTitle>이름</LineTitle>
+      <Modal
+        isOpen={modalState}
+        modalContent={
+          <ProfileImageListContent
+            profileImageState={profileImgState}
+            onClcik={onHandleChangeProfileImage}
+            close={closeModal}
+          />
+        }
+      />
+      <ProfileTitle
+        isEdit={true}
+        openModal={openModal}
+        imageId={profileImgState}
+        userName={profile.userName}
+        userEmail={profile.userEmail}
+      />
+      <SignupBody>
+        {/* <InputBlock>
+          <ProfileImageLine>
+            <LineTitle>프로필 이미지</LineTitle>
+            <ProfileImage alt="profile" src={profileImgState.prifileUrl} />
+            <ProfileUploadButton>업로드</ProfileUploadButton>
+          </ProfileImageLine>
+        </InputBlock>
+        <InputBlock>
+          <UserEmailLine>
+            <h2>{profile.userName}</h2>
+            {profile.userEmail}
+            <DefaultProfileButton>기본 이미지로 변경</DefaultProfileButton>
+          </UserEmailLine>
+        </InputBlock> */}
+        <InputTag>이름</InputTag>
+        <InputBlock>
           <InputWrapper
-            width={"180px"}
-            height={"30px"}
-            placeholder="이름"
-            defaultValue={profileState.userName}
-          ></InputWrapper>
-        </InputLine>
-        <InputLine>
-          <LineTitle>닉네임</LineTitle>
+            name="userName"
+            type="text"
+            value={profile.userName}
+            placeholder="이름을 입력해주세요."
+            onChange={onHandleInput}
+            width="100%"
+          />
+        </InputBlock>
+        <InputTag>닉네임</InputTag>
+        <BaseForm onSubmit={onHandleNickNameDuplicateCheck}>
+          <InputBlock>
+            <InputWrapper
+              name="userNickName"
+              type="text"
+              value={profile.userNickName}
+              placeholder="닉네임을 입력해주세요."
+              onChange={onHandleInput}
+              ref={(el) => (nickNameConfirmRef.current = el)}
+              width="80%"
+            />
+            <InputCheckButton message="중복 확인"></InputCheckButton>
+          </InputBlock>
+        </BaseForm>
+        <InputTag>생년월일</InputTag>
+        <InputBlock>
+          <BirthSelectBox
+            value={birthDate.year}
+            onChange={(e) => {
+              setBirthDate({ ...birthDate, year: e.target.value });
+            }}
+          >
+            {years.map((item) => (
+              <option value={item} key={item}>
+                {item}
+              </option>
+            ))}
+          </BirthSelectBox>
+          <BirthSelectBox
+            value={birthDate.month}
+            onChange={(e) => {
+              setBirthDate({ ...birthDate, month: e.target.value });
+            }}
+          >
+            {month.map((item) => (
+              <option value={item} key={item}>
+                {item}
+              </option>
+            ))}
+          </BirthSelectBox>
+          <BirthSelectBox
+            value={birthDate.day}
+            onChange={(e) => {
+              setBirthDate({ ...birthDate, day: e.target.value });
+            }}
+          >
+            {days.map((item) => (
+              <option value={item} key={item}>
+                {item}
+              </option>
+            ))}
+          </BirthSelectBox>
+        </InputBlock>
+        <InputTag>휴대폰 번호</InputTag>
+        <InputBlock>
           <InputWrapper
-            width={"180px"}
-            height={"30px"}
-            placeholder="닉네임"
-            defaultValue={profileState.userNickName}
-          ></InputWrapper>
-        </InputLine>
-      </SeccondLine>
-      <ThirdLine>
-        <InputLine>
-          <LineTitle>생년월일</LineTitle>
-          <BirthLine>
-            <InputWrapper
-              width={"80px"}
-              height={"30px"}
-              defaultValue={profileState.year}
-            ></InputWrapper>
-            년
-            <InputWrapper
-              width={"40px"}
-              height={"30px"}
-              defaultValue={profileState.month}
-            ></InputWrapper>
-            월
-            <InputWrapper
-              width={"40px"}
-              height={"30px"}
-              defaultValue={profileState.day}
-            ></InputWrapper>
-            일
-          </BirthLine>
-        </InputLine>
-        <InputLine>
-          <LineTitle>휴대폰</LineTitle>
-          <PhoneLine>
-            <InputWrapper
-              width={"30px"}
-              height={"30px"}
-              defaultValue={profileState.userPhone.substr(0, 3)}
-            ></InputWrapper>
-            -
-            <InputWrapper
-              width={"40px"}
-              height={"30px"}
-              defaultValue={profileState.userPhone.substr(4, 4)}
-            ></InputWrapper>
-            -
-            <InputWrapper
-              width={"40px"}
-              height={"30px"}
-              defaultValue={profileState.userPhone.substr(9, 4)}
-            ></InputWrapper>
-          </PhoneLine>
-        </InputLine>
-      </ThirdLine>
-      <SubmitLine>
-        <ButtonWrapper>되돌리기</ButtonWrapper>
-        <ButtonWrapper color={"#ffffff"} bg={"#80e080"} border="#80c0a0">
-          저장
-        </ButtonWrapper>
-      </SubmitLine>
+            name="userPhone"
+            type="text"
+            value={profile.userPhone}
+            placeholder="휴대폰 번호를 입력해주세요. (ex. 01012341234)"
+            onChange={onHandleInput}
+            width="100%"
+          />
+        </InputBlock>
+        <InputBlock>
+          <DivButton
+            message="되돌리기"
+            width="40%"
+            clickEvent={() => returnState()}
+          ></DivButton>
+          <DivButton
+            message="저장"
+            width="40%"
+            borderColor="#80E080"
+            color="#80C0A0"
+            clickEvent={() => submitState()}
+          ></DivButton>
+        </InputBlock>
+      </SignupBody>
     </>
   );
 };

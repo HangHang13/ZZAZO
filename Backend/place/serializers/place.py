@@ -1,14 +1,16 @@
 from rest_framework import serializers
-from ..models import Card
+from ..models import Place
 
+'''
 class CardListSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Card
+        model = Place
         fields = ('id','title', 'date', 'appointed_time', 'place')
+'''
 
-class CardSerializer(serializers.ModelSerializer):
+class PlaceDetailSerializer(serializers.ModelSerializer):
     
     class Meta:
-        model = Card
-        fields = ('title', 'date', 'appointed_time', 'appointed_place')
+        model = Place
+        fields = ('id', 'placeName', 'placeAddress')
