@@ -1,31 +1,36 @@
 import React from "react";
 import styled from "styled-components";
 
-const Btn = styled.button`
+const AuthBtn = styled.button`
   display: flex;
   width: ${({ width }) => width};
   height: ${({ height }) => height};
   color: ${({ color }) => color};
   background-color: ${({ bg }) => bg};
-  border-radius: ${({ borderRadius }) => borderRadius};
+  border-radius: 8px;
   border: 1px solid ${({ borderColor }) => borderColor};
   text-align: center;
   justify-content: center;
   align-items: center;
   font-size: 1rem;
   font-weight: bold;
+
+  transition: all 0.2s ease-in;
+  &:hover {
+    background: #c0f0b0;
+    border: 1px solid #80e080;
+  }
 `;
 
-Btn.defaultProps = {
-  width: "100px",
+AuthBtn.defaultProps = {
+  width: "80%",
   height: "52px",
-  color: "#000000",
+  color: "#80C0A0",
   bg: "#ffffff",
-  borderColor: "#767676",
-  borderRadius: "8px",
+  borderColor: "#80E080",
 };
 
-const Button = ({
+const AuthButton = ({
   message,
   width,
   height,
@@ -35,7 +40,7 @@ const Button = ({
   clickEvent,
 }) => {
   return (
-    <Btn
+    <AuthBtn
       width={width}
       height={height}
       color={color}
@@ -44,8 +49,8 @@ const Button = ({
       onClick={clickEvent}
     >
       {message}
-    </Btn>
+    </AuthBtn>
   );
 };
 
-export default Button;
+export default AuthButton;
