@@ -23,11 +23,11 @@ const InputBlock = styled.div`
 
 const UpdatePassword = () => {
   const [state, setState] = useState({
-    prevPassword: "1q2w3e4r!@",
     newPassword: "",
     confirmPassword: "",
   });
   const [valid, setValid] = useState({
+    passwordNotDuplicate: false,
     passwordNotValid: false,
     passwordNotMatch: false,
   });
@@ -44,6 +44,7 @@ const UpdatePassword = () => {
   const userPwRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,12}$/i;
   const userPwCheck = (e) => {
     onHandleInput(e);
+
     if (!userPwRegex.test(state.newPassword)) {
       // setValid({ ...valid, passwordNotMatch: false });
       setValid({ ...valid, passwordNotValid: true });
@@ -62,7 +63,21 @@ const UpdatePassword = () => {
       setValid({ ...valid, passwordNotMatch: false });
     }
   };
-
+  const submitState = async () => {
+    if (!confirm("비밀번호를 변경하시겠습니까?")) {
+      return;
+    }
+    const response = {
+      code: 200,
+    };
+    if (response.code === 200) {
+      alert("비밀번호가 변경되었습니다.");
+      console.log(state.confirmPassword);
+    } else {
+      alert("비밀번호 변경에 실패하였습니다.");
+      console.log(state.confirmPassword);
+    }
+  };
   return (
     <>
       <Body>
@@ -84,6 +99,8 @@ const UpdatePassword = () => {
           ) : (
             <AlertTag></AlertTag>
           )}
+
+          <InputTag>새 비밀번호 확인</InputTag>
           <InputBlock>
             <InputWrapper
               name="confirmPassword"
@@ -106,7 +123,7 @@ const UpdatePassword = () => {
             width="100%"
             borderColor="#80E080"
             color="#80C0A0"
-            // clickEvent={() => submitState()}
+            clickEvent={() => submitState()}
           ></DivButton>
         </SignupBody>
       </Body>
