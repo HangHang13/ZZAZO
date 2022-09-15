@@ -41,6 +41,7 @@ const Button = ({
       color={color}
       bg={bg}
       borderColor={borderColor}
+      borderRadius={borderRadius}
       onClick={clickEvent}
     >
       {message}
