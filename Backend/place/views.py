@@ -1,4 +1,3 @@
-from typing import Type
 from django.shortcuts import get_object_or_404
 
 from rest_framework import status
@@ -12,6 +11,34 @@ from place.models import Place, Review
 
 from django.db.models import Q
 import haversine
+
+@api_view(['POST'])
+def place_recommend(request):
+    longitude = float(request.data['longitude'])
+    latitude  = float(request.data['latitude'])
+    position  = (latitude, longitude)
+    condition = (
+                # 1km 기준
+                Q(latitude__range  = (latitude - 0.01, latitude + 0.01)) &
+                Q(longitude__range = (longitude - 0.015, longitude + 0.015))
+            )
+    place_list = (
+                Place
+                .objects
+                .filter(condition)
+            )
+    near_place_list = [info for info in place_list
+                                if haversine(position, (info.latitude, info.longitude)) <= 2]
+    serializer = PlaceListSerializer(near_place_list, many=True)
+    data = {'Place': serializer.data}
+    code = 200
+    message = "추천 목록"
+    res = {
+        "code": code,
+        "message": message,
+        "data": data
+    }
+    return Response(res)
 
 @api_view(['POST'])
 def place_list(request, place_type):
