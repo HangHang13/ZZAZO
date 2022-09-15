@@ -23,11 +23,11 @@ const InputBlock = styled.div`
 
 const UpdatePassword = () => {
   const [state, setState] = useState({
-    prevPassword: "1q2w3e4r!@",
     newPassword: "",
     confirmPassword: "",
   });
   const [valid, setValid] = useState({
+    passwordNotDuplicate: false,
     passwordNotValid: false,
     passwordNotMatch: false,
   });
@@ -44,25 +44,40 @@ const UpdatePassword = () => {
   const userPwRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,12}$/i;
   const userPwCheck = (e) => {
     onHandleInput(e);
-    if (!userPwCheck.text(state.newPassword)) {
-      setValid({ ...valid, passwordNotMatch: false });
+
+    if (!userPwRegex.test(state.newPassword)) {
+      // setValid({ ...valid, passwordNotMatch: false });
       setValid({ ...valid, passwordNotValid: true });
     } else {
-      setValid({ ...valid, passwordNotMatch: false });
+      // setValid({ ...valid, passwordNotMatch: false });
       setValid({ ...valid, passwordNotValid: false });
     }
   };
   const userPwMatch = (e) => {
     onHandleInput(e);
     if (state.newPassword !== state.confirmPassword) {
-      setValid({ ...valid, passwordNotValid: false });
+      // setValid({ ...valid, passwordNotValid: false });
       setValid({ ...valid, passwordNotMatch: true });
     } else {
-      setValid({ ...valid, passwordNotValid: false });
+      // setValid({ ...valid, passwordNotValid: false });
       setValid({ ...valid, passwordNotMatch: false });
     }
   };
-
+  const submitState = async () => {
+    if (!confirm("비밀번호를 변경하시겠습니까?")) {
+      return;
+    }
+    const response = {
+      code: 200,
+    };
+    if (response.code === 200) {
+      alert("비밀번호가 변경되었습니다.");
+      console.log(state.confirmPassword);
+    } else {
+      alert("비밀번호 변경에 실패하였습니다.");
+      console.log(state.confirmPassword);
+    }
+  };
   return (
     <>
       <Body>
@@ -79,6 +94,13 @@ const UpdatePassword = () => {
               ref={(el) => (passwordRef.current[0] = el)}
             />
           </InputBlock>
+          {valid.passwordNotValid ? (
+            <AlertTag color="red">사용할 수 없는 비밀번호입니다.</AlertTag>
+          ) : (
+            <AlertTag></AlertTag>
+          )}
+
+          <InputTag>새 비밀번호 확인</InputTag>
           <InputBlock>
             <InputWrapper
               name="confirmPassword"
@@ -90,11 +112,7 @@ const UpdatePassword = () => {
               ref={(el) => (passwordRef.current[1] = el)}
             />
           </InputBlock>
-          {valid.passwordNotValid ? (
-            <AlertTag color="red">사용할 수 없는 비밀번호입니다.</AlertTag>
-          ) : (
-            <AlertTag></AlertTag>
-          )}
+
           {valid.passwordNotMatch ? (
             <AlertTag color="red">비밀번호가 일치하지 않습니다.</AlertTag>
           ) : (

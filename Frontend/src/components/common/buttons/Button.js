@@ -32,6 +32,7 @@ const Button = ({
   color,
   bg,
   borderColor,
+  borderRadius,
   clickEvent,
 }) => {
   return (
