@@ -361,18 +361,18 @@ const UpdateProfile = () => {
           />
         </InputBlock>
         <InputBlock>
-          <DivButton
+          <InputCheckButton
             message="되돌리기"
             width="40%"
             clickEvent={() => returnState()}
-          ></DivButton>
-          <DivButton
+          ></InputCheckButton>
+          <InputCheckButton
             message="저장"
             width="40%"
             borderColor="#80E080"
             color="#80C0A0"
             clickEvent={() => submitState()}
-          ></DivButton>
+          ></InputCheckButton>
         </InputBlock>
       </SignupBody>
     </>

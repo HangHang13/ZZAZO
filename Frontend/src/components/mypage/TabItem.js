@@ -6,9 +6,6 @@ const TabCard = styled.div`
   cursor: pointer;
   padding: 16 0;
   display: flex;
-  @media screen and (max-width: 500px) {
-    margin: 2%;
-  }
 `;
 
 const StyledNavLink = styled(NavLink)`

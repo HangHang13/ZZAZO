@@ -3,11 +3,15 @@ import styled from "styled-components";
 import { SignupBody } from "../../components/auth/signup/Signup";
 import DivButton from "../../components/common/buttons/DivButton";
 import { ButtonWrapper, InputWrapper } from "../../components/styled/Wrapper";
+import InputCheckButton from "./../../components/common/buttons/InputCheckButton";
 
 const Body = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
+  @media screen and (max-width: 500px) {
+    margin-left: 25%;
+  }
 `;
 
 const InputTag = styled.div`
@@ -82,6 +86,8 @@ const UpdatePassword = () => {
     <>
       <Body>
         <SignupBody>
+          <InputTag></InputTag>
+          <InputTag></InputTag>
           <InputTag>새 비밀번호</InputTag>
           <InputBlock>
             <InputWrapper
@@ -99,7 +105,8 @@ const UpdatePassword = () => {
           ) : (
             <AlertTag></AlertTag>
           )}
-
+          <InputTag></InputTag>
+          <InputTag></InputTag>
           <InputTag>새 비밀번호 확인</InputTag>
           <InputBlock>
             <InputWrapper
@@ -118,13 +125,15 @@ const UpdatePassword = () => {
           ) : (
             <AlertTag></AlertTag>
           )}
-          <DivButton
+          <InputTag></InputTag>
+          <InputTag></InputTag>
+          <InputCheckButton
             message="저장"
             width="100%"
             borderColor="#80E080"
             color="#80C0A0"
             clickEvent={() => submitState()}
-          ></DivButton>
+          ></InputCheckButton>
         </SignupBody>
       </Body>
     </>
