@@ -16,34 +16,36 @@ import SignupInterests from "./pages/auth/SignupInterests";
 import FindIdMain from "./pages/auth/find/FindIdMain";
 import FindPwMain from "./pages/auth/find/FindPwMain";
 import Plan from "./pages/plan/Plan";
+import FindIdResult from "./pages/auth/find/FindIdResult";
 
 function App() {
 	//useEffect(async () => {}, []);
 
-  return (
-    <Provider store={store}>
-      <div className="App">
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/mypage" element={<MyPage />}>
-              <Route index element={<UpdateProfile />} />
-              <Route path="update/profile" element={<UpdateProfile />} />
-              <Route path="update/password" element={<UpdatePassword />} />
-              <Route path="delete/profile" element={<DeleteProfile />} />
-            </Route>
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/signupinterests" element={<SignupInterests />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/findid" element={<FindIdMain />} />
-            <Route path="/findpw" element={<FindPwMain />} />
-            <Route path="/plan" element={<Plan />} />
-            <Route path="*" element={<NotFound />}></Route>
-          </Routes>
-        </BrowserRouter>
-      </div>
-    </Provider>
-  );
+	return (
+		<Provider store={store}>
+			<div className="App">
+				<BrowserRouter>
+					<Routes>
+						<Route path="/" element={<Home />} />
+						<Route path="/mypage" element={<MyPage />}>
+							<Route index element={<UpdateProfile />} />
+							<Route path="update/profile" element={<UpdateProfile />} />
+							<Route path="update/password" element={<UpdatePassword />} />
+							<Route path="delete/profile" element={<DeleteProfile />} />
+						</Route>
+						<Route path="/signup" element={<Signup />} />
+						<Route path="/signupinterests" element={<SignupInterests />} />
+						<Route path="/login" element={<Login />} />
+						<Route path="/findid" element={<FindIdMain />} />
+						<Route path="/findid/result" element={<FindIdResult />} />
+						<Route path="/findpw" element={<FindPwMain />} />
+						<Route path="/plan" element={<Plan />} />
+						<Route path="*" element={<NotFound />}></Route>
+					</Routes>
+				</BrowserRouter>
+			</div>
+		</Provider>
+	);
 }
 
 export default App;

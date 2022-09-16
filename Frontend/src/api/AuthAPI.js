@@ -14,7 +14,7 @@ const signup = async (data) => {
 const login = async (data) => {
 	const result = await client
 		.post(`/users/login/`, data)
-		.then((response) => response.data)
+		.then((response) => response)
 		.catch((error) => error.response);
 	return result;
 };

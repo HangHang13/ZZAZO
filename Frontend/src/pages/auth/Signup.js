@@ -11,6 +11,7 @@ import { emailConfirm, emailDuplicateCheck, nickNameDuplicateCheck } from "../..
 import axios from "axios";
 import Header from "./../../components/layout/Header";
 import Button from "./../../components/common/buttons/Button";
+import { useSelector } from "react-redux";
 
 const InputBlock = styled.div`
 	display: flex;
