@@ -12,9 +12,10 @@ export const BaseFlexColWrapper = styled(BaseFlexWrapper)`
 
 export const Wrapper = styled(BaseFlexWrapper)`
 	background-color: ${({ color }) => color};
+	align-items: ${({ alignItems }) => alignItems};
 	width: 100vw;
 	min-height: 100vh;
-	align-items: ${({ alignItems }) => alignItems};
+	padding-top: 5rem;
 
 	@media screen and (max-width: 500px) {
 		width: 100vw;

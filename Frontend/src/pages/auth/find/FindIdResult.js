@@ -15,7 +15,7 @@ const FindIdResult = () => {
 	};
 
 	useEffect(() => {
-		console.log(state);
+		window.scrollTo(0, 0);
 		if (state === null) {
 			alert("비정상적인 접근입니다.");
 			navigate("/");

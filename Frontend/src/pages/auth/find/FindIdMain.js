@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { ColWrapper } from "../../../components/styled/Wrapper";
 import { AuthInput, AuthWrapper, FindGuide, FindTitle, LogoImage } from "./../../../components/styled/Auth";
 import styled from "styled-components";
@@ -44,6 +44,10 @@ const FindIdMain = () => {
 
 	const nameRef = useRef();
 	const phoneRef = useRef();
+
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 
 	const onHandleInput = (e) => {
 		setState({ ...state, [e.target.name]: e.target.value });
