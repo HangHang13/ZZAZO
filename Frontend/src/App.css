@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+
 @font-face {
 	font-family: "NEXON Lv2 Gothic";
 	src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff") format("woff");
@@ -7,6 +9,7 @@
 
 * {
 	font-family: "NEXON Lv2 Gothic";
+	/* font-family: "Noto Sans KR", sans-serif; */
 	font-weight: 500;
 	color: black;
 	margin: 0;
