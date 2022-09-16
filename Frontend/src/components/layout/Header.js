@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { IoIosMenu } from "react-icons/io";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Common = styled.div`
   display: flex;
@@ -73,6 +75,7 @@ const Menubar = styled.a`
 
 const Header = () => {
   const [menu, setmenu] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <Common>
@@ -81,7 +84,7 @@ const Header = () => {
       <NavbarItemList menu={menu}>
         <NavItem href="/">약속잡기</NavItem>
         <NavItem href="/">공유일정확인</NavItem>
-        <NavItem href="/">마이페이지</NavItem>
+        <NavItem onClick={() => navigate("/mypage")}>마이페이지</NavItem>
         <NavItem href="/">누구님</NavItem>
         <NavItem href="/">로그아웃</NavItem>
       </NavbarItemList>
