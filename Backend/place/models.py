@@ -3,6 +3,7 @@ from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
+
 class Place(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
@@ -11,6 +12,9 @@ class Place(models.Model):
     place_type = models.CharField(max_length=100)
     regist = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        app_label = 'place'
 
 class Review(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviews')
@@ -25,3 +29,6 @@ class Review(models.Model):
     )
     regist = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        app_label = 'place'

@@ -9,7 +9,7 @@ import DivButton from "./../../components/common/buttons/DivButton";
 import Modal from "../../components/modals/Modal";
 import ProfileImageListContent from "../../components/modals/contents/ProfileImageListContent";
 import ProfileTitle from "./../../components/mypage/ProfileTitle";
-import { nickNameDuplicateCheck } from "../../api/AuthAPI";
+import { login, nickNameDuplicateCheck } from "../../api/AuthAPI";
 import { getUser } from "../../api/mypage/MyPage";
 
 const InputTag = styled.div`
@@ -77,13 +77,23 @@ const DefaultProfileButton = styled.button`
   color: #80c0a0;
 `;
 const UpdateProfile = () => {
-  const token =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY2MzMzMDk2NCwiaWF0IjoxNjYzMjQ0NTY0LCJqdGkiOiIxYWQxOTZjZTJmMTc0ZmVkYTE0MDViMjBiYjBkYTViNyIsInVzZXJfaWQiOjF9.wDzpt9zCAyBQCTMWf8bR9kRw_vZ8TJMZQmTrda725hY";
-  const GetUser = async () => {
-    const user = await getUser(token);
-    console.log(user);
+  const user = {
+    userEmail: "test@gmail.com",
+    password: "test1234!",
   };
-  GetUser();
+  // const ACCtoken = "";
+  // const LoginUser = async () => {
+  //   const response = await login(user);
+  //   console.log(response.token.access);
+  //   ACCtoken = response.token.access;
+  //   console.log(ACCtoken);
+  // };
+
+  // const GetUser = async () => {
+  //   const user = await getUser(ACCtoken);
+  //   console.log(user);
+  // };
+
   const [profile, setProfile] = useState({
     userEmail: "aaa@naver.com",
     userPassword: "1q2w3e4r!@",
@@ -269,20 +279,6 @@ const UpdateProfile = () => {
         userEmail={profile.userEmail}
       />
       <SignupBody>
-        {/* <InputBlock>
-          <ProfileImageLine>
-            <LineTitle>프로필 이미지</LineTitle>
-            <ProfileImage alt="profile" src={profileImgState.prifileUrl} />
-            <ProfileUploadButton>업로드</ProfileUploadButton>
-          </ProfileImageLine>
-        </InputBlock>
-        <InputBlock>
-          <UserEmailLine>
-            <h2>{profile.userName}</h2>
-            {profile.userEmail}
-            <DefaultProfileButton>기본 이미지로 변경</DefaultProfileButton>
-          </UserEmailLine>
-        </InputBlock> */}
         <InputTag>이름</InputTag>
         <InputBlock>
           <InputWrapper

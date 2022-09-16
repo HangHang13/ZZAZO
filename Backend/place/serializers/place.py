@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from ..models import Place
+from ..models import Place, Review
+from . import review
 
 
 class PlaceListSerializer(serializers.ModelSerializer):
@@ -22,4 +23,4 @@ class PlaceDetailSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Place
-        fields = ('id', 'placeName', 'placeAddress')
+        fields = ('id', 'placeName', 'placeAddress', 'score')
