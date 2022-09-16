@@ -14,7 +14,8 @@ from accounts.views import (
     UserRegistrationView, 
     UserPasswordResetView,
     APILogoutView,
-    create_category)
+    create_category,
+    UserChangeView)
 app_name = 'accounts'
 urlpatterns = [
 
@@ -37,6 +38,10 @@ urlpatterns = [
 
     path('me/', UserProfileView.as_view(), name='profile'),
     path('category/', create_category.as_view(), name='category'),
+    path('', UserChangeView.as_view(), name='userchange'),
+
+
+
     path('changepassword/', UserChangePasswordView.as_view(), name='changepassword'),
     path('send-reset-password-email/', SendPasswordResetEmailView.as_view(), name='send-reset-password-email'),
     path('reset-password/<uid>/<token>/', UserPasswordResetView.as_view(), name='reset-password'),

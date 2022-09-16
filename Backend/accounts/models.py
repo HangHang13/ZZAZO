@@ -66,7 +66,8 @@ class Category(models.Model):
     user = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='category')
     categoryName = models.CharField(max_length=20,null=True,blank=True)
     categoryNumber = models.CharField(max_length=20,null=True,blank=True)
-   
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     userEmail = models.EmailField(null=False, unique=True)
     userName = models.CharField(max_length=25)
@@ -78,7 +79,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     userBirth = models.DateTimeField()
     userPhone = models.CharField(max_length=12)
-    userGender = models.CharField(max_length=2, choices=GENDER_CHOICES)
+    userGender = models.CharField(max_length=2, choices=GENDER_CHOICES, default='M', null=True)
     userUpdate = models.DateTimeField(auto_now=True)
     userRegist = models.DateTimeField(auto_now_add=True)
 
