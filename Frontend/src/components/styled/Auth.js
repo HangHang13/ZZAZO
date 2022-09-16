@@ -80,3 +80,24 @@ export const FindGuide = styled.p`
 		width: 80%;
 	}
 `;
+
+// * 생년월일 셀렉트박스 시작 *
+export const InputBlock = styled.div`
+	display: flex;
+	flex-direction: row;
+	width: 80%;
+	justify-content: space-between;
+	margin-top: 0.5rem;
+	margin-bottom: 2rem;
+`;
+
+export const BirthSelectBox = styled.select`
+	width: 30%;
+	height: 52px;
+	background-color: white;
+	border-radius: 8px;
+	border: 1px solid #d0d0d0;
+	text-align: center;
+	font-size: 0.9rem;
+`;
+// * 생년월일 셀렉트박스 끝 *

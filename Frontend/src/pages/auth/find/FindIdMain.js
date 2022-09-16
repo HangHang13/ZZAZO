@@ -1,31 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { ColWrapper } from "../../../components/styled/Wrapper";
-import { AuthInput, AuthWrapper, FindGuide, FindTitle, LogoImage } from "./../../../components/styled/Auth";
+import { AuthInput, AuthWrapper, BirthSelectBox, FindGuide, FindTitle, InputBlock, LogoImage } from "./../../../components/styled/Auth";
 import styled from "styled-components";
 import Header from "../../../components/layout/Header";
 import { Wrapper } from "./../../../components/styled/Wrapper";
 import AuthButton from "../../../components/common/buttons/AuthButton";
 import { useNavigate } from "react-router-dom";
 import { findId } from "../../../api/AuthAPI";
-
-const InputBlock = styled.div`
-	display: flex;
-	flex-direction: row;
-	width: 80%;
-	justify-content: space-between;
-	margin-top: 0.5rem;
-	margin-bottom: 2rem;
-`;
-
-const BirthSelectBox = styled.select`
-	width: 30%;
-	height: 52px;
-	background-color: white;
-	border-radius: 8px;
-	border: 1px solid #d0d0d0;
-	text-align: center;
-	font-size: 0.9rem;
-`;
 
 const FindIdMain = () => {
 	const [state, setState] = useState({
@@ -49,8 +30,21 @@ const FindIdMain = () => {
 		window.scrollTo(0, 0);
 	}, []);
 
+	useEffect(() => {
+		setState({
+			...state,
+			userBirth: birthDate.year + "-" + birthDate.month + "-" + birthDate.day,
+		});
+	}, [birthDate]);
+
 	const onHandleInput = (e) => {
 		setState({ ...state, [e.target.name]: e.target.value });
+	};
+
+	const handleOnKeyPress = (e) => {
+		if (e.key === "Enter") {
+			onSubmit();
+		}
 	};
 
 	const onSubmit = async () => {
@@ -80,12 +74,6 @@ const FindIdMain = () => {
 		} else {
 			alert("오류가 발생했습니다.");
 			return;
-		}
-	};
-
-	const handleOnKeyPress = (e) => {
-		if (e.key === "Enter") {
-			onSubmit();
 		}
 	};
 
