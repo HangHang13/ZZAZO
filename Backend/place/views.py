@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .serializers.place import PlaceDetailSerializer, PlaceListSerializer
-from .serializers.review import ReviewCreateSerializer
+from .serializers.review import ReviewCreateSerializer, ReviewViewSerializer
 
 from place.models import Place, Review
 
@@ -26,8 +26,13 @@ def place_test(request):
 @api_view(['GET'])
 def place_detail(request, place_id):
     place = get_object_or_404(Place, pk = place_id)
-    serializer = PlaceDetailSerializer(place)
-    data = {'Place': serializer.data}
+    placeSerializer = PlaceDetailSerializer(place)
+    review = Review.object.filter(place = place)
+    reviewSerializer = ReviewViewSerializer(review, many=True)
+    data = {
+        'Place': placeSerializer.data, 
+        'Review' : reviewSerializer.data
+        }
     code = 200
     message = "장소 상세보기 로드"
     res = {
