@@ -1,7 +1,10 @@
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.views import APIView
-from accounts.serializers import SendPasswordResetEmailSerializer, UserChangePasswordSerializer, UserLoginSerializer, UserPasswordResetSerializer, UserProfileSerializer, UserRegistrationSerializer,UserCategorySerializer
+from rest_framework.views import APIView 
+from accounts import serializers
+from accounts.serializers import (
+    SendPasswordResetEmailSerializer, UserChangePasswordSerializer, UserLoginSerializer, UserPasswordResetSerializer,
+    UserProfileSerializer, UserRegistrationSerializer,UserCategorySerializer, UpdateUserSerializer)
 from django.contrib.auth import authenticate
 from accounts.renderers import UserRenderer
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -69,7 +72,10 @@ def check_nickName(request, userNickName):
   #   res = {'이미 가입된 사용자입니다.'}
   #   Response (res)
 
-
+#회원탈퇴
+# class UserDelete(APIView):
+#   permission_classes = (IsAuthenticated,)
+  
 # logout
 class APILogoutView(APIView):
     permission_classes = (IsAuthenticated,)
@@ -128,9 +134,10 @@ class UserRegistrationView(APIView):
     else:
       return Response({'code':401,  'message':'회원가입에 실패하였습니다.', }, status=status.HTTP_401_UNAUTHORIZED)
 
+
 class UserLoginView(APIView):
   renderer_classes = [UserRenderer]
- 
+  
   def post(self, request, format=None):
     serializer = UserLoginSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
@@ -138,8 +145,8 @@ class UserLoginView(APIView):
     password = serializer.data.get('password')
     print(username, password)
 
-    user = User.objects.get(userEmail=username)
-    print(user.check_password(f'{password}'))
+    # user = User.objects.get(userEmail=username)
+    # print(user.check_password(f'{password}'))
    
    
     user = authenticate(username = username, password = f'{password}')
@@ -158,20 +165,44 @@ class UserProfileView(APIView):
     serializer = UserProfileSerializer(request.user)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+
+
+class UserChangeView(APIView):
+  renderer_classes = [UserRenderer]
+  permission_classes = [IsAuthenticated]
+
+  def post(self, request, format=None):
+    # serializer = UpdateUserSerializer
+    serializer = UpdateUserSerializer(data=request.data, context={'user':request.user})
+    print(serializer)
+    serializer.is_valid(raise_exception=True)
+    print(serializer )
+    return Response({ 'code':200,  'message':'회원가입 수정에 성공하였습니다.'}, status=status.HTTP_200_OK)
+
+    if user:
+      return Response({ 'code':200,  'message':'회원가입 수정에 성공하였습니다.', 'userEmail' : user.userEmail}, status=status.HTTP_201_CREATED)
+
+
 class UserChangePasswordView(APIView):
   renderer_classes = [UserRenderer]
   permission_classes = [IsAuthenticated]
   def post(self, request, format=None):
+    
     serializer = UserChangePasswordSerializer(data=request.data, context={'user':request.user})
-    serializer.is_valid(raise_exception=True)
-    return Response({'msg':'Password Changed Successfully'}, status=status.HTTP_200_OK)
+    if serializer.is_valid(raise_exception=True):
+      return Response({'code': 200, "message": "비밀번호 변경"}, status=status.HTTP_200_OK)
+    else:
+      return Response({'code': 401, "message": "비밀번호 변경 실패"}, status=status.HTTP_401_UNAUTHORIZED)
 
 class SendPasswordResetEmailView(APIView):
   renderer_classes = [UserRenderer]
   def post(self, request, format=None):
     serializer = SendPasswordResetEmailSerializer(data=request.data)
-    serializer.is_valid(raise_exception=True)
-    return Response({'msg':'Password Reset link send. Please check your Email'}, status=status.HTTP_200_OK)
+    if serializer.is_valid(raise_exception=True):
+      return Response({'code': 200, "message": "비밀번호 변경"}, status=status.HTTP_200_OK)
+    else:
+      return Response({'code': 401, "message": "비밀번호 변경 실패"}, status=status.HTTP_401_UNAUTHORIZED)
+    
 
 class UserPasswordResetView(APIView):
   renderer_classes = [UserRenderer]

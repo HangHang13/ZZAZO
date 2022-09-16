@@ -1,4 +1,5 @@
 
+from unittest.util import _MAX_LENGTH
 from rest_framework import serializers
 from accounts.models import Category, User
 from django.utils.encoding import smart_str, force_bytes, DjangoUnicodeDecodeError
@@ -39,6 +40,19 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
   def create(self, validate_data):
     
     return User.objects.create_user(**validate_data)
+  
+  def update(self, instance, validated_data):
+    instance.userName = validated_data.get('userName', instance.userName)
+    # instance.userNickName = validated_data.get('userNickName', instance.userNickName)
+    instance.userBirth = validated_data.get('userBirth', instance.userBirth)
+    instance.userPhone = validated_data.get('userPhone', instance.userPhone)
+    instance.userGender = validated_data.get('userBirth', instance.userGender)
+    instance.profileUrl = validated_data.get('userBirth', instance.profileUrl)
+    instance.save()
+    return instance
+
+
+
 
 class UserLoginSerializer(serializers.ModelSerializer):
   userEmail = serializers.EmailField(max_length=255)
@@ -56,8 +70,76 @@ class UserProfileSerializer(serializers.ModelSerializer):
   categoryName = UserCategorySerializer(read_only=True)
   class Meta:
     model = User
-    fields = ['id', 'userEmail', 'userName','categoryName']
+    fields = ['id', 'userEmail', 'userName','userNickName','profileUrl','userPhone', 'categoryName']
 
+class ChoicesField(serializers.Field):
+    def __init__(self, choices, **kwargs):
+        self._choices = choices
+        super(ChoicesField, self).__init__(**kwargs)
+
+    def to_representation(self, obj):
+        return self._choices[obj]
+
+    def to_internal_value(self, data):
+        return getattr(self._choices, data)
+
+
+class ChoicesSerializerField(serializers.SerializerMethodField):
+    """
+    A read-only field that return the representation of a model field with choices.
+    """
+
+    def to_representation(self, value):
+        # sample: 'get_XXXX_display'
+        method_name = 'get_{field_name}_display'.format(field_name=self.field_name)
+        # retrieve instance method
+        method = getattr(value, method_name)
+        # finally use instance method to return result of get_XXXX_display()
+        return method()
+        
+class UpdateUserSerializer(serializers.Serializer):
+    userName = serializers.CharField(max_length=25, source="user.userName")
+    profileUrl = serializers.CharField(max_length=255 ,source="user.profileUrl" )
+    userBirth = serializers.DateTimeField(source="user.userBirth", )
+    userPhone = serializers.CharField(max_length=12,source="user.userPhone", )
+    # GENDER_CHOICES = (
+    #     (u'M', u'Male'),
+    #     (u'F', u'Female'),
+    # )
+    userGender = serializers.CharField(max_length=2,source="user.userGender", allow_blank=True )
+    
+    class Meta:
+        model = User
+        fields=['userName', 'userBirth','userPhone','userGender','profileUrl']
+     
+
+   
+
+    
+    # def validate(self, instance, validated_data):
+    #     instance.userName = validated_data['userName']
+    #     instance.profileUrl = validated_data['profileUrl']
+    #     instance.userBirth = validated_data['userBirth']
+    #     instance.userPhone = validated_data['userPhone']
+    #     instance.userGender = validated_data['userGender']
+    #     user = self.context.get('user')
+    #     print('유저',user)
+    #     user.update(instance.userName)
+    #     user.save()
+    #     instance.save()
+
+    #     return instance
+    def validate(self, attrs):
+      
+      user = self.context.get('user')
+      print('유저', type(user))
+      user.userName = attrs.get('userName')
+      user.profileUrl = attrs.get('userName')
+      user.userBirth = attrs.get('userBirth')
+      user.Birth = attrs.get('Birth')
+      user.userGender = attrs.get('userGender')
+      user.save()
+      return attrs
 class UserChangePasswordSerializer(serializers.Serializer):
   password = serializers.CharField(max_length=255, style={'input_type':'password'}, write_only=True)
   password2 = serializers.CharField(max_length=255, style={'input_type':'password'}, write_only=True)
@@ -69,7 +151,7 @@ class UserChangePasswordSerializer(serializers.Serializer):
     password2 = attrs.get('password2')
     user = self.context.get('user')
     if password != password2:
-      raise serializers.ValidationError("Password and Confirm Password doesn't match")
+      raise serializers.ValidationError({'code': 401, "message": "비밀번호 변경 실패"})
     user.set_password(password)
     user.save()
     return attrs
