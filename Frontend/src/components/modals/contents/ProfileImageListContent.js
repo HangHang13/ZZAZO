@@ -32,7 +32,7 @@ const ProfileImageGridWrapper = styled.div`
   grid-gap: 25px;
   grid-template-columns: repeat(5, 1fr);
 `;
-const ProfileImageListContent = ({ onClcik, profileImageState, close }) => {
+const ProfileImageListContent = ({ onClick, profileImageState, close }) => {
   return (
     <>
       <ModalCloseButton close={close} />
@@ -43,7 +43,7 @@ const ProfileImageListContent = ({ onClcik, profileImageState, close }) => {
               className={
                 parseInt(profileImageState) === parseInt(item) ? "active" : ""
               }
-              onClick={() => onClcik(item)}
+              onClick={() => onClick(item)}
               src={`/assets/profileImages/profile${item}.png`}
             />
           </ProfileImageWrapper>
