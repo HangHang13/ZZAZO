@@ -4,6 +4,7 @@ import { ColWrapper, Wrapper } from "./../../components/styled/Wrapper";
 import { useNavigate } from "react-router-dom";
 import AuthButton from "./../../components/common/buttons/AuthButton";
 import { login } from "../../api/AuthAPI";
+import { getUser } from "../../api/MyPageAPI";
 import Header from "./../../components/layout/Header";
 import { AuthInput, AuthWrapper, LogoImage, Option, OptionBorder, Options } from "./../../components/styled/Auth";
 import { useDispatch, useSelector } from "react-redux";
@@ -58,10 +59,6 @@ const Login = () => {
 
 		const response = await login(state);
 
-		// const response = {
-		// 	code: 200,
-		// };
-
 		if (response.status === 200) {
 			alert("로그인에 성공했습니다!");
 		} else if (response.status === 400) {
@@ -72,15 +69,17 @@ const Login = () => {
 			return;
 		}
 
+		// 1. 토큰 두 가지 sessionStorage에 저장
 		const accessToken = response.data.token.access;
 		const refreshToken = response.data.token.refresh;
+		sessionStorage.setItem("ACCESS_TOKEN", accessToken);
+		sessionStorage.setItem("REFRESH_TOKEN", refreshToken);
 
-		// 토큰 두 가지 sessionStorage에 저장
+		// 2. 회원 본인 정보 조회 api 요청
+		const userData = await getUser();
 
-		// 1. 회원 본인 정보 조회 api 요청 (access token 실어 보내야 하나?)
-		// 2. 받아온 데이터를 밑에 dispatch -> data에 저장
-
-		dispatch(storeLogin({ isLogin: true, data: { userEmail: state.userEmail } }));
+		// 3. 받아온 데이터를 밑에 dispatch -> data에 저장
+		dispatch(storeLogin({ isLogin: true, data: userData }));
 	};
 
 	return (
