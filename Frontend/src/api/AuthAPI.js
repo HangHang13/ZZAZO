@@ -50,7 +50,7 @@ const emailConfirm = async (data) => {
 // 아이디 찾기
 const findId = async (data) => {
 	const result = await client
-		.get(`/users/findEmail/`)
+		.post(`/users/findEmail/`, data)
 		.then((response) => response)
 		.catch((error) => error.response);
 	return result;
@@ -59,7 +59,7 @@ const findId = async (data) => {
 // 비밀번호 찾기 (재설정 이메일 발송)
 const findPw = async (data) => {
 	const result = await client
-		.get(`/users/findpw/`)
+		.post(`/users/findpw/`, data)
 		.then((response) => response)
 		.catch((error) => error.response);
 	return result;
