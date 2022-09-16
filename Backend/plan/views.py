@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .models import Card
-from .serializers.plan import CardListSerializer, CardSerializer
+from .serializers.plan import CardSerializer
 
 
 # Create your views here.
@@ -26,23 +26,23 @@ def list(request):
 
 @api_view(['POST'])
 def plan_create(request):
-        serializer = CardSerializer(data=request.data)
-        print(request.data)
-        if serializer.is_valid(raise_exception=True):
-            # serializer.save(user=request.user)
-            code = 200
-            message = "약속 생성"
-            res = {
-                "code": code,
-                "message": message,
-            }
-            return Response(res, status=status.HTTP_201_CREATED)
+    serializer = CardSerializer(data=request.data)
+    print(request.data)
+    if serializer.is_valid(raise_exception=True):
+        # serializer.save(user=request.user)
+        code = 200
+        message = "약속 생성"
+        res = {
+            "code": code,
+            "message": message,
+        }
+        return Response(res, status=status.HTTP_201_CREATED)
         
-        else:
-            code = 401
-            message = "약속 생성 실패"
-            res = {
-                "code": code,
-                "message": message,
+    else:
+        code = 401
+        message = "약속 생성 실패"
+        res = {
+            "code": code,
+            "message": message,
             }
-            return Response(res)
+        return Response(res)

@@ -4,11 +4,25 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .serializers.place import PlaceDetailSerializer
+from .serializers.place import PlaceDetailSerializer, PlaceListSerializer
 from .serializers.review import ReviewCreateSerializer
 
 from place.models import Place, Review
 
+@api_view(['GET'])
+def place_test(request):
+    place = Place.objects.all()
+    serializer = PlaceListSerializer(place)
+    data = {'Place' : serializer.data}
+    code = 200
+    message = "장소 로드"
+    res = {
+        "code": code,
+        "message": message,
+        "data": data
+    }
+    return Response(res)
+    
 @api_view(['GET'])
 def place_detail(request, place_id):
     place = get_object_or_404(Place, pk = place_id)

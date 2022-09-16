@@ -1,13 +1,13 @@
 from rest_framework import serializers
 from ..models import Place
 
-'''
-class CardListSerializer(serializers.ModelSerializer):
+
+class PlaceListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Place
-        fields = ('id','title', 'date', 'appointed_time', 'place')
-'''
+        fields = ('id','name', 'type', 'address')
+
 
 class PlaceDetailSerializer(serializers.ModelSerializer):
     

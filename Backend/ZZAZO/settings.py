@@ -195,16 +195,17 @@ TEMPLATES = [
 WSGI_APPLICATION = 'ZZAZO.wsgi.application'
 
 
-# Database
+# 
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+DATABASES_ROUTERS = ['ZZAZO.placeRouter.placeRouter', 'ZZAZO.planRouter.planRouter']
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    },
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # },
 
-    'place': {
+    'default': {
         'ENGINE': 'djongo',
         'ENFORCE_SCHEMA': False,
         'LOGGING': {
