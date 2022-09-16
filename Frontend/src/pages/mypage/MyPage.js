@@ -18,6 +18,7 @@ const EditWrapper = styled.div`
   @media screen and (max-width: 500px) {
     margin: 0;
     flex-direction: column;
+    border: none;
   }
 `;
 
@@ -40,6 +41,7 @@ const EditorWrapper = styled.div`
   max-height: 860px;
   border-left: 1px solid #80c0a0;
   @media screen and (max-width: 500px) {
+    border-left: none;
     width: 70%;
   }
   /* background-color: green; */
