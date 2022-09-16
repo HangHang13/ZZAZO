@@ -15,6 +15,12 @@ const AuthBtn = styled.button`
   font-size: 1rem;
   font-weight: bold;
 
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+
   transition: all 0.2s ease-in;
   &:hover {
     background: #c0f0b0;

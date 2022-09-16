@@ -4,11 +4,17 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
     TokenVerifyView
 )
-# from .views import UserCreate, RegisterView
 from django.urls import path
-from accounts.views import SendPasswordResetEmailView, UserChangePasswordView, UserLoginView, UserProfileView, UserRegistrationView, UserPasswordResetView
-
-
+from . import views
+from accounts.views import (
+    SendPasswordResetEmailView, 
+    UserChangePasswordView, 
+    UserLoginView, 
+    UserProfileView, 
+    UserRegistrationView, 
+    UserPasswordResetView,
+    APILogoutView,
+    create_category)
 app_name = 'accounts'
 urlpatterns = [
 
@@ -16,13 +22,21 @@ urlpatterns = [
     path('token', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
-    # path("registration/", UserCreate.as_view()),
-    # path('register/', RegisterView.as_view(), name="sign_up"),
+
     #로그인/회원가입
 
-    path('register/', UserRegistrationView.as_view(), name='register'),
+    path('signup/', UserRegistrationView.as_view(), name='register'),
     path('login/', UserLoginView.as_view(), name='login'),
-    path('profile/', UserProfileView.as_view(), name='profile'),
+    path('logout/', APILogoutView.as_view(), name='logout'),
+
+    #유효성검사
+    path('checkemail/<str:userEmail>/', views.check_userEmail, name='check_email'),
+    path('checkNickName/<str:userNickName>/', views.check_nickName, name='check_nickname'),
+
+
+
+    path('me/', UserProfileView.as_view(), name='profile'),
+    path('category/', create_category.as_view(), name='category'),
     path('changepassword/', UserChangePasswordView.as_view(), name='changepassword'),
     path('send-reset-password-email/', SendPasswordResetEmailView.as_view(), name='send-reset-password-email'),
     path('reset-password/<uid>/<token>/', UserPasswordResetView.as_view(), name='reset-password'),

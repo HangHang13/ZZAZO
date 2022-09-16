@@ -11,7 +11,7 @@ import {
 } from "../../components/auth/signup/Signup";
 import { MobileSizeWrapper, Wrapper } from "./../../components/styled/Wrapper";
 import DivButton from "./../../components/common/buttons/DivButton";
-import { client } from "./../../utils/client";
+import { signup } from "../../api/AuthAPI";
 
 // 임시 interests 더미데이터
 const intList = [
@@ -85,47 +85,28 @@ const SignupInterests = () => {
     }
   };
 
-  function concatCategories() {
-    return new Promise(function (resolve, reject) {
-      let categoryStr = "";
-      form.userCategory.map((item) => {
-        categoryStr.concat(item).concat(",");
-      });
-      resolve(categoryStr);
-    }).then((str) => {
-      setForm({ ...form, userCategory: str });
-    });
-  }
-
   const submitForm = async () => {
     if (!confirm("가입을 완료하시겠습니까?")) {
       return;
     }
 
-    // category 전부 이어붙이기!
-    await concatCategories();
-    console.log("aaa => " + form.userCategory);
-
-    // const response = client.post(`/auth/signup`, {
-    // 	userEmail: form.userEmail,
-    // 	userName: form.userName,
-    // 	userPassword: form.userPassword,
-    // 	userNickname: form.userNickname,
-    // 	userName: form.userName,
-    // 	userPhone: form.userPhone,
-    // 	userBirth: form.userBirth,
-    // 	userGender: parseInt(form.userGender),
-    // 	userCategory: form.userCategory,
-    // });
-
-    const response = {
-      code: 200,
+    const newForm = {
+      userEmail: form.userEmail,
+      userName: form.userName,
+      password: form.password,
+      password2: form.password2,
+      userNickName: form.userNickName,
+      userPhone: form.userPhone,
+      userBirth: form.userBirth,
+      userGender: form.userGender,
+      userCategory: form.userCategory,
     };
 
-    if (response.code === 200) {
+    const response = await signup(newForm);
+
+    if (response.code === 200 || response.code === 201) {
       alert("회원가입이 완료되었습니다.");
       navigate("/login");
-      console.log(form.userCategory);
     } else {
       alert("회원가입에 실패했습니다.");
     }

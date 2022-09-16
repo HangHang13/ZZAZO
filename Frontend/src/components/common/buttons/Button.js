@@ -14,6 +14,18 @@ const Btn = styled.button`
   align-items: center;
   font-size: 1rem;
   font-weight: bold;
+
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+
+  transition: all 0.2s ease-in;
+  // &:active {
+  //   background: rgba(0, 0, 0, 0.5);
+  //   border: 1px solid #383838;
+  // }
 `;
 
 Btn.defaultProps = {
@@ -32,6 +44,7 @@ const Button = ({
   color,
   bg,
   borderColor,
+  borderRadius,
   clickEvent,
 }) => {
   return (

@@ -7,6 +7,6 @@ export const client = axios.create({
 });
 
 // client.interceptors.request.use(function (config) {
-// 	console.log(config);
-// 	console.log("interceptor");
+//   config.headers["Access-Control-Allow-Origin"] = "http://localhost:3000";
+//   return config;
 // });

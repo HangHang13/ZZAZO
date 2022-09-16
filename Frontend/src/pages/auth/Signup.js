@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { client } from "./../../utils/client";
 import { Wrapper, MobileSizeWrapper, InputWrapper, ButtonWrapper } from "./../../components/styled/Wrapper";
 import { BaseForm } from "../../components/common/forms/Form";
 import InputCheckButton from "./../../components/common/buttons/InputCheckButton";
@@ -8,6 +7,10 @@ import DivButton from "./../../components/common/buttons/DivButton";
 import { useNavigate } from "react-router-dom";
 import NumberCircle from "./../../components/auth/NumberCircle";
 import { ProgressBlock, ProgressDescription, SignupBody, SignupHeader } from "../../components/auth/signup/Signup";
+import { emailConfirm, emailDuplicateCheck, nickNameDuplicateCheck } from "../../api/AuthAPI";
+import axios from "axios";
+import Header from "./../../components/layout/Header";
+import Button from "./../../components/common/buttons/Button";
 
 const InputBlock = styled.div`
 	display: flex;
@@ -41,17 +44,17 @@ const Signup = () => {
 	const [state, setState] = useState({
 		userEmail: "",
 		userEmailCode: "",
-		userPassword: "",
-		userPasswordRe: "",
+		password: "",
+		password2: "",
 		userName: "",
 		userNickName: "",
 		userPhone: "",
 		userBirth: "",
-		userGender: 0,
+		userGender: "M",
 		userCategory: [],
 		userEmailChecked: false,
 		userEmailConfirmed: false,
-		userPasswordChecked: false,
+		passwordChecked: false,
 		userNickNameChecked: false,
 	});
 
@@ -89,13 +92,7 @@ const Signup = () => {
 			return;
 		}
 
-		// const response = await client.get(
-		//   `/users/checkemail?userEmail=${state.userEmail}`
-		// );
-
-		const response = {
-			code: 200,
-		};
+		const response = await emailDuplicateCheck(state.userEmail);
 
 		if (response.code === 200) {
 			const finish = confirm("사용 가능한 이메일입니다. 이 이메일로 가입을 진행하시겠습니까?");
@@ -132,9 +129,7 @@ const Signup = () => {
 			return;
 		}
 
-		// const response = await client.get(
-		//   `/users/??????`
-		// );
+		// const response = emailConfirm(state.userEmailCode);
 
 		const response = {
 			code: 200,
@@ -155,7 +150,7 @@ const Signup = () => {
 	const userPwCheck = (e) => {
 		onHandleInput(e);
 
-		if (!userPwRegex.test(state.userPassword)) {
+		if (!userPwRegex.test(state.password)) {
 			setValid({ ...valid, passwordNotMatch: false });
 			setValid({ ...valid, passwordNotValid: true });
 		} else {
@@ -168,7 +163,7 @@ const Signup = () => {
 	const userPwMatch = (e) => {
 		onHandleInput(e);
 
-		if (state.userPassword !== state.userPasswordRe) {
+		if (state.password !== state.password2) {
 			setValid({ ...valid, passwordNotValid: false });
 			setValid({ ...valid, passwordNotMatch: true });
 		} else {
@@ -176,13 +171,13 @@ const Signup = () => {
 			setValid({ ...valid, passwordNotMatch: false });
 		}
 
-		// if (state.userPassword.length > 8 && !valid.passwordNotMatch && !valid.passwordNotValid) {
-		// 	setState({ ...state, userPasswordChecked: true });
+		// if (state.password.length > 8 && !valid.passwordNotMatch && !valid.passwordNotValid) {
+		// 	setState({ ...state, passwordChecked: true });
 		// }
 	};
 
 	// 닉네임 중복 체크
-	const onHandleNickNameDuplicateCheck = (e) => {
+	const onHandleNickNameDuplicateCheck = async (e) => {
 		e.preventDefault();
 		if (state.userNickNameChecked) {
 			alert("중복 확인이 완료된 닉네임입니다.");
@@ -193,13 +188,7 @@ const Signup = () => {
 			return;
 		}
 
-		// const response = await client.get(
-		//   `/users/checkemail?userEmail=${state.userEmail}`
-		// );
-
-		const response = {
-			code: 200,
-		};
+		const response = await nickNameDuplicateCheck(state.userNickName);
 
 		if (response.code === 200) {
 			const finish = confirm("사용 가능한 닉네임입니다. 이 닉네임으로 가입을 진행하시겠습니까?");
@@ -228,7 +217,7 @@ const Signup = () => {
 			return;
 		}
 		// 비밀번호 : 길이 8이상, notmatch랑 notvalid 모두 아닌가 확인
-		if (state.userPassword.length < 8 || state.userPasswordRe.length < 8 || valid.passwordNotMatch || valid.passwordNotValid) {
+		if (state.password.length < 8 || state.password2.length < 8 || valid.passwordNotMatch || valid.passwordNotValid) {
 			alert("비밀번호를 다시 확인해주세요.");
 			return;
 		}
@@ -265,7 +254,14 @@ const Signup = () => {
 	};
 
 	useEffect(() => {
-		setState({ ...state, userBirth: birthDate.year + "-" + birthDate.month + "-" + birthDate.day });
+		window.scrollTo(0, 0);
+	}, []);
+
+	useEffect(() => {
+		setState({
+			...state,
+			userBirth: birthDate.year + "-" + birthDate.month + "-" + birthDate.day,
+		});
 	}, [birthDate]);
 
 	/* 날짜 구하는 부분 시작 */
@@ -298,177 +294,180 @@ const Signup = () => {
 	/* 날짜 구하는 부분 끝 */
 
 	return (
-		<Wrapper>
-			<MobileSizeWrapper>
-				<SignupHeader>
-					<ProgressBlock>
-						<NumberCircle color="#C0F0B0" number="1" />
-						<ProgressDescription>회원정보 입력</ProgressDescription>
-					</ProgressBlock>
-					<ProgressBlock>
-						<NumberCircle color="#D0D0D0" number="2" />
-						<ProgressDescription>관심정보 입력</ProgressDescription>
-					</ProgressBlock>
-				</SignupHeader>
-				<SignupBody>
-					<InputTag>아이디 (이메일)</InputTag>
-					<BaseForm onSubmit={onHandleEmailDuplicateCheck}>
+		<>
+			<Header />
+			<Wrapper>
+				<MobileSizeWrapper>
+					<SignupHeader>
+						<ProgressBlock>
+							<NumberCircle color="#C0F0B0" number="1" />
+							<ProgressDescription>회원정보 입력</ProgressDescription>
+						</ProgressBlock>
+						<ProgressBlock>
+							<NumberCircle color="#D0D0D0" number="2" />
+							<ProgressDescription>관심정보 입력</ProgressDescription>
+						</ProgressBlock>
+					</SignupHeader>
+					<SignupBody>
+						<InputTag>아이디 (이메일)</InputTag>
+						<BaseForm onSubmit={onHandleEmailDuplicateCheck}>
+							<InputBlock>
+								<InputWrapper
+									name="userEmail"
+									type="email"
+									value={state.userEmail}
+									placeholder="user@example.com"
+									onChange={onHandleInput}
+									ref={(el) => (emailConfirmRef.current[0] = el)}
+									width="270px"
+								/>
+								<InputCheckButton message="중복 확인"></InputCheckButton>
+							</InputBlock>
+						</BaseForm>
+						<BaseForm onSubmit={onHandleEmailConfirm}>
+							<InputBlock>
+								<InputWrapper
+									name="userEmailCode"
+									value={state.userEmailCode}
+									placeholder="이메일 인증 번호"
+									onChange={onHandleInput}
+									disabled
+									bg="#f0f0f0"
+									ref={(el) => (emailConfirmRef.current[1] = el)}
+									width="270px"
+								/>
+								<ButtonWrapper>이메일 인증</ButtonWrapper>
+							</InputBlock>
+						</BaseForm>
+						<InputTag>비밀번호</InputTag>
 						<InputBlock>
 							<InputWrapper
-								name="userEmail"
-								type="email"
-								value={state.userEmail}
-								placeholder="user@example.com"
-								onChange={onHandleInput}
-								ref={(el) => (emailConfirmRef.current[0] = el)}
-								width="270px"
+								name="password"
+								type="password"
+								value={state.password}
+								placeholder="영문+숫자+특수문자 포함 8~12자"
+								onChange={userPwCheck}
+								onKeyUp={userPwCheck}
+								ref={(el) => (passwordRef.current[0] = el)}
 							/>
-							<InputCheckButton message="중복 확인"></InputCheckButton>
 						</InputBlock>
-					</BaseForm>
-					<BaseForm onSubmit={onHandleEmailConfirm}>
 						<InputBlock>
 							<InputWrapper
-								name="userEmailCode"
-								value={state.userEmailCode}
-								placeholder="이메일 인증 번호"
-								onChange={onHandleInput}
-								disabled
-								bg="#f0f0f0"
-								ref={(el) => (emailConfirmRef.current[1] = el)}
-								width="270px"
+								name="password2"
+								type="password"
+								value={state.password2}
+								placeholder="비밀번호 재입력"
+								onChange={userPwMatch}
+								onKeyUp={userPwMatch}
+								ref={(el) => (passwordRef.current[1] = el)}
 							/>
-							<ButtonWrapper>이메일 인증</ButtonWrapper>
 						</InputBlock>
-					</BaseForm>
-					<InputTag>비밀번호</InputTag>
-					<InputBlock>
-						<InputWrapper
-							name="userPassword"
-							type="password"
-							value={state.userPassword}
-							placeholder="영문+숫자+특수문자 포함 8~12자"
-							onChange={userPwCheck}
-							onKeyUp={userPwCheck}
-							ref={(el) => (passwordRef.current[0] = el)}
-						/>
-					</InputBlock>
-					<InputBlock>
-						<InputWrapper
-							name="userPasswordRe"
-							type="password"
-							value={state.userPasswordRe}
-							placeholder="비밀번호 재입력"
-							onChange={userPwMatch}
-							onKeyUp={userPwMatch}
-							ref={(el) => (passwordRef.current[1] = el)}
-						/>
-					</InputBlock>
-					{valid.passwordNotValid ? <AlertTag color="red">사용할 수 없는 비밀번호입니다.</AlertTag> : <AlertTag></AlertTag>}
-					{valid.passwordNotMatch ? <AlertTag color="red">비밀번호가 일치하지 않습니다.</AlertTag> : <AlertTag></AlertTag>}
-					{state.userPasswordChecked ? <AlertTag color="green">사용할 수 있는 비밀번호입니다.</AlertTag> : <AlertTag></AlertTag>}
-					<InputTag>이름</InputTag>
-					<InputBlock>
-						<InputWrapper
-							name="userName"
-							type="text"
-							value={state.userName}
-							placeholder="이름을 입력해주세요."
-							onChange={onHandleInput}
-							width="100%"
-						/>
-					</InputBlock>
-					<InputTag>닉네임</InputTag>
-					<BaseForm onSubmit={onHandleNickNameDuplicateCheck}>
+						{valid.passwordNotValid ? <AlertTag color="red">사용할 수 없는 비밀번호입니다.</AlertTag> : <AlertTag></AlertTag>}
+						{valid.passwordNotMatch ? <AlertTag color="red">비밀번호가 일치하지 않습니다.</AlertTag> : <AlertTag></AlertTag>}
+						{state.passwordChecked ? <AlertTag color="green">사용할 수 있는 비밀번호입니다.</AlertTag> : <AlertTag></AlertTag>}
+						<InputTag>이름</InputTag>
 						<InputBlock>
 							<InputWrapper
-								name="userNickName"
+								name="userName"
 								type="text"
-								value={state.userNickname}
-								placeholder="닉네임을 입력해주세요."
+								value={state.userName}
+								placeholder="이름을 입력해주세요."
 								onChange={onHandleInput}
-								ref={(el) => (emailConfirmRef.current[2] = el)}
-								width="270px"
+								width="100%"
 							/>
-							<ButtonWrapper>중복 확인</ButtonWrapper>
 						</InputBlock>
-					</BaseForm>
-					<InputTag>생년월일</InputTag>
-					<InputBlock>
-						<BirthSelectBox
-							value={birthDate.year}
-							onChange={(e) => {
-								setBirthDate({ ...birthDate, year: e.target.value });
-							}}
-						>
-							{years.map((item) => (
-								<option value={item} key={item}>
-									{item}
-								</option>
-							))}
-						</BirthSelectBox>
-						<BirthSelectBox
-							value={birthDate.month}
-							onChange={(e) => {
-								setBirthDate({ ...birthDate, month: e.target.value });
-							}}
-						>
-							{month.map((item) => (
-								<option value={item} key={item}>
-									{item}
-								</option>
-							))}
-						</BirthSelectBox>
-						<BirthSelectBox
-							value={birthDate.day}
-							onChange={(e) => {
-								setBirthDate({ ...birthDate, day: e.target.value });
-							}}
-						>
-							{days.map((item) => (
-								<option value={item} key={item}>
-									{item}
-								</option>
-							))}
-						</BirthSelectBox>
-					</InputBlock>
-					<InputTag>성별</InputTag>
-					<InputBlock>
-						<DivButton
-							message="남"
-							value="0"
-							width="45%"
-							bg={state.userGender === 0 ? "#c0f0b0" : "#ffffff"}
-							borderColor={state.userGender === 0 ? "#80e080" : "#767676"}
-							clickEvent={() => changeGender(0)}
-						/>
-						<DivButton
-							message="여"
-							value="1"
-							width="45%"
-							bg={state.userGender === 1 ? "#c0f0b0" : "#ffffff"}
-							borderColor={state.userGender === 1 ? "#80e080" : "#767676"}
-							clickEvent={() => changeGender(1)}
-						/>
-					</InputBlock>
-					<InputTag>휴대폰 번호</InputTag>
-					<InputBlock>
-						<InputWrapper
-							name="userPhone"
-							type="text"
-							value={state.userPhone}
-							placeholder="휴대폰 번호를 입력해주세요. (ex. 01012341234)"
-							onChange={onHandleInput}
-							width="100%"
-						/>
-					</InputBlock>
-					<InputTag></InputTag>
-					<DivButton message="다 음" width="100%" borderColor="#80E080" color="#80C0A0" clickEvent={() => submitState()}></DivButton>
-					<InputTag></InputTag>
-					<InputTag></InputTag>
-				</SignupBody>
-			</MobileSizeWrapper>
-		</Wrapper>
+						<InputTag>닉네임</InputTag>
+						<BaseForm onSubmit={onHandleNickNameDuplicateCheck}>
+							<InputBlock>
+								<InputWrapper
+									name="userNickName"
+									type="text"
+									value={state.userNickname}
+									placeholder="닉네임을 입력해주세요."
+									onChange={onHandleInput}
+									ref={(el) => (emailConfirmRef.current[2] = el)}
+									width="270px"
+								/>
+								<ButtonWrapper>중복 확인</ButtonWrapper>
+							</InputBlock>
+						</BaseForm>
+						<InputTag>생년월일</InputTag>
+						<InputBlock>
+							<BirthSelectBox
+								value={birthDate.year}
+								onChange={(e) => {
+									setBirthDate({ ...birthDate, year: e.target.value });
+								}}
+							>
+								{years.map((item) => (
+									<option value={item} key={item}>
+										{item}
+									</option>
+								))}
+							</BirthSelectBox>
+							<BirthSelectBox
+								value={birthDate.month}
+								onChange={(e) => {
+									setBirthDate({ ...birthDate, month: e.target.value });
+								}}
+							>
+								{month.map((item) => (
+									<option value={item} key={item}>
+										{item}
+									</option>
+								))}
+							</BirthSelectBox>
+							<BirthSelectBox
+								value={birthDate.day}
+								onChange={(e) => {
+									setBirthDate({ ...birthDate, day: e.target.value });
+								}}
+							>
+								{days.map((item) => (
+									<option value={item} key={item}>
+										{item}
+									</option>
+								))}
+							</BirthSelectBox>
+						</InputBlock>
+						<InputTag>성별</InputTag>
+						<InputBlock>
+							<Button
+								message="남"
+								value="M"
+								width="45%"
+								bg={state.userGender === "M" ? "#c0f0b0" : "#ffffff"}
+								borderColor={state.userGender === "M" ? "#80e080" : "#767676"}
+								clickEvent={() => changeGender("M")}
+							/>
+							<Button
+								message="여"
+								value="F"
+								width="45%"
+								bg={state.userGender === "F" ? "#c0f0b0" : "#ffffff"}
+								borderColor={state.userGender === "F" ? "#80e080" : "#767676"}
+								clickEvent={() => changeGender("F")}
+							/>
+						</InputBlock>
+						<InputTag>휴대폰 번호</InputTag>
+						<InputBlock>
+							<InputWrapper
+								name="userPhone"
+								type="text"
+								value={state.userPhone}
+								placeholder="휴대폰 번호를 입력해주세요. (ex. 01012341234)"
+								onChange={onHandleInput}
+								width="100%"
+							/>
+						</InputBlock>
+						<InputTag></InputTag>
+						<Button message="다 음" width="100%" borderColor="#80E080" color="#80C0A0" clickEvent={() => submitState()}></Button>
+						<InputTag></InputTag>
+						<InputTag></InputTag>
+					</SignupBody>
+				</MobileSizeWrapper>
+			</Wrapper>
+		</>
 	);
 };
 

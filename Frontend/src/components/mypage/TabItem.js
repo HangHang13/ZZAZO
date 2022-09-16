@@ -5,6 +5,7 @@ const TabCard = styled.div`
   margin: auto;
   cursor: pointer;
   padding: 16 0;
+  display: flex;
 `;
 
 const StyledNavLink = styled(NavLink)`
