@@ -18,7 +18,7 @@ import FindPwMain from "./pages/auth/find/FindPwMain";
 import Plan from "./pages/plan/Plan";
 
 function App() {
-  //useEffect(async () => {}, []);
+	//useEffect(async () => {}, []);
 
   return (
     <Provider store={store}>
