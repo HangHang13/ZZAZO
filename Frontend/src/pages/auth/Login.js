@@ -6,22 +6,27 @@ import AuthButton from "./../../components/common/buttons/AuthButton";
 import { login } from "../../api/AuthAPI";
 import Header from "./../../components/layout/Header";
 import { AuthInput, AuthWrapper, LogoImage, Option, OptionBorder, Options } from "./../../components/styled/Auth";
+import { useDispatch, useSelector } from "react-redux";
+import { storeLogin } from "../../store/reducers/user";
 
 const Login = () => {
+	// States
 	const [state, setState] = useState({
 		userEmail: "",
 		password: "",
 	});
-
 	const [check, setCheck] = useState({
 		autoLogin: false,
 		idSave: false,
 	});
 
+	// Navigate, Ref
 	const navigate = useNavigate();
-
 	const idRef = useRef();
 	const pwRef = useRef();
+
+	// Dispatch
+	const dispatch = useDispatch();
 
 	const onHandleInput = (e) => {
 		setState({ ...state, [e.target.name]: e.target.value });
@@ -53,18 +58,29 @@ const Login = () => {
 
 		const response = await login(state);
 
-		if (response.code === 200) {
+		// const response = {
+		// 	code: 200,
+		// };
+
+		if (response.status === 200) {
 			alert("로그인에 성공했습니다!");
-		} else if (response.code === 404) {
-			alert(response.message);
+		} else if (response.status === 400) {
+			alert("유효한 아이디 형태(이메일)을 입력해주세요.");
 			return;
 		} else {
-			alert("로그인 중 오류가 발생했습니다.");
+			alert("아이디 또는 비밀번호가 틀렸습니다.");
 			return;
 		}
 
-		// 로그인 성공 후 do something....
-		// 1. dispatch로 user 정보 저장
+		const accessToken = response.data.token.access;
+		const refreshToken = response.data.token.refresh;
+
+		// 토큰 두 가지 sessionStorage에 저장
+
+		// 1. 회원 본인 정보 조회 api 요청 (access token 실어 보내야 하나?)
+		// 2. 받아온 데이터를 밑에 dispatch -> data에 저장
+
+		dispatch(storeLogin({ isLogin: true, data: { userEmail: state.userEmail } }));
 	};
 
 	return (
