@@ -1,17 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { Wrapper, MobileSizeWrapper, InputWrapper, ButtonWrapper } from "./../../components/styled/Wrapper";
+import { Wrapper, MobileSizeWrapper, InputWrapper, ButtonWrapper, InputFullWrapper } from "./../../components/styled/Wrapper";
 import { BaseForm } from "../../components/common/forms/Form";
 import InputCheckButton from "./../../components/common/buttons/InputCheckButton";
-import DivButton from "./../../components/common/buttons/DivButton";
 import { useNavigate } from "react-router-dom";
 import NumberCircle from "./../../components/auth/NumberCircle";
 import { ProgressBlock, ProgressDescription, SignupBody, SignupHeader } from "../../components/auth/signup/Signup";
 import { emailConfirm, emailDuplicateCheck, nickNameDuplicateCheck } from "../../api/AuthAPI";
-import axios from "axios";
 import Header from "./../../components/layout/Header";
 import Button from "./../../components/common/buttons/Button";
-import { useSelector } from "react-redux";
 
 const InputBlock = styled.div`
 	display: flex;
@@ -23,6 +20,9 @@ const InputBlock = styled.div`
 
 const InputTag = styled.div`
 	margin-top: 2rem;
+	@media screen and (max-width: 500px) {
+		font-size: 0.9rem;
+	}
 `;
 
 const AlertTag = styled.div`
@@ -171,10 +171,6 @@ const Signup = () => {
 			setValid({ ...valid, passwordNotValid: false });
 			setValid({ ...valid, passwordNotMatch: false });
 		}
-
-		// if (state.password.length > 8 && !valid.passwordNotMatch && !valid.passwordNotValid) {
-		// 	setState({ ...state, passwordChecked: true });
-		// }
 	};
 
 	// 닉네임 중복 체크
@@ -322,7 +318,7 @@ const Signup = () => {
 									ref={(el) => (emailConfirmRef.current[0] = el)}
 									width="270px"
 								/>
-								<InputCheckButton message="중복 확인"></InputCheckButton>
+								<InputCheckButton message="중복 확인" />
 							</InputBlock>
 						</BaseForm>
 						<BaseForm onSubmit={onHandleEmailConfirm}>
@@ -337,12 +333,12 @@ const Signup = () => {
 									ref={(el) => (emailConfirmRef.current[1] = el)}
 									width="270px"
 								/>
-								<ButtonWrapper>이메일 인증</ButtonWrapper>
+								<InputCheckButton message="이메일 인증" />
 							</InputBlock>
 						</BaseForm>
 						<InputTag>비밀번호</InputTag>
 						<InputBlock>
-							<InputWrapper
+							<InputFullWrapper
 								name="password"
 								type="password"
 								value={state.password}
@@ -353,7 +349,7 @@ const Signup = () => {
 							/>
 						</InputBlock>
 						<InputBlock>
-							<InputWrapper
+							<InputFullWrapper
 								name="password2"
 								type="password"
 								value={state.password2}
@@ -368,7 +364,7 @@ const Signup = () => {
 						{state.passwordChecked ? <AlertTag color="green">사용할 수 있는 비밀번호입니다.</AlertTag> : <AlertTag></AlertTag>}
 						<InputTag>이름</InputTag>
 						<InputBlock>
-							<InputWrapper
+							<InputFullWrapper
 								name="userName"
 								type="text"
 								value={state.userName}
@@ -389,7 +385,7 @@ const Signup = () => {
 									ref={(el) => (emailConfirmRef.current[2] = el)}
 									width="270px"
 								/>
-								<ButtonWrapper>중복 확인</ButtonWrapper>
+								<InputCheckButton message="중복 확인" />
 							</InputBlock>
 						</BaseForm>
 						<InputTag>생년월일</InputTag>
@@ -452,7 +448,7 @@ const Signup = () => {
 						</InputBlock>
 						<InputTag>휴대폰 번호</InputTag>
 						<InputBlock>
-							<InputWrapper
+							<InputFullWrapper
 								name="userPhone"
 								type="text"
 								value={state.userPhone}
@@ -463,8 +459,6 @@ const Signup = () => {
 						</InputBlock>
 						<InputTag></InputTag>
 						<Button message="다 음" width="100%" borderColor="#80E080" color="#80C0A0" clickEvent={() => submitState()}></Button>
-						<InputTag></InputTag>
-						<InputTag></InputTag>
 					</SignupBody>
 				</MobileSizeWrapper>
 			</Wrapper>

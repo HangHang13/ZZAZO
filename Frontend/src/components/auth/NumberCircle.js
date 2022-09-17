@@ -13,6 +13,14 @@ const Circle = styled.div`
 	align-items: center;
 	justify-content: center;
 	font-size: 2.2rem;
+
+	@media screen and (max-width: 500px) {
+		width: 4.5rem;
+		height: 4.5rem;
+		margin-left: 1.5rem;
+		margin-right: 1.5rem;
+		font-size: 2rem;
+	}
 `;
 
 const NumberCircle = ({ color, number }) => {

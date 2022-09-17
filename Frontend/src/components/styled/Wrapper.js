@@ -11,6 +11,7 @@ export const BaseFlexColWrapper = styled(BaseFlexWrapper)`
 `;
 
 export const Wrapper = styled(BaseFlexWrapper)`
+	display: flex;
 	background-color: ${({ color }) => color};
 	align-items: ${({ alignItems }) => alignItems};
 	width: 100vw;
@@ -31,6 +32,11 @@ export const MobileSizeWrapper = styled(Wrapper)`
 	display: flex;
 	flex-direction: column;
 	width: 400px;
+	justify-content: center;
+
+	@media screen and (max-width: 500px) {
+		width: 90vw;
+	}
 `;
 
 export const RoundedWrapper = styled(BaseFlexWrapper)`
@@ -55,6 +61,24 @@ export const InputWrapper = styled.input`
 	border: 1px solid #d0d0d0;
 	padding-left: 0.5rem;
 	position: relative;
+
+	@media screen and (max-width: 500px) {
+		width: 67%;
+	}
+`;
+
+export const InputFullWrapper = styled.input`
+	width: ${({ width }) => width};
+	height: ${({ height }) => height};
+	background-color: ${({ bg }) => bg};
+	border-radius: 8px;
+	border: 1px solid #d0d0d0;
+	padding-left: 0.5rem;
+	position: relative;
+
+	@media screen and (max-width: 500px) {
+		width: 100%;
+	}
 `;
 
 export const ButtonWrapper = styled.button`
@@ -78,6 +102,12 @@ export const ButtonWrapper = styled.button`
 `;
 
 InputWrapper.defaultProps = {
+	width: "100%",
+	height: "52px",
+	bg: "white",
+};
+
+InputFullWrapper.defaultProps = {
 	width: "100%",
 	height: "52px",
 	bg: "white",
