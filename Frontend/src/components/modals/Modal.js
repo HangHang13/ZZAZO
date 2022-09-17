@@ -23,7 +23,7 @@ ModalWrapper.defaultProps = {
 const ModalContentWrapper = styled.div`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
-  background-color: #fff;
+  background-color: rgba(192, 240, 176, 0.5);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -86,7 +86,7 @@ export default Modal;
 Modal.defaultProps = {
   width: "620px",
   height: "480px",
-  background: "#eaf1ff",
-  borderColor: "#6f92bf",
+  background: "rgba(192, 240, 176, 0.5)",
+  borderColor: "#80c0a0",
   borderWidth: "5px",
 };
