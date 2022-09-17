@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { IoIosMenu } from "react-icons/io";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { storeLogin, storeLogout } from "../../store/reducers/user";
 
 const Common = styled.div`
+  padding-left: 2rem;
+  padding-right: 4rem;
   display: flex;
   position: fixed;
   justify-content: space-between;
+  align-items: center;
   width: 100vw;
-  height: 12vh;
-  box-shadow: 0 4px 4px -4px gray;
-
+  background-color: white;
+  height: 6rem;
+  z-index: 10;
   @media screen and (max-width: 500px) {
     flex-direction: column;
   }
@@ -35,8 +39,9 @@ const NavItem = styled.a`
     transform: scale(1.2);
   }
   text-shadow: 2px 1px 1px #b7e769;
-  margin-right: 3rem;
-  font-size: 0.8rem;
+  margin-right: 5rem;
+  padding-right: 3rem;
+  font-size: 1.1rem;
 
   text-decoration: none;
   font-weight: bold;
@@ -47,24 +52,22 @@ const NavItem = styled.a`
 `;
 
 const Menubar = styled.a`
-  display: flex;
-  align-items: center;
-  font-size: 2.5rem;
-  position: absolute;
-  margin-top: 1rem;
-  right: 2rem;
-  height: 2rem;
-  @media screen and (min-width: 500px) {
-    display: none;
+  display: none;
+  @media screen and (max-width: 500px) {
+    display: flex;
+    align-items: center;
+    font-size: 2.5rem;
+    position: absolute;
+    margin-top: 1rem;
+    right: 2rem;
+    height: 2rem;
   }
 `;
 
 const ImgWrapper = styled.img`
-  margin-top: 0.6rem;
   display: flex;
   width: ${({ width }) => width};
   height: ${({ height }) => height};
-  margin-bottom: 1.5rem;
   @media screen and (max-width: 900px) {
     width: 6rem;
     height: 6rem;
@@ -90,10 +93,15 @@ const ImgWrapper = styled.img`
 const Header = () => {
   const [menu, setmenu] = useState(false);
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
+  const onHandleLogOut = () => {
+    dispatch(storeLogout());
+    sessionStorage.removeItem("ACCESS_TOKEN");
+    sessionStorage.removeItem("REFRESH_TOKEN");
+    navigate("/");
+  };
   //loginUser정보
   const user = useSelector((state) => state.user.value);
-  console.log(user);
   const currUserisLogin = user.isLogin; //로그인 여부
   const loginUser = user.data ? user.data : "";
   //console.log(loginUser);
@@ -104,7 +112,6 @@ const Header = () => {
   return (
     <Common>
       <ImgWrapper onClick={() => navigate("/")} width="5rem" height="4rem" src="../assets/ZZAZOLOGO.png"></ImgWrapper>
-
       <NavbarItemList menu={menu}>
         {currUserisLogin ? (
           <>
@@ -112,7 +119,7 @@ const Header = () => {
             <NavItem href="/">공유일정확인</NavItem>
             <NavItem onClick={() => navigate("/mypage")}>마이페이지</NavItem>
             <NavItem>{email ? email : ""}님 환영합니다.</NavItem>
-            <NavItem href="/">로그아웃</NavItem>
+            <NavItem onClick={() => onHandleLogOut()}>로그아웃</NavItem>
           </>
         ) : (
           <>

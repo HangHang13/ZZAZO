@@ -132,6 +132,7 @@ const PlanBtn = styled.button`
 
 const HomeWrapper = styled.div`
   content-direction: column;
+  padding-top: 5rem;
   margin: 0 auto;
   width: 70vw;
 `;
@@ -144,43 +145,6 @@ const CardWrapper = styled.div`
   }
 `;
 
-const HomeNav = styled.div`
-  display: flex;
-  justify-content: space-between;
-  height: 12vh;
-`;
-
-const HomeMenu = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const HomeMenuItem = styled.a`
-  margin: 2.5rem;
-  text-decoration: none;
-  font-size: 1rem;
-  font-weight: bold;
-  color: black;
-  text-shadow: 1px 0.5px 0.5px gray;
-  &:hover {
-    transform: scale(1.2);
-  }
-  @media screen and (max-width: 900px) {
-    font-size: 1.1rem;
-  }
-  @media screen and (max-width: 700px) {
-    font-size: 0.8rem;
-    margin: 1rem;
-  }
-  @media screen and (max-width: 500px) {
-    font-size: 0.1rem;
-    margin: 1rem;
-  }
-  @media screen and (max-width: 400px) {
-    font-size: 0.11rem;
-    margin: 0.7rem;
-  }
-`;
 const HomeBanner = styled.div`
   width: 100vw;
   margin-left: -21.5%;
@@ -188,7 +152,7 @@ const HomeBanner = styled.div`
   justify-content: space-evenly;
   background-color: rgba(192, 240, 176, 0.2);
   align-items: center;
-  height: 33rem;
+  height: 35rem;
   @media screen and (max-width: 500px) {
     display: flex;
     flex-direction: column;
