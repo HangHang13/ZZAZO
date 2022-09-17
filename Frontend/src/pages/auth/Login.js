@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Checkbox from "../../components/common/inputs/Checkbox";
 import { ColWrapper, Wrapper } from "./../../components/styled/Wrapper";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,7 @@ import { getUser } from "../../api/MyPageAPI";
 import Header from "./../../components/layout/Header";
 import { AuthInput, AuthWrapper, LogoImage, Option, OptionBorder, Options } from "./../../components/styled/Auth";
 import { useDispatch, useSelector } from "react-redux";
-import { storeLogin } from "../../store/reducers/user";
+import { storeLogin, storeLogout } from "../../store/reducers/user";
 
 const Login = () => {
 	// States
@@ -28,6 +28,32 @@ const Login = () => {
 
 	// Dispatch
 	const dispatch = useDispatch();
+
+	// Selector
+	const userData = useSelector((state) => state.user.value);
+
+	// Effect
+	useEffect(() => {
+		if (userData.isLogin) {
+			if (confirm("이미 로그인중입니다. 강제로 로그아웃 하시겠습니까?")) {
+				onHandleLogOut();
+			}
+			navigate("/");
+			return;
+		}
+
+		if (sessionStorage.getItem("ACCESS_TOKEN")) {
+			sessionStorage.removeItem("ACCESS_TOKEN");
+			sessionStorage.removeItem("REFRESH_TOKEN");
+			return;
+		}
+	}, []);
+
+	const onHandleLogOut = () => {
+		dispatch(storeLogout());
+		sessionStorage.removeItem("ACCESS_TOKEN");
+		sessionStorage.removeItem("REFRESH_TOKEN");
+	};
 
 	const onHandleInput = (e) => {
 		setState({ ...state, [e.target.name]: e.target.value });
@@ -80,6 +106,9 @@ const Login = () => {
 
 		// 3. 받아온 데이터를 밑에 dispatch -> data에 저장
 		dispatch(storeLogin({ isLogin: true, data: userData }));
+
+		// 4. 메인 페이지로 이동
+		navigate("/");
 	};
 
 	return (
