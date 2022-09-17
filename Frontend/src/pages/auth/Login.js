@@ -9,6 +9,7 @@ import Header from "./../../components/layout/Header";
 import { AuthInput, AuthWrapper, LogoImage, Option, OptionBorder, Options } from "./../../components/styled/Auth";
 import { useDispatch, useSelector } from "react-redux";
 import { storeLogin, storeLogout } from "../../store/reducers/user";
+import Loading from "./../../components/common/Loading";
 
 const Login = () => {
 	// States
@@ -20,6 +21,7 @@ const Login = () => {
 		autoLogin: false,
 		idSave: false,
 	});
+	const [loading, setLoading] = useState(false);
 
 	// Navigate, Ref
 	const navigate = useNavigate();
@@ -83,7 +85,9 @@ const Login = () => {
 			return;
 		}
 
+		setLoading(true);
 		const response = await login(state);
+		setLoading(false);
 
 		if (response.status === 200) {
 			alert("로그인에 성공했습니다!");
@@ -117,6 +121,7 @@ const Login = () => {
 		<>
 			<Header />
 			<Wrapper>
+				{loading ? <Loading /> : null}
 				<ColWrapper>
 					<AuthWrapper>
 						<LogoImage src="/assets/logo.png" />
