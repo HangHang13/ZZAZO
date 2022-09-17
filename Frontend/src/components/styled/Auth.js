@@ -6,7 +6,7 @@ export const LogoImage = styled.img`
 	width: 100px;
 	height: 80px;
 	margin-bottom: 1rem;
-	@media screen and (max-width: 528px) {
+	@media screen and (max-width: 500px) {
 		height: 30%;
 	}
 `;
@@ -23,7 +23,7 @@ export const AuthWrapper = styled.div`
 	justify-content: center;
 	align-items: center;
 
-	@media screen and (max-width: 528px) {
+	@media screen and (max-width: 500px) {
 		width: 90vw;
 	}
 `;
@@ -76,7 +76,7 @@ export const FindGuide = styled.p`
 	width: 100%;
 	justify-content: center;
 
-	@media screen and (max-width: 528px) {
+	@media screen and (max-width: 500px) {
 		width: 80%;
 	}
 `;
