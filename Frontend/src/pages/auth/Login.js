@@ -90,9 +90,11 @@ const Login = () => {
 		} else if (response.status === 400) {
 			alert("유효한 아이디 형태(이메일)을 입력해주세요.");
 			return;
-		} else {
+		} else if (response.status === 404) {
 			alert("아이디 또는 비밀번호가 틀렸습니다.");
 			return;
+		} else {
+			alert("로그인 시도 중 오류가 발생했습니다. 네트워크 상태를 확인해주세요.");
 		}
 
 		// 1. 토큰 두 가지 sessionStorage에 저장
