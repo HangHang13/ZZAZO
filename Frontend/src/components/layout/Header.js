@@ -9,26 +9,12 @@ const Common = styled.div`
   position: fixed;
   justify-content: space-between;
   width: 100vw;
-  height: 4rem;
-  background-color: rgba(192, 240, 176, 0.5);
+  height: 12vh;
+  box-shadow: 0 4px 4px -4px gray;
+
   @media screen and (max-width: 500px) {
     flex-direction: column;
-    background-color: rgba(192, 240, 176, 0.5);
   }
-`;
-
-const Home = styled.a`
-    display: flex;
-    align-items:center;
-    font-size: 2rem;
-    margin 1rem;
-    text-decoration: none;
-    color: black;
-    font-weight: 900;
-    @media screen and (max-width: 500px) {
-      font-size : 2rem;
-      margin : 1rem;
-    }
 `;
 
 const NavbarItemList = styled.div`
@@ -73,20 +59,67 @@ const Menubar = styled.a`
   }
 `;
 
+const ImgWrapper = styled.img`
+  margin-top: 0.6rem;
+  display: flex;
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
+  margin-bottom: 1.5rem;
+  @media screen and (max-width: 900px) {
+    width: 6rem;
+    height: 6rem;
+  }
+  @media screen and (max-width: 700px) {
+    width: 5rem;
+    height: 5rem;
+  }
+  @media screen and (max-width: 500px) {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-right: 0.8rem;
+    margin-left: 0.8rem;
+  }
+  @media screen and (max-width: 400px) {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 0.7rem;
+    margin-left: 0.7rem;
+  }
+`;
+
 const Header = () => {
   const [menu, setmenu] = useState(false);
   const navigate = useNavigate();
 
+  //loginUser정보
+  const user = useSelector((state) => state.user.value);
+  console.log(user);
+  const currUserisLogin = user.isLogin; //로그인 여부
+  const loginUser = user.data ? user.data : "";
+  //console.log(loginUser);
+  const email = loginUser.userEmail ? loginUser.userEmail : "";
+
+  //data.UserEmail
+
   return (
     <Common>
-      <Home href="/">ZZAZO</Home>
+      <ImgWrapper onClick={() => navigate("/")} width="5rem" height="4rem" src="../assets/ZZAZOLOGO.png"></ImgWrapper>
 
       <NavbarItemList menu={menu}>
-        <NavItem href="/">약속잡기</NavItem>
-        <NavItem href="/">공유일정확인</NavItem>
-        <NavItem onClick={() => navigate("/mypage")}>마이페이지</NavItem>
-        <NavItem href="/">누구님</NavItem>
-        <NavItem href="/">로그아웃</NavItem>
+        {currUserisLogin ? (
+          <>
+            <NavItem href="/">약속잡기</NavItem>
+            <NavItem href="/">공유일정확인</NavItem>
+            <NavItem onClick={() => navigate("/mypage")}>마이페이지</NavItem>
+            <NavItem>{email ? email : ""}님 환영합니다.</NavItem>
+            <NavItem href="/">로그아웃</NavItem>
+          </>
+        ) : (
+          <>
+            <NavItem onClick={() => navigate("/signup")}>회원가입</NavItem>
+            <NavItem onClick={() => navigate("/login")}>로그인</NavItem>
+          </>
+        )}
       </NavbarItemList>
       <Menubar
         href="#"
