@@ -1,9 +1,5 @@
-import { useEffect } from "react";
-import { Provider } from "react-redux";
-import { Route, Routes, Router, BrowserRouter } from "react-router-dom";
-import { PersistGate } from "redux-persist/integration/react";
 import "./App.css";
-import store, { persistor } from "./store/store";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
 import MyPage from "./pages/mypage/MyPage";
 import Home from "./pages/home/Home";
 import Signup from "./pages/auth/Signup";
@@ -17,16 +13,15 @@ import FindIdMain from "./pages/auth/find/FindIdMain";
 import FindPwMain from "./pages/auth/find/FindPwMain";
 import Plan from "./pages/plan/Plan";
 import FindIdResult from "./pages/auth/find/FindIdResult";
+import PrivateRoute from "./routes/PrivateRoute";
 
 function App() {
-	//useEffect(async () => {}, []);
-
 	return (
 		<div className="App">
 			<BrowserRouter>
 				<Routes>
 					<Route path="/" element={<Home />} />
-					<Route path="/mypage" element={<MyPage />}>
+					<Route path="/mypage" element={<PrivateRoute component={<MyPage />} />}>
 						<Route index element={<UpdateProfile />} />
 						<Route path="update/profile" element={<UpdateProfile />} />
 						<Route path="update/password" element={<UpdatePassword />} />
@@ -38,8 +33,8 @@ function App() {
 					<Route path="/findid" element={<FindIdMain />} />
 					<Route path="/findid/result" element={<FindIdResult />} />
 					<Route path="/findpw" element={<FindPwMain />} />
-					<Route path="/plan" element={<Plan />} />
-					<Route path="*" element={<NotFound />}></Route>
+					<Route path="/plan" element={<PrivateRoute component={<Plan />} />} />
+					<Route path="*" element={<NotFound />} />
 				</Routes>
 			</BrowserRouter>
 		</div>
