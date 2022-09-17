@@ -9,6 +9,7 @@ import Header from "./../../components/layout/Header";
 import { AuthInput, AuthWrapper, LogoImage, Option, OptionBorder, Options } from "./../../components/styled/Auth";
 import { useDispatch, useSelector } from "react-redux";
 import { storeLogin, storeLogout } from "../../store/reducers/user";
+import Loading from "./../../components/common/Loading";
 
 const Login = () => {
 	// States
@@ -20,6 +21,7 @@ const Login = () => {
 		autoLogin: false,
 		idSave: false,
 	});
+	const [loading, setLoading] = useState(false);
 
 	// Navigate, Ref
 	const navigate = useNavigate();
@@ -83,16 +85,20 @@ const Login = () => {
 			return;
 		}
 
+		setLoading(true);
 		const response = await login(state);
+		setLoading(false);
 
 		if (response.status === 200) {
 			alert("로그인에 성공했습니다!");
 		} else if (response.status === 400) {
 			alert("유효한 아이디 형태(이메일)을 입력해주세요.");
 			return;
-		} else {
+		} else if (response.status === 404) {
 			alert("아이디 또는 비밀번호가 틀렸습니다.");
 			return;
+		} else {
+			alert("로그인 시도 중 오류가 발생했습니다. 네트워크 상태를 확인해주세요.");
 		}
 
 		// 1. 토큰 두 가지 sessionStorage에 저장
@@ -115,6 +121,7 @@ const Login = () => {
 		<>
 			<Header />
 			<Wrapper>
+				{loading ? <Loading /> : null}
 				<ColWrapper>
 					<AuthWrapper>
 						<LogoImage src="/assets/logo.png" />
