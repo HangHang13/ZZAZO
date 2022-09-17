@@ -1,9 +1,5 @@
-import { useEffect } from "react";
-import { Provider } from "react-redux";
-import { Route, Routes, Router, BrowserRouter } from "react-router-dom";
-import { PersistGate } from "redux-persist/integration/react";
 import "./App.css";
-import store, { persistor } from "./store/store";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
 import MyPage from "./pages/mypage/MyPage";
 import Home from "./pages/home/Home";
 import Signup from "./pages/auth/Signup";
@@ -17,34 +13,31 @@ import FindIdMain from "./pages/auth/find/FindIdMain";
 import FindPwMain from "./pages/auth/find/FindPwMain";
 import Plan from "./pages/plan/Plan";
 import FindIdResult from "./pages/auth/find/FindIdResult";
+import PrivateRoute from "./routes/PrivateRoute";
 
 function App() {
-	//useEffect(async () => {}, []);
-
 	return (
-		<Provider store={store}>
-			<div className="App">
-				<BrowserRouter>
-					<Routes>
-						<Route path="/" element={<Home />} />
-						<Route path="/mypage" element={<MyPage />}>
-							<Route index element={<UpdateProfile />} />
-							<Route path="update/profile" element={<UpdateProfile />} />
-							<Route path="update/password" element={<UpdatePassword />} />
-							<Route path="delete/profile" element={<DeleteProfile />} />
-						</Route>
-						<Route path="/signup" element={<Signup />} />
-						<Route path="/signupinterests" element={<SignupInterests />} />
-						<Route path="/login" element={<Login />} />
-						<Route path="/findid" element={<FindIdMain />} />
-						<Route path="/findid/result" element={<FindIdResult />} />
-						<Route path="/findpw" element={<FindPwMain />} />
-						<Route path="/plan" element={<Plan />} />
-						<Route path="*" element={<NotFound />}></Route>
-					</Routes>
-				</BrowserRouter>
-			</div>
-		</Provider>
+		<div className="App">
+			<BrowserRouter>
+				<Routes>
+					<Route path="/" element={<Home />} />
+					<Route path="/mypage" element={<PrivateRoute component={<MyPage />} />}>
+						<Route index element={<UpdateProfile />} />
+						<Route path="update/profile" element={<UpdateProfile />} />
+						<Route path="update/password" element={<UpdatePassword />} />
+						<Route path="delete/profile" element={<DeleteProfile />} />
+					</Route>
+					<Route path="/signup" element={<Signup />} />
+					<Route path="/signupinterests" element={<SignupInterests />} />
+					<Route path="/login" element={<Login />} />
+					<Route path="/findid" element={<FindIdMain />} />
+					<Route path="/findid/result" element={<FindIdResult />} />
+					<Route path="/findpw" element={<FindPwMain />} />
+					<Route path="/plan" element={<PrivateRoute component={<Plan />} />} />
+					<Route path="*" element={<NotFound />} />
+				</Routes>
+			</BrowserRouter>
+		</div>
 	);
 }
 
