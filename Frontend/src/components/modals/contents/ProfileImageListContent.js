@@ -2,7 +2,7 @@ import styled from "styled-components";
 import ModalCloseButton from "../../common/buttons/ModalCloseButton";
 
 const pictureArray = [];
-for (let i = 1; i <= 25; i++) {
+for (let i = 1; i <= 3; i++) {
   pictureArray.push(i);
 }
 
@@ -23,7 +23,7 @@ const StyledProfileImage = styled.img`
   border: 5px solid transparent;
   border-radius: 100%;
   &.active {
-    border: 5px solid cornflowerblue;
+    border: 5px solid #80c0a0;
   }
 `;
 
