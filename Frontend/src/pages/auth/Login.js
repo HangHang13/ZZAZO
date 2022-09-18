@@ -48,6 +48,11 @@ const Login = () => {
 			sessionStorage.removeItem("REFRESH_TOKEN");
 			return;
 		}
+
+		const loginId = sessionStorage.getItem("LOGIN_ID");
+		if (loginId) {
+			setState({ ...state, userEmail: loginId });
+		}
 	}, []);
 
 	const onHandleLogOut = () => {
@@ -99,19 +104,26 @@ const Login = () => {
 			alert("로그인 시도 중 오류가 발생했습니다. 네트워크 상태를 확인해주세요.");
 		}
 
-		// 1. 토큰 두 가지 sessionStorage에 저장
+		// sessionStorage에 현재 아이디 저장
+		if (check.idSave) {
+			sessionStorage.setItem("LOGIN_ID", state.userEmail);
+		} else {
+			sessionStorage.removeItem("LOGIN_ID");
+		}
+
+		// 토큰 두 가지 sessionStorage에 저장
 		const accessToken = response.data.token.access;
 		const refreshToken = response.data.token.refresh;
 		sessionStorage.setItem("ACCESS_TOKEN", accessToken);
 		sessionStorage.setItem("REFRESH_TOKEN", refreshToken);
 
-		// 2. 회원 본인 정보 조회 api 요청
+		// 회원 본인 정보 조회 api 요청
 		const userData = await getUser();
 
-		// 3. 받아온 데이터를 밑에 dispatch -> data에 저장
+		// 받아온 데이터를 밑에 dispatch -> data에 저장
 		dispatch(storeLogin({ isLogin: true, data: userData }));
 
-		// 4. 메인 페이지로 이동
+		// 메인 페이지로 이동
 		navigate("/");
 	};
 
