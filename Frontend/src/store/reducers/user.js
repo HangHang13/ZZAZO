@@ -17,6 +17,10 @@ export const userSlice = createSlice({
 				isLogin: false,
 				data: null,
 			};
+			sessionStorage.removeItem("ACCESS_TOKEN");
+			sessionStorage.removeItem("REFRESH_TOKEN");
+			localStorage.removeItem("persist:root");
+			localStorage.removeItem("jwt");
 		},
 	},
 });

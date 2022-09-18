@@ -40,7 +40,6 @@ const Login = () => {
 			if (confirm("이미 로그인중입니다. 강제로 로그아웃 하시겠습니까?")) {
 				onHandleLogOut();
 			}
-			navigate("/");
 			return;
 		}
 
@@ -53,8 +52,7 @@ const Login = () => {
 
 	const onHandleLogOut = () => {
 		dispatch(storeLogout());
-		sessionStorage.removeItem("ACCESS_TOKEN");
-		sessionStorage.removeItem("REFRESH_TOKEN");
+		navigate("/");
 	};
 
 	const onHandleInput = (e) => {
