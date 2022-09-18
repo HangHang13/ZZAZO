@@ -1,4 +1,5 @@
 
+from multiprocessing import context
 from unittest.util import _MAX_LENGTH
 from rest_framework import serializers
 from accounts.models import Category, User
@@ -46,8 +47,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     # instance.userNickName = validated_data.get('userNickName', instance.userNickName)
     instance.userBirth = validated_data.get('userBirth', instance.userBirth)
     instance.userPhone = validated_data.get('userPhone', instance.userPhone)
-    instance.userGender = validated_data.get('userBirth', instance.userGender)
-    instance.profileUrl = validated_data.get('userBirth', instance.profileUrl)
+    instance.userGender = validated_data.get('userGender', instance.userGender)
+    instance.profileUrl = validated_data.get('profileUrl', instance.profileUrl)
     instance.save()
     return instance
 
@@ -98,19 +99,19 @@ class ChoicesSerializerField(serializers.SerializerMethodField):
         return method()
         
 class UpdateUserSerializer(serializers.Serializer):
-    userName = serializers.CharField(max_length=25, source="user.userName")
-    profileUrl = serializers.CharField(max_length=255 ,source="user.profileUrl" )
-    userBirth = serializers.DateTimeField(source="user.userBirth", )
-    userPhone = serializers.CharField(max_length=12,source="user.userPhone", )
+    userName = serializers.CharField(max_length=25, source="User.userName")
+    profileUrl = serializers.CharField(max_length=255 ,source="User.profileUrl" )
+    userBirth = serializers.DateTimeField(source="User.userBirth", )
+    userPhone = serializers.CharField(max_length=12,source="User.userPhone", )
     # GENDER_CHOICES = (
     #     (u'M', u'Male'),
     #     (u'F', u'Female'),
     # )
-    userGender = serializers.CharField(max_length=2,source="user.userGender", allow_blank=True )
-    
+    userGender = serializers.CharField(max_length=2,source="User.userGender", allow_blank=True )
+    userRadius = serializers.IntegerField(source="User.userRadius")
     class Meta:
         model = User
-        fields=['userName', 'userBirth','userPhone','userGender','profileUrl']
+        fields=['userName', 'userBirth','userPhone','userGender','profileUrl','userRadius']
      
 
    
@@ -130,15 +131,25 @@ class UpdateUserSerializer(serializers.Serializer):
 
     #     return instance
     def validate(self, attrs):
-      
+      # print(self.context)
       user = self.context.get('user')
-      print('유저', type(user))
-      user.userName = attrs.get('userName')
-      user.profileUrl = attrs.get('userName')
-      user.userBirth = attrs.get('userBirth')
-      user.Birth = attrs.get('Birth')
-      user.userGender = attrs.get('userGender')
-      user.save()
+      a=attrs.get('User')
+      # print(a.get('userRadius'))
+      user = User.objects.filter(userEmail=user).update(userName=a.get('userName'),userBirth=a.get('userBirth'), 
+      userGender=a.get('userGender'),
+      profileUrl=a.get('profileUrl'),
+      userPhone=a.get('userPhone'),
+      userRadius=a.get('userRadius')
+       )
+
+    
+      # user.userName = attrs.get('userName')
+      
+      # user.profileUrl = attrs.get('profileUrl')
+      # user.userBirth = attrs.get('userBirth')
+      # user.Birth = attrs.get('Birth')
+      # user.userGender = attrs.get('userGender')
+      # user.update(userName=user.userName, profileUrl=user.profileUrl)
       return attrs
 class UserChangePasswordSerializer(serializers.Serializer):
   password = serializers.CharField(max_length=255, style={'input_type':'password'}, write_only=True)
@@ -155,11 +166,11 @@ class UserChangePasswordSerializer(serializers.Serializer):
     user.set_password(password)
     user.save()
     return attrs
-
+from django.http import JsonResponse
 class SendPasswordResetEmailSerializer(serializers.Serializer):
-  email = serializers.EmailField(max_length=255)
+  userEmail = serializers.EmailField(max_length=255)
   class Meta:
-    fields = ['userEmail']
+    fields = ['userEmail', 'link']
 
   def validate(self, attrs):
     email = attrs.get('userEmail')
@@ -169,16 +180,17 @@ class SendPasswordResetEmailSerializer(serializers.Serializer):
       print('Encoded UID', uid)
       token = PasswordResetTokenGenerator().make_token(user)
       print('Password Reset Token', token)
-      link = 'http://localhost:8000/api/v1/accounts/reset-password/'+uid+'/'+token
+      link = 'http://localhost:8000/api/v1/users/reset-password/'+uid+'/'+token
       print('Password Reset Link', link)
       # Send EMail
-      body = '링크를 눌러 비밀번호를 변경하세요 '+link
+      body = '링크를 눌러 비밀번호를 변경하세요 '+ link
       data = {
-        'subject':'Reset Your Password',
+        'subject':'ZZAZO 비밀번호 변경 이메일입니다.',
         'body':body,
         'to_email':user.userEmail
       }
-      Util.send_email(data)
+      # Util.send_email(data)
+    
       return attrs
     else:
       raise serializers.ValidationError('가입되지 않은 사용자 입니다.')

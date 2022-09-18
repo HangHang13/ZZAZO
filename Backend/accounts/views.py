@@ -1,3 +1,5 @@
+import re
+from winreg import REG_QWORD
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView 
@@ -135,6 +137,7 @@ class UserRegistrationView(APIView):
       return Response({'code':401,  'message':'회원가입에 실패하였습니다.', }, status=status.HTTP_401_UNAUTHORIZED)
 
 
+
 class UserLoginView(APIView):
   renderer_classes = [UserRenderer]
   
@@ -173,11 +176,24 @@ class UserChangeView(APIView):
 
   def post(self, request, format=None):
     # serializer = UpdateUserSerializer
+  
+ 
     serializer = UpdateUserSerializer(data=request.data, context={'user':request.user})
-    print(serializer)
+ 
     serializer.is_valid(raise_exception=True)
-    print(serializer )
-    return Response({ 'code':200,  'message':'회원가입 수정에 성공하였습니다.'}, status=status.HTTP_200_OK)
+    print(serializer.data)
+    res= {
+      'code':200,
+      'message':'회원정보가 수정되었습니다',
+      "message": "회원정보가 수정되었습니다.",
+      "userName":serializer.data.get('userName'),
+      "userBirth" : serializer.data.get('userBirth'),
+      "userPhone": serializer.data.get('userPhone'),
+      "userRadius": serializer.data.get('userRadius'),
+      "profileUrl" : serializer.data.get('profileUrl')
+
+    }
+    return Response(res, status=status.HTTP_200_OK)
 
     if user:
       return Response({ 'code':200,  'message':'회원가입 수정에 성공하였습니다.', 'userEmail' : user.userEmail}, status=status.HTTP_201_CREATED)
@@ -186,6 +202,7 @@ class UserChangeView(APIView):
 class UserChangePasswordView(APIView):
   renderer_classes = [UserRenderer]
   permission_classes = [IsAuthenticated]
+  
   def post(self, request, format=None):
     
     serializer = UserChangePasswordSerializer(data=request.data, context={'user':request.user})
@@ -199,7 +216,12 @@ class SendPasswordResetEmailView(APIView):
   def post(self, request, format=None):
     serializer = SendPasswordResetEmailSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
-      return Response({'code': 200, "message": "비밀번호 변경"}, status=status.HTTP_200_OK)
+      res= {
+        "code": 200, 
+        "message": "비밀번호 변경",
+        "link" : serializer.data
+      }
+      return Response(res, status=status.HTTP_200_OK)
     else:
       return Response({'code': 401, "message": "비밀번호 변경 실패"}, status=status.HTTP_401_UNAUTHORIZED)
     
