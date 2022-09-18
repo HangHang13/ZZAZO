@@ -107,11 +107,12 @@ class UpdateUserSerializer(serializers.Serializer):
     #     (u'M', u'Male'),
     #     (u'F', u'Female'),
     # )
+    userNickName = serializers.CharField(max_length=25, source="User.userNickName")
     userGender = serializers.CharField(max_length=2,source="User.userGender", allow_blank=True )
     userRadius = serializers.IntegerField(source="User.userRadius")
     class Meta:
         model = User
-        fields=['userName', 'userBirth','userPhone','userGender','profileUrl','userRadius']
+        fields=['userName','userNickName', 'userBirth','userPhone','userGender','profileUrl','userRadius']
      
 
    
@@ -135,7 +136,7 @@ class UpdateUserSerializer(serializers.Serializer):
       user = self.context.get('user')
       a=attrs.get('User')
       # print(a.get('userRadius'))
-      user = User.objects.filter(userEmail=user).update(userName=a.get('userName'),userBirth=a.get('userBirth'), 
+      user = User.objects.filter(userEmail=user).update(userNickName=a.get('userNickName'),userName=a.get('userName'),userBirth=a.get('userBirth'), 
       userGender=a.get('userGender'),
       profileUrl=a.get('profileUrl'),
       userPhone=a.get('userPhone'),
@@ -189,7 +190,7 @@ class SendPasswordResetEmailSerializer(serializers.Serializer):
         'body':body,
         'to_email':user.userEmail
       }
-      # Util.send_email(data)
+      Util.send_email(data)
     
       return attrs
     else:
