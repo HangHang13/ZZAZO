@@ -1,3 +1,4 @@
+from statistics import mode
 from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser, PermissionsMixin, AbstractUser
@@ -82,8 +83,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     userGender = models.CharField(max_length=2, choices=GENDER_CHOICES, default='M', null=True)
     userUpdate = models.DateTimeField(auto_now=True)
     userRegist = models.DateTimeField(auto_now_add=True)
-
-  
+    userRadius = models.IntegerField(null=True)
+    
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

@@ -39,6 +39,7 @@ urlpatterns = [
     path('me/', UserProfileView.as_view(), name='profile'),
     path('category/', create_category.as_view(), name='category'),
     path('', UserChangeView.as_view(), name='userchange'),
+  
 
 
 
