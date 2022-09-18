@@ -1,9 +1,12 @@
 FROM node:16.16.0 as build-stage
 WORKDIR /var/jenkins_home/workspace/B307/Frontend
 COPY package*.json ./
-RUN npm config set proxy null
-RUN npm config set https-proxy null
+RUN npm config rm proxy
+RUN npm config rm https-proxy
+# RUN npm config set proxy null
+# RUN npm config set https-proxy null
 RUN npm config set registry 
+RUN npm i -g npm@8.5.1
 RUN npm install
 COPY . .
 RUN npm run build
