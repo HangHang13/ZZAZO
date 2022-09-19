@@ -175,14 +175,14 @@ class UserChangeView(APIView):
   renderer_classes = [UserRenderer]
   permission_classes = [IsAuthenticated]
 
-  def post(self, request, format=None):
+  def put(self, request, format=None):
     # serializer = UpdateUserSerializer
   
  
     serializer = UpdateUserSerializer(data=request.data, context={'user':request.user})
  
     serializer.is_valid(raise_exception=True)
-    print(serializer.data)
+
     res= {
       'code':200,
       'message':'회원정보가 수정되었습니다',
