@@ -23,8 +23,6 @@ export const userSlice = createSlice({
       localStorage.removeItem("jwt");
     },
     storeSetUserProfile: (state, action) => {
-      console.log(state.value);
-      console.log(action.payload);
       state.value = action.payload;
     },
   },

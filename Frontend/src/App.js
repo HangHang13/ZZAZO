@@ -26,7 +26,6 @@ function App() {
   const onHandleBrowserClose = (e) => {
     e.preventDefault();
     onHandleLogOut();
-    alert("good!");
   };
 
   useEffect(() => {
