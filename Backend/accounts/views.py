@@ -206,7 +206,7 @@ class UserChangePasswordView(APIView):
   renderer_classes = [UserRenderer]
   permission_classes = [IsAuthenticated]
   
-  def post(self, request, format=None):
+  def put(self, request, format=None):
     
     serializer = UserChangePasswordSerializer(data=request.data, context={'user':request.user})
     if serializer.is_valid(raise_exception=True):
