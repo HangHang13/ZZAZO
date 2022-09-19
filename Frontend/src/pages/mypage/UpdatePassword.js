@@ -8,6 +8,7 @@ import {
 } from "../../components/styled/Wrapper";
 import InputCheckButton from "./../../components/common/buttons/InputCheckButton";
 import Button from "./../../components/common/buttons/Button";
+import { useSelector } from "react-redux";
 
 const Body = styled.div`
   display: flex;
@@ -30,6 +31,8 @@ const InputBlock = styled.div`
 `;
 
 const UpdatePassword = () => {
+  const user = useSelector((state) => state.user.value);
+  console.log(user);
   const [state, setState] = useState({
     newPassword: "",
     confirmPassword: "",
