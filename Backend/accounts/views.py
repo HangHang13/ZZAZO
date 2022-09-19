@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from accounts import serializers
 from accounts.serializers import (
     SendPasswordResetEmailSerializer, UserChangePasswordSerializer, UserLoginSerializer, UserPasswordResetSerializer,
-    UserProfileSerializer, UserRegistrationSerializer,UserCategorySerializer, UpdateUserSerializer)
+    UserProfileSerializer, UserRegistrationSerializer,UserCategorySerializer, UpdateUserSerializer,SendEmailSerializer)
 from django.contrib.auth import authenticate
 from accounts.renderers import UserRenderer
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -17,15 +17,48 @@ from rest_framework.permissions import IsAuthenticated
 import json
 from rest_framework.decorators import api_view
 from django.shortcuts import get_object_or_404
-from .models import Category, User
+from .models import Category, EmailCheck, User
 from django.views.decorators.csrf import csrf_exempt
-
+from django.db.models import Q
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from accounts.utils import Util
 # Generate Token Manually
 
 
 #이메일 인증 확인
-
+# {
+# "userName": String,
+# ”userPhone” : String,
+# "userBirth" : String,
+# }
 # def verificationEmail() 
+
+
+#아이디 찾기
+@csrf_exempt
+@api_view(['GET'])
+def find_userEmail(request):
+ 
+  userName = request.data.get('userName')
+  userPhone = request.data.get('userPhone')
+  userBirth = request.data.get('userBirth')
+  a= User.objects.filter(userBirth=userBirth)
+  print(a)
+  if User.objects.filter(Q(userName=userName) & Q(userPhone=userPhone) & Q(userBirth=userBirth)).exists():
+      user = User.objects.get(userName=userName)
+ 
+
+      context = {'code': 200, 'message': "아이디 찾기 성공", 'userEmail' : user.userEmail}
+      return Response(context) 
+  else:
+
+    context = {'code': 401, 'message': "고객님의 정보와 일치하는 아이디가 없습니다."}
+
+   
+    return Response(context)
+
+
+#이메일 중복확인
 @csrf_exempt
 @api_view(['GET'])
 def check_userEmail(request, userEmail):
@@ -46,7 +79,7 @@ def check_userEmail(request, userEmail):
 
   return Response(context) 
 
-
+#닉네임 중복확인
 @csrf_exempt
 @api_view(['GET'])
 def check_nickName(request, userNickName):
@@ -68,18 +101,9 @@ def check_nickName(request, userNickName):
       context = {'code': 401, 
       'message': duplicate}
    return Response(context) 
-  # if user:
-  #   res = {'사용가능한 닉네임입니다.'}
-  #   Response (res)
-  # else:
-  #   res = {'이미 가입된 사용자입니다.'}
-  #   Response (res)
 
-#회원탈퇴
-# class UserDelete(APIView):
-#   permission_classes = (IsAuthenticated,)
-  
-# logout
+
+#로그아웃
 class APILogoutView(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -95,10 +119,7 @@ class APILogoutView(APIView):
         return Response({"code": 200,
                           "message": "로그아웃 되었습니다.",})
 
-# @api_view(['POST'])
-# def create_category(request):
-#   user = request.user
-#   category = get_object_or_404(Category)
+
 
 class create_category(APIView):
   renderer_classes = [UserRenderer]
@@ -119,6 +140,7 @@ def get_tokens_for_user(user):
       'access': str(refresh.access_token),
   }
 
+#회원가입
 class UserRegistrationView(APIView):
  
   renderer_classes = [UserRenderer]
@@ -138,7 +160,7 @@ class UserRegistrationView(APIView):
       return Response({'code':401,  'message':'회원가입에 실패하였습니다.', }, status=status.HTTP_401_UNAUTHORIZED)
 
 
-
+#로그인
 class UserLoginView(APIView):
   renderer_classes = [UserRenderer]
   
@@ -162,6 +184,60 @@ class UserLoginView(APIView):
       return Response({"code": 404,
                       "message": "아이디 혹은 비밀번호를 확인해주세요."}, status=status.HTTP_404_NOT_FOUND)
 
+#회원 탈퇴
+
+
+@csrf_exempt
+@api_view(['DELETE'])
+def delete_user(request, userEmail):
+  
+    permission_classes = [IsAuthenticated]
+    if request.method == 'DELETE':
+        try:
+            user = User.objects.get(userEmail=userEmail)
+            print(user)
+            user.delete()
+            res={
+                "code": 200,
+                "message": "회원탈퇴가 완료되었습니다."
+                }
+            return Response(res)
+        except Exception as e: 
+          print(e)
+          res={
+                "code": 401,
+                "message": "회원 탈퇴 실패."
+                }
+          return Response(res)
+
+    else:
+        return Response('"DELETE" 요청을 보내세요!')
+
+
+class Delete_user(APIView):
+  renderer_classes = [UserRenderer]
+  permission_classes = [IsAuthenticated]
+
+  def delete(self, request,userEmail):
+      print('클래스 삭제',userEmail)
+      print(request.data)
+      if User.objects.get(userEmail=userEmail):
+            user = User.objects.get(userEmail=userEmail)
+            print(user)
+            user.delete()
+            res={
+                "code": 200,
+                "message": "회원탈퇴가 완료되었습니다."
+                }
+            return Response(res)
+      else: 
+          
+          res={
+                "code": 401,
+                "message": "회원 탈퇴 실패."
+                }
+          return Response(res)
+#프로필
 class UserProfileView(APIView):
   renderer_classes = [UserRenderer]
   permission_classes = [IsAuthenticated]
@@ -218,8 +294,6 @@ class SendPasswordResetEmailView(APIView):
   renderer_classes = [UserRenderer]
   def post(self, request, format=None):
 
-
-
     serializer = SendPasswordResetEmailSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
       res= {
@@ -239,3 +313,37 @@ class UserPasswordResetView(APIView):
     serializer.is_valid(raise_exception=True)
     return Response({'msg':'Password Reset Successfully'}, status=status.HTTP_200_OK)
 
+
+
+#이메일 인증번호 전송
+import random
+import string
+@csrf_exempt
+@api_view(['POST'])
+def chceck_email(request, userEmail):
+  print('rla')
+  print(request.data)
+  # userEmail = request.data.get('userEmail')
+
+  token  = "".join([random.choice(string.ascii_letters) for _ in range(10)]) # 섞어서
+
+  EmailCheck.objects.create(emailToken=token)
+  res={
+        "code": 200,
+        "message": "인증번호를 전송했습니다."
+        }
+  # Send EMail
+  body = '인증번호를 입력해 주세요. '+ token
+  print(token)
+  data = {
+      'subject':'ZZAZO 회원가입 인증번호 이메일입니다.',
+      'body':body,
+      'to_email':userEmail
+    }
+  Util.send_email(data)
+  return Response(res)
+
+#이메일 인증번호 확인
+@csrf_exempt
+@api_view(['GET'])
+# def chceck_email(request, token):

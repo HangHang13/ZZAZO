@@ -1,3 +1,5 @@
+from operator import mod
+from pyexpat import model
 from statistics import mode
 from django.db import models
 from django.contrib.auth.models import (
@@ -78,7 +80,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         (u'M', u'Male'),
         (u'F', u'Female'),
     )
-    userBirth = models.DateTimeField()
+    userBirth = models.DateField()
     userPhone = models.CharField(max_length=12)
     userGender = models.CharField(max_length=2, choices=GENDER_CHOICES, default='M', null=True)
     userUpdate = models.DateTimeField(auto_now=True)
@@ -96,3 +98,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
     def __str__(self):
         return self.userEmail
+
+
+class EmailCheck(models.Model):
+    emailToken = models.CharField(max_length=255)
+    created = models.DateTimeField(auto_now_add=True)
+    expired = models.DateTimeField(null=True)

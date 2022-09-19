@@ -36,7 +36,7 @@ SECRET_KEY = 'django-insecure-djx=c&gb(0g2s7yae&^_hk(sizwl=l(0m2=%s_9#ro^lco2xv+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+USE_TZ = False
 ALLOWED_HOSTS = []
 # AUTH_USER_MODEL = '{app-name}.{User-model-name}'
 AUTH_USER_MODEL = 'accounts.User'
@@ -168,7 +168,7 @@ EMAIL_USE_TLS = True
 REST_USE_JWT = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=20),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 
     'AUTH_HEADER_TYPES': ('Bearer',),
