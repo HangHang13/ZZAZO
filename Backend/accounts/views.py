@@ -217,11 +217,14 @@ class UserChangePasswordView(APIView):
 class SendPasswordResetEmailView(APIView):
   renderer_classes = [UserRenderer]
   def post(self, request, format=None):
-    serializer = SendPasswordResetEmailSerializer(data=request.data, context={'user':request.user})
+
+
+
+    serializer = SendPasswordResetEmailSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
       res= {
         "code": 200, 
-        "message": "비밀번호 변경",
+        "message": "비밀번호 변경성공",
       
       }
       return Response(res, status=status.HTTP_200_OK)
