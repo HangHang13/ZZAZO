@@ -1,7 +1,16 @@
 from rest_framework import serializers
-from ..models import Place, Review
-from . import review
+from ..models import Place
+# from . import review
 
+class PlaceTestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Place
+        fields = ('_id', 'name', 'address')
+
+class PlaceTest2Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Place
+        fields = '__all__'
 
 class PlaceListSerializer(serializers.ModelSerializer):
 
@@ -9,7 +18,7 @@ class PlaceListSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Place
-        fields = ('id', 'placeName', 'placeAddress', 'placeScore')
+        fields = ('_id', 'name', 'address', 'placeScore')
 
 class PlaceRecommendListSerializer(serializers.ModelSerializer):
 
@@ -17,10 +26,11 @@ class PlaceRecommendListSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Place
-        fields = ('id', 'placeName', 'placeAddress', 'placeScore', 'placeType')
+        fields = ('_id', 'name', 'address', 'placeScore', 'place_type')
 
 class PlaceDetailSerializer(serializers.ModelSerializer):
-    
+    placeScore = serializers.IntegerField(source='review.score.average')
+
     class Meta:
         model = Place
-        fields = ('id', 'placeName', 'placeAddress', 'score')
+        fields = ('_id', 'name', 'address', 'placeScore')
