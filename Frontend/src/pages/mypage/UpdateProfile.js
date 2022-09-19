@@ -17,6 +17,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Button from "../../components/common/buttons/Button";
 import { updateProfile } from "../../api/MyPageAPI";
 import { useNavigate } from "react-router-dom";
+import { storeSetUserProfile } from "../../store/reducers/user";
 
 const InputTag = styled.div`
   margin-top: 2rem;
@@ -45,7 +46,6 @@ const UpdateProfile = () => {
   const user = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log(user);
 
   const [profile, setProfile] = useState({
     userName: user.data.userName,
@@ -99,8 +99,6 @@ const UpdateProfile = () => {
       setProfile((prevState) => {
         return { ...prevState, ...userProfileRequest };
       });
-      console.log(userProfileRequest);
-      // alert();
     },
     [
       // birthDate,
@@ -118,27 +116,13 @@ const UpdateProfile = () => {
   };
   const onHandleChangeProfileImage = (profileImageId) => {
     setProfileImgState({ ...profileImgState, imgId: profileImageId });
-    console.log(profileImageId);
-    console.log(profileImgState);
     closeModal();
   };
   //input 창 입력 시 이벤트
   const onHandleInput = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
   };
-  // const onHandleNickNameDuplicateUpdate = async (e) => {
-  //   console.log(e.target.name);
-  //   console.log(e.target.value);
-  //   const nickNameDuplicate = await nickNameDuplicateCheck(e.target.value);
-  //   console.log(nickNameDuplicate.code);
-  //   if (e.target.name === "userNickName" && nickNameDuplicate.code === 200) {
-  //     setProfile({ ...profile, userNickNameChecked: true });
-  //     console.log(profile.userNickNameChecked);
-  //   } else {
-  //     setProfile({ ...profile, userNickNameChecked: false });
-  //     console.log(profile.userNickNameChecked);
-  //   }
-  // };
+
   //닉네임 중복 체크
   const onHandleNickNameDuplicateCheck = async (e) => {
     e.preventDefault();
@@ -195,7 +179,6 @@ const UpdateProfile = () => {
     // }
   };
   const returnState = () => {
-    console.log("먹어라");
     nickNameConfirmRef.current.disabled = false;
     nickNameConfirmRef.current.style.backgroundColor = "#ffffff";
     setProfile(OriginProfile);
@@ -207,7 +190,6 @@ const UpdateProfile = () => {
     });
   };
   const submitState = async () => {
-    console.log("제출");
     if (!confirm("변경을 완료하시겠습니까?")) {
       return;
     }
@@ -247,15 +229,16 @@ const UpdateProfile = () => {
       userRadius: 0,
       profileUrl: profileImgState.imgId,
     };
-    //유저정보수정
-    // console.log(data);
+
     const result = await updateProfile(data);
-    console.log(result);
-    if (result.code === 200) {
-      alert("프로필 정보가 변경되었습니다.");
-      console.log(result.data);
+
+    if (!result.code === 200) {
+      alert("프로필 정보 변경에 실패했습니다.");
+      return;
     }
-    //네비게이트
+
+    alert("프로필 정보가 변경되었습니다.");
+    dispatch(storeSetUserProfile({ isLogin: true, data: data }));
   };
   //1. 맨처음 초기값 null
   //2. null이므로 1로 setProfile
