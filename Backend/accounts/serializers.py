@@ -2,7 +2,7 @@
 from multiprocessing import context
 from unittest.util import _MAX_LENGTH
 from rest_framework import serializers
-from accounts.models import Category, User
+from accounts.models import Category, User,EmailCheck
 from django.utils.encoding import smart_str, force_bytes, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
@@ -237,3 +237,63 @@ class UserPasswordResetSerializer(serializers.Serializer):
       PasswordResetTokenGenerator().check_token(user, token)
       raise serializers.ValidationError('Token is not Valid or Expired')
   
+
+  class CheckEmail(serializers.Serializer):
+    password = serializers.CharField(max_length=255, style={'input_type':'password'}, write_only=True)
+    def create(self, validate_data):
+  
+      return EmailCheck.objects.create(**validate_data)
+    class Meta:
+      fields = ['password']
+
+    def validate(self, attrs):
+      try:
+        password = attrs.get('password')
+        password2 = attrs.get('password2')
+        uid = self.context.get('uid')
+        token = self.context.get('token')
+        token = PasswordResetTokenGenerator().make_token(user)
+        print('Password Reset Token', token[:15])
+        if password != password2:
+          raise serializers.ValidationError("Password and Confirm Password doesn't match")
+        id = smart_str(urlsafe_base64_decode(uid))
+        user = User.objects.get(id=id)
+        if not PasswordResetTokenGenerator().check_token(user, token):
+          raise serializers.ValidationError('Token is not Valid or Expired')
+        return attrs
+      except DjangoUnicodeDecodeError as identifier:
+        PasswordResetTokenGenerator().check_token(user, token)
+        raise serializers.ValidationError('Token is not Valid or Expired')
+
+
+class SendEmailSerializer(serializers.Serializer):
+  userEmail = serializers.EmailField(max_length=255)
+  # created = serializers.DateTimeField(auto_now_add=True)
+  # expired = serializers.DateTimeField()
+  
+  class Meta:
+    fields = ['userEmail']
+
+  def validate(self, attrs):
+    email = attrs.get('userEmail')
+    token = PasswordResetTokenGenerator().make_token(email)
+    user = EmailCheck.objects.get(emailToken=token[:15])
+    # user1= User.objects.filter(userEmail=email)
+  
+    uid = urlsafe_base64_encode(force_bytes(user.id))
+    # print('Encoded UID', uid)
+    print('Password Reset Token', token[:15])
+
+
+    # Send EMail
+    body = '인증번호를 입력해 주세요. '+ token[:15]
+    print(token)
+    data = {
+      'subject':'ZZAZO 비밀번호 변경 이메일입니다.',
+      'body':body,
+      'to_email':user.userEmail
+    }
+    Util.send_email(data)
+  
+    return attrs
+ 
