@@ -14,9 +14,23 @@ export const Wrapper = styled(BaseFlexWrapper)`
   display: flex;
   background-color: ${({ color }) => color};
   align-items: ${({ alignItems }) => alignItems};
-  width: 100vw;
-  min-height: 100vh;
-  padding-top: 6rem;
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
+  padding-top: ${({ paddingTop }) => paddingTop};
+
+  @media screen and (max-width: 500px) {
+    width: 100vw;
+  }
+`;
+
+export const PlanPageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: ${({ bg }) => bg};
+  align-items: ${({ alignItems }) => alignItems};
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
+  padding-top: ${({ paddingTop }) => paddingTop};
 
   @media screen and (max-width: 500px) {
     width: 100vw;
@@ -124,7 +138,18 @@ RoundedWrapper.defaultProps = {
   flexDirection: "row",
 };
 
+PlanPageWrapper.defaultProps = {
+  bg: "white",
+  alignItems: "center",
+  width: "100vw",
+  height: "calc(100vh - 6rem)",
+  paddingTop: "6rem",
+};
+
 Wrapper.defaultProps = {
   color: "white",
   alignItems: "center",
+  width: "100vw",
+  height: "calc(100vh - 6rem)",
+  paddingTop: "6rem",
 };
