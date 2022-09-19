@@ -170,27 +170,36 @@ class UserChangePasswordSerializer(serializers.Serializer):
 from django.http import JsonResponse
 class SendPasswordResetEmailSerializer(serializers.Serializer):
   userEmail = serializers.EmailField(max_length=255)
+  userPhone = serializers.CharField(max_length=12)
+  userName = serializers.CharField(max_length=25)
   class Meta:
-    fields = ['userEmail', 'link']
+    fields = ['userEmail','userName','userPhone', 'link']
 
   def validate(self, attrs):
+    username =attrs.get('userName')
+    userPhone = attrs.get('userPhone')
     email = attrs.get('userEmail')
-    if User.objects.filter(userEmail=email).exists():
+    print(attrs,username,userPhone)
+    if User.objects.filter(userEmail=email, userName=username, userPhone=userPhone).exists():
       user = User.objects.get(userEmail = email)
       uid = urlsafe_base64_encode(force_bytes(user.id))
       print('Encoded UID', uid)
       token = PasswordResetTokenGenerator().make_token(user)
       print('Password Reset Token', token)
+      a='12345a'
+      user.set_password(a)
+      print(user)
       link = 'http://localhost:8000/api/v1/users/reset-password/'+uid+'/'+token
       print('Password Reset Link', link)
       # Send EMail
-      body = '링크를 눌러 비밀번호를 변경하세요 '+ link
+      body = '링크를 눌러 비밀번호를 변경하세요 '+ a
+      print(token)
       data = {
         'subject':'ZZAZO 비밀번호 변경 이메일입니다.',
         'body':body,
         'to_email':user.userEmail
       }
-      Util.send_email(data)
+      # Util.send_email(data)
     
       return attrs
     else:

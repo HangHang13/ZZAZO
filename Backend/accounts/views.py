@@ -1,3 +1,4 @@
+from audioop import lin2adpcm
 import re
 from winreg import REG_QWORD
 from rest_framework.response import Response
@@ -188,9 +189,11 @@ class UserChangeView(APIView):
       "message": "회원정보가 수정되었습니다.",
       "userName":serializer.data.get('userName'),
       "userBirth" : serializer.data.get('userBirth'),
+      "userNickName":serializer.data.get('userNickName'),
       "userPhone": serializer.data.get('userPhone'),
       "userRadius": serializer.data.get('userRadius'),
-      "profileUrl" : serializer.data.get('profileUrl')
+      "profileUrl" : serializer.data.get('profileUrl'),
+      
 
     }
     return Response(res, status=status.HTTP_200_OK)
@@ -214,12 +217,12 @@ class UserChangePasswordView(APIView):
 class SendPasswordResetEmailView(APIView):
   renderer_classes = [UserRenderer]
   def post(self, request, format=None):
-    serializer = SendPasswordResetEmailSerializer(data=request.data)
+    serializer = SendPasswordResetEmailSerializer(data=request.data, context={'user':request.user})
     if serializer.is_valid(raise_exception=True):
       res= {
         "code": 200, 
         "message": "비밀번호 변경",
-        "link" : serializer.data
+      
       }
       return Response(res, status=status.HTTP_200_OK)
     else:
