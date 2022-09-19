@@ -71,7 +71,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
   categoryName = UserCategorySerializer(read_only=True)
   class Meta:
     model = User
-    fields = ['id', 'userEmail', 'userName','userNickName','profileUrl','userPhone', 'categoryName']
+    fields = ['id', 'userEmail', 'userName','userNickName','profileUrl','userPhone', 'userBirth','categoryName']
 
 class ChoicesField(serializers.Field):
     def __init__(self, choices, **kwargs):
@@ -101,8 +101,8 @@ class ChoicesSerializerField(serializers.SerializerMethodField):
 class UpdateUserSerializer(serializers.Serializer):
     userName = serializers.CharField(max_length=25, source="User.userName")
     profileUrl = serializers.CharField(max_length=255 ,source="User.profileUrl" )
-    userBirth = serializers.DateTimeField(source="User.userBirth", )
-    userPhone = serializers.CharField(max_length=12,source="User.userPhone", )
+    userBirth = serializers.DateTimeField(source="User.userBirth" )
+    userPhone = serializers.CharField(max_length=12,source="User.userPhone")
     # GENDER_CHOICES = (
     #     (u'M', u'Male'),
     #     (u'F', u'Female'),
@@ -161,6 +161,7 @@ class UserChangePasswordSerializer(serializers.Serializer):
   def validate(self, attrs):
     password = attrs.get('password')
     password2 = attrs.get('password2')
+  
     user = self.context.get('user')
     if password != password2:
       raise serializers.ValidationError({'code': 401, "message": "비밀번호 변경 실패"})
@@ -172,39 +173,40 @@ from django.http import JsonResponse
 from django.db.models import Q
 class SendPasswordResetEmailSerializer(serializers.Serializer):
   userEmail = serializers.EmailField(max_length=255)
-  userPhone = serializers.CharField(max_length=12)
+  userBirth = serializers.DateTimeField()
   userName = serializers.CharField(max_length=25)
   class Meta:
-    fields = ['userEmail','userName','userPhone', 'link']
+    fields = ['userEmail','userName','userBirth', 'link']
 
   def validate(self, attrs):
     
     username =attrs.get('userName')
-    userPhone = attrs.get('userPhone')
+    userBirth = attrs.get('userBirth')
     email = attrs.get('userEmail')
-    print(attrs,username,userPhone)
-    if User.objects.filter(Q(userEmail=email) &Q(userName=username) &Q(userPhone=userPhone)).exists():
+    print(attrs,username,userBirth)
+    if User.objects.filter(Q(userEmail=email) &Q(userName=username) &Q(userBirth=userBirth)).exists():
       user = User.objects.get(userEmail=email)
       # user1= User.objects.filter(userEmail=email)
    
       uid = urlsafe_base64_encode(force_bytes(user.id))
       # print('Encoded UID', uid)
       token = PasswordResetTokenGenerator().make_token(user)
-      print('Password Reset Token', token)
-      password='123'
-      user.set_password(password)
+      print('Password Reset Token', token[:15])
+  
+      user.set_password(token[:15])
+      user.save()
       # print(type(user1))
       link = 'http://localhost:8000/api/v1/users/reset-password/'+uid+'/'+token
       print('Password Reset Link', link)
       # Send EMail
-      body = '링크를 눌러 비밀번호를 변경하세요 '+ password
+      body = '해당 비밀번호로 변경 되었습니다. '+ token[:15]
       print(token)
       data = {
         'subject':'ZZAZO 비밀번호 변경 이메일입니다.',
         'body':body,
         'to_email':user.userEmail
       }
-      # Util.send_email(data)
+      Util.send_email(data)
     
       return attrs
     else:
