@@ -239,6 +239,7 @@ WSGI_APPLICATION = 'ZZAZO.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+DATABASE_ROUTERS = ['ZZAZO.placeRouter.placeRouter']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
