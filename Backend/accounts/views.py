@@ -343,7 +343,7 @@ def chceck_email(request, userEmail):
   Util.send_email(data)
   return Response(res)
 
-#이메일 인증번호 확인
-@csrf_exempt
-@api_view(['GET'])
+#이메일 인증번호 확인asdasd
+# @csrf_exempt
+# @api_view(['GET'])
 # def chceck_email(request, token):
