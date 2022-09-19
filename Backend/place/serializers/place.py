@@ -26,10 +26,11 @@ class PlaceRecommendListSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Place
-        fields = ('_id', 'placeName', 'placeAddress', 'placeScore', 'placeType')
+        fields = ('_id', 'name', 'address', 'placeScore', 'place_type')
 
 class PlaceDetailSerializer(serializers.ModelSerializer):
-    
+    placeScore = serializers.IntegerField(source='review.score.average')
+
     class Meta:
         model = Place
-        fields = ('_id', 'placeName', 'placeAddress', 'score')
+        fields = ('_id', 'name', 'address', 'placeScore')
