@@ -14,8 +14,29 @@ import FindPwMain from "./pages/auth/find/FindPwMain";
 import Plan from "./pages/plan/Plan";
 import FindIdResult from "./pages/auth/find/FindIdResult";
 import PrivateRoute from "./routes/PrivateRoute";
+import { useEffect } from "react";
 
 function App() {
+	const onHandleLogOut = () => {
+		dispatch(storeLogout());
+		navigate("/");
+	};
+
+	const onHandleBrowserClose = (e) => {
+		e.preventDefault();
+		onHandleLogOut();
+		alert("good!");
+	};
+
+	useEffect(() => {
+		(() => {
+			window.addEventListener("beforeunload", onHandleBrowserClose);
+		})();
+		return () => {
+			window.removeEventListener("beforeunload", onHandleBrowserClose);
+		};
+	}, []);
+
 	return (
 		<div className="App">
 			<BrowserRouter>
