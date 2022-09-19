@@ -224,12 +224,12 @@ class SendPasswordResetEmailView(APIView):
     if serializer.is_valid(raise_exception=True):
       res= {
         "code": 200, 
-        "message": "비밀번호 변경성공",
+        "message": "비밀번호 찾기 성공",
       
       }
       return Response(res, status=status.HTTP_200_OK)
     else:
-      return Response({'code': 401, "message": "비밀번호 변경 실패"}, status=status.HTTP_401_UNAUTHORIZED)
+      return Response({'code': 401, "message": "비밀번호 찾기 실패"}, status=status.HTTP_401_UNAUTHORIZED)
     
 
 class UserPasswordResetView(APIView):
