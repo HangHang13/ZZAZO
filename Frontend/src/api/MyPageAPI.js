@@ -20,7 +20,7 @@ const updateProfile = async (data) => {
 
 const updatePassword = async (data) => {
   const result = await client
-    .post(`/users/pw`, data)
+    .put(`/users/pw/`, data)
     .then((response) => response.data)
     .catch((error) => error.response);
   return result;
