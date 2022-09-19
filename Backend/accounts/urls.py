@@ -17,7 +17,7 @@ from accounts.views import (
     create_category,
     UserChangeView,
     Delete_user,
-    CheckEmailView)
+   )
 app_name = 'accounts'
 urlpatterns = [
 
