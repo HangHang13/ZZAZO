@@ -6,12 +6,19 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from place.models import Place
 from .serializers.review import ReviewCreateSerializer, ReviewViewSerializer
-from models import Review
+from .models import Review
+from place.serializers.place import PlaceTest2Serializer
 
 @api_view(['POST'])
 def place_review_create(request, place_id):
+    place = Place.objects.using('place').get(_id = place_id)
+    print(place.pk)
+    print(place)
+    print(request.data)
+    print(request.user)
+    print(type(request.user))
+
     serializer = ReviewCreateSerializer(data=request.data)
-    place = get_object_or_404(Place, pk = place_id)
     if serializer.is_valid(raise_exception=True):
         serializer.save(user=request.user, place=place)
         code = 200
@@ -52,16 +59,16 @@ def place_review_update_or_delete(request, place_id, review_id):
         if request.user == review.user:
             review.delete()
             code = 200
-#             message = "리뷰 삭제"
-#             res = {
-#                 "code": code,
-#                 "message": message,
-#             }
-#             return Response(res)
+            message = "리뷰 삭제"
+            res = {
+                "code": code,
+                "message": message,
+            }
+            return Response(res)
     
-#     if request.method == 'PUT':
-#         return review_update()
+    if request.method == 'PUT':
+        return review_update()
     
-#     elif request.method == 'DELETE':
-#         return review_delete()
+    elif request.method == 'DELETE':
+        return review_delete()
 

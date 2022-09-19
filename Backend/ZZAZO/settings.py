@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'accounts',
     'place',
     'plan',
+    'review',
 
    
     #django-rest-auth

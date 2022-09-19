@@ -5,26 +5,31 @@ from ..models import Place
 class PlaceTestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Place
-        fields = ('id', 'name', 'address')
+        fields = ('_id', 'name', 'address')
 
-# class PlaceListSerializer(serializers.ModelSerializer):
+class PlaceTest2Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Place
+        fields = '__all__'
 
-#     placeScore = serializers.IntegerField(source='review.score.average')
+class PlaceListSerializer(serializers.ModelSerializer):
+
+    placeScore = serializers.IntegerField(source='review.score.average')
     
-#     class Meta:
-#         model = Place
-#         fields = ('id', 'name', 'address', 'placeScore')
+    class Meta:
+        model = Place
+        fields = ('_id', 'name', 'address', 'placeScore')
 
-# class PlaceRecommendListSerializer(serializers.ModelSerializer):
+class PlaceRecommendListSerializer(serializers.ModelSerializer):
 
-#     placeScore = serializers.IntegerField(source='review.score.average')
+    placeScore = serializers.IntegerField(source='review.score.average')
     
-#     class Meta:
-#         model = Place
-#         fields = ('id', 'placeName', 'placeAddress', 'placeScore', 'placeType')
+    class Meta:
+        model = Place
+        fields = ('_id', 'placeName', 'placeAddress', 'placeScore', 'placeType')
 
-# class PlaceDetailSerializer(serializers.ModelSerializer):
+class PlaceDetailSerializer(serializers.ModelSerializer):
     
-#     class Meta:
-#         model = Place
-#         fields = ('id', 'placeName', 'placeAddress', 'score')
+    class Meta:
+        model = Place
+        fields = ('_id', 'placeName', 'placeAddress', 'score')
