@@ -9,6 +9,7 @@ import { ProgressBlock, ProgressDescription, SignupBody, SignupHeader } from "..
 import { emailConfirm, emailDuplicateCheck, nickNameDuplicateCheck } from "../../api/AuthAPI";
 import Header from "./../../components/layout/Header";
 import Button from "./../../components/common/buttons/Button";
+import { HeaderSpace } from "./../../components/styled/HeaderSpace";
 
 const InputBlock = styled.div`
 	display: flex;
@@ -293,6 +294,7 @@ const Signup = () => {
 	return (
 		<>
 			<Header />
+			<HeaderSpace height="12rem" />
 			<Wrapper>
 				<MobileSizeWrapper>
 					<SignupHeader>
