@@ -12,11 +12,12 @@ from accounts.views import (
     UserLoginView, 
     UserProfileView, 
     UserRegistrationView, 
-    UserPasswordResetView,
+   
     APILogoutView,
     create_category,
     UserChangeView,
     Delete_user,
+    Getcheck_email
    )
 app_name = 'accounts'
 urlpatterns = [
@@ -53,7 +54,9 @@ urlpatterns = [
     path('findpw/', SendPasswordResetEmailView.as_view(), name='send-reset-password-email'),
     #이메일 인증번호
     path('checkEmail/<str:userEmail>/',views.chceck_email),
-
-    path('reset-password/<uid>/<token>/', UserPasswordResetView.as_view(), name='reset-password'),
+    #이메일 인증번호 받기
+    path('getcheckEmail/',views.getchceck_email, name='getchceck_email'),
+    path('getcheckEmail1/',Getcheck_email.as_view(),name='getchceck_email'),
+    # path('reset-password/<uid>/<token>/', UserPasswordResetView.as_view(), name='reset-password'),
    
 ]
