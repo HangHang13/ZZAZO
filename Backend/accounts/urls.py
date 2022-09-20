@@ -12,7 +12,7 @@ from accounts.views import (
     UserLoginView, 
     UserProfileView, 
     UserRegistrationView, 
-    UserPasswordResetView,
+   
     APILogoutView,
     create_category,
     UserChangeView,
@@ -57,6 +57,6 @@ urlpatterns = [
     #이메일 인증번호 받기
     path('getcheckEmail/',views.getchceck_email, name='getchceck_email'),
     path('getcheckEmail1/',Getcheck_email.as_view(),name='getchceck_email'),
-    path('reset-password/<uid>/<token>/', UserPasswordResetView.as_view(), name='reset-password'),
+    # path('reset-password/<uid>/<token>/', UserPasswordResetView.as_view(), name='reset-password'),
    
 ]
