@@ -124,7 +124,7 @@ EMAIL_USE_TLS = True
 REST_USE_JWT = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1200),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 
     'AUTH_HEADER_TYPES': ('Bearer',),
