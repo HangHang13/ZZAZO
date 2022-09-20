@@ -39,12 +39,20 @@ const nickNameDuplicateCheck = async (data) => {
 
 // 이메일 인증 메일 발송
 const emailSendConfirm = async (data) => {
-	alert(data);
+	const result = await client
+		.post(`/users/checkEmail/${data}/`)
+		.then((response) => response.data)
+		.catch((error) => error.response);
+	return result;
 };
 
 // 이메일 인증
 const emailConfirm = async (data) => {
-	alert(data);
+	const result = await client
+		.get(`/users/checkEmail/${data}/`)
+		.then((response) => response.data)
+		.catch((error) => error.response);
+	return result;
 };
 
 // 아이디 찾기
@@ -60,9 +68,9 @@ const findId = async (data) => {
 const findPw = async (data) => {
 	const result = await client
 		.post(`/users/findpw/`, data)
-		.then((response) => response)
+		.then((response) => response.data)
 		.catch((error) => error.response);
 	return result;
 };
 
-export { login, emailDuplicateCheck, nickNameDuplicateCheck, emailConfirm, signup, findId, findPw };
+export { login, emailDuplicateCheck, nickNameDuplicateCheck, emailSendConfirm, emailConfirm, signup, findId, findPw };
