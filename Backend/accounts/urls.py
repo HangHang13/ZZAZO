@@ -17,7 +17,8 @@ from accounts.views import (
     create_category,
     UserChangeView,
     Delete_user,
-    Getcheck_email
+    Getcheck_email,
+    Create_category
    )
 app_name = 'accounts'
 urlpatterns = [
@@ -36,7 +37,8 @@ urlpatterns = [
     path('checkemail/<str:userEmail>/', views.check_userEmail, name='check_email'),
     path('checkNickName/<str:userNickName>/', views.check_nickName, name='check_nickname'),
 
-
+    #카테고리 추가
+    path('category/', Create_category.as_view(), name='profile'),
     #프로필확인
     path('me/', UserProfileView.as_view(), name='profile'),
     path('category/', create_category.as_view(), name='category'),

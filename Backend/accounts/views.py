@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from accounts import serializers
 from accounts.serializers import (
     SendPasswordResetEmailSerializer, UserChangePasswordSerializer, UserLoginSerializer, 
-    UserProfileSerializer, UserRegistrationSerializer,UserCategorySerializer, UpdateUserSerializer,)
+    UserProfileSerializer, UserRegistrationSerializer,UserCategorySerializer, UpdateUserSerializer,UserCategorySerializer)
 from django.contrib.auth import authenticate
 from accounts.renderers import UserRenderer
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -22,6 +22,22 @@ from accounts.utils import Util
 from drf_yasg.utils import swagger_auto_schema
 from .open_api_params import get_params
 # Generate Token Manually
+
+
+# .is_valid(raise_exception=True)
+class Create_category(APIView):
+  renderer_classes = [UserRenderer]
+  permission_classes = [IsAuthenticated]
+  
+  def post(self, request, format=None):
+    print(request.data)
+    serializer = UserCategorySerializer(data=request.data)
+    if serializer.is_valid(): 
+      user = serializer.save(user=request.user)
+    if serializer:
+        return Response({'code': 200, "message": "카테고리 설정", "카테고리" : serializer.data}, status=status.HTTP_200_OK)
+    else:
+        return Response({'code': 401, "message": "카테고리 설정 실패"}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 #이메일 인증번호 확인asdasd

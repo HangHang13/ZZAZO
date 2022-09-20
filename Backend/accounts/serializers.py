@@ -10,11 +10,22 @@ from accounts.utils import Util
 from rest_framework.response import Response
 
 class UserCategorySerializer(serializers.ModelSerializer):
-  categoryName = serializers.CharField(max_length=100, write_only=True)
-  
+  categoryName = serializers.CharField(max_length=100)
+  categoryNumber = serializers.IntegerField()
   class Meta:
     model = Category
-    fields = ('id','categoryName')
+    fields = ('id','categoryName','categoryNumber')
+  def validate(self, attrs):
+    categoryName = attrs.get('categoryName')
+    categoryNumber = attrs.get('categoryNumber')
+  
+    return attrs
+  def create(self,validate_data):
+    return Category.objects.create(**validate_data)
+
+  
+    
+
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
   # We are writing this becoz we need confirm password field in our Registratin Request
@@ -67,11 +78,11 @@ class UserProfileSerializer(serializers.ModelSerializer):
   class UserSerializerCate(serializers.ModelSerializer):
         class Meta:
             model = Category
-            fields = ('categoryName')
-  categoryName = UserCategorySerializer(read_only=True)
+            fields = '__all__'
+  category = UserSerializerCate(many=True, read_only=True)
   class Meta:
     model = User
-    fields = ['id', 'userEmail', 'userName','userNickName','profileUrl','userPhone', 'userBirth','categoryName']
+    fields = ['id', 'userEmail', 'userName','userNickName','profileUrl','userPhone', 'userBirth','category']
 
 class ChoicesField(serializers.Field):
     def __init__(self, choices, **kwargs):
