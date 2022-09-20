@@ -6,7 +6,7 @@ import InputCheckButton from "./../../components/common/buttons/InputCheckButton
 import { useNavigate } from "react-router-dom";
 import NumberCircle from "./../../components/auth/NumberCircle";
 import { ProgressBlock, ProgressDescription, SignupBody, SignupHeader } from "../../components/auth/signup/Signup";
-import { emailConfirm, emailDuplicateCheck, nickNameDuplicateCheck } from "../../api/AuthAPI";
+import { emailConfirm, emailDuplicateCheck, emailSendConfirm, nickNameDuplicateCheck } from "../../api/AuthAPI";
 import Header from "./../../components/layout/Header";
 import Button from "./../../components/common/buttons/Button";
 import { HeaderSpace } from "./../../components/styled/HeaderSpace";
@@ -115,27 +115,21 @@ const Signup = () => {
 	};
 
 	// 이메일 인증 번호 발송
-	const sendConfirmEmail = () => {
-		console.log("send confirm email!");
+	const sendConfirmEmail = async () => {
+		const response = await emailSendConfirm(state.userEmail);
+		console.log(response);
 	};
 
 	// 이메일 인증
-	const onHandleEmailConfirm = (e) => {
+	const onHandleEmailConfirm = async (e) => {
 		e.preventDefault();
 		if (!state.userEmailChecked) {
 			alert("중복 체크를 먼저 해 주세요.");
 			return;
 		}
-		if (state.userEmailConfirmed) {
-			alert("이메일 인증이 완료되었습니다.");
-			return;
-		}
 
-		// const response = emailConfirm(state.userEmailCode);
-
-		const response = {
-			code: 200,
-		};
+		const response = await emailConfirm(state.userEmailCode);
+		console.log(response);
 
 		if (response.code === 200) {
 			alert("이메일 인증이 완료되었습니다.");
