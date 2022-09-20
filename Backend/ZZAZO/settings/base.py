@@ -52,8 +52,8 @@ INSTALLED_APPS = [
     'place',
     'plan',
     'review',
-
-   
+    #swagger
+    'drf_yasg',
     #django-rest-auth
     'rest_framework',
     'rest_framework_simplejwt',
