@@ -1,6 +1,4 @@
-from audioop import lin2adpcm
-import re
-from winreg import REG_QWORD
+
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView 
@@ -13,15 +11,16 @@ from accounts.renderers import UserRenderer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.token_blacklist.models import OutstandingToken, BlacklistedToken
 
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated,AllowAny
 import json
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from django.shortcuts import get_object_or_404
 from .models import Category, EmailCheck, User
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from accounts.utils import Util
+from drf_yasg.utils import swagger_auto_schema
+from .open_api_params import get_params
 # Generate Token Manually
 
 
@@ -37,6 +36,7 @@ from accounts.utils import Util
 #아이디 찾기
 @csrf_exempt
 @api_view(['GET'])
+@swagger_auto_schema(manual_parameters=get_params)
 def find_userEmail(request):
  
   userName = request.data.get('userName')
@@ -103,10 +103,10 @@ def check_nickName(request, userNickName):
    return Response(context) 
 
 
-#로그아웃
+#로그아웃request_body=serializers.BoardTestSerializer
 class APILogoutView(APIView):
     permission_classes = (IsAuthenticated,)
-
+    
     def post(self, request, *args, **kwargs):
         if self.request.data.get('all'):
             token: OutstandingToken
@@ -144,7 +144,7 @@ def get_tokens_for_user(user):
 class UserRegistrationView(APIView):
  
   renderer_classes = [UserRenderer]
- 
+  @swagger_auto_schema(request_body=serializers.UserRegistrationSerializer)
   def post(self, request, format=None):
     print(request.data)
     serializer = UserRegistrationSerializer(data=request.data)
@@ -343,7 +343,30 @@ def chceck_email(request, userEmail):
   Util.send_email(data)
   return Response(res)
 
+# @permission_classes([AllowAny])
+
 #이메일 인증번호 확인asdasd
-# @csrf_exempt
-# @api_view(['GET'])
-# def chceck_email(request, token):
+import time
+@api_view(['GET'])
+@csrf_exempt
+def getchceck_email(request):
+  print('김')
+  token = request.data.get('emailToken')
+  if EmailCheck.objects.filter(emailToken=token).exists():
+    expiretime = EmailCheck.objects.get(emailToken=token)
+  now = time.localtime()
+  print(time.strftime('%M', now))
+
+class Getcheck_email(APIView):
+  permission_classes = [AllowAny]
+  # renderer_classes = [UserRenderer]
+  # def post(self, request, format=None):
+  #   EmailCheck.objects.filter(emailToken=request.data)
+  #   print(request.data)
+  #   res= request.data
+  #   return Response({res})
+
+  permission_classes = (AllowAny,)
+
+  def post(self, request, format=None):
+      return Response("ok")
