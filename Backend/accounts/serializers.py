@@ -56,7 +56,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
 
 class UserLoginSerializer(serializers.ModelSerializer):
-  userEmail = serializers.EmailField(max_length=255)
+  userEmail = serializers.EmailField(help_text="아이디", max_length=255)
  
   class Meta:
     model = User

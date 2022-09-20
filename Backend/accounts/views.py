@@ -4,8 +4,8 @@ from rest_framework import status
 from rest_framework.views import APIView 
 from accounts import serializers
 from accounts.serializers import (
-    SendPasswordResetEmailSerializer, UserChangePasswordSerializer, UserLoginSerializer, UserPasswordResetSerializer,
-    UserProfileSerializer, UserRegistrationSerializer,UserCategorySerializer, UpdateUserSerializer,SendEmailSerializer)
+    SendPasswordResetEmailSerializer, UserChangePasswordSerializer, UserLoginSerializer, 
+    UserProfileSerializer, UserRegistrationSerializer,UserCategorySerializer, UpdateUserSerializer,)
 from django.contrib.auth import authenticate
 from accounts.renderers import UserRenderer
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -24,6 +24,30 @@ from .open_api_params import get_params
 # Generate Token Manually
 
 
+#이메일 인증번호 확인asdasd
+import time
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def getchceck_email(request):
+  print('김')
+  token = request.data.get('emailToken')
+  if EmailCheck.objects.filter(emailToken=token).exists():
+    expiretime = EmailCheck.objects.get(emailToken=token)
+  now = time.localtime()
+  print(time.strftime('%M', now))
+
+
+class Getcheck_email(APIView):
+  permission_classes = [AllowAny,]
+  # renderer_classes = [UserRenderer]
+  # def post(self, request, format=None):
+  #   EmailCheck.objects.filter(emailToken=request.data)
+  #   print(request.data)
+  #   res= request.data
+  #   return Response({res})
+
+  def post(self, request, format=None):
+      return Response("ok")
 #이메일 인증 확인
 # {
 # "userName": String,
@@ -36,7 +60,6 @@ from .open_api_params import get_params
 #아이디 찾기
 @csrf_exempt
 @api_view(['GET'])
-@swagger_auto_schema(manual_parameters=get_params)
 def find_userEmail(request):
  
   userName = request.data.get('userName')
@@ -163,7 +186,7 @@ class UserRegistrationView(APIView):
 #로그인
 class UserLoginView(APIView):
   renderer_classes = [UserRenderer]
-  
+  @swagger_auto_schema(request_body=serializers.UserLoginSerializer)
   def post(self, request, format=None):
     serializer = UserLoginSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
@@ -241,6 +264,7 @@ class Delete_user(APIView):
 class UserProfileView(APIView):
   renderer_classes = [UserRenderer]
   permission_classes = [IsAuthenticated]
+  # @swagger_auto_schema(request_body=serializers.UserProfileSerializer)
   def get(self, request, format=None):
     serializer = UserProfileSerializer(request.user)
     return Response(serializer.data, status=status.HTTP_200_OK)
@@ -250,7 +274,7 @@ class UserProfileView(APIView):
 class UserChangeView(APIView):
   renderer_classes = [UserRenderer]
   permission_classes = [IsAuthenticated]
-
+  @swagger_auto_schema(request_body=serializers.UpdateUserSerializer)
   def put(self, request, format=None):
     # serializer = UpdateUserSerializer
   
@@ -281,7 +305,7 @@ class UserChangeView(APIView):
 class UserChangePasswordView(APIView):
   renderer_classes = [UserRenderer]
   permission_classes = [IsAuthenticated]
-  
+  @swagger_auto_schema(request_body=serializers.UserChangePasswordSerializer)
   def put(self, request, format=None):
     
     serializer = UserChangePasswordSerializer(data=request.data, context={'user':request.user})
@@ -290,8 +314,11 @@ class UserChangePasswordView(APIView):
     else:
       return Response({'code': 401, "message": "비밀번호 변경 실패"}, status=status.HTTP_401_UNAUTHORIZED)
 
+
+
 class SendPasswordResetEmailView(APIView):
   renderer_classes = [UserRenderer]
+  @swagger_auto_schema(request_body=serializers.SendPasswordResetEmailSerializer)
   def post(self, request, format=None):
 
     serializer = SendPasswordResetEmailSerializer(data=request.data)
@@ -306,12 +333,12 @@ class SendPasswordResetEmailView(APIView):
       return Response({'code': 401, "message": "비밀번호 찾기 실패"}, status=status.HTTP_401_UNAUTHORIZED)
     
 
-class UserPasswordResetView(APIView):
-  renderer_classes = [UserRenderer]
-  def post(self, request, uid, token, format=None):
-    serializer = UserPasswordResetSerializer(data=request.data, context={'uid':uid, 'token':token})
-    serializer.is_valid(raise_exception=True)
-    return Response({'msg':'Password Reset Successfully'}, status=status.HTTP_200_OK)
+# class UserPasswordResetView(APIView):
+#   renderer_classes = [UserRenderer]
+#   def post(self, request, uid, token, format=None):
+#     serializer = UserPasswordResetSerializer(data=request.data, context={'uid':uid, 'token':token})
+#     serializer.is_valid(raise_exception=True)
+#     return Response({'msg':'Password Reset Successfully'}, status=status.HTTP_200_OK)
 
 
 
@@ -321,8 +348,7 @@ import string
 @csrf_exempt
 @api_view(['POST'])
 def chceck_email(request, userEmail):
-  print('rla')
-  print(request.data)
+  
   # userEmail = request.data.get('userEmail')
 
   token  = "".join([random.choice(string.ascii_letters) for _ in range(10)]) # 섞어서
@@ -344,29 +370,4 @@ def chceck_email(request, userEmail):
   return Response(res)
 
 # @permission_classes([AllowAny])
-
-#이메일 인증번호 확인asdasd
-import time
-@api_view(['GET'])
-@csrf_exempt
-def getchceck_email(request):
-  print('김')
-  token = request.data.get('emailToken')
-  if EmailCheck.objects.filter(emailToken=token).exists():
-    expiretime = EmailCheck.objects.get(emailToken=token)
-  now = time.localtime()
-  print(time.strftime('%M', now))
-
-class Getcheck_email(APIView):
-  permission_classes = [AllowAny]
-  # renderer_classes = [UserRenderer]
-  # def post(self, request, format=None):
-  #   EmailCheck.objects.filter(emailToken=request.data)
-  #   print(request.data)
-  #   res= request.data
-  #   return Response({res})
-
-  permission_classes = (AllowAny,)
-
-  def post(self, request, format=None):
-      return Response("ok")
+# @csrf_exempt
