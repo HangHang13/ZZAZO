@@ -7,6 +7,8 @@ import { ProgressBlock, ProgressDescription, SignupBody, SignupHeader } from "..
 import { MobileSizeWrapper, Wrapper } from "./../../components/styled/Wrapper";
 import DivButton from "./../../components/common/buttons/DivButton";
 import { signup } from "../../api/AuthAPI";
+import Header from "../../components/layout/Header";
+import { HeaderSpace } from "../../components/styled/HeaderSpace";
 
 // 임시 interests 더미데이터
 const intList = [
@@ -104,6 +106,7 @@ const SignupInterests = () => {
 			navigate("/login");
 		} else {
 			alert("회원가입에 실패했습니다.");
+			console.log(response);
 		}
 	};
 
@@ -115,55 +118,59 @@ const SignupInterests = () => {
 	}, []);
 
 	return (
-		<Wrapper>
-			<MobileSizeWrapper>
-				<SignupHeader>
-					<ProgressBlock>
-						<NumberCircle color="#C0F0B0" number="1" />
-						<ProgressDescription>회원정보 입력</ProgressDescription>
-					</ProgressBlock>
-					<ProgressBlock>
-						<NumberCircle color="#C0F0B0" number="2" />
-						<ProgressDescription>관심정보 입력</ProgressDescription>
-					</ProgressBlock>
-				</SignupHeader>
-				<SignupBody>
-					<InterestsWrapper>
-						<InterestsHeader>식사</InterestsHeader>
-						<InterestsList intList={intList} onHandleInterestClick={onHandleInterestClick} />
-					</InterestsWrapper>
-					<InterestsWrapper>
-						<InterestsHeader>카페 / 주류</InterestsHeader>
-						{/* <InterestsList
-              intList={intList}
-              onHandleInterestClick={onHandleInterestClick}
-            /> */}
-					</InterestsWrapper>
-					<InterestsWrapper>
-						<InterestsHeader>게임 / 놀거리</InterestsHeader>
-						{/* <InterestsList
-              intList={intList}
-              onHandleInterestClick={onHandleInterestClick}
-            /> */}
-					</InterestsWrapper>
-					<InterestsWrapper>
-						<InterestsHeader>관람</InterestsHeader>
-						{/* <InterestsList
-              intList={intList}
-              onHandleInterestClick={onHandleInterestClick}
-            /> */}
-					</InterestsWrapper>
-					<InterestsWrapper>
-						<InterestsHeader>걷기</InterestsHeader>
-						{/* <InterestsList
-              intList={intList}
-              onHandleInterestClick={onHandleInterestClick}
-            /> */}
-					</InterestsWrapper>
-				</SignupBody>
-				<DivButton message="완 료" width="100%" borderColor="#80E080" color="#80C0A0" clickEvent={() => submitForm()}></DivButton>
-			</MobileSizeWrapper>
-		</Wrapper>
+		<>
+			<Header />
+			<HeaderSpace />
+			<Wrapper>
+				<MobileSizeWrapper>
+					<SignupHeader>
+						<ProgressBlock>
+							<NumberCircle color="#C0F0B0" number="1" />
+							<ProgressDescription>회원정보 입력</ProgressDescription>
+						</ProgressBlock>
+						<ProgressBlock>
+							<NumberCircle color="#C0F0B0" number="2" />
+							<ProgressDescription>관심정보 입력</ProgressDescription>
+						</ProgressBlock>
+					</SignupHeader>
+					<SignupBody>
+						<InterestsWrapper>
+							<InterestsHeader>식사</InterestsHeader>
+							<InterestsList intList={intList} onHandleInterestClick={onHandleInterestClick} />
+						</InterestsWrapper>
+						<InterestsWrapper>
+							<InterestsHeader>카페 / 주류</InterestsHeader>
+							{/* <InterestsList
+					intList={intList}
+					onHandleInterestClick={onHandleInterestClick}
+				/> */}
+						</InterestsWrapper>
+						<InterestsWrapper>
+							<InterestsHeader>게임 / 놀거리</InterestsHeader>
+							{/* <InterestsList
+					intList={intList}
+					onHandleInterestClick={onHandleInterestClick}
+				/> */}
+						</InterestsWrapper>
+						<InterestsWrapper>
+							<InterestsHeader>관람</InterestsHeader>
+							{/* <InterestsList
+					intList={intList}
+					onHandleInterestClick={onHandleInterestClick}
+				/> */}
+						</InterestsWrapper>
+						<InterestsWrapper>
+							<InterestsHeader>걷기</InterestsHeader>
+							{/* <InterestsList
+					intList={intList}
+					onHandleInterestClick={onHandleInterestClick}
+				/> */}
+						</InterestsWrapper>
+					</SignupBody>
+					<DivButton message="완 료" width="100%" borderColor="#80E080" color="#80C0A0" clickEvent={() => submitForm()}></DivButton>
+				</MobileSizeWrapper>
+			</Wrapper>
+		</>
 	);
 };
 

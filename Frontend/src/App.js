@@ -16,6 +16,7 @@ import FindIdResult from "./pages/auth/find/FindIdResult";
 import PrivateRoute from "./routes/PrivateRoute";
 import { useEffect } from "react";
 import { storeLogout } from "./store/reducers/user";
+import Plan_Copy from "./pages/plan/Plan_Copy";
 
 function App() {
   const onHandleLogOut = () => {
@@ -58,6 +59,10 @@ function App() {
           <Route path="/findid/result" element={<FindIdResult />} />
           <Route path="/findpw" element={<FindPwMain />} />
           <Route path="/plan" element={<PrivateRoute component={<Plan />} />} />
+          <Route
+            path="/plancopy"
+            element={<PrivateRoute component={<Plan_Copy />} />}
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
