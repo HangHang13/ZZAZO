@@ -113,7 +113,9 @@ def place_test(request, place_id):
 def place_detail(request, place_id):
     place = get_object_or_404(Place, pk = place_id)
     placeSerializer = PlaceDetailSerializer(place)
-    review = Review.object.filter(place = place)
+    print(placeSerializer)
+    review = Review.object.using('default').get(place = place_id)
+    print(review)
     reviewSerializer = ReviewViewSerializer(review, many=True)
     data = {
         'Place': placeSerializer.data, 

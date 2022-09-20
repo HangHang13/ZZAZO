@@ -242,9 +242,17 @@ WSGI_APPLICATION = 'ZZAZO.wsgi.application'
 
 DATABASE_ROUTERS = ['ZZAZO.placeRouter.placeRouter']
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # },
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'S07P23B307',
+        'USER': 'S07P23B307',
+        'PASSWORD': 'b307ZAZZO~',
+        'HOST': 'stg-yswa-kr-practice-db-master.mariadb.database.azure.com',
+        'PORT': '3306'
     },
     
     'place': {
