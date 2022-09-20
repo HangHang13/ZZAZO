@@ -14,9 +14,9 @@ from accounts.views import (
     UserRegistrationView, 
    
     APILogoutView,
-    create_category,
+
     UserChangeView,
-    Delete_user,
+    # Delete_user,
     Getcheck_email,
     Create_category
    )
@@ -38,17 +38,17 @@ urlpatterns = [
     path('checkNickName/<str:userNickName>/', views.check_nickName, name='check_nickname'),
 
     #카테고리 추가
-    path('category/', Create_category.as_view(), name='profile'),
+    path('category/', Create_category.as_view(), name='category'),
     #프로필확인
     path('me/', UserProfileView.as_view(), name='profile'),
-    path('category/', create_category.as_view(), name='category'),
+
     #프로필 변경
     path('', UserChangeView.as_view(), name='userchange'),
     #아이디찾기
     path('findEmail/', views.find_userEmail, name='find_email'),
     #회원탈퇴
     # path('<str:userEmail>/', views.delete_user, name='delete_user'),
-    path('<str:userEmail>/', Delete_user.as_view(), name='delete_user'),
+    # path('<str:userEmail>/', Delete_user.as_view(), name='delete_user'),
     
     #비밀번호 변경
     path('pw/', UserChangePasswordView.as_view(), name='changepassword'),
@@ -58,7 +58,6 @@ urlpatterns = [
     path('checkEmail/<str:userEmail>/',views.chceck_email),
     #이메일 인증번호 받기
     path('getcheckEmail/',views.getchceck_email, name='getchceck_email'),
-    path('getcheckEmail1/',Getcheck_email.as_view(),name='getchceck_email'),
     # path('reset-password/<uid>/<token>/', UserPasswordResetView.as_view(), name='reset-password'),
    
 ]

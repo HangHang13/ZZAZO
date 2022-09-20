@@ -1,4 +1,5 @@
 
+import re
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView 
@@ -19,38 +20,51 @@ from .models import Category, EmailCheck, User
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from accounts.utils import Util
+from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from .open_api_params import get_params
 # Generate Token Manually
 
+test_param = openapi.Parameter('test', openapi.IN_QUERY, description="test manual param", type=openapi.TYPE_BOOLEAN)
 
 # .is_valid(raise_exception=True)
 class Create_category(APIView):
   renderer_classes = [UserRenderer]
   permission_classes = [IsAuthenticated]
   
+  @swagger_auto_schema(operation_summary='회원 카테고리 생성',request_body=serializers.UserCategorySerializer)
   def post(self, request, format=None):
-    print(request.data)
     serializer = UserCategorySerializer(data=request.data)
     if serializer.is_valid(): 
       user = serializer.save(user=request.user)
     if serializer:
-        return Response({'code': 200, "message": "카테고리 설정", "카테고리" : serializer.data}, status=status.HTTP_200_OK)
+        return Response({'code': 200, "message": "카테고리 생성",  "category" : serializer.data}, status=status.HTTP_200_OK)
     else:
-        return Response({'code': 401, "message": "카테고리 설정 실패"}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response({'code': 401, "message": "카테고리 생성 실패"}, status=status.HTTP_401_UNAUTHORIZED)
+
+
 
 
 #이메일 인증번호 확인asdasd
 import time
+from datetime import datetime,timedelta
 @api_view(['POST'])
 @permission_classes([AllowAny])
+@swagger_auto_schema(operation_summary="이메일 인증번호 확인", responses={404: 'slug not found'})
 def getchceck_email(request):
+
+
+
   print('김')
-  token = request.data.get('emailToken')
+  token = request.data.get('userToken')
+  print(token)
   if EmailCheck.objects.filter(emailToken=token).exists():
     expiretime = EmailCheck.objects.get(emailToken=token)
-  now = time.localtime()
-  print(time.strftime('%M', now))
+    # then = datetime(expiretime.created)
+    # expire = expiretime.created.strftime("%H:%M:%S")
+    ti = expiretime.created.strftime('%H:%M:%S')
+    
+    res={"code" : 200, "생성시간" : ti}
+  return Response(res)
 
 
 class Getcheck_email(APIView):
@@ -100,6 +114,7 @@ def find_userEmail(request):
 #이메일 중복확인
 @csrf_exempt
 @api_view(['GET'])
+@swagger_auto_schema(tags=["my_custom_tag"])
 def check_userEmail(request, userEmail):
 
   try:
@@ -142,7 +157,7 @@ def check_nickName(request, userNickName):
    return Response(context) 
 
 
-#로그아웃request_body=serializers.BoardTestSerializer
+#로그아웃
 class APILogoutView(APIView):
     permission_classes = (IsAuthenticated,)
     
@@ -160,17 +175,6 @@ class APILogoutView(APIView):
 
 
 
-class create_category(APIView):
-  renderer_classes = [UserRenderer]
-  def post(self, request, format=None):
-    print(request.data)
-    serializer = UserCategorySerializer(data=request.data)
-    print('카테고리',serializer)
-
-    serializer.is_valid(raise_exception=True)
-    user = serializer.save()
-    return Response({'msg':'Password Reset Successfully','user' : user}, status=status.HTTP_200_OK)
-
 
 def get_tokens_for_user(user):
   refresh = RefreshToken.for_user(user)
@@ -183,7 +187,7 @@ def get_tokens_for_user(user):
 class UserRegistrationView(APIView):
  
   renderer_classes = [UserRenderer]
-  @swagger_auto_schema(request_body=serializers.UserRegistrationSerializer)
+  @swagger_auto_schema(operation_summary='회원 가입',request_body=serializers.UserRegistrationSerializer)
   def post(self, request, format=None):
     print(request.data)
     serializer = UserRegistrationSerializer(data=request.data)
@@ -202,7 +206,7 @@ class UserRegistrationView(APIView):
 #로그인
 class UserLoginView(APIView):
   renderer_classes = [UserRenderer]
-  @swagger_auto_schema(request_body=serializers.UserLoginSerializer)
+  @swagger_auto_schema(operation_summary='로그인', request_body=serializers.UserLoginSerializer)
   def post(self, request, format=None):
     serializer = UserLoginSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
@@ -276,21 +280,21 @@ class Delete_user(APIView):
                 "message": "회원 탈퇴 실패."
                 }
           return Response(res)
-#프로필
+#프로필 조회
 class UserProfileView(APIView):
   renderer_classes = [UserRenderer]
   permission_classes = [IsAuthenticated]
-  # @swagger_auto_schema(request_body=serializers.UserProfileSerializer)
+  @swagger_auto_schema(operation_summary='프로필 조회')
   def get(self, request, format=None):
     serializer = UserProfileSerializer(request.user)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-
+#회원정보 수정
 class UserChangeView(APIView):
   renderer_classes = [UserRenderer]
   permission_classes = [IsAuthenticated]
-  @swagger_auto_schema(request_body=serializers.UpdateUserSerializer)
+  @swagger_auto_schema(operation_summary='회원 정보 수정', request_body=serializers.UpdateUserSerializer)
   def put(self, request, format=None):
     # serializer = UpdateUserSerializer
   
@@ -321,7 +325,7 @@ class UserChangeView(APIView):
 class UserChangePasswordView(APIView):
   renderer_classes = [UserRenderer]
   permission_classes = [IsAuthenticated]
-  @swagger_auto_schema(request_body=serializers.UserChangePasswordSerializer)
+  @swagger_auto_schema(operation_summary='회원 비밀번호 변경', request_body=serializers.UserChangePasswordSerializer)
   def put(self, request, format=None):
     
     serializer = UserChangePasswordSerializer(data=request.data, context={'user':request.user})
@@ -334,7 +338,7 @@ class UserChangePasswordView(APIView):
 
 class SendPasswordResetEmailView(APIView):
   renderer_classes = [UserRenderer]
-  @swagger_auto_schema(request_body=serializers.SendPasswordResetEmailSerializer)
+  @swagger_auto_schema(operation_summary='회원 비밀번호 찾기 이메일 전송', request_body=serializers.SendPasswordResetEmailSerializer)
   def post(self, request, format=None):
 
     serializer = SendPasswordResetEmailSerializer(data=request.data)
@@ -382,7 +386,7 @@ def chceck_email(request, userEmail):
       'body':body,
       'to_email':userEmail
     }
-  Util.send_email(data)
+  # Util.send_email(data)
   return Response(res)
 
 # @permission_classes([AllowAny])

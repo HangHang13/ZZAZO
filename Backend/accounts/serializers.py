@@ -78,7 +78,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
   class UserSerializerCate(serializers.ModelSerializer):
         class Meta:
             model = Category
-            fields = '__all__'
+            fields = ['id', 'categoryName','categoryNumber']
   category = UserSerializerCate(many=True, read_only=True)
   class Meta:
     model = User

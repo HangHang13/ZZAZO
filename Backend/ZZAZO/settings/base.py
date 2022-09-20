@@ -30,7 +30,15 @@ SECRET_KEY = get_secret("SECRET_KEY")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
-
+SWAGGER_SETTINGS = {
+   'SECURITY_DEFINITIONS': {
+      'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+      }
+   }
+}
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-djx=c&gb(0g2s7yae&^_hk(sizwl=l(0m2=%s_9#ro^lco2xv+'
 
