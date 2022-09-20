@@ -12,7 +12,7 @@ from review.models import Review
 
 
 from place.models import Place
-
+from drf_yasg.utils import swagger_auto_schema
 from django.db.models import Q
 import haversine
 
@@ -59,6 +59,7 @@ def place_recommend(request):
     }
     return Response(res)
 
+
 @api_view(['POST'])
 def place_list(request, place_type):
     print("post")
@@ -84,6 +85,8 @@ def place_list(request, place_type):
     near_place_list = [info for info in place_list
                                 if haversine(position, (info.latitude, info.longitude)) <= 2]
     print(near_place_list)
+
+    
     serializer = PlaceListSerializer(near_place_list, many=True)
     data = {'Place': serializer.data}
     code = 200
