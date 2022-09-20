@@ -6,8 +6,9 @@ const SelectMapContainer = ({ searchPlace }) => {
   const [Place, setPlaces] = useState([]);
 
   const markerRef = useRef([]);
-  const selectPlace = (key, y, x) => {
-    // console.log(key, y, x);
+  const selectPlace = (key, y, x, road, address) => {
+    const result = { key, y, x, road, address };
+    console.log(key, y, x);
     // let marker = new kakao.maps.Marker({
     //   map: map,
     //   position: new kakao.maps.LatLng(y, x),
@@ -95,7 +96,15 @@ const SelectMapContainer = ({ searchPlace }) => {
           <div
             key={i}
             style={{ marginTop: "20px" }}
-            onClick={() => selectPlace(i, item.y, item.x)}
+            onClick={() =>
+              selectPlace(
+                i,
+                item.y,
+                item.x,
+                item.road_address_name,
+                item.address_name
+              )
+            }
           >
             <span>{i + 1}</span>
             <div>
