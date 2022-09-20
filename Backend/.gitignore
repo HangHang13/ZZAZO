@@ -320,3 +320,7 @@ $RECYCLE.BIN/
 
 # 마이그레이션 폴더
 migrations
+
+# settings
+local.py
+prod.py
