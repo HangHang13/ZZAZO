@@ -7,6 +7,9 @@ import { ProgressBlock, ProgressDescription, SignupBody, SignupHeader } from "..
 import { MobileSizeWrapper, Wrapper } from "./../../components/styled/Wrapper";
 import DivButton from "./../../components/common/buttons/DivButton";
 import { signup } from "../../api/AuthAPI";
+import Header from "../../components/layout/Header";
+import { HeaderSpace } from "../../components/styled/HeaderSpace";
+import Loading from "./../../components/common/Loading";
 
 // 임시 interests 더미데이터
 const intList = [
@@ -66,6 +69,7 @@ const SignupInterests = () => {
 	const navigate = useNavigate();
 	const { state } = useLocation();
 	const [form, setForm] = useState(state); // form.userCategory = []
+	const [loading, setLoading] = useState(false);
 
 	const onHandleInterestClick = (categoryName) => {
 		if (form.userCategory.includes(categoryName)) {
@@ -85,6 +89,7 @@ const SignupInterests = () => {
 			return;
 		}
 
+		setLoading(true);
 		const newForm = {
 			userEmail: form.userEmail,
 			userName: form.userName,
@@ -98,12 +103,13 @@ const SignupInterests = () => {
 		};
 
 		const response = await signup(newForm);
-
+		setLoading(false);
 		if (response.code === 200 || response.code === 201) {
 			alert("회원가입이 완료되었습니다.");
 			navigate("/login");
 		} else {
 			alert("회원가입에 실패했습니다.");
+			console.log(response);
 		}
 	};
 
@@ -115,55 +121,60 @@ const SignupInterests = () => {
 	}, []);
 
 	return (
-		<Wrapper>
-			<MobileSizeWrapper>
-				<SignupHeader>
-					<ProgressBlock>
-						<NumberCircle color="#C0F0B0" number="1" />
-						<ProgressDescription>회원정보 입력</ProgressDescription>
-					</ProgressBlock>
-					<ProgressBlock>
-						<NumberCircle color="#C0F0B0" number="2" />
-						<ProgressDescription>관심정보 입력</ProgressDescription>
-					</ProgressBlock>
-				</SignupHeader>
-				<SignupBody>
-					<InterestsWrapper>
-						<InterestsHeader>식사</InterestsHeader>
-						<InterestsList intList={intList} onHandleInterestClick={onHandleInterestClick} />
-					</InterestsWrapper>
-					<InterestsWrapper>
-						<InterestsHeader>카페 / 주류</InterestsHeader>
-						{/* <InterestsList
-              intList={intList}
-              onHandleInterestClick={onHandleInterestClick}
-            /> */}
-					</InterestsWrapper>
-					<InterestsWrapper>
-						<InterestsHeader>게임 / 놀거리</InterestsHeader>
-						{/* <InterestsList
-              intList={intList}
-              onHandleInterestClick={onHandleInterestClick}
-            /> */}
-					</InterestsWrapper>
-					<InterestsWrapper>
-						<InterestsHeader>관람</InterestsHeader>
-						{/* <InterestsList
-              intList={intList}
-              onHandleInterestClick={onHandleInterestClick}
-            /> */}
-					</InterestsWrapper>
-					<InterestsWrapper>
-						<InterestsHeader>걷기</InterestsHeader>
-						{/* <InterestsList
-              intList={intList}
-              onHandleInterestClick={onHandleInterestClick}
-            /> */}
-					</InterestsWrapper>
-				</SignupBody>
-				<DivButton message="완 료" width="100%" borderColor="#80E080" color="#80C0A0" clickEvent={() => submitForm()}></DivButton>
-			</MobileSizeWrapper>
-		</Wrapper>
+		<>
+			<Header />
+			<HeaderSpace />
+			<Wrapper>
+				{loading ? <Loading /> : null}
+				<MobileSizeWrapper>
+					<SignupHeader>
+						<ProgressBlock>
+							<NumberCircle color="#C0F0B0" number="1" />
+							<ProgressDescription>회원정보 입력</ProgressDescription>
+						</ProgressBlock>
+						<ProgressBlock>
+							<NumberCircle color="#C0F0B0" number="2" />
+							<ProgressDescription>관심정보 입력</ProgressDescription>
+						</ProgressBlock>
+					</SignupHeader>
+					<SignupBody>
+						<InterestsWrapper>
+							<InterestsHeader>식사</InterestsHeader>
+							<InterestsList intList={intList} onHandleInterestClick={onHandleInterestClick} />
+						</InterestsWrapper>
+						<InterestsWrapper>
+							<InterestsHeader>카페 / 주류</InterestsHeader>
+							{/* <InterestsList
+					intList={intList}
+					onHandleInterestClick={onHandleInterestClick}
+				/> */}
+						</InterestsWrapper>
+						<InterestsWrapper>
+							<InterestsHeader>게임 / 놀거리</InterestsHeader>
+							{/* <InterestsList
+					intList={intList}
+					onHandleInterestClick={onHandleInterestClick}
+				/> */}
+						</InterestsWrapper>
+						<InterestsWrapper>
+							<InterestsHeader>관람</InterestsHeader>
+							{/* <InterestsList
+					intList={intList}
+					onHandleInterestClick={onHandleInterestClick}
+				/> */}
+						</InterestsWrapper>
+						<InterestsWrapper>
+							<InterestsHeader>걷기</InterestsHeader>
+							{/* <InterestsList
+					intList={intList}
+					onHandleInterestClick={onHandleInterestClick}
+				/> */}
+						</InterestsWrapper>
+					</SignupBody>
+					<DivButton message="완 료" width="100%" borderColor="#80E080" color="#80C0A0" clickEvent={() => submitForm()}></DivButton>
+				</MobileSizeWrapper>
+			</Wrapper>
+		</>
 	);
 };
 

@@ -104,12 +104,15 @@ const Login = () => {
 			alert("로그인 시도 중 오류가 발생했습니다. 네트워크 상태를 확인해주세요.");
 		}
 
-		// sessionStorage에 현재 아이디 저장
+		// 아이디 저장 체크했을 경우
 		if (check.idSave) {
 			sessionStorage.setItem("LOGIN_ID", state.userEmail);
 		} else {
 			sessionStorage.removeItem("LOGIN_ID");
 		}
+
+		// 자동 로그인 체크했을 경우
+		sessionStorage.setItem("AUTO_LOGIN", check.autoLogin);
 
 		// 토큰 두 가지 sessionStorage에 저장
 		const accessToken = response.data.token.access;

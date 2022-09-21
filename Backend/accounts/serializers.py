@@ -2,7 +2,7 @@
 from multiprocessing import context
 from unittest.util import _MAX_LENGTH
 from rest_framework import serializers
-from accounts.models import Category, User
+from accounts.models import Category, User,EmailCheck
 from django.utils.encoding import smart_str, force_bytes, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
@@ -10,11 +10,22 @@ from accounts.utils import Util
 from rest_framework.response import Response
 
 class UserCategorySerializer(serializers.ModelSerializer):
-  categoryName = serializers.CharField(max_length=100, write_only=True)
-  
+  categoryName = serializers.CharField(max_length=100)
+  categoryNumber = serializers.IntegerField()
   class Meta:
     model = Category
-    fields = ('id','categoryName')
+    fields = ('id','categoryName','categoryNumber')
+  def validate(self, attrs):
+    categoryName = attrs.get('categoryName')
+    categoryNumber = attrs.get('categoryNumber')
+  
+    return attrs
+  def create(self,validate_data):
+    return Category.objects.create(**validate_data)
+
+  
+    
+
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
   # We are writing this becoz we need confirm password field in our Registratin Request
@@ -56,7 +67,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
 
 class UserLoginSerializer(serializers.ModelSerializer):
-  userEmail = serializers.EmailField(max_length=255)
+  userEmail = serializers.EmailField(help_text="아이디", max_length=255)
  
   class Meta:
     model = User
@@ -67,11 +78,11 @@ class UserProfileSerializer(serializers.ModelSerializer):
   class UserSerializerCate(serializers.ModelSerializer):
         class Meta:
             model = Category
-            fields = ('categoryName')
-  categoryName = UserCategorySerializer(read_only=True)
+            fields = ['id', 'categoryName','categoryNumber']
+  category = UserSerializerCate(many=True, read_only=True)
   class Meta:
     model = User
-    fields = ['id', 'userEmail', 'userName','userNickName','profileUrl','userPhone', 'categoryName']
+    fields = ['id', 'userEmail', 'userName','userNickName','profileUrl','userPhone', 'userBirth','category']
 
 class ChoicesField(serializers.Field):
     def __init__(self, choices, **kwargs):
@@ -101,17 +112,18 @@ class ChoicesSerializerField(serializers.SerializerMethodField):
 class UpdateUserSerializer(serializers.Serializer):
     userName = serializers.CharField(max_length=25, source="User.userName")
     profileUrl = serializers.CharField(max_length=255 ,source="User.profileUrl" )
-    userBirth = serializers.DateTimeField(source="User.userBirth", )
-    userPhone = serializers.CharField(max_length=12,source="User.userPhone", )
+    userBirth = serializers.DateTimeField(source="User.userBirth" )
+    userPhone = serializers.CharField(max_length=12,source="User.userPhone")
     # GENDER_CHOICES = (
     #     (u'M', u'Male'),
     #     (u'F', u'Female'),
     # )
-    userGender = serializers.CharField(max_length=2,source="User.userGender", allow_blank=True )
+    userNickName = serializers.CharField(max_length=25, source="User.userNickName")
+
     userRadius = serializers.IntegerField(source="User.userRadius")
     class Meta:
         model = User
-        fields=['userName', 'userBirth','userPhone','userGender','profileUrl','userRadius']
+        fields=['userName','userNickName', 'userBirth','userPhone','profileUrl','userRadius']
      
 
    
@@ -135,8 +147,8 @@ class UpdateUserSerializer(serializers.Serializer):
       user = self.context.get('user')
       a=attrs.get('User')
       # print(a.get('userRadius'))
-      user = User.objects.filter(userEmail=user).update(userName=a.get('userName'),userBirth=a.get('userBirth'), 
-      userGender=a.get('userGender'),
+      user = User.objects.filter(userEmail=user).update(userNickName=a.get('userNickName'),userName=a.get('userName'),userBirth=a.get('userBirth'), 
+     
       profileUrl=a.get('profileUrl'),
       userPhone=a.get('userPhone'),
       userRadius=a.get('userRadius')
@@ -160,36 +172,52 @@ class UserChangePasswordSerializer(serializers.Serializer):
   def validate(self, attrs):
     password = attrs.get('password')
     password2 = attrs.get('password2')
+  
     user = self.context.get('user')
     if password != password2:
       raise serializers.ValidationError({'code': 401, "message": "비밀번호 변경 실패"})
+    print('비밀번호 유저타입', type(user))
     user.set_password(password)
     user.save()
     return attrs
 from django.http import JsonResponse
+from django.db.models import Q
 class SendPasswordResetEmailSerializer(serializers.Serializer):
   userEmail = serializers.EmailField(max_length=255)
+  userBirth = serializers.DateTimeField()
+  userName = serializers.CharField(max_length=25)
   class Meta:
-    fields = ['userEmail', 'link']
+    fields = ['userEmail','userName','userBirth', 'link']
 
   def validate(self, attrs):
+    
+    username =attrs.get('userName')
+    userBirth = attrs.get('userBirth')
     email = attrs.get('userEmail')
-    if User.objects.filter(userEmail=email).exists():
-      user = User.objects.get(userEmail = email)
+    print(attrs,username,userBirth)
+    if User.objects.filter(Q(userEmail=email) &Q(userName=username) &Q(userBirth=userBirth)).exists():
+      user = User.objects.get(userEmail=email)
+      # user1= User.objects.filter(userEmail=email)
+   
       uid = urlsafe_base64_encode(force_bytes(user.id))
-      print('Encoded UID', uid)
+      # print('Encoded UID', uid)
       token = PasswordResetTokenGenerator().make_token(user)
-      print('Password Reset Token', token)
+      print('Password Reset Token', token[:15])
+  
+      user.set_password(token[:15])
+      user.save()
+      # print(type(user1))
       link = 'http://localhost:8000/api/v1/users/reset-password/'+uid+'/'+token
       print('Password Reset Link', link)
       # Send EMail
-      body = '링크를 눌러 비밀번호를 변경하세요 '+ link
+      body = '해당 비밀번호로 변경 되었습니다. '+ token[:15]
+      print(token)
       data = {
         'subject':'ZZAZO 비밀번호 변경 이메일입니다.',
         'body':body,
         'to_email':user.userEmail
       }
-      # Util.send_email(data)
+      Util.send_email(data)
     
       return attrs
     else:
@@ -220,3 +248,63 @@ class UserPasswordResetSerializer(serializers.Serializer):
       PasswordResetTokenGenerator().check_token(user, token)
       raise serializers.ValidationError('Token is not Valid or Expired')
   
+
+  class CheckEmail(serializers.Serializer):
+    password = serializers.CharField(max_length=255, style={'input_type':'password'}, write_only=True)
+    def create(self, validate_data):
+  
+      return EmailCheck.objects.create(**validate_data)
+    class Meta:
+      fields = ['password']
+
+    def validate(self, attrs):
+      try:
+        password = attrs.get('password')
+        password2 = attrs.get('password2')
+        uid = self.context.get('uid')
+        token = self.context.get('token')
+        token = PasswordResetTokenGenerator().make_token(user)
+        print('Password Reset Token', token[:15])
+        if password != password2:
+          raise serializers.ValidationError("Password and Confirm Password doesn't match")
+        id = smart_str(urlsafe_base64_decode(uid))
+        user = User.objects.get(id=id)
+        if not PasswordResetTokenGenerator().check_token(user, token):
+          raise serializers.ValidationError('Token is not Valid or Expired')
+        return attrs
+      except DjangoUnicodeDecodeError as identifier:
+        PasswordResetTokenGenerator().check_token(user, token)
+        raise serializers.ValidationError('Token is not Valid or Expired')
+
+
+class SendEmailSerializer(serializers.Serializer):
+  userEmail = serializers.EmailField(max_length=255)
+  # created = serializers.DateTimeField(auto_now_add=True)
+  # expired = serializers.DateTimeField()
+  
+  class Meta:
+    fields = ['userEmail']
+
+  def validate(self, attrs):
+    email = attrs.get('userEmail')
+    token = PasswordResetTokenGenerator().make_token(email)
+    user = EmailCheck.objects.get(emailToken=token[:15])
+    # user1= User.objects.filter(userEmail=email)
+  
+    uid = urlsafe_base64_encode(force_bytes(user.id))
+    # print('Encoded UID', uid)
+    print('Password Reset Token', token[:15])
+
+
+    # Send EMail
+    body = '인증번호를 입력해 주세요. '+ token[:15]
+    print(token)
+    data = {
+      'subject':'ZZAZO 비밀번호 변경 이메일입니다.',
+      'body':body,
+      'to_email':user.userEmail
+    }
+    Util.send_email(data)
+  
+    return attrs
+ 
