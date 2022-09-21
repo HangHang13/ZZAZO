@@ -21,7 +21,6 @@ from haversine import haversine
 @api_view(['GET'])
 def home(request):
     place_list = Place.objects.all()[:10]
-    print(place_list)
     serializer = PlaceListSerializer(place_list, many=True)
     data = {'Place': serializer.data}
     code = 200
@@ -36,7 +35,6 @@ def home(request):
     
 @api_view(['POST'])
 def place_recommend(request):
-    print("추천입성")
     longitude = float(request.data['longitude'])
     latitude  = float(request.data['latitude'])
     position  = (latitude, longitude)
@@ -53,10 +51,8 @@ def place_recommend(request):
     near_place_list = [info for info in place_list
                                 if haversine(position, (info.latitude, info.longitude)) <= 2]
     serializer = PlaceListSerializer(near_place_list, many=True)
-    print(len(serializer.data))
     for i in range(len(serializer.data)):
         for key, val in serializer.data[i].items():
-            print(key)
             if key == "_id":
                 placeScore = Review.objects.filter(place=val).aggregate(placeScore = Avg('score'))
                 serializer.data[i].update(placeScore)
@@ -88,16 +84,7 @@ def place_list(request, place_type):
                 .objects
                 .filter(condition)
             )
-<<<<<<< HEAD
-    print(place_list)
-    near_place_list = [info for info in place_list
-                                if haversine(position, (info.latitude, info.longitude)) <= 2]
-    print(near_place_list)
-
-    
-=======
     near_place_list = [info for info in place_list if haversine(position, (info.latitude, info.longitude)) <= 2]
->>>>>>> feat/BE/DB
     serializer = PlaceListSerializer(near_place_list, many=True)
     for i in range(len(serializer.data)):
         for key, val in serializer.data[i].items():
