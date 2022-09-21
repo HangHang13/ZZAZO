@@ -5,7 +5,7 @@ from place.models import Place
 
 class Review(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviews')
-    place = models.ForeignKey(Place, on_delete=models.DO_NOTHING, db_constraint=False)
+    place = models.ForeignKey(Place, on_delete=models.DO_NOTHING, db_constraint=False, related_name='reviews')
     content = models.CharField(max_length=100, null=False)
     score = models.IntegerField(
         default = 3,
