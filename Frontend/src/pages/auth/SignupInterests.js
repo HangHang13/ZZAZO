@@ -9,6 +9,7 @@ import DivButton from "./../../components/common/buttons/DivButton";
 import { signup } from "../../api/AuthAPI";
 import Header from "../../components/layout/Header";
 import { HeaderSpace } from "../../components/styled/HeaderSpace";
+import Loading from "./../../components/common/Loading";
 
 // 임시 interests 더미데이터
 const intList = [
@@ -68,6 +69,7 @@ const SignupInterests = () => {
 	const navigate = useNavigate();
 	const { state } = useLocation();
 	const [form, setForm] = useState(state); // form.userCategory = []
+	const [loading, setLoading] = useState(false);
 
 	const onHandleInterestClick = (categoryName) => {
 		if (form.userCategory.includes(categoryName)) {
@@ -87,6 +89,7 @@ const SignupInterests = () => {
 			return;
 		}
 
+		setLoading(true);
 		const newForm = {
 			userEmail: form.userEmail,
 			userName: form.userName,
@@ -100,7 +103,7 @@ const SignupInterests = () => {
 		};
 
 		const response = await signup(newForm);
-
+		setLoading(false);
 		if (response.code === 200 || response.code === 201) {
 			alert("회원가입이 완료되었습니다.");
 			navigate("/login");
@@ -122,6 +125,7 @@ const SignupInterests = () => {
 			<Header />
 			<HeaderSpace />
 			<Wrapper>
+				{loading ? <Loading /> : null}
 				<MobileSizeWrapper>
 					<SignupHeader>
 						<ProgressBlock>
