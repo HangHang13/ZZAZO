@@ -52,19 +52,19 @@ from datetime import datetime,timedelta
 @swagger_auto_schema(operation_summary="이메일 인증번호 확인", responses={404: 'slug not found'})
 def getchceck_email(request):
 
-
-
-  print('김')
   token = request.data.get('userToken')
   print(token)
   if EmailCheck.objects.filter(emailToken=token).exists():
     expiretime = EmailCheck.objects.get(emailToken=token)
     # then = datetime(expiretime.created)
     # expire = expiretime.created.strftime("%H:%M:%S")
-    ti = expiretime.created.strftime('%H:%M:%S')
-    
+    ti = expiretime.created.strftime('%Y-%m-%d %H:%M:%S')
+    # .strftime('%D :%H:%M:%S')
     res={"code" : 200, "생성시간" : ti}
-  return Response(res)
+    return Response(res)
+  else:
+    res={"code" : 200, "message" : '해당 이메일이 없습니다.'}
+    return Response(res)
 
 
 class Getcheck_email(APIView):
