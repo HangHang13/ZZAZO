@@ -2,6 +2,20 @@ import React from "react";
 import styled from "styled-components";
 import ReviewCard from "./ReviewCard";
 
+const Background = styled.div`
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: #ffffffb7;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
 const CardWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -13,8 +27,13 @@ const CardWrapper = styled.div`
   padding-left: 1.5rem;
   border-radius: 16px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8);
-
   margin-bottom: 3rem;
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
 `;
 const ExitBtnWrapper = styled.div`
   width: 48rem;
@@ -106,54 +125,64 @@ const ReviewTitle = styled.div`
   font-weight: 900;
 `;
 
-const CardDetail = ({}) => {
+//title : 장소명
+//address : 주소
+//category : 장소 카테고리
+//target : 주요 이용 고객
+//score : 별점
+const CardDetail = ({ modalClose, title, address, category, target, score }) => {
+  let searchTitle = title.replace(/ /g, "");
   return (
-    <CardWrapper>
-      <ExitBtnWrapper>
-        <ImgButton src={`${process.env.PUBLIC_URL}/assets/card/exit.png`} alt="exit"></ImgButton>
-      </ExitBtnWrapper>
-      <CardTitle>가가가덮밥</CardTitle>
-      <CardLine width="50%"></CardLine>
-      <CardMainWrapper>
-        <CardInfoWrapper>
-          <CardInfo>
-            <CardInfoItem>
-              <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/location.png`} alt="location"></InfoIcon>
-              서울 강남구 강남대로 123
-            </CardInfoItem>
-            <CardInfoItem>
-              <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/sushi.png`} alt="location"></InfoIcon>
-              음식점 - 일식
-            </CardInfoItem>
-            <CardInfoItem>
-              <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/women.png`} alt="location"></InfoIcon>
-              20대 여성들이 많이 방문했어요
-            </CardInfoItem>
-            <CardInfoItem>
-              <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/star.png`} alt="location"></InfoIcon>
-              4.3
-            </CardInfoItem>
-          </CardInfo>
-          <CardLine width="100%"></CardLine>
-          <ReviewTitle>Review</ReviewTitle>
-          <ReviewWrapper>
-            <ReviewCard writer="김성수" writeday="2022 - 09 - 20" score="4.7" content="인생은 가지덮밥을 먹기 전과 후로 나뉜다."></ReviewCard>
-            <ReviewCard
-              writer="김성수"
-              writeday="2022 - 09 - 20"
-              score="4.7"
-              content="내 인생에 있어 가지는 변수가 아닌 상수다.내 인생에 있어 가지는 변수가 아닌 상수다. 내 인생에 있어 가지는 변수가 아닌 상수다."
-            ></ReviewCard>
-          </ReviewWrapper>
-        </CardInfoWrapper>
-        <CardImgWrapper>
-          <CardImg src={`${process.env.PUBLIC_URL}/assets/card/gazi.png`} alt="exit"></CardImg>
-          <InstaButtonWrapper>
-            <ImgButton src={`${process.env.PUBLIC_URL}/assets/card/insta.png`} alt="insta"></ImgButton>
-          </InstaButtonWrapper>
-        </CardImgWrapper>
-      </CardMainWrapper>
-    </CardWrapper>
+    <Background>
+      <CardWrapper>
+        <ExitBtnWrapper>
+          <ImgButton src={`${process.env.PUBLIC_URL}/assets/card/exit.png`} alt="exit" onClick={modalClose}></ImgButton>
+        </ExitBtnWrapper>
+        <CardTitle>{title}</CardTitle>
+        <CardLine width="50%"></CardLine>
+        <CardMainWrapper>
+          <CardInfoWrapper>
+            <CardInfo>
+              <CardInfoItem>
+                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/location.png`} alt="location"></InfoIcon>
+                {address}
+              </CardInfoItem>
+              <CardInfoItem>
+                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/sushi.png`} alt="location"></InfoIcon>
+                {category}
+              </CardInfoItem>
+              <CardInfoItem>
+                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/women.png`} alt="location"></InfoIcon>
+                {target}
+              </CardInfoItem>
+              <CardInfoItem>
+                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/star.png`} alt="location"></InfoIcon>
+                {score}
+              </CardInfoItem>
+            </CardInfo>
+            <CardLine width="100%"></CardLine>
+            <ReviewTitle>Review</ReviewTitle>
+            <ReviewWrapper>
+              <ReviewCard writer="김성수" writeday="2022 - 09 - 20" score="4.7" content="인생은 가지덮밥을 먹기 전과 후로 나뉜다."></ReviewCard>
+              <ReviewCard
+                writer="김성수"
+                writeday="2022 - 09 - 20"
+                score="4.7"
+                content="내 인생에 있어 가지는 변수가 아닌 상수다.내 인생에 있어 가지는 변수가 아닌 상수다. 내 인생에 있어 가지는 변수가 아닌 상수다."
+              ></ReviewCard>
+            </ReviewWrapper>
+          </CardInfoWrapper>
+          <CardImgWrapper>
+            <CardImg src={`${process.env.PUBLIC_URL}/assets/card/gazi.png`} alt="exit"></CardImg>
+            <InstaButtonWrapper>
+              <a href={`https://www.instagram.com/explore/tags/${searchTitle}/?hl=ko`} target="_blank">
+                <ImgButton src={`${process.env.PUBLIC_URL}/assets/card/insta.png`} alt="insta"></ImgButton>
+              </a>
+            </InstaButtonWrapper>
+          </CardImgWrapper>
+        </CardMainWrapper>
+      </CardWrapper>
+    </Background>
   );
 };
 

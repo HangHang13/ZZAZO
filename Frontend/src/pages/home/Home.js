@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Introduce from "../../components/common/home/introduce/introduce";
 import RecCard from "../../components/common/home/recommendation/RecCard";
@@ -12,6 +12,12 @@ import CardDetail from "../../components/locationdetail/CardDetail.js";
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  //약속카드 상세 모달
+  const [modalOpen, setModalOpen] = useState(false);
+  const modalClose = () => {
+    setModalOpen(!modalOpen);
+  };
 
   useEffect(() => {
     if (!sessionStorage.getItem("ACCESS_TOKEN")) {
@@ -36,6 +42,7 @@ const Home = () => {
           </HomeBannerArea>
           <BannerImg src="../assets/main/play.png"></BannerImg>
         </HomeBanner>
+
         <br />
         <br />
         <MiddleTitle>약속 장소 추천 서비스 - ZZAZO</MiddleTitle>
@@ -91,10 +98,9 @@ const Home = () => {
             <PlanBtn>약속잡기</PlanBtn>
           </BtnWrapper>
         </BottomArea>
-
-        <CardDetail></CardDetail>
-
-        {/* <SearchPlace></SearchPlace> */}
+        {/* 상세보기 모달 띄우기 */}
+        <button onClick={modalClose}>모달열기</button>
+        {modalOpen && <CardDetail modalClose={modalClose} title="석촌 호수 공원" address="서울시 강남대로 123" category="음식점 - 일식" target="20대 여성이 주로 방문해요" score="4.7"></CardDetail>}
       </HomeWrapper>
     </>
   );
