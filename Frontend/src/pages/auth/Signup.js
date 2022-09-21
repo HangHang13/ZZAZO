@@ -117,7 +117,6 @@ const Signup = () => {
 	// 이메일 인증 번호 발송
 	const sendConfirmEmail = async () => {
 		const response = await emailSendConfirm(state.userEmail);
-		console.log(response);
 	};
 
 	// 이메일 인증
@@ -127,13 +126,30 @@ const Signup = () => {
 			alert("중복 체크를 먼저 해 주세요.");
 			return;
 		}
+		if (state.userEmailCode.length < 1) {
+			alert("이메일 인증 코드를 입력해주세요.");
+			return;
+		}
 
-		const response = await emailConfirm(state.userEmailCode);
-		console.log(response);
+		const response = await emailConfirm({ userToken: state.userEmailCode });
 
 		if (response.code === 200) {
+			// 인증번호 유효기간 만료 시 (30분)
+			const timeGap = new Date().getTime() - new Date(response.생성시간).getTime();
+			const timeGapMinute = timeGap / 1000 / 60;
+			if (timeGapMinute >= 30) {
+				alert("이메일 인증번호의 유효 기간이 만료되었습니다. 인증을 다시 진행해주세요.");
+				setState({ ...state, userEmailCode: "", userEmailChecked: false });
+				emailConfirmRef.current[0].disabled = false;
+				emailConfirmRef.current[0].style.backgroundColor = "white";
+				emailConfirmRef.current[1].disabled = true;
+				emailConfirmRef.current[1].style.backgroundColor = "#f0f0f0";
+				return;
+			}
+
+			// 인증 완료
 			alert("이메일 인증이 완료되었습니다.");
-			setState({ ...state, ["userEmailConfirmed"]: true });
+			setState({ ...state, userEmailConfirmed: true });
 			emailConfirmRef.current[1].disabled = true;
 			emailConfirmRef.current[1].style.backgroundColor = "#f0f0f0";
 		} else {

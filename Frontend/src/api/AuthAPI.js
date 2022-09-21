@@ -49,7 +49,7 @@ const emailSendConfirm = async (data) => {
 // 이메일 인증
 const emailConfirm = async (data) => {
 	const result = await client
-		.get(`/users/checkEmail/${data}/`)
+		.post(`/users/getcheckEmail/`, data)
 		.then((response) => response.data)
 		.catch((error) => error.response);
 	return result;
