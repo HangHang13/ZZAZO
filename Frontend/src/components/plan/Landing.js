@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Map from "./Map";
+import Button from "../common/buttons/Button";
 //head에 작성한 Kakao API 불러오기
 const { kakao } = window;
 const MapWrapper = styled.div`
@@ -83,6 +83,9 @@ const Landing = () => {
   const [KeyWord, setKeyWord] = useState("");
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
+  const [clickLat, setClickLat] = useState(0);
+  const [clickLng, setClickLng] = useState(0);
+
   //입력 폼 변화 감지하여 입력값을 state에 담아주는 함수
   const keywordChange = (e) => {
     e.preventDefault();
@@ -99,57 +102,65 @@ const Landing = () => {
       alert("검색어를 입력해주세요.");
     }
   };
-  //마커를 담는 배열
+  //최종 좌표 넘겨주는 함수
+  const nextStep = () => {
+    if (clickLat === 0 && clickLng === 0) {
+      alert("위치를 선택해 주세요.");
+      return false;
+    }
+  };
+  //지도상의 전체 마커를 담는 배열
   let markers = [];
 
   //검색어가 바뀔 때마다 리랜더링 되도록 useEffect 사용
   useEffect(() => {
-    let firstlat;
-    let firstlon;
+    //지도 영역 컨테이너
     const mapContainer = document.getElementById("map");
+    //최초 랜더링 지도 옵션
     const mapOptions = {
       center: new kakao.maps.LatLng(lat, lng),
-      level: 3,
+      level: 6,
     };
+    //최초랜더링 지도를 생성
     const map = new kakao.maps.Map(mapContainer, mapOptions);
-    // //지도를 생성
+
     // const map = new kakao.maps.Map(mapContainer, mapOptions);
     //장소 검색 객체를 생성
     const ps = new kakao.maps.services.Places();
+
     //검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성
     const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
-    //초기 위치 GPS 중심
+
+    //초기 위치 GPS 중심 재설정
     const firstLocation = () => {
+      //GPS 좌표 기능이 정상적으로 동작하는가 판단
       if (navigator.geolocation) {
+        //정상적으로 동작할경우
         navigator.geolocation.getCurrentPosition((position) => {
+          //GPS 기반 위도 경도 재설정
           setLat((prev) => position.coords.latitude);
           setLng((prev) => position.coords.longitude);
-          // let lat = position.coords.latitude,
-          //   lon = position.coords.longitude;
-          // firstlat = lat;
-          // firstlon = lon;
-          // mapOptions.center = new kakao.maps.LatLng(lat, lon);
-          //지도를 생성
+          //GPS 기반 위도 경도 최종좌표 재설정
+          setClickLat((prev) => lat);
+          setClickLng((prev) => lng);
+          //맵 중앙 재설정
           map.setCenter(new kakao.maps.LatLng(lat, lng));
-          // map.setCenter(new kakao.maps.LatLng(lat, lon));
         });
       } else {
-        // let lat = 33.453333,
-        //   lon = 126.573333;
-        // message = "현재 위치를 알 수 없어 기본 위치로 이동합니다.";
-        currentLatLon["lat"] = 33.453333;
-        currentLatLon["lon"] = 126.573333;
-        // addMarker(locPosition, 0);
+        //GPS 기능 실패시 기본 좌표
         map.setCenter(new kakao.maps.LatLng(lat, lng));
       }
     };
+    //GPS 기반 초기위치 함수 실행
     firstLocation();
 
+    //초기 마커 설정
+    //마커 이미지 소스
     let imageSrc =
       "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png";
-    //초기 마커
     //마커 이미지 크기
     let imageSize = new kakao.maps.Size(36, 37);
+    //마커 옵션
     let imageOptions = {
       //스프라이트 이미지의 크기
       spriteSize: new kakao.maps.Size(36, 691),
@@ -158,21 +169,22 @@ const Landing = () => {
       //마커 좌표에 일치시킬 이미지 내에서의 좌표
       offset: new kakao.maps.Point(13, 37),
     };
+    //마커 이미지 설정
     let markerImage = new kakao.maps.MarkerImage(
       imageSrc,
       imageSize,
       imageOptions
     );
-
+    //마커 설정
     let marker = new kakao.maps.Marker({
       position: new kakao.maps.LatLng(lat, lng),
       image: markerImage,
     });
-    console.log(marker);
     //지도 위에 마커 표출
     marker.setMap(map);
     //배열에 생성된 마커 추가
     markers.push(marker);
+    //검색결과 리스트 각 아이템 정보생성
     const getListItem = (index, places) => {
       const el = document.createElement("li");
       let itemStr = `
@@ -204,6 +216,7 @@ const Landing = () => {
       el.className = "item";
       return el;
     };
+    //마커 생성 함수
     const addMarker = (position, idx, title) => {
       //마커 이미지 url, 스프라이트 이미지
       let imageSrc =
@@ -218,11 +231,13 @@ const Landing = () => {
         //마커 좌표에 일치시킬 이미지 내에서의 좌표
         offset: new kakao.maps.Point(13, 37),
       };
+      //마커 이미지 설정
       let markerImage = new kakao.maps.MarkerImage(
         imageSrc,
         imageSize,
         imageOptions
       );
+      //마커 설정
       let marker = new kakao.maps.Marker({
         position: position,
         image: markerImage,
@@ -236,14 +251,20 @@ const Landing = () => {
 
     //지도 위에 표시되고 있는 마커를 모두 제거합니다.
     const removeMarker = () => {
+      //전체 마커 배열 전부 제거
       for (let i = 0; i < markers.length; i++) {
         markers[i].setMap(null);
       }
+      //전체 마커 배열 초기화
       markers = [];
     };
 
     //검색 결과 목록과 마커를 표출하는 함수
     const displayPlaces = (places) => {
+      //최종좌표 0으로 갱신
+      setClickLat((prev) => 0);
+      setClickLng((prev) => 0);
+      //리스트 요소, 결과 요소, 프레그먼트, 바운즈 초기화
       const listEl = document.getElementById("places-list"),
         resultEl = document.getElementById("search-result"),
         fragment = document.createDocumentFragment(),
@@ -252,7 +273,7 @@ const Landing = () => {
       listEl && removeAllChildNods(listEl);
       //지도에 표시되고 있는 마커를 제거
       removeMarker();
-
+      //검색된 요소들만큼
       for (let i = 0; i < places.length; i++) {
         //마커를 생성하고 지도에 표시
         let placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
@@ -370,15 +391,37 @@ const Landing = () => {
         el.lastChild && el.removeChild(el.lastChild);
       }
     };
-  }, [KeyWord, lat, lng]);
+    //지도 클릭시 중심좌표 이동 후 마커생성
+    kakao.maps.event.addListener(map, "click", function (mouseEvent) {
+      const listEl = document.getElementById("places-list");
+      // 검색 결과 목록에 추가된 항목들을 제거
+      listEl && removeAllChildNods(listEl);
+      //지도에 표시되고 있는 마커를 제거
+      removeMarker();
+
+      //중심좌표를 마우스 클릭한 좌표로 설정
+      let latlng = mouseEvent.latLng;
+      //맵 중앙 이동
+      map.setCenter(latlng);
+      //마커 생성
+      marker = addMarker(latlng, 0, undefined);
+      //마커 지도에 표출
+      marker.setMap(map);
+      //전체 마커 배열에 마커 추가
+      markers.push(marker);
+      //최종좌표 갱신
+      setClickLat((prev) => marker.n.La);
+      setClickLng((prev) => marker.n.Ma);
+      console.log(marker.n.La);
+      console.log(marker.n.Ma);
+    });
+  }, [KeyWord, lat, lng]); //키워드, 위도, 경도가 바뀔때마다 랜더링
   return (
     <>
       {/* 제출한 검색어 넘기기 */}
-      {/* <Map searchKeyword={KeyWord} /> */}
-      <MapWrapper id="map" className="map">
-        {/* <div id="map" className="map"></div> */}
-      </MapWrapper>
-
+      {/* 맵 지도 영역 */}
+      <MapWrapper id="map" className="map"></MapWrapper>
+      {/* 검색 리스트 영역 */}
       <ListWrapper>
         <MainPlaceInputWrapper onSubmit={submitKeyword}>
           <MainPlaceSearchButton onClick={valueChecker}>
@@ -441,6 +484,8 @@ const Landing = () => {
           </div> */}
 
         {/* </div> */}
+        {/* 최종 좌표 넘겨주는 버튼 */}
+        <Button message="다음" clickEvent={nextStep} />
       </ListWrapper>
     </>
   );

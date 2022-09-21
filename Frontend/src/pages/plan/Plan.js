@@ -9,7 +9,6 @@ import fontawesome from "@fortawesome/fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FullPage } from "react-full-page/lib";
 import { Slide } from "react-full-page";
-import Map from "../../components/plan/Map";
 import Landing from "../../components/plan/Landing";
 
 const PlanBlock = styled.div`
