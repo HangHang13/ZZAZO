@@ -11,6 +11,5 @@ class Place(models.Model):
     longitude = models.FloatField()
     latitude = models.FloatField()
     place_type = models.CharField(max_length=100)
-
     class Meta:
         app_label = 'place'
