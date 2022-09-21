@@ -8,6 +8,7 @@ import BackgroundCloud from "../../components/common/home/banner/BackgroundCloud
 import { useDispatch } from "react-redux";
 import { storeLogout } from "../../store/reducers/user";
 import CardDetail from "../../components/locationdetail/CardDetail.js";
+import { getRec } from "../../api/HomeApi";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -15,6 +16,9 @@ const Home = () => {
 
   //약속카드 상세 모달
   const [modalOpen, setModalOpen] = useState(false);
+  //메인페이지 추천 장소
+  const [recList, setRecList] = useState(false);
+
   const modalClose = () => {
     setModalOpen(!modalOpen);
   };
@@ -23,7 +27,14 @@ const Home = () => {
     if (!sessionStorage.getItem("ACCESS_TOKEN")) {
       dispatch(storeLogout());
     }
+    RecLoad();
   }, []);
+
+  //메인페이지 추천장소 api 호출
+  const RecLoad = async () => {
+    const RecData = await getRec();
+    setRecList(RecData);
+  };
 
   return (
     <>
@@ -80,16 +91,77 @@ const Home = () => {
         <RecTitle>이런 장소는 어때요?</RecTitle>
         <RecArea>
           <CardWrapper>
-            <RecCard src="../assets/main/location/location1.jpg" text="을지로" address="서울 특별시 중구" target="20대 여성이 주로 방문해요"></RecCard>
-            <RecCard src="../assets/main/location/location2.jpg" text="여의도 한강공원" address="서울 특별시 중구" target="20대 여성이 주로 방문해요"></RecCard>
-            <RecCard src="../assets/main/location/location3.jpg" text="남산 타워" address="서울 특별시 중구" target="20대 여성이 주로 방문해요"></RecCard>
-            <RecCard src="../assets/main/location/location4.jpg" text="한밭 수목원" address="서울 특별시 중구" target="20대 여성이 주로 방문해요"></RecCard>
+            {recList.data ? (
+              <>
+                <RecCard
+                  src="../assets/main/location/location1.jpg"
+                  name={recList.data.Place[0].name}
+                  address={recList.data.Place[0].address}
+                  target="20대 여성이 주로 방문해요"
+                  place_type={recList.data.Place[0].place_type}
+                ></RecCard>
+                <RecCard
+                  src="../assets/main/location/location2.jpg"
+                  name={recList.data.Place[1].name}
+                  address={recList.data.Place[1].address}
+                  target="20대 여성이 주로 방문해요"
+                  place_type={recList.data.Place[1].place_type}
+                ></RecCard>
+                <RecCard
+                  src="../assets/main/location/location3.jpg"
+                  name={recList.data.Place[2].name}
+                  address={recList.data.Place[2].address}
+                  target="20대 여성이 주로 방문해요"
+                  place_type={recList.data.Place[2].place_type}
+                ></RecCard>
+                <RecCard
+                  src="../assets/main/location/location4.jpg"
+                  name={recList.data.Place[3].name}
+                  address={recList.data.Place[3].address}
+                  target="20대 여성이 주로 방문해요"
+                  place_type={recList.data.Place[3].place_type}
+                ></RecCard>
+              </>
+            ) : (
+              <></>
+            )}
+            {/* <RecCard src="../assets/main/location/location1.jpg" text={recListData[0].name} address={recListData[0].address} place_type={recListData[0].place_type}></RecCard> */}
           </CardWrapper>
           <CardWrapper>
-            <RecCard src="../assets/main/location/location5.jpg" text="한빛탑" address="서울 특별시 중구" target="20대 여성이 주로 방문해요"></RecCard>
-            <RecCard src="../assets/main/location/location6.jpg" text="덕수궁" address="서울 특별시 중구" target="20대 여성이 주로 방문해요"></RecCard>
-            <RecCard src="../assets/main/location/location7.jpg" text="홍대" address="서울 특별시 중구" target="20대 여성이 주로 방문해요"></RecCard>
-            <RecCard src="../assets/main/location/location8.jpg" text="단풍" address="서울 특별시 중구" target="20대 여성이 주로 방문해요"></RecCard>
+            {recList.data ? (
+              <>
+                <RecCard
+                  src="../assets/main/location/location5.jpg"
+                  name={recList.data.Place[4].name}
+                  address={recList.data.Place[4].address}
+                  target="20대 여성이 주로 방문해요"
+                  place_type={recList.data.Place[4].place_type}
+                ></RecCard>
+                <RecCard
+                  src="../assets/main/location/location6.jpg"
+                  name={recList.data.Place[5].name}
+                  address={recList.data.Place[5].address}
+                  target="20대 여성이 주로 방문해요"
+                  place_type={recList.data.Place[5].place_type}
+                ></RecCard>
+                <RecCard
+                  src="../assets/main/location/location7.jpg"
+                  name={recList.data.Place[6].name}
+                  address={recList.data.Place[6].address}
+                  target="20대 여성이 주로 방문해요"
+                  place_type={recList.data.Place[6].place_type}
+                ></RecCard>
+                <RecCard
+                  src="../assets/main/location/location8.jpg"
+                  name={recList.data.Place[7].name}
+                  address={recList.data.Place[7].address}
+                  target="20대 여성이 주로 방문해요"
+                  place_type={recList.data.Place[7].place_type}
+                ></RecCard>
+              </>
+            ) : (
+              <></>
+            )}
           </CardWrapper>
         </RecArea>
 
