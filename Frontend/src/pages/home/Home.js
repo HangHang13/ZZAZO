@@ -37,7 +37,7 @@ const Home = () => {
               <BoldText>일정은</BoldText> &nbsp; 내가 짜조!
             </HomeBannerText>
             <BtnWrapper>
-              <PlanBtn>약속잡기</PlanBtn>
+              <PlanBtn onClick={() => navigate("/plan")}>약속잡기</PlanBtn>
             </BtnWrapper>
           </HomeBannerArea>
           <BannerImg src="../assets/main/play.png"></BannerImg>
@@ -95,7 +95,7 @@ const Home = () => {
 
         <BottomArea>
           <BtnWrapper>
-            <PlanBtn>약속잡기</PlanBtn>
+            <PlanBtn onClick={() => navigate("/plan")}>약속잡기</PlanBtn>
           </BtnWrapper>
         </BottomArea>
         {/* 상세보기 모달 띄우기 */}
@@ -153,6 +153,7 @@ const HomeWrapper = styled.div`
 const CardWrapper = styled.div`
   display: flex;
   @media screen and (max-width: 500px) {
+    width: 15rem;
     display: flex;
     flex-direction: column;
   }
