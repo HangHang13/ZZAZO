@@ -20,10 +20,20 @@ const LoadingText = styled.div`
 	text-align: center;
 `;
 
+const LoadingImg = styled.img`
+	width: 5%;
+	@media screen and (max-width: 1024px) {
+		width: 10%;
+	}
+	@media screen and (max-width: 500px) {
+		width: 20%;
+	}
+`;
+
 const Loading = () => {
 	return (
 		<Background>
-			<img src={`${process.env.PUBLIC_URL}/assets/common/spinner.gif`} alt="로딩중" width="5%" />
+			<LoadingImg src={`${process.env.PUBLIC_URL}/assets/common/spinner.gif`} alt="로딩중" />
 		</Background>
 	);
 };

@@ -1,4 +1,4 @@
-from statistics import mode
+from tkinter import CASCADE
 from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser, PermissionsMixin, AbstractUser
@@ -64,10 +64,11 @@ class UserManager(BaseUserManager):
 ##카테고리는 엄밀하지 않음
 
 class Category(models.Model):
-    user = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='category')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name='category')
     categoryName = models.CharField(max_length=20,null=True,blank=True)
     categoryNumber = models.CharField(max_length=20,null=True,blank=True)
-
+    def __str__(self):
+        return self.categoryName
 
 class User(AbstractBaseUser, PermissionsMixin):
     userEmail = models.EmailField(null=False, unique=True)
@@ -78,7 +79,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         (u'M', u'Male'),
         (u'F', u'Female'),
     )
-    userBirth = models.DateTimeField()
+    userBirth = models.DateField()
     userPhone = models.CharField(max_length=12)
     userGender = models.CharField(max_length=2, choices=GENDER_CHOICES, default='M', null=True)
     userUpdate = models.DateTimeField(auto_now=True)
@@ -96,3 +97,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
     def __str__(self):
         return self.userEmail
+
+
+class EmailCheck(models.Model):
+    emailToken = models.CharField(max_length=255)
+    created = models.DateTimeField(auto_now_add=True)
+    is_expired = models.BooleanField(default=False)
