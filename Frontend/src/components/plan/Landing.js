@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "../common/buttons/Button";
+import { useSelector, useDispatch } from "react-redux";
+import { storeSetPosition } from "../../store/reducers/position";
 //head에 작성한 Kakao API 불러오기
 const { kakao } = window;
 const MapWrapper = styled.div`
@@ -77,6 +79,8 @@ const MainPlaceInput = styled.input`
   fone-weight: bold;
 `;
 const Landing = () => {
+  const position = useSelector((state) => state.position.value);
+  const dispatch = useDispatch();
   //입력 폼 변화 감지하여 입력 값 관리
   const [Value, setValue] = useState("");
   //제출한 검색어 관리
@@ -86,6 +90,7 @@ const Landing = () => {
   const [clickLat, setClickLat] = useState(0);
   const [clickLng, setClickLng] = useState(0);
 
+  console.log(position);
   //입력 폼 변화 감지하여 입력값을 state에 담아주는 함수
   const keywordChange = (e) => {
     e.preventDefault();
@@ -108,6 +113,12 @@ const Landing = () => {
       alert("위치를 선택해 주세요.");
       return false;
     }
+    const data = {
+      lat: clickLat,
+      lng: clickLng,
+    };
+    dispatch(storeSetPosition({ data: data }));
+    console.log(position.data);
   };
   //지도상의 전체 마커를 담는 배열
   let markers = [];
@@ -188,29 +199,29 @@ const Landing = () => {
     const getListItem = (index, places) => {
       const el = document.createElement("li");
       let itemStr = `
-      <div class="info">
-      <span class="marker marker_${index + 1}">
-        ${index + 1}
-      </span>
-      <a href="${places.place_url}">
-        <h5 class="info-item place-name">${places.place_name}</h5>
-        ${
-          places.road_address_name
-            ? `<span class="info-item road-address-name">
-              ${places.road_address_name}
-             </span>
-             <span class="info-item address-name">
-              ${places.address_name}
-              </span>`
-            : `<span class="info-item address-name">
-              ${places.address_name}
-            </span>`
-        }
-        <span class="info-item tel">
-          ${places.phone}
+      <div className="info">
+        <span className="marker marker_${index + 1}">
+          ${index + 1}
         </span>
-      </a>
-    </div>
+        <div href="${places.place_url}">
+          <h5 className="info-item place-name">${places.place_name}</h5>
+          ${
+            places.road_address_name
+              ? `<span className="info-item road-address-name">
+                ${places.road_address_name}
+              </span>
+              <span className="info-item address-name">
+                ${places.address_name}
+                </span>`
+              : `<span className="info-item address-name">
+                ${places.address_name}
+              </span>`
+          }
+            <span className="info-item tel">
+              ${places.phone}
+            </span>
+        </div>
+      </div>
       `;
       el.innerHTML = itemStr;
       el.className = "item";
@@ -271,6 +282,7 @@ const Landing = () => {
         bounds = new kakao.maps.LatLngBounds();
       // 검색 결과 목록에 추가된 항목들을 제거
       listEl && removeAllChildNods(listEl);
+      listEl.className = "off";
       //지도에 표시되고 있는 마커를 제거
       removeMarker();
       //검색된 요소들만큼
@@ -279,7 +291,7 @@ const Landing = () => {
         let placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
           marker = addMarker(placePosition, i, undefined),
           itemEl = getListItem(i, places[i]); //검색 결과 항목 Element 생성
-
+        itemEl.className = "off";
         //검색된 장소 위치를 기준으로 지도 범위를 재설정하기 위해
         //LatLngBounds 객체에 좌표를 추가
         bounds.extend(placePosition);
@@ -287,12 +299,25 @@ const Landing = () => {
         //마커와 검색결과 항목에 mouseover 했을 때
         //해당 장소에 인포윈도우에 장소명 표시
         //mouseout 했을 때 인포윈도우 닫기
-        (function (marker, title) {
+        (function (marker, title, placeInfo) {
           kakao.maps.event.addListener(marker, "mouseover", () => {
             displayInfowindow(marker, title);
           });
           kakao.maps.event.addListener(marker, "mouseout", () => {
             infowindow.close();
+          });
+          kakao.maps.event.addListener(marker, "click", () => {
+            console.log(placePosition);
+            console.log(marker.T.lf);
+            // marker.setImage(40, 50);
+            setClickLat((prev) => placePosition.La);
+            setClickLng((prev) => placePosition.Ma);
+
+            // setClickLat((prev) => lat);
+            // setClickLng((prev) => lng);
+            // console.log(clickLat);
+            // console.log(clickLng);
+            // map.setCenter(clickLat, clickLng);
           });
           itemEl.onmouseover = () => {
             displayInfowindow(marker, title);
@@ -300,7 +325,28 @@ const Landing = () => {
           itemEl.onmouseout = () => {
             infowindow.close();
           };
-        })(marker, places[i].place_name);
+          itemEl.onclick = () => {
+            console.log(placePosition);
+            console.log(marker.T.lf);
+            console.log(placeInfo);
+            //  marker.setImage(40, 50);
+            setClickLat((prev) => placePosition.La);
+            setClickLng((prev) => placePosition.Ma);
+            // if () {
+            //   itemEl.className = "on";
+            //   itemEl.style.backgroundColor = "green";
+            // }
+            //  else if (
+            //   itemEl.className === "off" &&
+            //   listEl.className === "on"
+            // ) {
+            //   if (itemEl.style.backgroundColor === "green") {
+            //     itemEl.style.backgroundColor = "white";
+            //   }
+            //   itemEl.style.backgroundColor = "green";
+            // }
+          };
+        })(marker, places[i].place_name, places[i]);
 
         fragment.appendChild(itemEl);
       }
