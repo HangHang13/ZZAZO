@@ -29,7 +29,7 @@ export const PlanPageWrapper = styled.div`
 	background-color: ${({ bg }) => bg};
 	align-items: ${({ alignItems }) => alignItems};
 	width: ${({ width }) => width};
-	height: ${({ height }) => height};
+	// height: ${({ height }) => height};
 	padding-top: ${({ paddingTop }) => paddingTop};
 
 	@media screen and (max-width: 500px) {
