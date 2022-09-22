@@ -281,6 +281,7 @@ const LandingCopy = () => {
                 },
               });
               setMarkers(markers);
+              setInfo(markers);
               console.log(markers);
             }
           );
@@ -418,6 +419,7 @@ const LandingCopy = () => {
                 console.log(markers);
               }
             );
+            setInfo(markers);
             setMap((prev) => ({
               ...prev,
               center: {
