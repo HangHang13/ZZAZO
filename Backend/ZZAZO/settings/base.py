@@ -55,7 +55,8 @@ SWAGGER_SETTINGS = {
 SECRET_KEY = 'django-insecure-djx=c&gb(0g2s7yae&^_hk(sizwl=l(0m2=%s_9#ro^lco2xv+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-
+DEBUG = False
+ALLOWED_HOSTS = ['*']
 USE_TZ = False
 
 # AUTH_USER_MODEL = '{app-name}.{User-model-name}'
