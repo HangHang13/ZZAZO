@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "./../../components/layout/Header";
-import SelectPosition from "./SelectPosition";
+
 import CreatePlan from "./CreatePlan";
 import { PlanPageWrapper, Wrapper } from "./../../components/styled/Wrapper";
 import styled from "styled-components";
@@ -10,6 +10,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FullPage } from "react-full-page/lib";
 import { Slide } from "react-full-page";
 import Landing from "../../components/plan/Landing";
+import LandingCopy from "../../components/plan/LandingCopy";
 
 const PlanBlock = styled.div`
   display: flex;
@@ -130,29 +131,20 @@ fontawesome.library.add(faMagnifyingGlass);
 const Plan = () => {
   return (
     <div align="center">
-      <FullPage
-        beforeChange={() => {
-          console.log("here go");
-        }}
-      >
-        <Slide>
-          <Header display="none" />
-          <PlanPageWrapper width="90vw">
-            <PlanBlock height="calc(25vh - 3rem)">
-              <Title>약속 장소 선택</Title>
-            </PlanBlock>
-            <PlanBlock
-              height="calc(75vh - 3rem)"
-              justifyContent="space-between"
-            >
-              {/* 카카오맵 구현 부분 */}
-              {/* Map.js component MapWrapper */}
-              {/* <Map /> */}
-              {/* <MapWrapper></MapWrapper> */}
-              {/* 장소 리스트 구현 부분 */}
-              {/* LendingPage.js */}
-              <Landing />
-              {/* <ListWrapper>
+      <Header display="none" />
+      <PlanPageWrapper width="90vw">
+        <PlanBlock height="calc(25vh - 3rem)">
+          <Title>약속 장소 선택</Title>
+        </PlanBlock>
+        <PlanBlock height="calc(70vh - 3rem)" justifyContent="space-between">
+          {/* 카카오맵 구현 부분 */}
+          {/* Map.js component MapWrapper */}
+          {/* <Map /> */}
+          {/* <MapWrapper></MapWrapper> */}
+          {/* 장소 리스트 구현 부분 */}
+          {/* LendingPage.js */}
+          <LandingCopy />
+          {/* <ListWrapper>
                 <MainPlaceInputWrapper>
                   <MainPlaceSearchButton>
                     <FontAwesomeIcon icon={faMagnifyingGlass} size="2x" />
@@ -160,23 +152,8 @@ const Plan = () => {
                   <MainPlaceInput placeholder="약속장소 입력" />
                 </MainPlaceInputWrapper>
               </ListWrapper> */}
-            </PlanBlock>
-          </PlanPageWrapper>
-        </Slide>
-        <Slide>
-          <PlanPageWrapper width="90vw">
-            <PlanBlock height="calc(25vh - 3rem)">
-              <Title>약속 카드 생성</Title>
-            </PlanBlock>
-            <PlanBlock
-              height="calc(75vh - 3rem)"
-              justifyContent="space-between"
-            >
-              카드 생성 부분
-            </PlanBlock>
-          </PlanPageWrapper>
-        </Slide>
-      </FullPage>
+        </PlanBlock>
+      </PlanPageWrapper>
     </div>
   );
 };

@@ -25,4 +25,12 @@ const updatePassword = async (data) => {
     .catch((error) => error.response);
   return result;
 };
-export { getUser, updateProfile, updatePassword };
+
+const deleteProfile = async () => {
+  const result = await client
+    .delete(`/userEmail/`)
+    .then((response) => response.data)
+    .catch((error) => error.response);
+  return result;
+};
+export { getUser, updateProfile, updatePassword, deleteProfile };
