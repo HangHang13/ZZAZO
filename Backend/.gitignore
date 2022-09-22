@@ -322,5 +322,4 @@ $RECYCLE.BIN/
 migrations
 
 # settings
-local.py
-secret.json
+
