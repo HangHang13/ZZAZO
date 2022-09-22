@@ -1,6 +1,14 @@
 from .base import *
-import os, json
-from django.core.exceptions import ImproperlyConfigured
+
+DEBUG = False
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
+
+# SECURITY WARNING: keep the secret key used in production secret!
 
 secret_file = os.path.join('./', 'secrets.json')
 
@@ -14,17 +22,19 @@ def get_secret(setting, secrets=secrets):
         error_msg = "Set the {} environment variable".format(setting)
         raise ImproperlyConfigured(error_msg)
 
-SECRET_KEY = get_secret("SECRET_KEY")
-MOGNOPASS = get_secret("")
-DEBUG = False
 
-
+mongo = get_secret('DATABASE_MONGO')
+mysql = get_secret('DATABASE_MYSQL')
 DATABASE_ROUTERS = ['ZZAZO.placeRouter.placeRouter']
 DATABASES = {
     # 디폴트에 서버에 올릴 MySQL 적어야 함 
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'S07P23B307',
+        'USER': 'S07P23B307',
+        'PASSWORD': mysql,
+        'HOST': 'stg-yswa-kr-practice-db-master.mariadb.database.azure.com',
+        'PORT': '3306'
     },
 
     'place': {
@@ -44,7 +54,7 @@ DATABASES = {
             'host': 'mongodb+srv://S07P22B307:6bqIN7398L@ssafy.ngivl.mongodb.net/S07P22B307?authSource=admin',
             'port': 27017,
             'username': 'S07P22B307',
-            'password': "ilRiOqQfhB",
+            'password':mongo,
             'authSource': 'admin',
             'authMechanism': 'SCRAM-SHA-1'
         }
