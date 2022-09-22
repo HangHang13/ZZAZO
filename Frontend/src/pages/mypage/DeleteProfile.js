@@ -2,7 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { ButtonWrapper } from "./../../components/styled/Wrapper";
 import InputCheckButton from "./../../components/common/buttons/InputCheckButton";
-
+import Button from "./../../components/common/buttons/Button";
+import { useSelector } from "react-redux";
+import { deleteProfile } from "../../api/MyPageAPI";
 const Body = styled.div`
   position: relative;
 `;
@@ -46,19 +48,34 @@ const Description = styled.div`
 `;
 
 const DeleteProfile = () => {
+  const user = useSelector((state) => state.user.value);
+  console.log(user);
+  const deleteUser = async () => {
+    const result = await deleteProfile();
+    if (result.code === 200) {
+      alert("계정이 탈퇴되었습니다.");
+      // console.log(state.confirmPassword);
+      console.log(result.data);
+    } else {
+      alert("계정탈퇴에 실패하였습니다.");
+      // console.log(state.confirmPassword);
+      console.log(result.data);
+    }
+  };
   return (
     <>
       <Body>
         <DeleteTitle>계정 탈퇴</DeleteTitle>
         <DeleteForm>
           <Description>계정을 정말로 탈퇴하시겠습니까?</Description>
-          <InputCheckButton
+          <Button
             message="계정 탈퇴"
             width={"12rem"}
             color="red"
             borderColor="red"
             bg="white"
-          ></InputCheckButton>
+            clickEvent={deleteUser}
+          ></Button>
         </DeleteForm>
       </Body>
     </>

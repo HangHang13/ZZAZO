@@ -89,7 +89,7 @@ const Landing = () => {
   const [lng, setLng] = useState(0);
   const [clickLat, setClickLat] = useState(0);
   const [clickLng, setClickLng] = useState(0);
-
+  const [placeList, setPlaceList] = useState([]);
   console.log(position);
   //입력 폼 변화 감지하여 입력값을 state에 담아주는 함수
   const keywordChange = (e) => {
