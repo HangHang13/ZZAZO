@@ -11,23 +11,35 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-import os, json
 from datetime import timedelta
+import os, json
 from django.core.exceptions import ImproperlyConfigured
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
-secret_file = os.path.join(BASE_DIR, 'secrets.json')
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
+
+# SECURITY WARNING: keep the secret key used in production secret!
+
+secret_file = os.path.join('./', 'secrets.json')
+
 with open(secret_file) as f:
     secrets = json.loads(f.read())
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 def get_secret(setting, secrets=secrets):
     try:
         return secrets[setting]
     except KeyError:
         error_msg = "Set the {} environment variable".format(setting)
         raise ImproperlyConfigured(error_msg)
+
 SECRET_KEY = get_secret("SECRET_KEY")
 
+print(SECRET_KEY)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 SWAGGER_SETTINGS = {
@@ -126,7 +138,7 @@ EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = 'smtp.naver.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "hanghangjin@naver.com"
-EMAIL_HOST_PASSWORD = "dlwlsgod!"
+EMAIL_HOST_PASSWORD = SECRET_KEY
 
 EMAIL_USE_TLS = True
 REST_USE_JWT = True
