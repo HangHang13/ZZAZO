@@ -8,7 +8,7 @@ const Background = styled.div`
   height: 100vh;
   top: 0;
   left: 0;
-  background: #ffffffb7;
+  background: #000000b7;
   z-index: 1000;
   display: flex;
   flex-direction: column;
@@ -34,12 +34,21 @@ const CardWrapper = styled.div`
   top: 50%;
   transform: translate(-50%, -50%);
   z-index: 100;
+  @media screen and (max-width: 500px) {
+    width: 25rem;
+    height: 48rem;
+    flex-direction: column;
+    margin-bottom: 0;
+  }
 `;
 const ExitBtnWrapper = styled.div`
   width: 48rem;
   display: flex;
 
   justify-content: flex-end;
+  @media screen and (max-width: 500px) {
+    width: 25rem;
+  }
 `;
 
 const CardTitle = styled.div`
@@ -60,15 +69,22 @@ const CardMainWrapper = styled.div`
   height: 22rem;
   display: flex;
   justify-content: space-evenly;
+  @media screen and (max-width: 500px) {
+    margin-top: 15rem;
+    width: 25rem;
+    height: 10rem;
+    flex-direction: column;
+  }
 `;
 
 const CardInfoWrapper = styled.div`
   display: flex;
   width: 24rem;
-
   flex-direction: column;
-
   background-color: white;
+  @media screen and (max-width: 500px) {
+    width: 24rem;
+  }
 `;
 const CardImgWrapper = styled.div`
   display: flex;
@@ -94,6 +110,10 @@ const CardImg = styled.img`
   margin-left: 1.5rem;
   border-radius: 16px;
   box-shadow: 2px 1px 1px grey;
+  @media screen and (max-width: 500px) {
+    width: 20.5rem;
+    height: 13rem;
+  }
 `;
 const InstaButtonWrapper = styled.div`
   width: 25rem;
@@ -106,6 +126,9 @@ const ImgButton = styled.img`
   border-radius: 5px;
   width: 2rem;
   height: 2rem;
+  @media screen and (max-width: 500px) {
+    padding-right: 1.2rem;
+  }
 `;
 const ReviewWrapper = styled.div`
   height: 10rem;
@@ -173,7 +196,7 @@ const CardDetail = ({ modalClose, title, address, category, target, score }) => 
             </ReviewWrapper>
           </CardInfoWrapper>
           <CardImgWrapper>
-            <CardImg src={`${process.env.PUBLIC_URL}/assets/card/gazi.png`} alt="exit"></CardImg>
+            <CardImg src={`${process.env.PUBLIC_URL}/assets/card/gazi.png`} alt="gazi"></CardImg>
             <InstaButtonWrapper>
               <a href={`https://www.instagram.com/explore/tags/${searchTitle}/?hl=ko`} target="_blank">
                 <ImgButton src={`${process.env.PUBLIC_URL}/assets/card/insta.png`} alt="insta"></ImgButton>

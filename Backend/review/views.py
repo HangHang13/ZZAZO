@@ -12,11 +12,6 @@ from place.serializers.place import PlaceTest2Serializer
 @api_view(['POST'])
 def place_review_create(request, place_id):
     place = Place.objects.using('place').get(_id = place_id)
-    print(place.pk)
-    print(place)
-    print(request.data)
-    print(request.user)
-    print(type(request.user))
 
     serializer = ReviewCreateSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
@@ -40,10 +35,9 @@ def place_review_create(request, place_id):
         
 @api_view(['PUT', 'DELETE'])
 def place_review_update_or_delete(request, place_id, review_id):
-    review = get_object_or_404(Review, pk = review_id)
-    
+    review = Review.objects.get(pk = review_id, place_id = place_id)
     def review_update():
-        if request.user == review.user:
+        if request.user.id == review.user_id:
             serializer = ReviewCreateSerializer(instance=review, data=request.data)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
@@ -56,7 +50,7 @@ def place_review_update_or_delete(request, place_id, review_id):
             return Response(res)
 
     def review_delete():
-        if request.user == review.user:
+        if request.user.id == review.user_id:
             review.delete()
             code = 200
             message = "리뷰 삭제"

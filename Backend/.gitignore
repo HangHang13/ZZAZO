@@ -323,4 +323,4 @@ migrations
 
 # settings
 local.py
-prod.py
+secret.json
