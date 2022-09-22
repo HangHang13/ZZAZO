@@ -1,6 +1,13 @@
 FROM node:16.16.0 as build-stage
 WORKDIR /var/jenkins_home/workspace/deploy/Frontend
 COPY package*.json ./
+# RUN npm config rm proxy
+# RUN npm config rm https-proxy
+RUN npm config set fetch-retry-mintimeout 20000
+RUN npm config set fetch-retry-maxtimeout 120000
+RUN npm config set proxy null
+RUN npm config set https-proxy null
+RUN npm config set registry 
 RUN npm install
 COPY . .
 RUN npm run build
