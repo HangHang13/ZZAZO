@@ -17,6 +17,7 @@ import PrivateRoute from "./routes/PrivateRoute";
 import { useEffect } from "react";
 import { storeLogout } from "./store/reducers/user";
 import Plan_Copy from "./pages/plan/Plan_Copy";
+import PlanCalendar from "./pages/plancalendar/PlanCalendar";
 
 function App() {
   const onHandleLogOut = () => {
@@ -43,10 +44,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route
-            path="/mypage"
-            element={<PrivateRoute component={<MyPage />} />}
-          >
+          <Route path="/mypage" element={<PrivateRoute component={<MyPage />} />}>
             <Route index element={<UpdateProfile />} />
             <Route path="update/profile" element={<UpdateProfile />} />
             <Route path="update/password" element={<UpdatePassword />} />
@@ -59,10 +57,8 @@ function App() {
           <Route path="/findid/result" element={<FindIdResult />} />
           <Route path="/findpw" element={<FindPwMain />} />
           <Route path="/plan" element={<PrivateRoute component={<Plan />} />} />
-          <Route
-            path="/plancopy"
-            element={<PrivateRoute component={<Plan_Copy />} />}
-          />
+          <Route path="/plancopy" element={<PrivateRoute component={<Plan_Copy />} />} />
+          <Route path="/plancalendar" element={<PlanCalendar />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
