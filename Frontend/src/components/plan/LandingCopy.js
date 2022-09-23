@@ -110,6 +110,28 @@ const ButtonList = styled.div`
   display: flex;
   justify-content: space-around;
 `;
+const PaginationBox = styled.div`
+  display: flex;
+  justify-content: space-around;
+  height: 2rem;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 2px;
+  .off {
+    width: 2rem;
+    padding: 2px 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+  .on {
+    width: 2rem;
+    padding: 2px 5px;
+    border: 1px solid #80e080;
+    border-radius: 5px;
+    background-color: #80e080;
+    color: white;
+  }
+`;
 const LandingCopy = () => {
   const position = useSelector((state) => state.position.value);
   const dispatch = useDispatch();
@@ -180,6 +202,7 @@ const LandingCopy = () => {
 
     for (i = 1; i <= pagination.last; i++) {
       const el = document.createElement("a");
+      el.className = "off";
       el.href = "#";
       el.innerHTML = i.toString();
 
@@ -644,7 +667,10 @@ const LandingCopy = () => {
             </ScrollList>
           ))}
           {/* </div> */}
-          <div id="pagination"></div>
+          <PaginationBox id="pagination">
+            <PaginationBox></PaginationBox>
+          </PaginationBox>
+          {/* <div id="pagination"></div> */}
         </SearchResult>
         {/* <div className="landing-page">
           <div className="landing-page__inner">
