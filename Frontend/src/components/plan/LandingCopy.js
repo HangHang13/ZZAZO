@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "../common/buttons/Button";
 import { useSelector, useDispatch } from "react-redux";
 import { storeSetPosition } from "../../store/reducers/position";
+import { ButtonWrapper } from "../styled/Wrapper";
+import { useNavigate } from "react-router-dom";
 //head에 작성한 Kakao API 불러오기
 const { kakao } = window;
 const MapWrapper = styled.div`
@@ -34,6 +36,7 @@ const ListWrapper = styled.div`
   height: 100%;
   box-shadow: 2px 0 4px 0 #303030;
   flex-direction: column;
+  overflow: scroll;
   @media screen and (max-width: 1000px) {
     width: 35%;
   }
@@ -82,6 +85,7 @@ const MainPlaceInput = styled.input`
 
 const MarkerInfo = styled.div`
   padding: 5px;
+  width: 30rem;
   color: #000;
 `;
 const SearchResult = styled.div`
@@ -101,38 +105,69 @@ const SelectedList = styled.div`
 const NotSelectedList = styled.div`
   width: 100%;
 `;
+const ButtonList = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+`;
+const PaginationBox = styled.div`
+  display: flex;
+  justify-content: space-around;
+  height: 2rem;
+
+  padding: 2px;
+  .off {
+    width: 2rem;
+    padding: 2px 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+  .on {
+    width: 2rem;
+    padding: 2px 5px;
+    border: 1px solid #80e080;
+    border-radius: 5px;
+    background-color: #80e080;
+    color: white;
+  }
+`;
 const LandingCopy = () => {
   const position = useSelector((state) => state.position.value);
   const dispatch = useDispatch();
   const mapRef = useRef();
   const [map, setMap] = useState({
     center: {
-      lat: 33.450701,
-      lng: 126.570667,
+      lat: 36.3553323999952,
+      lng: 127.298414851088,
     },
     errMsg: null,
     isLoading: true,
   });
   const [info, setInfo] = useState();
   const [markers, setMarkers] = useState([]);
+  const [selectedMarker, setSelectedMarker] = useState([]);
   const [KeyWord, setKeyWord] = useState("");
   const [Value, setValue] = useState("");
-  //다중 마커 혹은 검색리스트 선택후 장소 확정 함수
-  const selectPlace = () => {};
+
+  const navigate = useNavigate();
 
   //최종 좌표 넘겨주는 함수
   const nextStep = () => {
-    console.log(markers);
-    if (markers.length !== 1) {
+    console.log(selectedMarker);
+    console.log(selectedMarker.length);
+    if (selectedMarker.length !== 1) {
       alert("위치를 선택해 주세요.");
       return false;
     }
 
     const data = {
-      position: markers[0].position,
-      content: markers[0].content,
+      position: selectedMarker[0].position,
+      content: selectedMarker[0].content,
     };
     console.log(data);
+    dispatch(storeSetPosition({ data: data }));
+    navigate("/planmakecard", { state: data });
+    console.log(position);
   };
   //주소-좌표 변환 객체 생성
   const geocoder = new kakao.maps.services.Geocoder();
@@ -166,6 +201,7 @@ const LandingCopy = () => {
 
     for (i = 1; i <= pagination.last; i++) {
       const el = document.createElement("a");
+      el.className = "off";
       el.href = "#";
       el.innerHTML = i.toString();
 
@@ -186,7 +222,7 @@ const LandingCopy = () => {
   const submitKeyword = (e) => {
     e.preventDefault();
     setKeyWord((prev) => Value);
-
+    setSelectedMarker([]);
     const map = mapRef.current;
     if (!map) return;
     const ps = new kakao.maps.services.Places();
@@ -218,6 +254,7 @@ const LandingCopy = () => {
           bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
         }
         setMarkers(markers);
+        setInfo(markers);
         map.setBounds(bounds);
         displayPagination(_pagination);
       }
@@ -247,6 +284,7 @@ const LandingCopy = () => {
     let dongAddr;
     removePagination();
     setKeyWord((prev) => "");
+    setSelectedMarker([]);
     const map = mapRef.current;
     if (!map) return;
     const bounds = new kakao.maps.LatLngBounds();
@@ -281,8 +319,10 @@ const LandingCopy = () => {
                 },
               });
               setMarkers(markers);
+              setSelectedMarker(markers);
               setInfo(markers);
               console.log(markers);
+              console.log(selectedMarker);
             }
           );
           // searchAddFromCoords(position.coords.latitude, position.coords.longitude, (result,status)=>{
@@ -310,6 +350,13 @@ const LandingCopy = () => {
             isLoading: false,
           }));
           map.setBounds(bounds);
+          map.setLevel(4);
+          map.setCenter(
+            new kakao.maps.LatLng(
+              position.coords.latitude,
+              position.coords.longitude
+            )
+          );
         },
         (err) => {
           setMap((prev) => ({
@@ -363,7 +410,7 @@ const LandingCopy = () => {
     //     map.setBounds(bounds);
     //   }
     // });
-  }, [markers]);
+  }, [markers, selectedMarker]);
   return (
     <>
       {/* 제출한 검색어 넘기기 */}
@@ -376,7 +423,7 @@ const LandingCopy = () => {
             width: "100%",
             height: "100%",
           }}
-          level={9} // 지도의 확대 레벨
+          level={4} // 지도의 확대 레벨
           // onCreate={setMap}
           ref={mapRef}
           // onCreate={setMap}
@@ -384,6 +431,7 @@ const LandingCopy = () => {
             let markers = [];
             let roadAddr;
             let jibunAddr;
+            setSelectedMarker([]);
             removePagination();
             setKeyWord((prev) => "");
             const map = mapRef.current;
@@ -416,7 +464,9 @@ const LandingCopy = () => {
                   },
                 });
                 setMarkers(markers);
+                setSelectedMarker(markers);
                 console.log(markers);
+                console.log(selectedMarker);
               }
             );
             setInfo(markers);
@@ -447,6 +497,13 @@ const LandingCopy = () => {
               )
             );
             map.setBounds(bounds);
+            map.setLevel(4);
+            map.setCenter(
+              new kakao.maps.LatLng(
+                mouseEvent.latLng.getLat(),
+                mouseEvent.latLng.getLng()
+              )
+            );
             // setMarkers(markers);
           }}
           // ref={mapRef}
@@ -455,7 +512,21 @@ const LandingCopy = () => {
             <MapMarker
               key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
               position={marker.position}
-              onClick={() => setInfo(marker)}
+              onClick={() => {
+                const map = mapRef.current;
+                let markers = [];
+                markers.push(marker);
+                setInfo(marker);
+                setSelectedMarker(markers);
+                map.setLevel(4);
+                map.setCenter(
+                  new kakao.maps.LatLng(
+                    marker.position.lat,
+                    marker.position.lng
+                  )
+                );
+                console.log(selectedMarker);
+              }}
             >
               {info && info.content === marker.content && (
                 <MarkerInfo>
@@ -526,7 +597,21 @@ const LandingCopy = () => {
             <ScrollList
               key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
               id="places-list"
-              onClick={() => setInfo(marker)}
+              onClick={() => {
+                const map = mapRef.current;
+                let markers = [];
+                markers.push(marker);
+                setInfo(marker);
+                setSelectedMarker(markers);
+                console.log(selectedMarker);
+                map.setLevel(4);
+                map.setCenter(
+                  new kakao.maps.LatLng(
+                    marker.position.lat,
+                    marker.position.lng
+                  )
+                );
+              }}
             >
               {info && info.content !== marker.content && (
                 <NotSelectedList>
@@ -581,7 +666,10 @@ const LandingCopy = () => {
             </ScrollList>
           ))}
           {/* </div> */}
-          <div id="pagination"></div>
+          <PaginationBox id="pagination">
+            <PaginationBox></PaginationBox>
+          </PaginationBox>
+          {/* <div id="pagination"></div> */}
         </SearchResult>
         {/* <div className="landing-page">
           <div className="landing-page__inner">
@@ -612,9 +700,10 @@ const LandingCopy = () => {
 
         {/* </div> */}
         {/* 최종 좌표 넘겨주는 버튼 */}
-        <Button message="사용자위치" clickEvent={userLocation}></Button>
-        <Button message="장소확정" clickEvent={selectPlace}></Button>
-        <Button message="다음" clickEvent={nextStep} />
+        <ButtonList>
+          <Button message="사용자위치" clickEvent={userLocation}></Button>
+          <Button message="다음" clickEvent={nextStep} />
+        </ButtonList>
       </ListWrapper>
     </>
   );
