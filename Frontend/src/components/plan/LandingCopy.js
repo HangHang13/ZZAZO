@@ -35,6 +35,7 @@ const ListWrapper = styled.div`
   height: 100%;
   box-shadow: 2px 0 4px 0 #303030;
   flex-direction: column;
+  overflow: scroll;
   @media screen and (max-width: 1000px) {
     width: 35%;
   }
@@ -83,6 +84,7 @@ const MainPlaceInput = styled.input`
 
 const MarkerInfo = styled.div`
   padding: 5px;
+  width: 30rem;
   color: #000;
 `;
 const SearchResult = styled.div`
@@ -101,6 +103,11 @@ const SelectedList = styled.div`
 `;
 const NotSelectedList = styled.div`
   width: 100%;
+`;
+const ButtonList = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
 `;
 const LandingCopy = () => {
   const position = useSelector((state) => state.position.value);
@@ -634,10 +641,10 @@ const LandingCopy = () => {
 
         {/* </div> */}
         {/* 최종 좌표 넘겨주는 버튼 */}
-        <ButtonWrapper width={20}>
+        <ButtonList>
           <Button message="사용자위치" clickEvent={userLocation}></Button>
           <Button message="다음" clickEvent={nextStep} />
-        </ButtonWrapper>
+        </ButtonList>
       </ListWrapper>
     </>
   );
