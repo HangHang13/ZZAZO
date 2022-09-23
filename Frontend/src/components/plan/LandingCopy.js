@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "../common/buttons/Button";
 import { useSelector, useDispatch } from "react-redux";
 import { storeSetPosition } from "../../store/reducers/position";
+import { ButtonWrapper } from "../styled/Wrapper";
 //head에 작성한 Kakao API 불러오기
 const { kakao } = window;
 const MapWrapper = styled.div`
@@ -115,24 +116,26 @@ const LandingCopy = () => {
   });
   const [info, setInfo] = useState();
   const [markers, setMarkers] = useState([]);
+  const [selectedMarker, setSelectedMarker] = useState([]);
   const [KeyWord, setKeyWord] = useState("");
   const [Value, setValue] = useState("");
-  //다중 마커 혹은 검색리스트 선택후 장소 확정 함수
-  const selectPlace = () => {};
 
   //최종 좌표 넘겨주는 함수
   const nextStep = () => {
-    console.log(markers);
-    if (markers.length !== 1) {
+    console.log(selectedMarker);
+    console.log(selectedMarker.length);
+    if (selectedMarker.length !== 1) {
       alert("위치를 선택해 주세요.");
       return false;
     }
 
     const data = {
-      position: markers[0].position,
-      content: markers[0].content,
+      position: selectedMarker[0].position,
+      content: selectedMarker[0].content,
     };
     console.log(data);
+    dispatch(storeSetPosition({ data: data }));
+    console.log(position);
   };
   //주소-좌표 변환 객체 생성
   const geocoder = new kakao.maps.services.Geocoder();
@@ -186,7 +189,7 @@ const LandingCopy = () => {
   const submitKeyword = (e) => {
     e.preventDefault();
     setKeyWord((prev) => Value);
-
+    setSelectedMarker([]);
     const map = mapRef.current;
     if (!map) return;
     const ps = new kakao.maps.services.Places();
@@ -218,6 +221,7 @@ const LandingCopy = () => {
           bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
         }
         setMarkers(markers);
+        setInfo(markers);
         map.setBounds(bounds);
         displayPagination(_pagination);
       }
@@ -247,6 +251,7 @@ const LandingCopy = () => {
     let dongAddr;
     removePagination();
     setKeyWord((prev) => "");
+    setSelectedMarker([]);
     const map = mapRef.current;
     if (!map) return;
     const bounds = new kakao.maps.LatLngBounds();
@@ -281,8 +286,10 @@ const LandingCopy = () => {
                 },
               });
               setMarkers(markers);
+              setSelectedMarker(markers);
               setInfo(markers);
               console.log(markers);
+              console.log(selectedMarker);
             }
           );
           // searchAddFromCoords(position.coords.latitude, position.coords.longitude, (result,status)=>{
@@ -363,7 +370,7 @@ const LandingCopy = () => {
     //     map.setBounds(bounds);
     //   }
     // });
-  }, [markers]);
+  }, [markers, selectedMarker]);
   return (
     <>
       {/* 제출한 검색어 넘기기 */}
@@ -384,6 +391,7 @@ const LandingCopy = () => {
             let markers = [];
             let roadAddr;
             let jibunAddr;
+            setSelectedMarker([]);
             removePagination();
             setKeyWord((prev) => "");
             const map = mapRef.current;
@@ -416,7 +424,9 @@ const LandingCopy = () => {
                   },
                 });
                 setMarkers(markers);
+                setSelectedMarker(markers);
                 console.log(markers);
+                console.log(selectedMarker);
               }
             );
             setInfo(markers);
@@ -455,7 +465,13 @@ const LandingCopy = () => {
             <MapMarker
               key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
               position={marker.position}
-              onClick={() => setInfo(marker)}
+              onClick={() => {
+                let markers = [];
+                markers.push(marker);
+                setInfo(marker);
+                setSelectedMarker(markers);
+                console.log(selectedMarker);
+              }}
             >
               {info && info.content === marker.content && (
                 <MarkerInfo>
@@ -526,7 +542,13 @@ const LandingCopy = () => {
             <ScrollList
               key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
               id="places-list"
-              onClick={() => setInfo(marker)}
+              onClick={() => {
+                let markers = [];
+                markers.push(marker);
+                setInfo(marker);
+                setSelectedMarker(markers);
+                console.log(selectedMarker);
+              }}
             >
               {info && info.content !== marker.content && (
                 <NotSelectedList>
@@ -612,9 +634,10 @@ const LandingCopy = () => {
 
         {/* </div> */}
         {/* 최종 좌표 넘겨주는 버튼 */}
-        <Button message="사용자위치" clickEvent={userLocation}></Button>
-        <Button message="장소확정" clickEvent={selectPlace}></Button>
-        <Button message="다음" clickEvent={nextStep} />
+        <ButtonWrapper width={20}>
+          <Button message="사용자위치" clickEvent={userLocation}></Button>
+          <Button message="다음" clickEvent={nextStep} />
+        </ButtonWrapper>
       </ListWrapper>
     </>
   );
