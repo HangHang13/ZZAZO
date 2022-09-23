@@ -114,8 +114,7 @@ const PaginationBox = styled.div`
   display: flex;
   justify-content: space-around;
   height: 2rem;
-  border: 1px solid black;
-  border-radius: 5px;
+
   padding: 2px;
   .off {
     width: 2rem;
