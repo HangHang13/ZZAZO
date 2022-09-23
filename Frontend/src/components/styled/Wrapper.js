@@ -17,11 +17,13 @@ export const Wrapper = styled(BaseFlexWrapper)`
 	background-color: ${({ color }) => color};
 	align-items: ${({ alignItems }) => alignItems};
 	width: ${({ width }) => width};
+	background-color: yellow;
 	height: ${({ height }) => height};
 	padding-top: ${({ paddingTop }) => paddingTop};
+	margin-left: 1rem;
 
 	@media screen and (max-width: 500px) {
-		width: 100vw;
+		width: 95vw;
 	}
 `;
 
