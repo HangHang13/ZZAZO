@@ -304,7 +304,6 @@ const Signup = () => {
 	return (
 		<>
 			<Header />
-			<HeaderSpace height="12rem" />
 			<Wrapper>
 				<MobileSizeWrapper>
 					<SignupHeader>
