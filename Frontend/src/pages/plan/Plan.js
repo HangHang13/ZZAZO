@@ -22,7 +22,7 @@ const PlanBlock = styled.div`
   height: ${({ height }) => height};
 
   @media screen and (max-width: 500px) {
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
   }
