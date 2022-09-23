@@ -58,7 +58,7 @@ SECRET_KEY = 'django-insecure-djx=c&gb(0g2s7yae&^_hk(sizwl=l(0m2=%s_9#ro^lco2xv+
 DEBUG = False
 ALLOWED_HOSTS = ['*']
 USE_TZ = False
-
+SITE_ID=1
 # AUTH_USER_MODEL = '{app-name}.{User-model-name}'
 AUTH_USER_MODEL = 'accounts.User'
 
