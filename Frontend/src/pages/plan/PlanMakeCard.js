@@ -8,7 +8,8 @@ import PlanHeader from "../../components/plan/cards/PlanHeader";
 import PlanList from "../../components/plan/cards/PlanList";
 import AuthButton from "../../components/common/buttons/AuthButton";
 import moment from "moment";
-import { useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { SliderWrapper } from "../../components/styled/SliderWrapper";
 
 const BeforeButton = styled(ButtonWrapper)`
 	position: absolute;
@@ -235,7 +236,14 @@ const PlanMakeCard = () => {
 	const navigate = useNavigate();
 
 	// States_공통
+	const [start, setStart] = useState(100);
+	const [end, setEnd] = useState(5);
 	const [trashToggle, setTrashToggle] = useState(false); // 휴지통 토글
+
+	const onHandlePageOut = () => {
+		setStart(end);
+		setEnd(-100);
+	};
 
 	// States_추천리스트
 	const [recommendListToggle, setRecommendListToggle] = useState(true); // [추천,목록] 메뉴 토글
@@ -328,55 +336,65 @@ const PlanMakeCard = () => {
 	return (
 		<div align="center">
 			<Header />
-			<PlanPageWrapper width="90vw">
-				<BeforeButton onClick={() => navigate("/plan")}>약속장소 다시 선택하기</BeforeButton>
-				<PageHeaderBlock height="calc(20vh)" bg="yellow">
-					<Title>약속 카드 생성</Title>
-					{/* 휴지통 */}
-					<TrashCan onMouseOver={() => setTrashToggle(true)} onMouseLeave={() => setTrashToggle(false)}>
-						<img
-							className="trash"
-							src={!trashToggle ? `${process.env.PUBLIC_URL}/assets/plan/trash_close.png` : `${process.env.PUBLIC_URL}/assets/plan/trash_open.png`}
-							alt="휴지통"
-							width="100%"
-						/>
-					</TrashCan>
-				</PageHeaderBlock>
-				<PlanBlock justifyContent="space-between">
-					<PlanMakeWrapper width="calc(50% - 1rem)">
-						{/* 반경 */}
-						<RadiusWrapper>
-							<Radius />
-							<RadiusButton onClick={onHandleRadius}>입력</RadiusButton>
-						</RadiusWrapper>
-						{/* 카카오맵 */}
-						<MapWrapper mapName="make" width="100%">
-							여기에 카카오맵
-						</MapWrapper>
-					</PlanMakeWrapper>
-					{/* 추천 목록, 전체 목록 */}
-					<PlanMakeWrapper width="calc(25% - 1rem)">
-						<BaseFlexWrapper>
-							<SectionTitle width="50%" bg={recommendListToggle ? "#80E080" : "#D9D9D9"} onClick={() => onHandleChangeList(true)}>
-								추천
-							</SectionTitle>
-							<SectionTitle width="50%" bg={!recommendListToggle ? "#80E080" : "#D9D9D9"} onClick={() => onHandleChangeList(false)}>
-								목록
-							</SectionTitle>
-						</BaseFlexWrapper>
-						<PlanCard mWidth="50vh">추천 리스트</PlanCard>
-					</PlanMakeWrapper>
-					{/* 약속 카드 */}
-					<PlanMakeWrapper width="calc(25% - 1rem)">
-						<SectionTitle width="100%">약 속 카 드</SectionTitle>
-						<PlanCard mWidth="50vh">
-							<PlanHeader dateValue={planInfo.date} onHandleName={onHandleName} onHandleDate={onHandleDate} onHandleTime={onHandleTime} />
-							<PlanList pList={planList} openModal={openModal} onHandleDrag={onHandleDrag} />
-						</PlanCard>
-					</PlanMakeWrapper>
-				</PlanBlock>
-				<AuthButton message="약속 저장하기" />
-			</PlanPageWrapper>
+			<SliderWrapper leftStart={start} leftEnd={end}>
+				<PlanPageWrapper width="90vw">
+					<BeforeButton
+						onClick={() => {
+							setStart(end);
+							setEnd(100);
+							setTimeout(() => navigate("/plan"), 400);
+						}}
+					>
+						약속장소 다시 선택하기
+					</BeforeButton>
+					<PageHeaderBlock height="calc(20vh)" bg="yellow">
+						<Title>약속 카드 생성</Title>
+						{/* 휴지통 */}
+						<TrashCan onMouseOver={() => setTrashToggle(true)} onMouseLeave={() => setTrashToggle(false)}>
+							<img
+								className="trash"
+								src={!trashToggle ? `${process.env.PUBLIC_URL}/assets/plan/trash_close.png` : `${process.env.PUBLIC_URL}/assets/plan/trash_open.png`}
+								alt="휴지통"
+								width="100%"
+							/>
+						</TrashCan>
+					</PageHeaderBlock>
+					<PlanBlock justifyContent="space-between">
+						<PlanMakeWrapper width="calc(50% - 1rem)">
+							{/* 반경 */}
+							<RadiusWrapper>
+								<Radius />
+								<RadiusButton onClick={onHandleRadius}>입력</RadiusButton>
+							</RadiusWrapper>
+							{/* 카카오맵 */}
+							<MapWrapper mapName="make" width="100%">
+								여기에 카카오맵
+							</MapWrapper>
+						</PlanMakeWrapper>
+						{/* 추천 목록, 전체 목록 */}
+						<PlanMakeWrapper width="calc(25% - 1rem)">
+							<BaseFlexWrapper>
+								<SectionTitle width="50%" bg={recommendListToggle ? "#80E080" : "#D9D9D9"} onClick={() => onHandleChangeList(true)}>
+									추천
+								</SectionTitle>
+								<SectionTitle width="50%" bg={!recommendListToggle ? "#80E080" : "#D9D9D9"} onClick={() => onHandleChangeList(false)}>
+									목록
+								</SectionTitle>
+							</BaseFlexWrapper>
+							<PlanCard mWidth="50vh">추천 리스트</PlanCard>
+						</PlanMakeWrapper>
+						{/* 약속 카드 */}
+						<PlanMakeWrapper width="calc(25% - 1rem)">
+							<SectionTitle width="100%">약 속 카 드</SectionTitle>
+							<PlanCard mWidth="50vh">
+								<PlanHeader dateValue={planInfo.date} onHandleName={onHandleName} onHandleDate={onHandleDate} onHandleTime={onHandleTime} />
+								<PlanList pList={planList} openModal={openModal} onHandleDrag={onHandleDrag} />
+							</PlanCard>
+						</PlanMakeWrapper>
+					</PlanBlock>
+					<AuthButton message="약속 저장하기" />
+				</PlanPageWrapper>
+			</SliderWrapper>
 		</div>
 	);
 };

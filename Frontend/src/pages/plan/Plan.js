@@ -1,17 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./../../components/layout/Header";
 
-import CreatePlan from "./CreatePlan";
 import { PlanPageWrapper, Wrapper } from "./../../components/styled/Wrapper";
-import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import styled, { keyframes } from "styled-components";
 import fontawesome from "@fortawesome/fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { FullPage } from "react-full-page/lib";
-import { Slide } from "react-full-page";
 import Landing from "../../components/plan/Landing";
 import LandingCopy from "../../components/plan/LandingCopy";
-import { useNavigate } from "react-router-dom";
+import { SliderWrapper } from "./../../components/styled/SliderWrapper";
 
 const PlanBlock = styled.div`
 	display: flex;
@@ -130,31 +126,27 @@ PlanBlock.defaultProps = {
 fontawesome.library.add(faMagnifyingGlass);
 
 const Plan = () => {
+	const [start, setStart] = useState(-100);
+	const [end, setEnd] = useState(5);
+
+	const onHandlePageOut = () => {
+		setStart(end);
+		setEnd(-100);
+	};
+
 	return (
 		<div align="center">
 			<Header display="none" />
-			<PlanPageWrapper width="90vw">
-				<PlanBlock height="calc(25vh - 3rem)">
-					<Title>약속 장소 선택</Title>
-				</PlanBlock>
-				<PlanBlock height="calc(70vh - 3rem)" justifyContent="space-between">
-					{/* 카카오맵 구현 부분 */}
-					{/* Map.js component MapWrapper */}
-					{/* <Map /> */}
-					{/* <MapWrapper></MapWrapper> */}
-					{/* 장소 리스트 구현 부분 */}
-					{/* LendingPage.js */}
-					<LandingCopy />
-					{/* <ListWrapper>
-                <MainPlaceInputWrapper>
-                  <MainPlaceSearchButton>
-                    <FontAwesomeIcon icon={faMagnifyingGlass} size="2x" />
-                  </MainPlaceSearchButton>
-                  <MainPlaceInput placeholder="약속장소 입력" />
-                </MainPlaceInputWrapper>
-              </ListWrapper> */}
-				</PlanBlock>
-			</PlanPageWrapper>
+			<SliderWrapper leftStart={start} leftEnd={end}>
+				<PlanPageWrapper width="90vw">
+					<PlanBlock height="calc(25vh - 3rem)">
+						<Title>약속 장소 선택</Title>
+					</PlanBlock>
+					<PlanBlock height="calc(70vh - 3rem)" justifyContent="space-between">
+						<LandingCopy onHandlePageOut={onHandlePageOut} />
+					</PlanBlock>
+				</PlanPageWrapper>
+			</SliderWrapper>
 		</div>
 	);
 };

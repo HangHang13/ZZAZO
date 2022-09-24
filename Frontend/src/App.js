@@ -16,7 +16,6 @@ import FindIdResult from "./pages/auth/find/FindIdResult";
 import PrivateRoute from "./routes/PrivateRoute";
 import { useEffect } from "react";
 import { storeLogout } from "./store/reducers/user";
-import Plan_Copy from "./pages/plan/Plan_Copy";
 import PlanCalendar from "./pages/plancalendar/PlanCalendar";
 import PlanMakeCard from "./pages/plan/PlanMakeCard";
 import { TransitionGroup } from "react-transition-group";
@@ -61,8 +60,7 @@ function App() {
 					<Route path="/findpw" element={<FindPwMain />} />
 					<Route path="/plan" element={<PrivateRoute component={<Plan />} />} />
 					<Route path="/planmakecard" element={<PrivateRoute component={<PlanMakeCard />} />} />
-					  <Route path="/plancalendar" element={<PlanCalendar />} />
-
+					<Route path="/plancalendar" element={<PlanCalendar />} />
 					<Route path="*" element={<NotFound />} />
 				</Routes>
 			</Router>
