@@ -10,6 +10,7 @@ import AuthButton from "../../components/common/buttons/AuthButton";
 import moment from "moment";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { SliderWrapper } from "../../components/styled/SliderWrapper";
+import PlanInformHeader from "../../components/plan/cards/PlanInformHeader";
 
 const BeforeButton = styled(ButtonWrapper)`
 	position: absolute;
@@ -381,7 +382,9 @@ const PlanMakeCard = () => {
 									목록
 								</SectionTitle>
 							</BaseFlexWrapper>
-							<PlanCard mWidth="50vh">추천 리스트</PlanCard>
+							<PlanCard mWidth="50vh">
+								<PlanInformHeader />
+							</PlanCard>
 						</PlanMakeWrapper>
 						{/* 약속 카드 */}
 						<PlanMakeWrapper width="calc(25% - 1rem)">

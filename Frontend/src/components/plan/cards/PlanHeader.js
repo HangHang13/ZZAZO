@@ -3,16 +3,7 @@ import styled from "styled-components";
 import Calendar from "react-calendar";
 import "./Calendar.css";
 import moment from "moment";
-
-const PlanHeaderWrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: 100%;
-	height: 128px;
-	background-color: #c0f0e0;
-	border-bottom: 3px solid black;
-`;
+import { PlanHeaderWrapper } from "../../styled/Wrapper";
 
 const PlanHeaderItem = styled.div`
 	display: flex;

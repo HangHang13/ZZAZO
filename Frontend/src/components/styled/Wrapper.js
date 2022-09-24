@@ -119,6 +119,20 @@ export const ButtonWrapper = styled.button`
 	}
 `;
 
+export const PlanHeaderWrapper = styled.div`
+	display: flex;
+	flex-direction: ${({ flexDirection }) => flexDirection};
+	align-items: center;
+	width: 100%;
+	height: 120px;
+	background-color: #c0f0e0;
+	border-bottom: 3px solid black;
+`;
+
+PlanHeaderWrapper.defaultProps = {
+	flexDirection: "column",
+};
+
 InputWrapper.defaultProps = {
 	width: "100%",
 	height: "52px",
