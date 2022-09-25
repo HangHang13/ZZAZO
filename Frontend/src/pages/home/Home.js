@@ -9,20 +9,11 @@ import { useDispatch } from "react-redux";
 import { storeLogout } from "../../store/reducers/user";
 import CardDetail from "../../components/locationdetail/CardDetail.js";
 import { getRec } from "../../api/HomeApi";
+import { ImgSearch } from "../../api/KaKaoImgSearch";
 
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  //약속카드 상세 모달
-  const [modalOpen, setModalOpen] = useState(false);
-  //메인페이지 추천 장소
-  const [recList, setRecList] = useState(false);
-
-  const modalClose = () => {
-    setModalOpen(!modalOpen);
-  };
-
   useEffect(() => {
     if (!sessionStorage.getItem("ACCESS_TOKEN")) {
       dispatch(storeLogout());
@@ -30,12 +21,32 @@ const Home = () => {
     RecLoad();
   }, []);
 
+  //약속카드 상세 모달
+  const [modalOpen, setModalOpen] = useState(false);
+  //메인페이지 추천 장소
+  const [recList, setRecList] = useState(false);
+  //모달 열고 닫기
+  const modalClose = () => {
+    setModalOpen(!modalOpen);
+  };
+
   //메인페이지 추천장소 api 호출
   const RecLoad = async () => {
     const RecData = await getRec();
     setRecList(RecData);
   };
-
+  //장소 이미지 검색 kakao api 호출
+  const ImgSearchHttpHandler = async (query) => {
+    const params = {
+      query: query,
+      sort: "accuracy",
+      page: 1,
+      size: 1,
+    };
+    const { data } = await ImgSearch(params);
+    console.log(data.documents[0].image_url);
+    return data.documents[0].image_url;
+  };
   return (
     <>
       <Header></Header>
@@ -93,71 +104,9 @@ const Home = () => {
           <CardWrapper>
             {recList.data ? (
               <>
-                <RecCard
-                  src="../assets/main/location/location1.jpg"
-                  name={recList.data.Place[0].name}
-                  address={recList.data.Place[0].address}
-                  target="20대 여성이 주로 방문해요"
-                  place_type={recList.data.Place[0].place_type}
-                ></RecCard>
-                <RecCard
-                  src="../assets/main/location/location2.jpg"
-                  name={recList.data.Place[1].name}
-                  address={recList.data.Place[1].address}
-                  target="20대 여성이 주로 방문해요"
-                  place_type={recList.data.Place[1].place_type}
-                ></RecCard>
-                <RecCard
-                  src="../assets/main/location/location3.jpg"
-                  name={recList.data.Place[2].name}
-                  address={recList.data.Place[2].address}
-                  target="20대 여성이 주로 방문해요"
-                  place_type={recList.data.Place[2].place_type}
-                ></RecCard>
-                <RecCard
-                  src="../assets/main/location/location4.jpg"
-                  name={recList.data.Place[3].name}
-                  address={recList.data.Place[3].address}
-                  target="20대 여성이 주로 방문해요"
-                  place_type={recList.data.Place[3].place_type}
-                ></RecCard>
-              </>
-            ) : (
-              <></>
-            )}
-            {/* <RecCard src="../assets/main/location/location1.jpg" text={recListData[0].name} address={recListData[0].address} place_type={recListData[0].place_type}></RecCard> */}
-          </CardWrapper>
-          <CardWrapper>
-            {recList.data ? (
-              <>
-                <RecCard
-                  src="../assets/main/location/location5.jpg"
-                  name={recList.data.Place[4].name}
-                  address={recList.data.Place[4].address}
-                  target="20대 여성이 주로 방문해요"
-                  place_type={recList.data.Place[4].place_type}
-                ></RecCard>
-                <RecCard
-                  src="../assets/main/location/location6.jpg"
-                  name={recList.data.Place[5].name}
-                  address={recList.data.Place[5].address}
-                  target="20대 여성이 주로 방문해요"
-                  place_type={recList.data.Place[5].place_type}
-                ></RecCard>
-                <RecCard
-                  src="../assets/main/location/location7.jpg"
-                  name={recList.data.Place[6].name}
-                  address={recList.data.Place[6].address}
-                  target="20대 여성이 주로 방문해요"
-                  place_type={recList.data.Place[6].place_type}
-                ></RecCard>
-                <RecCard
-                  src="../assets/main/location/location8.jpg"
-                  name={recList.data.Place[7].name}
-                  address={recList.data.Place[7].address}
-                  target="20대 여성이 주로 방문해요"
-                  place_type={recList.data.Place[7].place_type}
-                ></RecCard>
+                {recList.data.Place.map((item, idx) => (
+                  <RecCard key={idx} src={ImgSearchHttpHandler(item.name)} name={item.name} address={item.address} target="20대 여성이 주로 방문해요" place_type={item.place_type} />
+                ))}
               </>
             ) : (
               <></>
@@ -224,6 +173,8 @@ const HomeWrapper = styled.div`
 
 const CardWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   @media screen and (max-width: 500px) {
     width: 15rem;
     display: flex;

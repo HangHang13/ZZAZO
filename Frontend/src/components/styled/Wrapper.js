@@ -12,14 +12,17 @@ export const BaseFlexColWrapper = styled(BaseFlexWrapper)`
 
 export const Wrapper = styled(BaseFlexWrapper)`
 	display: flex;
+	position: absolute;
+	top: ${({ top }) => top};
 	background-color: ${({ color }) => color};
 	align-items: ${({ alignItems }) => alignItems};
 	width: ${({ width }) => width};
 	height: ${({ height }) => height};
 	padding-top: ${({ paddingTop }) => paddingTop};
+	margin-left: 1rem;
 
 	@media screen and (max-width: 500px) {
-		width: 100vw;
+		width: 95vw;
 	}
 `;
 
@@ -151,5 +154,7 @@ Wrapper.defaultProps = {
 	color: "white",
 	width: "100vw",
 	height: "calc(100vh - 6rem)",
+	alignItems: "start",
 	paddingTop: "6rem",
+	top: "0rem",
 };
