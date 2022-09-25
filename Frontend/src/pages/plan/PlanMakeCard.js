@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/layout/Header";
-import { BaseFlexWrapper, ButtonWrapper, PlanPageWrapper } from "../../components/styled/Wrapper";
+import { BaseFlexWrapper, ButtonWrapper, PlanPageWrapper, Wrapper } from "../../components/styled/Wrapper";
 import styled, { keyframes } from "styled-components";
 import Radius from "../../components/plan/radius_bar/Radius";
 import { useSelector } from "react-redux";
@@ -286,6 +286,7 @@ const TrashWrapper = styled.div`
 	width: 300px;
 	height: 600px;
 	overflow-y: scroll;
+	overflow-x: hidden;
 	z-index: 100;
 	border-radius: 16px;
 	background-color: rgba(38, 38, 38, 0.6);
@@ -331,6 +332,11 @@ const PlanMakeCard = () => {
 	const [trashToggle, setTrashToggle] = useState(false); // 휴지통 토글
 
 	// useEffects
+	useEffect(() => {
+		console.log(start, end);
+		setStart(500);
+	});
+
 	useEffect(async () => {
 		// 화면 제일 위에서 시작
 		window.scrollTo(0, 0);

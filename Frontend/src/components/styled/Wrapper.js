@@ -19,10 +19,10 @@ export const Wrapper = styled(BaseFlexWrapper)`
 	width: ${({ width }) => width};
 	height: ${({ height }) => height};
 	padding-top: ${({ paddingTop }) => paddingTop};
-	margin-left: 1rem;
 
 	@media screen and (max-width: 500px) {
-		width: 95vw;
+		width: 100%;
+		overflow-x: hidden;
 	}
 `;
 
