@@ -19,10 +19,10 @@ export const Wrapper = styled(BaseFlexWrapper)`
 	width: ${({ width }) => width};
 	height: ${({ height }) => height};
 	padding-top: ${({ paddingTop }) => paddingTop};
-	margin-left: 1rem;
 
 	@media screen and (max-width: 500px) {
-		width: 95vw;
+		width: 100%;
+		overflow-x: hidden;
 	}
 `;
 
@@ -118,6 +118,21 @@ export const ButtonWrapper = styled.button`
 		border: 1px solid #80e080;
 	}
 `;
+
+export const PlanHeaderWrapper = styled.div`
+	display: flex;
+	flex-direction: ${({ flexDirection }) => flexDirection};
+	align-items: center;
+	width: 100%;
+	height: ${({ height }) => height};
+	background-color: #c0f0e0;
+	border-bottom: 3px solid black;
+`;
+
+PlanHeaderWrapper.defaultProps = {
+	height: "120px",
+	flexDirection: "column",
+};
 
 InputWrapper.defaultProps = {
 	width: "100%",
