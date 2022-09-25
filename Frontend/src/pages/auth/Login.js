@@ -133,7 +133,7 @@ const Login = () => {
 	return (
 		<>
 			<Header />
-			<Wrapper>
+			<Wrapper alignItems="center">
 				{loading ? <Loading /> : null}
 				<ColWrapper>
 					<AuthWrapper>
