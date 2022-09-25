@@ -39,7 +39,7 @@ def get_secret(setting, secrets=secrets):
 
 SECRET_KEY = get_secret("SECRET_KEY")
 
-print(SECRET_KEY)
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 SWAGGER_SETTINGS = {
@@ -55,9 +55,10 @@ SWAGGER_SETTINGS = {
 SECRET_KEY = 'django-insecure-djx=c&gb(0g2s7yae&^_hk(sizwl=l(0m2=%s_9#ro^lco2xv+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-
+DEBUG = True
+ALLOWED_HOSTS = ['*']
 USE_TZ = False
-
+SITE_ID=1
 # AUTH_USER_MODEL = '{app-name}.{User-model-name}'
 AUTH_USER_MODEL = 'accounts.User'
 
@@ -196,7 +197,7 @@ ROOT_URLCONF = 'ZZAZO.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR +'/'+ 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

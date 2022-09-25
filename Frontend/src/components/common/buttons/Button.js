@@ -22,10 +22,10 @@ const Btn = styled.button`
   user-select: none;
 
   transition: all 0.2s ease-in;
-  // &:active {
-  //   background: rgba(0, 0, 0, 0.5);
-  //   border: 1px solid #383838;
-  // }
+  &:active {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #383838;
+  }
 `;
 
 Btn.defaultProps = {

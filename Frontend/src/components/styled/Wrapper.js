@@ -12,6 +12,8 @@ export const BaseFlexColWrapper = styled(BaseFlexWrapper)`
 
 export const Wrapper = styled(BaseFlexWrapper)`
 	display: flex;
+	position: absolute;
+	top: ${({ top }) => top};
 	background-color: ${({ color }) => color};
 	align-items: ${({ alignItems }) => alignItems};
 	width: ${({ width }) => width};
@@ -19,7 +21,8 @@ export const Wrapper = styled(BaseFlexWrapper)`
 	padding-top: ${({ paddingTop }) => paddingTop};
 
 	@media screen and (max-width: 500px) {
-		width: 100vw;
+		width: 100%;
+		overflow-x: hidden;
 	}
 `;
 
@@ -116,6 +119,21 @@ export const ButtonWrapper = styled.button`
 	}
 `;
 
+export const PlanHeaderWrapper = styled.div`
+	display: flex;
+	flex-direction: ${({ flexDirection }) => flexDirection};
+	align-items: center;
+	width: 100%;
+	height: ${({ height }) => height};
+	background-color: #c0f0e0;
+	border-bottom: 3px solid black;
+`;
+
+PlanHeaderWrapper.defaultProps = {
+	height: "120px",
+	flexDirection: "column",
+};
+
 InputWrapper.defaultProps = {
 	width: "100%",
 	height: "52px",
@@ -151,5 +169,7 @@ Wrapper.defaultProps = {
 	color: "white",
 	width: "100vw",
 	height: "calc(100vh - 6rem)",
+	alignItems: "start",
 	paddingTop: "6rem",
+	top: "0rem",
 };

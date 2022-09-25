@@ -1,39 +1,136 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
-import PlanListItem from "./PlanListItem";
+import { faCircleInfo, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { ListTypes } from "./../../../constants/ListTypes";
 
 const PlanListWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: scroll;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	padding-bottom: 6rem;
 `;
 
-const PlanList = ({ pList, openModal, onHandleDrag }) => {
-  return (
-    <PlanListWrapper>
-      {pList.length !== 0 ? (
-        <>
-          {pList.map((item, index) => (
-            <PlanListItem
-              {...item}
-              idx={index}
-              key={index}
-              onHandleDrag={onHandleDrag}
-              openModal={openModal}
-            />
-          ))}
-        </>
-      ) : (
-        <>
-          <p align="center"></p>
-        </>
-      )}
-    </PlanListWrapper>
-  );
+/* Place 카드 하나에 대한 스타일 시작 */
+const PlaceCard = styled.div`
+	display: flex;
+	position: relative;
+	flex-direction: column;
+	justify-content: center;
+	padding: 1rem;
+	width: 80%;
+	margin-top: 0.5rem;
+	margin-bottom: 0.5rem;
+	background-color: ${({ bg }) => bg};
+	border-radius: 16px;
+	box-shadow: 4px 4px 16px 4px rgba(0, 0, 0, 0.25);
+
+	@media screen and (max-width: 1024px) and (min-width: 500px) {
+		width: 60%;
+	}
+`;
+
+const PlaceTitle = styled.p`
+	display: flex;
+	font-size: 1.1rem;
+	font-weight: bold;
+	margin-bottom: 0.5rem;
+`;
+
+const PlaceCategory = styled.p`
+	display: flex;
+	font-size: 0.8rem;
+	margin-bottom: 0.5rem;
+`;
+
+const PlaceAddress = styled.p`
+	display: flex;
+	font-size: 0.8rem;
+	margin-bottom: 0.5rem;
+`;
+
+const PlaceInfoButton = styled.div`
+	display: flex;
+	position: absolute;
+	right: 1rem;
+	bottom: 0.8rem;
+`;
+
+const AddOrRemoveButton = styled.div`
+	display: flex;
+	position: absolute;
+	right: 1rem;
+	top: 0.8rem;
+`;
+/* Place 카드 하나에 대한 스타일 끝 */
+
+const PlanList = ({ pList, setPList, openModal, onHandleList, listType }) => {
+	const handleOnDragEnd = (result) => {
+		if (!result.destination) return;
+		const items = Array.from(pList);
+
+		const tmp = pList[result.source.index]; // 원래 거 저장
+		items.splice(result.source.index, 1); // 원래 부분 제거
+		items.splice(result.destination.index, 0, tmp); // 목적지에 원래 부분 추가
+		setPList(items);
+	};
+
+	return (
+		<DragDropContext onDragEnd={handleOnDragEnd}>
+			<Droppable droppableId="list">
+				{(provided) => (
+					<PlanListWrapper className="list" {...provided.droppableProps} ref={provided.innerRef}>
+						{pList.length !== 0 ? (
+							<>
+								{pList.map((item, index) => (
+									<Draggable key={item.placeId} draggableId={String(item.placeId)} index={index}>
+										{(provided) => (
+											<PlaceCard
+												ref={provided.innerRef}
+												{...provided.draggableProps}
+												{...provided.dragHandleProps}
+												bg={item.isMain ? "#FF9BA9" : "#C0F0B0"}
+											>
+												<PlaceTitle>{item.placeName === "지정위치" ? "사용자 지정 위치" : item.placeName}</PlaceTitle>
+												{!item.isMain && <PlaceCategory>{item.placeType}</PlaceCategory>}
+												<PlaceAddress>{item.placeAddress}</PlaceAddress>
+												{!item.isMain && (
+													<PlaceInfoButton onClick={() => openModal(item.placeId)}>
+														<FontAwesomeIcon icon={faCircleInfo} size="lg" />
+													</PlaceInfoButton>
+												)}
+												{listType === ListTypes.PLAN ? (
+													!item.isMain ? (
+														<AddOrRemoveButton onClick={() => onHandleList(listType, index)}>
+															<FontAwesomeIcon icon={faMinus} size="lg" />
+														</AddOrRemoveButton>
+													) : (
+														<></>
+													)
+												) : (
+													<AddOrRemoveButton onClick={() => onHandleList(listType, index)}>
+														<FontAwesomeIcon icon={faPlus} size="lg" />
+													</AddOrRemoveButton>
+												)}
+											</PlaceCard>
+										)}
+									</Draggable>
+								))}
+								{provided.placeholder}
+							</>
+						) : (
+							<></>
+						)}
+					</PlanListWrapper>
+				)}
+			</Droppable>
+		</DragDropContext>
+	);
 };
 
 export default PlanList;

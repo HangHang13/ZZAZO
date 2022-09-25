@@ -323,4 +323,7 @@ migrations
 
 # settings
 
-secrets.json
+
+
+local.py
+
