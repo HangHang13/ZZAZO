@@ -1,5 +1,5 @@
 FROM node:16.16.0 as build-stage
-WORKDIR /jenkins/workspace/deploy/Frontend
+WORKDIR /var/jenkins_home/workspace/deploy/Frontend
 COPY package*.json ./
 # RUN npm config rm proxy
 # RUN npm config rm https-proxy
