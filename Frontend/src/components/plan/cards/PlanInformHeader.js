@@ -17,6 +17,10 @@ const InformMent = styled.div`
 	width: 50%;
 	height: 100%;
 	align-items: center;
+
+	@media screen and (max-width: 500px) {
+		font-size: 0.9rem;
+	}
 `;
 
 const ReloadButtonWrapper = styled.div`
@@ -25,6 +29,11 @@ const ReloadButtonWrapper = styled.div`
 	height: 100%;
 	align-items: center;
 	justify-content: center;
+
+	@media screen and (max-width: 500px) {
+		margin-top: 2rem;
+		margin-bottom: 2rem;
+	}
 `;
 
 const ReloadImg = styled.img`
@@ -37,7 +46,7 @@ const ReloadImg = styled.img`
 
 const PlanInformHeader = () => {
 	return (
-		<PlanHeaderWrapper flexDirection="row">
+		<PlanHeaderWrapper flexDirection="row" height="80px">
 			<InformMark>
 				<FontAwesomeIcon icon={faCircleInfo} size="2x" />
 			</InformMark>

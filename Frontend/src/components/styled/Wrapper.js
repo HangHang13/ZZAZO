@@ -124,12 +124,13 @@ export const PlanHeaderWrapper = styled.div`
 	flex-direction: ${({ flexDirection }) => flexDirection};
 	align-items: center;
 	width: 100%;
-	height: 120px;
+	height: ${({ height }) => height};
 	background-color: #c0f0e0;
 	border-bottom: 3px solid black;
 `;
 
 PlanHeaderWrapper.defaultProps = {
+	height: "120px",
 	flexDirection: "column",
 };
 
