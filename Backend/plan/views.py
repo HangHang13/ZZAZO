@@ -52,7 +52,7 @@ def plan_detail_put_or_delete(request, card_id):
     def plan_detail():
         if card is None:
             return Response("invalid request", status =status.HTTP_400_BAD_REQUEST)
-        serializer = CardSerializer(instance = card, data=request.data)
+        serializer = CardSerializer(instance = card)
         data = {'cards': serializer.data}
         code = 200
         message = "약속 조회"
