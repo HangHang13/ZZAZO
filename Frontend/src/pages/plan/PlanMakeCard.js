@@ -18,6 +18,9 @@ import { SliderWrapper } from "../../components/styled/SliderWrapper";
 import PlanInformHeader from "../../components/plan/cards/PlanInformHeader";
 import { ListTypes } from "./../../constants/ListTypes";
 import { getRecommendList } from "../../api/PlanAPI";
+import MapContainer from "./../../components/kakaomap/MapContainer";
+import Loading from "./../../components/common/Loading";
+import CardDetail from "../../components/locationdetail/CardDetail";
 
 const BeforeButton = styled(ButtonWrapper)`
   position: absolute;
@@ -56,6 +59,7 @@ const AfterButton = styled(ButtonWrapper)`
   font-weight: bold;
   font-size: 1.3rem;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
 
   @media screen and (max-width: 500px) {
     position: relative;
@@ -316,8 +320,14 @@ const PlanMakeCard = () => {
   const navigate = useNavigate();
 
   // States_공통
+  const [loading, setLoading] = useState(false);
   const [start, setStart] = useState(100); // 화면 슬라이딩 효과를 위한 state
   const [end, setEnd] = useState(5); // 화면 슬라이딩 효과를 위한 state
+  const [modalToggle, setModalToggle] = useState(false); // 장소 상세보기 모달
+  const [mainLocation, setMainLocation] = useState({
+    lat: 0.0,
+    lng: 0.0,
+  });
 
   // States_추천/목록 리스트
   const [recommendListToggle, setRecommendListToggle] = useState(true); // [추천,목록] 메뉴 토글
@@ -336,99 +346,33 @@ const PlanMakeCard = () => {
   const [trashList, setTrashList] = useState([]); // 휴지통 리스트
   const [trashToggle, setTrashToggle] = useState(false); // 휴지통 토글
 
-  // useEffects
-  useEffect(() => {
-    console.log(start, end);
-    setStart(500);
-  });
-
   useEffect(async () => {
     // 화면 제일 위에서 시작
     window.scrollTo(0, 0);
 
+    setLoading(true);
     // 약속카드 리스트에 메인 장소 설정
     setPlanList([
       {
-        placeName: location.state.content.placename,
-        placeAddress: location.state.content.addressname,
-        lat: location.state.position.lat,
-        lng: location.state.position.lng,
+        name: location.state.content.placename,
+        address: location.state.content.addressname,
+        latitude: location.state.position.lat,
+        longitude: location.state.position.lng,
         isMain: true,
       },
     ]);
 
-    setRecommendList([
-      {
-        placeId: 2,
-        placeName: "땀땀",
-        placeAddress: "서울 강남구 강남대로98길 12-5",
-        placeScore: 3.4,
-        placeType: "음식점",
-        isMain: false,
-      },
-      {
-        placeId: 17453,
-        placeName: "CGV 강남",
-        placeAddress: "서울 강남구 강남대로 438 스타플렉스",
-        placeScore: 3.3,
-        placeType: "영화관",
-      },
-      {
-        placeId: 456,
-        placeName: "스타벅스 강남대로점",
-        placeAddress: "서울 강남구 강남대로 456 한석타워 2층 1-2호",
-        placeScore: 4.2,
-        placeType: "커피전문점",
-      },
-      {
-        placeId: 15346,
-        placeName: "멀티캠퍼스 역삼",
-        placeAddress: "서울 강남구 테헤란로 212",
-        placeScore: 5.0,
-        placeType: "학원",
-      },
-      {
-        placeId: 111,
-        placeName: "나나나 짜장면",
-        placeAddress: "서울 강남구 강남대로98길 12-5",
-        placeScore: 3.4,
-        placeType: "음식점",
-        isMain: false,
-      },
-      {
-        placeId: 88,
-        placeName: "강남 유명한 방탈출카페",
-        placeAddress: "서울 강남구 강남대로 438 스타플렉스",
-        placeScore: 3.3,
-        placeType: "테마카페",
-      },
-      {
-        placeId: 3,
-        placeName: "투썸플레이스 강남점",
-        placeAddress: "서울 강남구 강남대로 456 한석타워 2층 1-2호",
-        placeScore: 4.2,
-        placeType: "커피전문점",
-      },
-      {
-        placeId: 4,
-        placeName: "카페지즈",
-        placeAddress: "서울 강남구 강남대로 134",
-        placeScore: 4.5,
-        placeType: "커피전문점",
-      },
-      {
-        placeId: 5,
-        placeName: "와타빈",
-        placeAddress: "서울 강남구 강남대로 1334",
-        placeScore: 4.5,
-        placeType: "체험장",
-      },
-    ]);
+    setMainLocation({
+      lat: location.state.position.lat,
+      lng: location.state.position.lng,
+    });
 
     const response = await getRecommendList({
       longitude: parseFloat(location.state.position.lng),
       latitude: parseFloat(location.state.position.lat),
     });
+    setRecommendList(response.data.Place);
+    setLoading(false);
   }, []);
 
   // 반경 기준으로 장소 리스트 요청 함수
@@ -442,8 +386,16 @@ const PlanMakeCard = () => {
   };
 
   // 장소 상세보기 모달창 띄우기
-  const openModal = (pId) => {
-    console.log(pId);
+  const openModal = (placeId) => {
+    console.log(placeId);
+    window.scrollTo(0, 0);
+    if (modalToggle) {
+      document.body.style = `overflow: auto`;
+    } else {
+      document.body.style = `overflow: hidden`;
+    }
+
+    setModalToggle(!modalToggle);
   };
 
   const onHandleName = (e) => {
@@ -482,6 +434,17 @@ const PlanMakeCard = () => {
   return (
     <div align="center">
       <Header />
+      {loading ? <Loading /> : null}
+      {modalToggle ? (
+        <CardDetail
+          modalClose={openModal}
+          title="제목"
+          address="주소 주소"
+          category="카테고리"
+          target="타겟"
+          score={4.3}
+        />
+      ) : null}
       <SliderWrapper leftStart={start} leftEnd={end}>
         <PlanPageWrapper width="90vw">
           <BeforeButton
@@ -527,7 +490,11 @@ const PlanMakeCard = () => {
               </RadiusWrapper>
               {/* 카카오맵 */}
               <MapWrapper mapName="make" width="100%" height="100%">
-                여기에 카카오맵
+                <MapContainer
+                  lat={mainLocation.lat}
+                  lng={mainLocation.lng}
+                  planList={planList}
+                />
               </MapWrapper>
             </PlanMakeWrapper>
             {/* 추천 목록, 전체 목록 */}

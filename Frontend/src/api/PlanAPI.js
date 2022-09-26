@@ -5,7 +5,6 @@ const getRecommendList = async (data) => {
   const result = await client
     .post(`/place/recommend`, data)
     .then((response) => response.data)
-    .then((r) => console.log(r))
     .catch((error) => error.response);
   return result;
 };
