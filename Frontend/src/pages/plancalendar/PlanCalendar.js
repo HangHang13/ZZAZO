@@ -6,8 +6,8 @@ import {
 } from "./../../components/styled/Wrapper";
 import styled from "styled-components";
 import Slider from "../../components/plancalendar/Slider";
-import Empty from "../../components/plancalendar/EmptyPlan";
 import EmptyPlan from "./../../components/plancalendar/EmptyPlan";
+import ReviewDetail from "../../components/plancalendar/ReviewDetail";
 
 const PageHeaderBlock = styled.div`
   display: flex;
@@ -143,6 +143,12 @@ const SearchIcon = styled.img`
 `;
 
 const PlanCalendar = () => {
+  //상세 보기 모달
+  const [modalOpen, setModalOpen] = useState(false);
+  //모달 열고 닫기
+  const modalClose = () => {
+    setModalOpen(!modalOpen);
+  };
   //유저의플랜리스트
   const [userPlan, setuserPlan] = useState([]);
   //유저 공유일정 호출 api
@@ -165,6 +171,17 @@ const PlanCalendar = () => {
         </PageHeaderBlock>
       </PlanPageWrapper>
       <button onClick={TestPlan}>테스트용버튼</button>
+      <button onClick={modalClose}>모달열기</button>
+      {modalOpen && (
+        <ReviewDetail
+          modalClose={modalClose}
+          title="석촌 호수 공원"
+          address="서울시 강남대로 123"
+          category="음식점 - 일식"
+          target="20대 여성이 주로 방문해요"
+          score="4.7"
+        ></ReviewDetail>
+      )}
       {userPlan ? (
         <>
           <SearchWrapper>
