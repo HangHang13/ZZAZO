@@ -11,10 +11,10 @@ const Slide = (leftStart, leftEnd) => keyframes`
 
 export const SliderWrapper = styled.div`
 	position: absolute;
-	width: 100%;
+	width: 90%;
 	height: 100%;
 	display: flex;
-	overflow-x: hidden;
+	overflow: hidden;
 
 	animation-duration: 0.4s;
 	animation-timing-function: ease-out;
