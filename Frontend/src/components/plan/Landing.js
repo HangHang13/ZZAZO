@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
+import { Map, MapMarker, useMap } from "react-kakao-maps-sdk";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "../common/buttons/Button";
@@ -425,6 +425,7 @@ const Landing = ({ onHandlePageOut }) => {
     removePagination();
     setKeyWord((prev) => "");
     setSelectedMarker([]);
+    setClickedMarker(null);
     const map = mapRef.current;
     if (!map) return;
     const bounds = new kakao.maps.LatLngBounds();
@@ -515,6 +516,95 @@ const Landing = ({ onHandlePageOut }) => {
       }));
     }
   };
+  const MARKER_WIDTH = 36; // 기본, 클릭 마커의 너비
+  const MARKER_HEIGHT = 40; // 기본, 클릭 마커의 높이
+  const OFFSET_X = 10; // 기본, 클릭 마커의 기준 X좌표
+  const OFFSET_Y = MARKER_HEIGHT; // 기본, 클릭 마커의 기준 Y좌표
+  const OVER_MARKER_WIDTH = 36; // 오버 마커의 너비
+  const OVER_MARKER_HEIGHT = 40; // 오버 마커의 높이
+  const OVER_OFFSET_X = 10; // 오버 마커의 기준 X좌표
+  const OVER_OFFSET_Y = OVER_MARKER_HEIGHT; // 오버 마커의 기준 Y좌표
+  const SPRITE_MARKER_URL = "assets/markerImage/selectMarker3.png"; // 스프라이트 마커 이미지 URL
+  const SPRITE_WIDTH = 109; // 스프라이트 이미지 너비
+  const SPRITE_HEIGHT = 78; // 스프라이트 이미지 높이
+  const SPRITE_GAP = 0; // 스프라이트 이미지에서 마커간 간격
+  const EventMarkerContainer = ({
+    position,
+    index,
+    onClick,
+    isClicked,
+    marker,
+  }) => {
+    const map = mapRef.current;
+    const [isOver, setIsOver] = useState(false);
+    const gapX = MARKER_WIDTH + SPRITE_GAP; // 스프라이트 이미지에서 마커로 사용할 이미지 X좌표 간격 값
+    const originY = MARKER_HEIGHT + SPRITE_GAP; // 스프라이트 이미지에서 기본, 클릭 마커로 사용할 Y좌표 값
+    const overOriginY = OVER_MARKER_HEIGHT + SPRITE_GAP; // 스프라이트 이미지에서 오버 마커로 사용할 Y좌표 값
+    const normalOrigin = { x: 0, y: originY }; // 스프라이트 이미지에서 기본 마커로 사용할 영역의 좌상단 좌표
+    const clickOrigin = { x: gapX * 2, y: originY }; // 스프라이트 이미지에서 마우스오버 마커로 사용할 영역의 좌상단 좌표
+    const overOrigin = { x: gapX, y: originY }; // 스프라이트 이미지에서 클릭 마커로 사용할 영역의 좌상단 좌표
+    let spriteOrigin = isOver ? overOrigin : normalOrigin;
+
+    if (isClicked) {
+      spriteOrigin = clickOrigin;
+    }
+
+    return (
+      <MapMarker
+        position={position} // 마커를 표시할 위치
+        onClick={onClick}
+        onMouseOver={() => setIsOver(true)}
+        onMouseOut={() => setIsOver(false)}
+        image={{
+          src: SPRITE_MARKER_URL,
+          size: {
+            width: MARKER_WIDTH,
+            height: MARKER_HEIGHT,
+          },
+          options: {
+            offset: {
+              x: OFFSET_X,
+              y: OFFSET_Y,
+            },
+            spriteSize: {
+              width: SPRITE_WIDTH,
+              height: SPRITE_HEIGHT,
+            },
+            spriteOrigin: spriteOrigin,
+          },
+        }}
+      >
+        {info && info.content === marker.content && (
+          <MarkerInfo>
+            {/* <span>선택위치</span>
+                  <br /> */}
+            <span>{marker.content.placename}</span>
+            {/* <br />
+                  <span>{marker.content.addressname}</span>
+                  <br />
+                  {marker.content.roadname ? (
+                    <>
+                      <span>{marker.content.roadname}</span>
+                      <br />
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                  {marker.content.phone ? (
+                    <>
+                      <span>{marker.content.phone}</span>
+                      <br />
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                  <span>{marker.content.place_url}</span> */}
+          </MarkerInfo>
+        )}
+      </MapMarker>
+    );
+  };
+  const [clickedMarker, setClickedMarker] = useState();
   useEffect(() => {
     // const map = mapRef.current;
     // if (!map) return;
@@ -605,6 +695,7 @@ const Landing = ({ onHandlePageOut }) => {
                 });
                 setMarkers(markers);
                 setSelectedMarker(markers);
+                setClickedMarker(null);
                 console.log(markers);
                 console.log(selectedMarker);
               }
@@ -648,16 +739,21 @@ const Landing = ({ onHandlePageOut }) => {
           }}
           // ref={mapRef}
         >
-          {markers.map((marker) => (
-            <MapMarker
+          {markers.map((marker, index) => (
+            // <MapMarker
+            <EventMarkerContainer
+              index={index}
+              marker={marker}
               key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
               position={marker.position}
               onClick={() => {
+                console.log(index);
                 const map = mapRef.current;
                 let markers = [];
                 markers.push(marker);
                 setInfo(marker);
                 setSelectedMarker(markers);
+                setClickedMarker(index);
                 map.setLevel(4);
                 map.setCenter(
                   new kakao.maps.LatLng(
@@ -667,13 +763,14 @@ const Landing = ({ onHandlePageOut }) => {
                 );
                 console.log(selectedMarker);
               }}
+              isClicked={clickedMarker === index}
             >
-              {info && info.content === marker.content && (
-                <MarkerInfo>
-                  {/* <span>선택위치</span>
+              {/* {info && info.content === marker.content && ( */}
+              {/* <MarkerInfo> */}
+              {/* <span>선택위치</span>
                   <br /> */}
-                  <span>{marker.content.placename}</span>
-                  {/* <br />
+              {/* <span>{marker.content.placename}</span> */}
+              {/* <br />
                   <span>{marker.content.addressname}</span>
                   <br />
                   {marker.content.roadname ? (
@@ -693,9 +790,10 @@ const Landing = ({ onHandlePageOut }) => {
                     <></>
                   )}
                   <span>{marker.content.place_url}</span> */}
-                </MarkerInfo>
-              )}
-            </MapMarker>
+              {/* </MarkerInfo> */}
+              {/* )} */}
+              {/* </MapMarker> */}
+            </EventMarkerContainer>
           ))}
           {/* {!mapState.isLoading && (
             <MapMarker position={mapState.center}>
