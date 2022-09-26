@@ -4,6 +4,8 @@ import Slide from "./Slide";
 import img1 from "./location2.jpg";
 import img2 from "./location3.jpg";
 import img3 from "./location4.jpg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretLeft, faCaretRight } from "@fortawesome/fontawesome-free-solid";
 
 const TOTAL_SLIDES = 2; // 전체 슬라이드 개수(총3개. 배열로 계산)
 
@@ -37,31 +39,54 @@ export default function Slider() {
   }, [currentSlide]);
 
   return (
-    <Container>
-      <Text>
-        <h1>공유일정확인</h1>
-        <p>{currentSlide + 1}번 째 사진</p>
-      </Text>
-      <SliderContainer ref={slideRef}>
-        <Slide img={img1} />
-        <Slide img={img2} />
-        <Slide img={img3} />
-      </SliderContainer>
-      <Center>
-        <Button onClick={PrevSlide}>Prev</Button>
-        <Button onClick={NextSlide}>Next</Button>
-      </Center>
-    </Container>
+    <LayOutWrapper>
+      <ButtonWrapper>
+        <FontAwesomeIcon
+          onClick={PrevSlide}
+          icon={faCaretLeft}
+          size="9x"
+        ></FontAwesomeIcon>
+      </ButtonWrapper>
+      <Container>
+        <SliderContainer ref={slideRef}>
+          <Slide img={img1} />
+          <Slide img={img2} />
+          <Slide img={img3} />
+        </SliderContainer>
+      </Container>
+      <ButtonWrapper>
+        <FontAwesomeIcon
+          onClick={NextSlide}
+          icon={faCaretRight}
+          size="9x"
+        ></FontAwesomeIcon>
+      </ButtonWrapper>
+    </LayOutWrapper>
   );
 }
+
+const LayOutWrapper = styled.div`
+  display: flex;
+`;
+
 const Container = styled.div`
-  width: 500px;
+  width: 40rem;
   margin: auto;
-  height: 1000px;
+  height: 50rem;
   overflow: hidden; // 선을 넘어간 이미지들은 숨겨줍니다.
 `;
-const Button = styled.div`
-  all: unset;
+const ButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  height: 40rem;
+  text-align: center;
+  padding: 2rem 6rem;
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+const PrevButton = styled.div`
+  width: 2rem;
   padding: 1em 2em;
   margin: 2em 2em;
   color: burlywood;
@@ -73,23 +98,25 @@ const Button = styled.div`
     color: #fff;
   }
 `;
+const NextButton = styled.div`
+  width: 2rem;
+  padding: 1em 2em;
+  margin: 2em 2em;
+  color: burlywood;
+  border-radius: 10px;
+  border: 1px solid burlywood;
+  cursor: pointer;
+  &:hover {
+    background-color: burlywood;
+    color: #fff;
+  }
+  margin-right: 2rem;
+`;
 const SliderContainer = styled.div`
+  width: 40rem;
+  height: 40rem;
+  background-color: green;
   margin: 0 auto;
   margin-bottom: 2em;
   display: flex; // 이미지들을 가로로 나열합니다.
-`;
-const Text = styled.div`
-  text-align: center;
-  color: burlywood;
-  p {
-    color: #fff;
-    font-size: 20px;
-    background-color: burlywood;
-    display: inline-block;
-    border-radius: 50px;
-    padding: 0.5em 1em;
-  }
-`;
-const Center = styled.div`
-  text-align: center;
 `;

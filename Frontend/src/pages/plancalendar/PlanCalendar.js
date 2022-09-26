@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Header from "./../../components/layout/Header";
-import { BaseFlexWrapper, PlanPageWrapper } from "./../../components/styled/Wrapper";
+import {
+  BaseFlexWrapper,
+  PlanPageWrapper,
+} from "./../../components/styled/Wrapper";
 import styled from "styled-components";
 import Slider from "../../components/plancalendar/Slider";
 
@@ -197,7 +200,9 @@ const PlanCalendar = () => {
           <option value="date">약속 날짜</option>
         </SearchOption>
         <SearchInput type="search"></SearchInput>
-        <SearchIcon src={`${process.env.PUBLIC_URL}/assets/plancalendar/SearchIcon.png`}></SearchIcon>
+        <SearchIcon
+          src={`${process.env.PUBLIC_URL}/assets/plancalendar/SearchIcon.png`}
+        ></SearchIcon>
       </SearchWrapper>
       <div>
         <Slider></Slider>
