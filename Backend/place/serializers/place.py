@@ -16,7 +16,7 @@ class PlaceListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Place
-        fields = ('_id', 'name', 'address', "place_type")
+        fields = ('_id', 'name', 'address', "place_type", "longitude", "latitude")
 
 class PlaceRecommendListSerializer(serializers.ModelSerializer):
     class Meta:
