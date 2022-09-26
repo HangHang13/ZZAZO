@@ -3,7 +3,7 @@ import { client } from "./../utils/client";
 // 추천 목록 불러오기
 const getRecommendList = async (data) => {
   const result = await client
-    .post(`/place/recommend/`, data)
+    .post(`/place/recommend`, data)
     .then((response) => response.data)
     .then((r) => console.log(r))
     .catch((error) => error.response);
