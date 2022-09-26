@@ -14,6 +14,7 @@ export const SliderWrapper = styled.div`
 	width: 90%;
 	height: 100%;
 	display: flex;
+	overflow-y: hidden;
 
 	animation-duration: 0.4s;
 	animation-timing-function: ease-out;
@@ -22,5 +23,6 @@ export const SliderWrapper = styled.div`
 
 	@media screen and (max-width: 500px) {
 		width: 100%;
+		overflow-y: scroll;
 		animation-name: ${({ leftStart, leftEnd }) => Slide(leftStart, leftEnd - 5)};
 `;

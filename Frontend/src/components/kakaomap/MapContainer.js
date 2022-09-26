@@ -10,19 +10,17 @@ const KMap = styled.div`
 
 const { kakao } = window;
 
-const MapContainer = ({ lat, lng, planList }) => {
+const MapContainer = ({ lat, lng, planList, onHandleMarkerHover }) => {
   // 마커 표시하는 함수
-  const displayMarker = (map, lat, lng, place) => {
-    console.log(place);
+  const displayMarker = (map, lat, lng, place, index) => {
     const markerImg = place.isMain
       ? `${process.env.PUBLIC_URL}/assets/plan/main_marker.png`
-      : `${process.env.PUBLIC_URL}/assets/plan/marker.png`;
-
+      : `${process.env.PUBLIC_URL}/assets/plan/white.png`;
     const size = place.isMain ? 48 : 36;
     const imageSrc = markerImg;
     const imageSize = new kakao.maps.Size(size, size);
     const imageOption = {
-      offset: new kakao.maps.Point(size * 0.66, size * 0.66),
+      // offset: new kakao.maps.Point(size * 0.66, size * 0.66),
     };
 
     const markerImage = new kakao.maps.MarkerImage(
@@ -38,6 +36,33 @@ const MapContainer = ({ lat, lng, planList }) => {
     });
 
     marker.setMap(map);
+
+    if (!place.isMain) {
+      const overlayContent = `
+      <div style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1rem;
+        font-weight: bold;
+        width: 32px;
+        height: 32px;
+        background-color: rgba(128,224,128,0.9);
+        border-radius: 100%;
+      ">${index}</div>`;
+
+      const overlayPosition = new kakao.maps.LatLng(lat, lng);
+      const overlay = new kakao.maps.CustomOverlay({
+        position: overlayPosition,
+        content: overlayContent,
+      });
+      overlay.setMap(map);
+    }
+
+    kakao.maps.event.addListener(marker, "mouseover", () =>
+      console.log(marker)
+    );
   };
 
   useEffect(() => {
@@ -56,7 +81,8 @@ const MapContainer = ({ lat, lng, planList }) => {
         map,
         planList[i].latitude,
         planList[i].longitude,
-        planList[i]
+        planList[i],
+        i + 1
       );
 
       // 마커 사이 선 생성

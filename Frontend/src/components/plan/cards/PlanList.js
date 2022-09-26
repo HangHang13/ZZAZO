@@ -110,9 +110,6 @@ const PlanList = ({ pList, setPList, openModal, onHandleList, listType }) => {
                       >
                         <PlaceTitle>
                           {item.name ? item.name : "사용자 지정 위치"}
-                          {/* {item.name === "지정위치"
-                            ? "사용자 지정 위치"
-                            : item.name``} */}
                         </PlaceTitle>
                         {!item.isMain && (
                           <PlaceCategory>{item.place_type}</PlaceCategory>
