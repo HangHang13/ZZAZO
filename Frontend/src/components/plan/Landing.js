@@ -829,9 +829,9 @@ const Landing = ({ onHandlePageOut }) => {
           ></input> */}
         </MainPlaceInputWrapper>
         {/* </SearchWrapper> */}
-        <ResultText>
+        {/* <ResultText>
           장소명 <ResultKeyword>{KeyWord}</ResultKeyword> 검색결과
-        </ResultText>
+        </ResultText> */}
         <SearchResult id="search-result">
           {/* <div className="scroll-wrapper"> */}
           {markers.map((marker) => (
