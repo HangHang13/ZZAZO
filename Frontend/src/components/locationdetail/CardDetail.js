@@ -153,13 +153,24 @@ const ReviewTitle = styled.div`
 //category : 장소 카테고리
 //target : 주요 이용 고객
 //score : 별점
-const CardDetail = ({ modalClose, title, address, category, target, score }) => {
+const CardDetail = ({
+  modalClose,
+  title,
+  address,
+  category,
+  target,
+  score,
+}) => {
   let searchTitle = title.replace(/ /g, "");
   return (
     <Background>
       <CardWrapper>
         <ExitBtnWrapper>
-          <ImgButton src={`${process.env.PUBLIC_URL}/assets/card/exit.png`} alt="exit" onClick={modalClose}></ImgButton>
+          <ImgButton
+            src={`${process.env.PUBLIC_URL}/assets/card/exit.png`}
+            alt="exit"
+            onClick={() => modalClose(3)}
+          ></ImgButton>
         </ExitBtnWrapper>
         <CardTitle>{title}</CardTitle>
         <CardLine width="50%"></CardLine>
@@ -167,26 +178,43 @@ const CardDetail = ({ modalClose, title, address, category, target, score }) => 
           <CardInfoWrapper>
             <CardInfo>
               <CardInfoItem>
-                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/location.png`} alt="location"></InfoIcon>
+                <InfoIcon
+                  src={`${process.env.PUBLIC_URL}/assets/card/location.png`}
+                  alt="location"
+                ></InfoIcon>
                 {address}
               </CardInfoItem>
               <CardInfoItem>
-                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/sushi.png`} alt="location"></InfoIcon>
+                <InfoIcon
+                  src={`${process.env.PUBLIC_URL}/assets/card/sushi.png`}
+                  alt="location"
+                ></InfoIcon>
                 {category}
               </CardInfoItem>
               <CardInfoItem>
-                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/women.png`} alt="location"></InfoIcon>
+                <InfoIcon
+                  src={`${process.env.PUBLIC_URL}/assets/card/women.png`}
+                  alt="location"
+                ></InfoIcon>
                 {target}
               </CardInfoItem>
               <CardInfoItem>
-                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/star.png`} alt="location"></InfoIcon>
+                <InfoIcon
+                  src={`${process.env.PUBLIC_URL}/assets/card/star.png`}
+                  alt="location"
+                ></InfoIcon>
                 {score}
               </CardInfoItem>
             </CardInfo>
             <CardLine width="100%"></CardLine>
             <ReviewTitle>Review</ReviewTitle>
             <ReviewWrapper>
-              <ReviewCard writer="김성수" writeday="2022 - 09 - 20" score="4.7" content="인생은 가지덮밥을 먹기 전과 후로 나뉜다."></ReviewCard>
+              <ReviewCard
+                writer="김성수"
+                writeday="2022 - 09 - 20"
+                score="4.7"
+                content="인생은 가지덮밥을 먹기 전과 후로 나뉜다."
+              ></ReviewCard>
               <ReviewCard
                 writer="김성수"
                 writeday="2022 - 09 - 20"
@@ -196,10 +224,19 @@ const CardDetail = ({ modalClose, title, address, category, target, score }) => 
             </ReviewWrapper>
           </CardInfoWrapper>
           <CardImgWrapper>
-            <CardImg src={`${process.env.PUBLIC_URL}/assets/card/gazi.png`} alt="gazi"></CardImg>
+            <CardImg
+              src={`${process.env.PUBLIC_URL}/assets/card/gazi.png`}
+              alt="gazi"
+            ></CardImg>
             <InstaButtonWrapper>
-              <a href={`https://www.instagram.com/explore/tags/${searchTitle}/?hl=ko`} target="_blank">
-                <ImgButton src={`${process.env.PUBLIC_URL}/assets/card/insta.png`} alt="insta"></ImgButton>
+              <a
+                href={`https://www.instagram.com/explore/tags/${searchTitle}/?hl=ko`}
+                target="_blank"
+              >
+                <ImgButton
+                  src={`${process.env.PUBLIC_URL}/assets/card/insta.png`}
+                  alt="insta"
+                ></ImgButton>
               </a>
             </InstaButtonWrapper>
           </CardImgWrapper>
