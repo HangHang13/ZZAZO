@@ -44,7 +44,7 @@ export default function Slider() {
         <FontAwesomeIcon
           onClick={PrevSlide}
           icon={faCaretLeft}
-          size="9x"
+          size="8x"
         ></FontAwesomeIcon>
       </ButtonWrapper>
       <Container>
@@ -58,7 +58,7 @@ export default function Slider() {
         <FontAwesomeIcon
           onClick={NextSlide}
           icon={faCaretRight}
-          size="9x"
+          size="8x"
         ></FontAwesomeIcon>
       </ButtonWrapper>
     </LayOutWrapper>
@@ -67,16 +67,18 @@ export default function Slider() {
 
 const LayOutWrapper = styled.div`
   display: flex;
+  justify-content: space-between;
+  width: 80%;
 `;
 
 const Container = styled.div`
   width: 40rem;
   margin: auto;
-  height: 50rem;
   overflow: hidden; // 선을 넘어간 이미지들은 숨겨줍니다.
 `;
 const ButtonWrapper = styled.div`
   display: flex;
+
   align-items: center;
   height: 40rem;
   text-align: center;
@@ -85,33 +87,7 @@ const ButtonWrapper = styled.div`
     transform: scale(1.1);
   }
 `;
-const PrevButton = styled.div`
-  width: 2rem;
-  padding: 1em 2em;
-  margin: 2em 2em;
-  color: burlywood;
-  border-radius: 10px;
-  border: 1px solid burlywood;
-  cursor: pointer;
-  &:hover {
-    background-color: burlywood;
-    color: #fff;
-  }
-`;
-const NextButton = styled.div`
-  width: 2rem;
-  padding: 1em 2em;
-  margin: 2em 2em;
-  color: burlywood;
-  border-radius: 10px;
-  border: 1px solid burlywood;
-  cursor: pointer;
-  &:hover {
-    background-color: burlywood;
-    color: #fff;
-  }
-  margin-right: 2rem;
-`;
+
 const SliderContainer = styled.div`
   width: 40rem;
   height: 40rem;

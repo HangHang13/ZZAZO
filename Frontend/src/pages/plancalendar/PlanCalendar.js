@@ -6,6 +6,8 @@ import {
 } from "./../../components/styled/Wrapper";
 import styled from "styled-components";
 import Slider from "../../components/plancalendar/Slider";
+import Empty from "../../components/plancalendar/EmptyPlan";
+import EmptyPlan from "./../../components/plancalendar/EmptyPlan";
 
 const PageHeaderBlock = styled.div`
   display: flex;
@@ -96,7 +98,7 @@ const SearchWrapper = styled.div`
   margin-bottom: 1.5rem;
   border-radius: 50px;
   width: 50rem;
-  height: 6rem;
+  height: 5rem;
   background-color: #c0f0b0;
   display: flex;
   justify-content: space-evenly;
@@ -111,7 +113,7 @@ const SearchWrapper = styled.div`
 const SearchOption = styled.select`
   width: 10rem;
   border-radius: 16px;
-  height: 3rem;
+  height: 2.5rem;
   font-size: 1.5rem;
   box-shadow: 4px 2px 2px grey;
   @media screen and (max-width: 500px) {
@@ -123,7 +125,7 @@ const SearchOption = styled.select`
 const SearchInput = styled.input`
   width: 30rem;
   border-radius: 16px;
-  height: 3rem;
+  height: 2.5rem;
   font-size: 1.5rem;
   box-shadow: 4px 2px 2px grey;
   @media screen and (max-width: 500px) {
@@ -141,72 +143,48 @@ const SearchIcon = styled.img`
 `;
 
 const PlanCalendar = () => {
-  const [planList, setPlanList] = useState([]);
+  //유저의플랜리스트
+  const [userPlan, setuserPlan] = useState([]);
+  //유저 공유일정 호출 api
+  const TestPlan = () => {
+    setuserPlan(!userPlan);
+  };
 
   // useEffects
   useEffect(() => {
     window.scrollTo(0, 0);
-    setPlanList([
-      {
-        placeAddress: "서울 서초구 강남대로 405-2",
-        isMain: true,
-      },
-      {
-        placeId: 2,
-        placeName: "땀땀",
-        placeAddress: "서울 강남구 강남대로98길 12-5",
-        placeScore: 3.4,
-        placeType: "음식점",
-        isMain: false,
-      },
-      {
-        placeId: 17453,
-        placeName: "CGV 강남",
-        placeAddress: "서울 강남구 강남대로 438 스타플렉스",
-        placeScore: 3.3,
-        placeType: "영화관",
-      },
-      {
-        placeId: 456,
-        placeName: "스타벅스 강남대로점",
-        placeAddress: "서울 강남구 강남대로 456 한석타워 2층 1-2호",
-        placeScore: 4.2,
-        placeType: "커피전문점",
-      },
-      {
-        placeId: 15346,
-        placeName: "멀티캠퍼스 역삼",
-        placeAddress: "서울 강남구 테헤란로 212",
-        placeScore: 5.0,
-        placeType: "학원",
-      },
-    ]);
   }, []);
 
   return (
     <div align="center">
       <Header />
+
       <PlanPageWrapper width="90vw">
         <PageHeaderBlock height="calc(20vh)" bg="yellow">
           <Title>공유 일정 확인</Title>
         </PageHeaderBlock>
       </PlanPageWrapper>
-      <SearchWrapper>
-        <SearchOption>
-          <option value="all" selected>
-            All
-          </option>
-          <option value="title">약속명</option>
-          <option value="date">약속 날짜</option>
-        </SearchOption>
-        <SearchInput type="search"></SearchInput>
-        <SearchIcon
-          src={`${process.env.PUBLIC_URL}/assets/plancalendar/SearchIcon.png`}
-        ></SearchIcon>
-      </SearchWrapper>
-      <div>
-        <Slider></Slider>
-      </div>
+      <button onClick={TestPlan}>테스트용버튼</button>
+      {userPlan ? (
+        <>
+          <SearchWrapper>
+            <SearchOption>
+              <option value="all" selected>
+                All
+              </option>
+              <option value="title">약속명</option>
+              <option value="date">약속 날짜</option>
+            </SearchOption>
+            <SearchInput type="search"></SearchInput>
+            <SearchIcon
+              src={`${process.env.PUBLIC_URL}/assets/plancalendar/SearchIcon.png`}
+            ></SearchIcon>
+          </SearchWrapper>
+          <Slider></Slider>
+        </>
+      ) : (
+        <EmptyPlan></EmptyPlan>
+      )}
     </div>
   );
 };
