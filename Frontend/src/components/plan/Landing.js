@@ -43,7 +43,7 @@ const ListWrapper = styled.div`
     width: 40%;
   }
   @media screen and (max-width: 500px) {
-    display: block;
+    // display: block;
     width: 100%;
     height: 60%;
   }
@@ -114,27 +114,67 @@ const ScrollList = styled.ul`
     font-size: 0.9rem;
   }
   @media screen and (max-width: 800px) {
-    font-size: 0.5rem;
+    font-size: 0.9rem;
   }
   @media screen and (max-width: 500px) {
-    font-size: 0.5rem;
+    font-size: 0.9rem;
   }
 `;
 const SelectedList = styled.div`
   width: 95%;
-  background-color: #80e080;
+  background-color: #c0f0b0;
 `;
 const NotSelectedList = styled.div`
   width: 95%;
   &:hover {
-    background-color: skyblue;
+    background-color: #80e080;
   }
+`;
+const ResultText = styled.p`
+  margin: 0.3rem;
+`;
+const ResultKeyword = styled.span`
+  color: blue;
+`;
+const ListLine = styled.hr`
+  border: 0;
+  margin: 0.4rem;
+  height: 0.2rem;
+  background: #80e080;
+`;
+const SelectedListLine = styled.hr`
+  border: 0;
+  margin: 0.4rem;
+  height: 0.2rem;
+  background: #c0f0b0;
+`;
+const PlaceName = styled.h3`
+  font-weight: bolder;
+`;
+const RoadAddressName = styled.span`
+  font-weight: bold;
+`;
+const AddressName = styled.span`
+  font-weight: lighter;
+  color: gray;
 `;
 const ButtonList = styled.div`
   width: 100%;
+  height: 10%;
   margin: 0.5rem;
   display: flex;
   justify-content: space-around;
+  @media screen and (max-width: 1000px) {
+    width: 35%;
+  }
+  @media screen and (max-width: 800px) {
+    width: 40%;
+  }
+  @media screen and (max-width: 500px) {
+    display: flex;
+    width: 100%;
+    height: 40%;
+  }
 `;
 const PaginationBox = styled.div`
   display: flex;
@@ -166,6 +206,72 @@ const PaginationBox = styled.div`
     align-items: center;
   }
 `;
+
+const ButtonListBtn = styled.button`
+  display: flex;
+  width: 80px;
+  height: 3rem;
+  color: #000000;
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #80e080;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: bold;
+
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  @media screen and (max-width: 1000px) {
+    width: 60vw;
+  }
+  @media screen and (max-width: 800px) {
+    width: 60vw;
+  }
+  @media screen and (max-width: 500px) {
+    width: 40vw;
+  }
+  transition: all 0.2s ease-in;
+  &:hover {
+    background: #80e080;
+  }
+  &:active {
+    background: rgba(128, 224, 128, 0.5);
+    border: 1px solid #80e080;
+  }
+`;
+
+const BeforeButton = styled(ButtonWrapper)`
+  animation: motion 0.5s linear infinite alternate;
+  margin-top: 0px;
+  width: 240px;
+  background-color: #80e080;
+  border: 1px solid #80c0a0;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
+
+  @keyframes motion {
+    0% {
+      margin-top: 0px;
+    }
+    100% {
+      margin-top: 0.2rem;
+    }
+  }
+  @media screen and (max-width: 1000px) {
+    width: 100vw;
+  }
+  @media screen and (max-width: 800px) {
+    width: 70vw;
+  }
+  @media screen and (max-width: 500px) {
+    width: 40vw;
+  }
+`;
+
 const Landing = ({ onHandlePageOut }) => {
   const position = useSelector((state) => state.position.value);
   const dispatch = useDispatch();
@@ -625,9 +731,9 @@ const Landing = ({ onHandlePageOut }) => {
           ></input> */}
         </MainPlaceInputWrapper>
         {/* </SearchWrapper> */}
-        <p className="result-text">
-          장소명 <span className="result-keyword">{KeyWord}</span> 검색결과
-        </p>
+        <ResultText>
+          장소명 <ResultKeyword>{KeyWord}</ResultKeyword> 검색결과
+        </ResultText>
         <SearchResult id="search-result">
           {/* <div className="scroll-wrapper"> */}
           {markers.map((marker) => (
@@ -652,20 +758,26 @@ const Landing = ({ onHandlePageOut }) => {
             >
               {info && info.content !== marker.content && (
                 <NotSelectedList>
-                  <hr />
-                  <h3>{marker.content.placename}</h3>
+                  <ListLine />
+                  {/* <hr /> */}
+                  <PlaceName>{marker.content.placename}</PlaceName>
+                  {/* <h3>{marker.content.placename}</h3> */}
                   <br />
                   {marker.content.roadname ? (
                     <>
-                      <span>{marker.content.roadname}</span>
+                      <RoadAddressName>
+                        {marker.content.roadname}
+                      </RoadAddressName>
+                      {/* <span>{marker.content.roadname}</span> */}
                       <br />
                     </>
                   ) : (
                     <></>
                   )}
-                  <span>(지번){marker.content.addressname}</span>
+                  <AddressName>(지번){marker.content.addressname}</AddressName>
+                  {/* <span>(지번){marker.content.addressname}</span> */}
                   <br />
-
+                  <ListLine />
                   {/* {marker.content.phone ? (
                     <>
                       <span>{marker.content.phone}</span>
@@ -679,18 +791,23 @@ const Landing = ({ onHandlePageOut }) => {
               )}
               {info && info.content === marker.content && (
                 <SelectedList>
-                  <hr />
-                  <h3>{marker.content.placename}</h3>
+                  <SelectedListLine />
+                  <PlaceName>{marker.content.placename}</PlaceName>
+                  {/* <h3>{marker.content.placename}</h3> */}
                   <br />
                   {marker.content.roadname ? (
                     <>
-                      <span>{marker.content.roadname}</span>
+                      <RoadAddressName>
+                        {marker.content.roadname}
+                      </RoadAddressName>
+                      {/* <span>{marker.content.roadname}</span> */}
                       <br />
                     </>
                   ) : (
                     <></>
                   )}
-                  <span>(지번){marker.content.addressname}</span>
+                  <AddressName>(지번){marker.content.addressname}</AddressName>
+                  {/* <span>(지번){marker.content.addressname}</span> */}
                   <br />
                   {/* {marker.content.phone ? (
                     <>
@@ -701,6 +818,7 @@ const Landing = ({ onHandlePageOut }) => {
                     <></>
                   )}
                   <span>{marker.content.place_url}</span> */}
+                  <SelectedListLine />
                 </SelectedList>
               )}
             </ScrollList>
@@ -741,8 +859,9 @@ const Landing = ({ onHandlePageOut }) => {
         {/* </div> */}
         {/* 최종 좌표 넘겨주는 버튼 */}
         <ButtonList>
-          <Button message="사용자위치" clickEvent={userLocation}></Button>
-          <Button message="다음" clickEvent={nextStep} />
+          <ButtonListBtn onClick={userLocation}>내위치</ButtonListBtn>
+          {/* <ButtonListBtn onClick={nextStep}>다음</ButtonListBtn> */}
+          <BeforeButton onClick={nextStep}>다음</BeforeButton>
         </ButtonList>
       </ListWrapper>
     </>
