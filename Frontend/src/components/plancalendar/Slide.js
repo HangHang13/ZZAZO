@@ -2,10 +2,17 @@ import React from "react";
 import styled from "styled-components";
 
 export default function Slide({ img }) {
-  return <IMG src={img} />;
+  return (
+    <ImgWrapper>
+      <IMG src={img} />
+    </ImgWrapper>
+  );
 }
 
+const ImgWrapper = styled.div`
+  width: 40rem;
+`;
 const IMG = styled.img`
-  width: 500px;
-  height: 500px;
+  width: 40rem;
+  height: 40rem;
 `;

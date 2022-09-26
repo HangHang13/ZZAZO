@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Header from "./../../components/layout/Header";
-import { BaseFlexWrapper, PlanPageWrapper } from "./../../components/styled/Wrapper";
+import {
+  BaseFlexWrapper,
+  PlanPageWrapper,
+} from "./../../components/styled/Wrapper";
 import styled from "styled-components";
 import Slider from "../../components/plancalendar/Slider";
 
@@ -89,6 +92,54 @@ SectionTitle.defaultProps = {
   bg: "#80e080",
 };
 
+const SearchWrapper = styled.div`
+  margin-bottom: 1.5rem;
+  border-radius: 50px;
+  width: 50rem;
+  height: 6rem;
+  background-color: #c0f0b0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  box-shadow: 4px 2px 2px grey;
+  @media screen and (max-width: 500px) {
+    width: 25rem;
+    height: 3rem;
+  }
+`;
+
+const SearchOption = styled.select`
+  width: 10rem;
+  border-radius: 16px;
+  height: 3rem;
+  font-size: 1.5rem;
+  box-shadow: 4px 2px 2px grey;
+  @media screen and (max-width: 500px) {
+    height: 2rem;
+    width: 5rem;
+  }
+`;
+
+const SearchInput = styled.input`
+  width: 30rem;
+  border-radius: 16px;
+  height: 3rem;
+  font-size: 1.5rem;
+  box-shadow: 4px 2px 2px grey;
+  @media screen and (max-width: 500px) {
+    height: 2rem;
+    width: 15rem;
+  }
+`;
+const SearchIcon = styled.img`
+  width: 2.5rem;
+  height: 2.5rem;
+  @media screen and (max-width: 500px) {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+`;
+
 const PlanCalendar = () => {
   const [planList, setPlanList] = useState([]);
 
@@ -137,9 +188,22 @@ const PlanCalendar = () => {
       <Header />
       <PlanPageWrapper width="90vw">
         <PageHeaderBlock height="calc(20vh)" bg="yellow">
-          <Title>공유 일정</Title>
+          <Title>공유 일정 확인</Title>
         </PageHeaderBlock>
       </PlanPageWrapper>
+      <SearchWrapper>
+        <SearchOption>
+          <option value="all" selected>
+            All
+          </option>
+          <option value="title">약속명</option>
+          <option value="date">약속 날짜</option>
+        </SearchOption>
+        <SearchInput type="search"></SearchInput>
+        <SearchIcon
+          src={`${process.env.PUBLIC_URL}/assets/plancalendar/SearchIcon.png`}
+        ></SearchIcon>
+      </SearchWrapper>
       <div>
         <Slider></Slider>
       </div>
