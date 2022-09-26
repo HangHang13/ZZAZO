@@ -411,6 +411,16 @@ const PlanMakeCard = () => {
     setPlanInfo({ ...planInfo, time: e.target.value });
   };
 
+  const onHandleMarkerHover = (place) => {
+    // console.log(place._id);
+    // console.log(planList[0]._id, planList[1]._id, planList[2]._id);
+    // const targetList = planList.filter((item) => item._id === place._id);
+    // const target = targetList[0];
+    // console.log(target);
+
+    console.log(place);
+  };
+
   // +, - 버튼 누를 시 이벤트
   const onHandleList = (listType, index) => {
     const arr1 = Array.from(recommendList);
@@ -494,6 +504,7 @@ const PlanMakeCard = () => {
                   lat={mainLocation.lat}
                   lng={mainLocation.lng}
                   planList={planList}
+                  onHandleMarkerHover={onHandleMarkerHover}
                 />
               </MapWrapper>
             </PlanMakeWrapper>
