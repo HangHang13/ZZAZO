@@ -37,7 +37,7 @@ def home(request):
 def place_recommend(request):
     longitude = float(request.data['longitude'])
     latitude  = float(request.data['latitude'])
-    radius = request.user.radius() if request.user.radius() else 500
+    radius = request.data['radius'] if request.data['radius'] else 500
     position  = (latitude, longitude)
     condition = (
                 # 1km 기준
@@ -73,7 +73,7 @@ def place_recommend(request):
 def place_list(request, place_type):
     longitude = float(request.data['longitude'])
     latitude  = float(request.data['latitude'])
-    radius = request.user.radius() if request.user.radius() else 500
+    radius = request.data['radius'] if request.data['radius'] else 500
     position  = (latitude,longitude)
     condition = (
                 # 1km 기준
