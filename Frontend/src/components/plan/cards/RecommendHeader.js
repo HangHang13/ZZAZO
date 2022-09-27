@@ -18,6 +18,15 @@ const InformMent = styled.div`
 	height: 100%;
 	align-items: center;
 
+	@media screen and (max-width: 1536px) {
+		font-size: 0.9rem;
+	}
+	@media screen and (max-width: 1280px) {
+		font-size: 0.8rem;
+	}
+	@media screen and (max-width: 1024px) {
+		font-size: 0.7rem;
+	}
 	@media screen and (max-width: 500px) {
 		font-size: 0.9rem;
 	}

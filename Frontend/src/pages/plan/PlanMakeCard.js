@@ -6,7 +6,6 @@ import Radius from "../../components/plan/radius_bar/Radius";
 import { useSelector } from "react-redux";
 import PlanHeader from "../../components/plan/cards/PlanHeader";
 import PlanList from "../../components/plan/cards/PlanList";
-import AuthButton from "../../components/common/buttons/AuthButton";
 import moment from "moment";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { SliderWrapper } from "../../components/styled/SliderWrapper";
@@ -124,7 +123,7 @@ const Title = styled.h1`
 const TrashCan = styled.div`
 	display: flex;
 	position: absolute;
-	right: 10%;
+	right: 0%;
 	width: 6rem;
 
 	&:after {
@@ -270,9 +269,9 @@ const TrashWrapper = styled.div`
 	background-color: yellow;
 	display: ${({ display }) => display};
 	position: absolute;
-	right: 148px;
+	right: 0px;
 	top: 200px;
-	width: 300px;
+	width: 360px;
 	height: ${({ height }) => height};
 	overflow-y: hidden;
 	overflow-x: hidden;
@@ -286,6 +285,7 @@ const TrashWrapper = styled.div`
 		right: 8px;
 		top: 228px;
 		height: ${({ mHeight }) => mHeight};
+		width: 80%;
 	}
 `;
 TrashWrapper.defaultProps = {
@@ -308,7 +308,7 @@ const PlanMakeCard = () => {
 
 	// States_추천/목록 리스트
 	const [recommendListToggle, setRecommendListToggle] = useState(true); // [추천,목록] 메뉴 토글
-	const radius = useSelector((state) => state.radius.value); // 반경
+	const [radius, setRadius] = useState(100); // 반경
 	const [recommendList, setRecommendList] = useState([]); // [추천]리스트
 	const [placeList, setPlaceList] = useState([]); // [목록]리스트
 	const [page, setPage] = useState(0); // [추천] 페이지
@@ -350,10 +350,12 @@ const PlanMakeCard = () => {
 		});
 
 		const recommendListResponse = await getRecommendList({
+			radius: radius,
 			longitude: parseFloat(location.state.position.lng),
 			latitude: parseFloat(location.state.position.lat),
 		});
 		const placeListResponse = await getPlaceList("한식", {
+			radius: radius,
 			longitude: parseFloat(location.state.position.lng),
 			latitude: parseFloat(location.state.position.lat),
 		});
@@ -372,8 +374,23 @@ const PlanMakeCard = () => {
 	}, [recommendListToggle]);
 
 	// 반경 기준으로 장소 리스트 요청 함수
-	const onHandleRadius = () => {
+	const onHandleRadius = async () => {
 		console.log(radius);
+
+		setLoading(true);
+		const recommendListResponse = await getRecommendList({
+			radius: radius,
+			longitude: parseFloat(location.state.position.lng),
+			latitude: parseFloat(location.state.position.lat),
+		});
+		const placeListResponse = await getPlaceList("한식", {
+			radius: radius,
+			longitude: parseFloat(location.state.position.lng),
+			latitude: parseFloat(location.state.position.lat),
+		});
+		setRecommendList(recommendListResponse.data.Place);
+		setPlaceList(placeListResponse.data.Place);
+		setLoading(false);
 	};
 
 	// [추천리스트, 목록리스트] 버튼 누를 시 이벤트
@@ -406,6 +423,7 @@ const PlanMakeCard = () => {
 	};
 
 	const onHandleReload = () => {
+		reloadAudio.volume = 0.3;
 		reloadAudio.play();
 		setPage(page + 1);
 		console.log(recommendList);
@@ -437,7 +455,7 @@ const PlanMakeCard = () => {
 	return (
 		<div align="center">
 			<Header />
-			{loading ? <Loading /> : null}
+			{loading ? <Loading text="추천 장소들을 불러오고 있습니다..." /> : null}
 			{modalToggle ? <CardDetail modalClose={openModal} title="제목" address="주소 주소" category="카테고리" target="타겟" score={4.3} /> : null}
 			<SliderWrapper leftStart={start} leftEnd={end}>
 				<PlanPageWrapper width="90vw">
@@ -469,7 +487,7 @@ const PlanMakeCard = () => {
 						<PlanMakeWrapper width="calc(50% - 1rem)">
 							{/* 반경 */}
 							<RadiusWrapper>
-								<Radius />
+								<Radius radius={radius} setRadius={setRadius} />
 								<RadiusButton onClick={onHandleRadius}>입력</RadiusButton>
 							</RadiusWrapper>
 							{/* 카카오맵 */}
