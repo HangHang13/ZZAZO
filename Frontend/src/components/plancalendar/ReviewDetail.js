@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { BaseForm } from "../common/forms/Form";
 import ReviewCard from "../locationdetail/ReviewCard";
+import Rating from "./Rating";
 
 const Background = styled.div`
   position: absolute;
@@ -23,7 +24,7 @@ const CardWrapper = styled.div`
   align-items: center;
   background-color: white;
   width: 55rem;
-  height: 40rem;
+  height: 41rem;
   padding-top: 1.5rem;
   padding-left: 1.5rem;
   border-radius: 16px;
@@ -133,12 +134,8 @@ const TitleWrapper = styled.div`
 `;
 const StarWrapper = styled.div`
   width: 50rem;
-  height: 3rem;
-  background-color: green;
 `;
-const StarText = styled.div`
-  background-color: yellow;
-`;
+
 const ReviewSet = styled.input`
   width: 50rem;
   height: 6rem;
@@ -151,7 +148,6 @@ const ReviewWrapper = styled.div`
   margin-top: 1rem;
   margin-bottom: 2rem;
   width: 50rem;
-  height: 4rem;
 `;
 
 const ReviewBtn = styled.button`
@@ -169,40 +165,46 @@ const ReviewBtn = styled.button`
   }
 `;
 
+const ReviewTextArea = styled.textarea`
+  width: 50rem;
+  height: 6rem;
+  font-size: 1.2rem;
+  border-radius: 16px;
+  padding: 1rem;
+`;
+const SubmitBtn = styled.input`
+  box-shadow: 2px 2px 1px grey;
+  border: none;
+  font-weight: bold;
+  width: 12rem;
+  height: 2.1rem;
+  border-radius: 12px;
+  background-color: #80e080;
+  font-size: 1.3rem;
+  color: white;
+  text-align: center;
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
 //title : 장소명
 //address : 주소
 //category : 장소 카테고리
 //target : 주요 이용 고객
 //score : 별점
-const ReviewDetail = ({
-  modalClose,
-  title,
-  address,
-  category,
-  target,
-  score,
-}) => {
+const ReviewDetail = ({ modalClose, title, address, category, target, score }) => {
   let searchTitle = title.replace(/ /g, "");
   return (
     <Background>
       <CardWrapper>
         <ExitBtnWrapper>
-          <ImgButton
-            src={`${process.env.PUBLIC_URL}/assets/card/exit.png`}
-            alt="exit"
-            onClick={() => modalClose(3)}
-          ></ImgButton>
+          <ImgButton src={`${process.env.PUBLIC_URL}/assets/card/exit.png`} alt="exit" onClick={() => modalClose(3)}></ImgButton>
         </ExitBtnWrapper>
         <TitleWrapper>
           <CardTitle>{title}</CardTitle>
-          <a
-            href={`https://www.instagram.com/explore/tags/${searchTitle}/?hl=ko`}
-            target="_blank"
-          >
-            <ImgButton
-              src={`${process.env.PUBLIC_URL}/assets/card/insta.png`}
-              alt="insta"
-            ></ImgButton>
+          <a href={`https://www.instagram.com/explore/tags/${searchTitle}/?hl=ko`} target="_blank">
+            <ImgButton src={`${process.env.PUBLIC_URL}/assets/card/insta.png`} alt="insta"></ImgButton>
           </a>
         </TitleWrapper>
 
@@ -211,54 +213,38 @@ const ReviewDetail = ({
           <CardInfoWrapper>
             <CardInfo>
               <CardInfoItem>
-                <InfoIcon
-                  src={`${process.env.PUBLIC_URL}/assets/card/location.png`}
-                  alt="location"
-                ></InfoIcon>
+                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/location.png`} alt="location"></InfoIcon>
                 {address}
               </CardInfoItem>
               <CardInfoItem>
-                <InfoIcon
-                  src={`${process.env.PUBLIC_URL}/assets/card/sushi.png`}
-                  alt="location"
-                ></InfoIcon>
+                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/sushi.png`} alt="location"></InfoIcon>
                 {category}
               </CardInfoItem>
               <CardInfoItem>
-                <InfoIcon
-                  src={`${process.env.PUBLIC_URL}/assets/card/women.png`}
-                  alt="location"
-                ></InfoIcon>
+                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/women.png`} alt="location"></InfoIcon>
                 {target}
               </CardInfoItem>
               <CardInfoItem>
-                <InfoIcon
-                  src={`${process.env.PUBLIC_URL}/assets/card/star.png`}
-                  alt="location"
-                ></InfoIcon>
+                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/star.png`} alt="location"></InfoIcon>
                 {score}
               </CardInfoItem>
             </CardInfo>
           </CardInfoWrapper>
           <CardImgWrapper>
-            <CardImg
-              src={`${process.env.PUBLIC_URL}/assets/card/gazi.png`}
-              alt="gazi"
-            ></CardImg>
+            <CardImg src={`${process.env.PUBLIC_URL}/assets/card/gazi.png`} alt="gazi"></CardImg>
           </CardImgWrapper>
         </CardMainWrapper>
         <></>
         <CardLine width="80%"></CardLine>
 
         <StarWrapper>
-          <div>별모양들어가기</div>
+          <Rating></Rating>
         </StarWrapper>
-        <StarText>별점들어가기</StarText>
-        <BaseForm>
-          <ReviewSet type="text"></ReviewSet>
-        </BaseForm>
+
+        <ReviewTextArea></ReviewTextArea>
+
         <ReviewWrapper>
-          <ReviewBtn> 리뷰등록</ReviewBtn>
+          <SubmitBtn value="리뷰 등록"></SubmitBtn>
         </ReviewWrapper>
       </CardWrapper>
     </Background>
