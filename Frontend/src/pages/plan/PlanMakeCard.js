@@ -293,6 +293,8 @@ TrashWrapper.defaultProps = {
 };
 
 const PlanMakeCard = () => {
+	const ELEMENTS_PER_PAGE = 5;
+
 	const location = useLocation(); // location.state.content, location.state.position
 	const navigate = useNavigate();
 
@@ -377,11 +379,11 @@ const PlanMakeCard = () => {
 	// 반경 기준으로 장소 리스트 요청 함수
 	const onHandleRadius = async () => {
 		setLoading(true);
-		if (radius < 250) {
+		if (radius <= 200) {
 			setMapLevel(3);
-		} else if (radius < 700) {
+		} else if (radius <= 250) {
 			setMapLevel(4);
-		} else if (radius < 900) {
+		} else if (radius <= 600) {
 			setMapLevel(5);
 		} else {
 			setMapLevel(6);
@@ -445,14 +447,31 @@ const PlanMakeCard = () => {
 		const arr1 = Array.from(recommendList);
 		const arr2 = Array.from(planList);
 		const arr3 = Array.from(trashList);
+
 		if (listType === ListTypes.RECOMMEND) {
-			const arr1Index = (page * 5 + index) % recommendList.length;
-			arr2.push(arr1[arr1Index]);
-			arr1.splice(arr1Index, 1);
+			// [추천] -> [약속]
+			const arr1Index = (page * ELEMENTS_PER_PAGE + index) % recommendList.length;
+
+			// 중복 방지 로직
+			let tmpStr = JSON.stringify(arr1[arr1Index]);
+			let dupResult = arr2.filter((item) => {
+				return tmpStr.includes(JSON.stringify(item));
+			});
+			if (dupResult.length > 0) {
+				// 중복이면
+				alert("약속 카드에 중복된 장소를 담을 수 없습니다.");
+				return;
+			} else {
+				// 중복이 아니면
+				arr2.push(arr1[arr1Index]);
+				arr1.splice(arr1Index, 1);
+			}
 		} else if (listType === ListTypes.PLAN) {
+			// [약속] -> [휴지통]
 			arr3.push(arr2[index]);
 			arr2.splice(index, 1);
 		} else if (listType === ListTypes.TRASH) {
+			// [휴지통] -> [약속]
 			arr2.push(arr3[index]);
 			arr3.splice(index, 1);
 		}
@@ -505,7 +524,10 @@ const PlanMakeCard = () => {
 									lat={mainLocation.lat}
 									lng={mainLocation.lng}
 									mapLevel={mapLevel}
-									placeList={recommendList.slice((page * 5) % recommendList.length, ((page * 5) % recommendList.length) + 5)}
+									placeList={recommendList.slice(
+										(page * ELEMENTS_PER_PAGE) % recommendList.length,
+										((page * ELEMENTS_PER_PAGE) % recommendList.length) + ELEMENTS_PER_PAGE
+									)}
 									planList={planList}
 								/>
 							</MapWrapper>
@@ -523,7 +545,10 @@ const PlanMakeCard = () => {
 							<PlanCard mWidth="50vh">
 								{recommendListToggle ? <RecommendHeader onHandleReload={onHandleReload} /> : <ListHeader />}
 								<PlanList
-									pList={recommendList.slice((page * 5) % recommendList.length, ((page * 5) % recommendList.length) + 5)}
+									pList={recommendList.slice(
+										(page * ELEMENTS_PER_PAGE) % recommendList.length,
+										((page * ELEMENTS_PER_PAGE) % recommendList.length) + ELEMENTS_PER_PAGE
+									)}
 									setPList={setRecommendList}
 									openModal={openModal}
 									onHandleList={onHandleList}

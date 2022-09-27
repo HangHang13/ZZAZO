@@ -51,8 +51,6 @@ const MapContainer = ({ lat, lng, mapLevel, placeList, planList }) => {
 			});
 			overlay.setMap(map);
 		}
-
-		kakao.maps.event.addListener(marker, "mouseover", () => console.log(marker));
 	};
 
 	useEffect(() => {
