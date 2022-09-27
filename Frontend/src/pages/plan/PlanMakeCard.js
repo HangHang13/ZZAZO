@@ -307,15 +307,15 @@ const PlanMakeCard = () => {
 		lat: 0.0,
 		lng: 0.0,
 	});
-	const [mapLevel, setMapLevel] = useState(3);
+	const [mapLevel, setMapLevel] = useState(3); // 맵 레벨
+	const [radius, setRadius] = useState(100); // 반경
 
 	// States_추천/목록 리스트
 	const [recommendListToggle, setRecommendListToggle] = useState(true); // [추천,목록] 메뉴 토글
-	const [radius, setRadius] = useState(100); // 반경
 	const [recommendList, setRecommendList] = useState([]); // [추천]리스트
 	const [placeList, setPlaceList] = useState([]); // [목록]리스트
-	const [page, setPage] = useState(0); // [추천] 페이지
-	const [categoryNum, setCategoryNum] = useState(0); // [목록] 카테고리 번호
+	const [page, setPage] = useState(0); // [추천] 페이지 number
+	const [selectedCategories, setSelectedCategories] = useState([]); // [목록] 카테고리 번호
 	const [reloadAudio] = useState(new Audio(`${process.env.PUBLIC_URL}/assets/sounds/reload.mp3`));
 
 	// States_약속카드 리스트
@@ -406,6 +406,17 @@ const PlanMakeCard = () => {
 	// [추천리스트, 목록리스트] 버튼 누를 시 이벤트
 	const onHandleChangeList = (toggle) => {
 		setRecommendListToggle(toggle);
+	};
+
+	// [목록]에서 카테고리 클릭 시 이벤트
+	const onHandleCategoryClick = (categoryName) => {
+		let arr = Array.from(selectedCategories);
+		if (arr.includes(categoryName)) {
+			arr = arr.filter((item) => item !== categoryName);
+		} else {
+			arr.push(categoryName);
+		}
+		setSelectedCategories(arr);
 	};
 
 	// 장소 상세보기 모달창 띄우기
@@ -543,7 +554,11 @@ const PlanMakeCard = () => {
 								</SectionTitle>
 							</BaseFlexWrapper>
 							<PlanCard mWidth="50vh">
-								{recommendListToggle ? <RecommendHeader onHandleReload={onHandleReload} /> : <ListHeader />}
+								{recommendListToggle ? (
+									<RecommendHeader onHandleReload={onHandleReload} />
+								) : (
+									<ListHeader onHandleCategoryClick={onHandleCategoryClick} />
+								)}
 								<PlanList
 									pList={recommendList.slice(
 										(page * ELEMENTS_PER_PAGE) % recommendList.length,

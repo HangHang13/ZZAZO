@@ -50,7 +50,6 @@ const Radius = ({ radius, setRadius }) => {
 			elmnt.querySelector("span").innerText = v + "m";
 
 			let isMobile = /Mobi/i.test(window.navigator.userAgent);
-			console.log(e.clientX);
 			if (isMobile) {
 				elmnt.style.left = leftVal + "px";
 			} else {
