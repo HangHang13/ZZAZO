@@ -41,6 +41,44 @@ const BirthSelectBox = styled.select`
   text-align: center;
   font-size: 0.9rem;
 `;
+
+const ProfileUpdateBtn = styled.button`
+  display: flex;
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
+  color: ${({ color }) => color};
+  background-color: ${({ bg }) => bg};
+  border-radius: ${({ borderRadius }) => borderRadius};
+  border: 1px solid ${({ borderColor }) => borderColor};
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: bold;
+
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+
+  transition: all 0.2s ease-in;
+  &:active {
+    background: ${({ activeBackground }) => activeBackground};
+    border: 1px solid ${({ borderColor }) => borderColor};
+  }
+`;
+
+ProfileUpdateBtn.defaultProps = {
+  width: "100px",
+  height: "52px",
+  color: "#000000",
+  bg: "#ffffff",
+  borderColor: "#767676",
+  borderRadius: "8px",
+  activeBackground: "rgba(0, 0, 0, 0.5)",
+};
+
 const UpdateProfile = () => {
   //유저 정보 받아오기
   const user = useSelector((state) => state.user.value);
@@ -48,6 +86,7 @@ const UpdateProfile = () => {
   const navigate = useNavigate();
 
   const [profile, setProfile] = useState({
+    userEmail: user.data.userEmail,
     userName: user.data.userName,
     userNickName: user.data.userNickName,
     userBirth: user.data.userBirth,
@@ -59,6 +98,7 @@ const UpdateProfile = () => {
     userNickNameChecked: true,
   });
   const OriginProfile = {
+    userEmail: user.data.userEmail,
     userName: user.data.userName,
     userNickName: user.data.userNickName,
     userBirth: user.data.userBirth,
@@ -81,33 +121,24 @@ const UpdateProfile = () => {
 
   const nickNameConfirmRef = useRef();
   const [modalState, setModalState] = useState(false);
-  useEffect(
-    () => {
-      const userProfileRequest = {
-        userName: profile.userName,
-        userNickName: profile.userNickName,
-        userBirth: `${birthDate.year}-${birthDate.month}-${birthDate.day}`,
-        userPhone: profile.userPhone,
-        profileUrl: !user.data.profileUrl ? "1" : user.data.profileUrl,
-        year: birthDate.year,
-        month: birthDate.month,
-        day: birthDate.day,
-      };
-      setProfileImgState((prevState) => {
-        return { ...prevState, imgId: userProfileRequest.profileUrl };
-      });
-      setProfile((prevState) => {
-        return { ...prevState, ...userProfileRequest };
-      });
-    },
-    [
-      // birthDate,
-      // profile.userName,
-      // profile.userNickName,
-      // profile.userPhone,
-      // profileImgState.imgId,
-    ]
-  );
+  useEffect(() => {
+    const userProfileRequest = {
+      userName: profile.userName,
+      userNickName: profile.userNickName,
+      userBirth: `${birthDate.year}-${birthDate.month}-${birthDate.day}`,
+      userPhone: profile.userPhone,
+      profileUrl: !user.data.profileUrl ? "1" : user.data.profileUrl,
+      year: birthDate.year,
+      month: birthDate.month,
+      day: birthDate.day,
+    };
+    setProfileImgState((prevState) => {
+      return { ...prevState, imgId: userProfileRequest.profileUrl };
+    });
+    setProfile((prevState) => {
+      return { ...prevState, ...userProfileRequest };
+    });
+  }, []);
   const openModal = () => {
     setModalState(true);
   };
@@ -155,28 +186,6 @@ const UpdateProfile = () => {
       setProfile({ ...profile, userNickNameChecked: false });
       return;
     }
-    // const response = await client.get(
-    //   `/users/checkemail?userEmail=${profile.userEmail}`
-    // );
-    // const response = await client.get(
-    //   `/users/checkemail?userEmail=${profile.userEmail}`
-    // );
-    // const response = {
-    //   code: 200,
-    // };
-
-    // if (response.code === 200) {
-    //   const finish = confirm(
-    //     "사용 가능한 닉네임입니다. 이 닉네임으로 변경하시겠습니까?"
-    //   );
-    //   if (finish) {
-    //     setProfile({ ...profile, ["userNickNameChecked"]: true });
-    //   }
-    // } else if (response.code === 401) {
-    //   alert(response.message);
-    // } else {
-    //   alert("오류가 발생했습니다.");
-    // }
   };
   const returnState = () => {
     nickNameConfirmRef.current.disabled = false;
@@ -214,7 +223,12 @@ const UpdateProfile = () => {
       alert("닉네임 중복 확인을 해주세요.");
       return;
     }
-    // 휴대폰번호
+    //휴대폰번호 : 길이체크
+    if (profile.userPhone.length !== 9) {
+      alert("휴대폰 번호는 0~9의 수로 이루어진 9자입니다.");
+      return;
+    }
+    // 휴대폰번호 : 유효성 체크
     const phoneRegex = /^[0-9]+$/;
     if (!phoneRegex.test(profile.userPhone)) {
       alert("휴대폰 번호를 올바르게 입력해주세요.");
@@ -277,6 +291,7 @@ const UpdateProfile = () => {
     <>
       <Modal
         isOpen={modalState}
+        width={400}
         modalContent={
           <ProfileImageListContent
             profileImageState={profileImgState.imgId}
@@ -299,7 +314,7 @@ const UpdateProfile = () => {
             name="userName"
             type="text"
             value={profile.userName}
-            placeholder="이름을 입력해주세요."
+            placeholder="이름은 1글자 이상 12글자 이하."
             onChange={onHandleInput}
             width="100%"
           />
@@ -311,7 +326,7 @@ const UpdateProfile = () => {
               name="userNickName"
               type="text"
               value={profile.userNickName}
-              placeholder="닉네임을 입력해주세요."
+              placeholder="닉네임은 1글자 이상 12글자 이하."
               onChange={onHandleInput}
               // onKeyUp={onHandleNickNameDuplicateUpdate}
               ref={nickNameConfirmRef}
@@ -365,24 +380,24 @@ const UpdateProfile = () => {
             name="userPhone"
             type="text"
             value={profile.userPhone}
-            placeholder="휴대폰 번호를 입력해주세요. (ex. 01012341234)"
+            placeholder="휴대폰 번호를 입력해주세요. (ex. 01012341234) 숫자 9자"
             onChange={onHandleInput}
             width="100%"
           />
         </InputBlock>
         <InputBlock>
-          <Button
-            message="되돌리기"
-            width="40%"
-            clickEvent={() => returnState()}
-          ></Button>
-          <Button
-            message="저장"
+          <ProfileUpdateBtn width="40%" onClick={() => returnState()}>
+            되돌리기
+          </ProfileUpdateBtn>
+          <ProfileUpdateBtn
             width="40%"
             borderColor="#80E080"
             color="#80C0A0"
-            clickEvent={() => submitState()}
-          ></Button>
+            activeBackground="rgba(128, 224, 128, 0.5)"
+            onClick={() => submitState()}
+          >
+            저장
+          </ProfileUpdateBtn>
         </InputBlock>
       </SignupBody>
     </>

@@ -30,6 +30,44 @@ const InputBlock = styled.div`
   margin-bottom: 0.5rem;
 `;
 
+const ProfileUpdateBtn = styled.button`
+  display: flex;
+  margin-top: 2rem;
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
+  color: ${({ color }) => color};
+  background-color: ${({ bg }) => bg};
+  border-radius: ${({ borderRadius }) => borderRadius};
+  border: 1px solid ${({ borderColor }) => borderColor};
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: bold;
+
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+
+  transition: all 0.2s ease-in;
+  &:active {
+    background: ${({ activeBackground }) => activeBackground};
+    border: 1px solid ${({ borderColor }) => borderColor};
+  }
+`;
+
+ProfileUpdateBtn.defaultProps = {
+  width: "100px",
+  height: "52px",
+  color: "#000000",
+  bg: "#ffffff",
+  borderColor: "#767676",
+  borderRadius: "8px",
+  activeBackground: "rgba(0, 0, 0, 0.5)",
+};
+
 const UpdatePassword = () => {
   const user = useSelector((state) => state.user.value);
   console.log(user);
@@ -124,7 +162,7 @@ const UpdatePassword = () => {
           <InputTag></InputTag>
           <InputTag>새 비밀번호 확인</InputTag>
           <InputBlock>
-            <InputWrapper
+            <InputFullWrapper
               name="confirmPassword"
               type="password"
               value={state.confirmPassword}
@@ -142,13 +180,15 @@ const UpdatePassword = () => {
           )}
           <InputTag></InputTag>
           <InputTag></InputTag>
-          <Button
-            message="저장"
+          <ProfileUpdateBtn
             width="100%"
             borderColor="#80E080"
             color="#80C0A0"
-            clickEvent={() => submitState()}
-          ></Button>
+            activeBackground="rgba(128, 224, 128, 0.5)"
+            onClick={() => submitState()}
+          >
+            저장
+          </ProfileUpdateBtn>
         </SignupBody>
       </Body>
     </>

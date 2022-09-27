@@ -2,7 +2,7 @@ import styled from "styled-components";
 import ModalCloseButton from "../../common/buttons/ModalCloseButton";
 
 const pictureArray = [];
-for (let i = 1; i <= 3; i++) {
+for (let i = 1; i <= 9; i++) {
   pictureArray.push(i);
 }
 
@@ -30,7 +30,7 @@ const StyledProfileImage = styled.img`
 const ProfileImageGridWrapper = styled.div`
   display: grid;
   grid-gap: 25px;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
 `;
 const ProfileImageListContent = ({ onClick, profileImageState, close }) => {
   return (
@@ -44,7 +44,7 @@ const ProfileImageListContent = ({ onClick, profileImageState, close }) => {
                 parseInt(profileImageState) === parseInt(item) ? "active" : ""
               }
               onClick={() => onClick(item)}
-              src={`/assets/profileImages/profile${item}.png`}
+              src={`${process.env.PUBLIC_URL}/assets/profileImages/profile${item}.jpg`}
             />
           </ProfileImageWrapper>
         ))}
