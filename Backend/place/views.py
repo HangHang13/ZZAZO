@@ -37,11 +37,12 @@ def home(request):
 def place_recommend(request):
     longitude = float(request.data['longitude'])
     latitude  = float(request.data['latitude'])
+    radius = request.user.radius() if request.user.radius() else 500
     position  = (latitude, longitude)
     condition = (
                 # 1km 기준
-                Q(latitude__range  = (latitude - 0.01, latitude + 0.01)) &
-                Q(longitude__range = (longitude - 0.015, longitude + 0.015))
+                Q(latitude__range  = (latitude - 0.01 * (radius / 1000), latitude + 0.01 * (radius / 1000))) &
+                Q(longitude__range = (longitude - 0.015 * (radius / 1000), longitude + 0.015 * (radius / 1000)))
             )
     place_list = (
                 Place
@@ -49,7 +50,7 @@ def place_recommend(request):
                 .filter(condition)
             )
     near_place_list = [info for info in place_list
-                                if haversine(position, (info.latitude, info.longitude)) <= 2]
+                                if haversine(position, (info.latitude, info.longitude)) <= 2 * (radius / 1000)]
     serializer = PlaceListSerializer(near_place_list, many=True)
     for i in range(len(serializer.data)):
         for key, val in serializer.data[i].items():
@@ -72,11 +73,12 @@ def place_recommend(request):
 def place_list(request, place_type):
     longitude = float(request.data['longitude'])
     latitude  = float(request.data['latitude'])
+    radius = request.user.radius() if request.user.radius() else 500
     position  = (latitude,longitude)
     condition = (
                 # 1km 기준
-                Q(latitude__range  = (latitude - 0.01, latitude + 0.01)) &
-                Q(longitude__range = (longitude - 0.015, longitude + 0.015)) &
+                Q(latitude__range  = (latitude - 0.01 * (radius / 1000), latitude + 0.01 * (radius / 1000))) &
+                Q(longitude__range = (longitude - 0.015 * (radius / 1000), longitude + 0.015 * (radius / 1000))) &
                 Q(place_type__contains=place_type)
             )
     place_list = (
@@ -84,7 +86,7 @@ def place_list(request, place_type):
                 .objects
                 .filter(condition)
             )
-    near_place_list = [info for info in place_list if haversine(position, (info.latitude, info.longitude)) <= 2]
+    near_place_list = [info for info in place_list if haversine(position, (info.latitude, info.longitude)) <= 2 * (radius / 1000)]
     serializer = PlaceListSerializer(near_place_list, many=True)
     for i in range(len(serializer.data)):
         for key, val in serializer.data[i].items():
