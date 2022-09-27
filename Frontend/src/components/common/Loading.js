@@ -17,7 +17,11 @@ const Background = styled.div`
 
 const LoadingText = styled.div`
 	font: 1rem "Noto Sans KR";
+	font-weight: bold;
 	text-align: center;
+	padding: 0.5rem 1rem 0.5rem 1rem;
+	background-color: rgba(181, 230, 29, 0.5);
+	border-radius: 16px;
 `;
 
 const LoadingImg = styled.img`
@@ -30,10 +34,11 @@ const LoadingImg = styled.img`
 	}
 `;
 
-const Loading = () => {
+const Loading = ({ text }) => {
 	return (
 		<Background>
 			<LoadingImg src={`${process.env.PUBLIC_URL}/assets/common/spinner.gif`} alt="로딩중" />
+			{text && <LoadingText>{text}</LoadingText>}
 		</Background>
 	);
 };

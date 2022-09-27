@@ -437,7 +437,7 @@ const PlanMakeCard = () => {
 	return (
 		<div align="center">
 			<Header />
-			{loading ? <Loading /> : null}
+			{loading ? <Loading text="추천 장소들을 불러오고 있습니다..." /> : null}
 			{modalToggle ? <CardDetail modalClose={openModal} title="제목" address="주소 주소" category="카테고리" target="타겟" score={4.3} /> : null}
 			<SliderWrapper leftStart={start} leftEnd={end}>
 				<PlanPageWrapper width="90vw">
