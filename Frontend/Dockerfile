@@ -24,5 +24,6 @@ EXPOSE 443
 USER root
 WORKDIR /Frontend
 COPY . .
+COPY --from=build-stage . /usr/share/nginx/html
 RUN npm install
 RUN npm run build
