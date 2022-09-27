@@ -84,7 +84,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     userGender = models.CharField(max_length=2, choices=GENDER_CHOICES, default='M', null=True)
     userUpdate = models.DateTimeField(auto_now=True)
     userRegist = models.DateTimeField(auto_now_add=True)
-    userRadius = models.IntegerField(null=True)
+    userRadius = models.IntegerField(null=False, default=500) # 반경 500m 
     
 
     is_active = models.BooleanField(default=True)
@@ -97,6 +97,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
     def __str__(self):
         return self.userEmail
+    
+    def radius(self):
+        return self.userRadius
 
 
 class EmailCheck(models.Model):

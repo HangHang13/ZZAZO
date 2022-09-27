@@ -105,7 +105,14 @@ const Home = () => {
             {recList.data ? (
               <>
                 {recList.data.Place.map((item, idx) => (
-                  <RecCard key={idx} src={ImgSearchHttpHandler(item.name)} name={item.name} address={item.address} target="20대 여성이 주로 방문해요" place_type={item.place_type} />
+                  <RecCard
+                    key={idx}
+                    src={`${process.env.PUBLIC_URL}/assets/card/location.png`}
+                    name={item.name}
+                    address={item.address}
+                    target="20대 여성이 주로 방문해요"
+                    place_type={item.place_type}
+                  />
                 ))}
               </>
             ) : (

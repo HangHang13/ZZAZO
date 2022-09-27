@@ -4,6 +4,10 @@ const ProfileImageWrapper = styled.div`
   width: 60px;
   height: 60px;
   margin: 10px 20px 0px 20px;
+  @media screen and (max-width: 500px) {
+    width: 2rem;
+    height: 2rem;
+  }
 `;
 
 const ProfileImageThumbnail = styled.img`
@@ -42,12 +46,11 @@ const ProfileTitle = ({
     >
       <ProfileImageWrapper>
         <ProfileImageThumbnail
-          src={`/assets/profileImages/profile${imageId}.png`}
+          src={`${process.env.PUBLIC_URL}/assets/profileImages/profile${imageId}.jpg`}
         />
       </ProfileImageWrapper>
       <div>
-        <h2>{userName}</h2>
-        <p>{userEmail}</p>
+        <h2>{userEmail}</h2>
         {isEdit ? (
           <>
             <ButtonBlock>

@@ -3,6 +3,9 @@ import Header from "./../../components/layout/Header";
 import { BaseFlexWrapper, PlanPageWrapper } from "./../../components/styled/Wrapper";
 import styled from "styled-components";
 import Slider from "../../components/plancalendar/Slider";
+import EmptyPlan from "./../../components/plancalendar/EmptyPlan";
+import ReviewDetail from "../../components/plancalendar/ReviewDetail";
+import Rating from "../../components/plancalendar/Rating";
 
 const PageHeaderBlock = styled.div`
   display: flex;
@@ -89,60 +92,103 @@ SectionTitle.defaultProps = {
   bg: "#80e080",
 };
 
+const SearchWrapper = styled.div`
+  margin-bottom: 1.5rem;
+  border-radius: 50px;
+  width: 50rem;
+  height: 5rem;
+  background-color: #c0f0b0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  box-shadow: 4px 2px 2px grey;
+  @media screen and (max-width: 500px) {
+    width: 25rem;
+    height: 3rem;
+  }
+`;
+
+const SearchOption = styled.select`
+  width: 10rem;
+  border-radius: 16px;
+  height: 2.5rem;
+  font-size: 1.5rem;
+  box-shadow: 4px 2px 2px grey;
+  @media screen and (max-width: 500px) {
+    height: 2rem;
+    width: 5rem;
+  }
+`;
+
+const SearchInput = styled.input`
+  width: 30rem;
+  border-radius: 16px;
+  height: 2.5rem;
+  font-size: 1.5rem;
+  box-shadow: 4px 2px 2px grey;
+  @media screen and (max-width: 500px) {
+    height: 2rem;
+    width: 15rem;
+  }
+`;
+const SearchIcon = styled.img`
+  width: 2.5rem;
+  height: 2.5rem;
+  @media screen and (max-width: 500px) {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+`;
+
 const PlanCalendar = () => {
-  const [planList, setPlanList] = useState([]);
+  //상세 보기 모달
+  const [modalOpen, setModalOpen] = useState(false);
+  //모달 열고 닫기
+  const modalClose = () => {
+    setModalOpen(!modalOpen);
+  };
+  //유저의플랜리스트
+  const [userPlan, setuserPlan] = useState([]);
+  //유저 공유일정 호출 api
+  const TestPlan = () => {
+    setuserPlan(!userPlan);
+  };
 
   // useEffects
   useEffect(() => {
     window.scrollTo(0, 0);
-    setPlanList([
-      {
-        placeAddress: "서울 서초구 강남대로 405-2",
-        isMain: true,
-      },
-      {
-        placeId: 2,
-        placeName: "땀땀",
-        placeAddress: "서울 강남구 강남대로98길 12-5",
-        placeScore: 3.4,
-        placeType: "음식점",
-        isMain: false,
-      },
-      {
-        placeId: 17453,
-        placeName: "CGV 강남",
-        placeAddress: "서울 강남구 강남대로 438 스타플렉스",
-        placeScore: 3.3,
-        placeType: "영화관",
-      },
-      {
-        placeId: 456,
-        placeName: "스타벅스 강남대로점",
-        placeAddress: "서울 강남구 강남대로 456 한석타워 2층 1-2호",
-        placeScore: 4.2,
-        placeType: "커피전문점",
-      },
-      {
-        placeId: 15346,
-        placeName: "멀티캠퍼스 역삼",
-        placeAddress: "서울 강남구 테헤란로 212",
-        placeScore: 5.0,
-        placeType: "학원",
-      },
-    ]);
   }, []);
 
   return (
     <div align="center">
       <Header />
+
       <PlanPageWrapper width="90vw">
         <PageHeaderBlock height="calc(20vh)" bg="yellow">
-          <Title>공유 일정</Title>
+          <Title>공유 일정 확인</Title>
         </PageHeaderBlock>
       </PlanPageWrapper>
-      <div>
-        <Slider></Slider>
-      </div>
+      <button onClick={TestPlan}>테스트용버튼</button>
+      <button onClick={modalClose}>모달열기</button>
+      {modalOpen && <ReviewDetail modalClose={modalClose} title="석촌 호수 공원" address="서울시 강남대로 123" category="음식점 - 일식" target="20대 여성이 주로 방문해요" score="4.7"></ReviewDetail>}
+      {userPlan ? (
+        <>
+          <SearchWrapper>
+            <SearchOption>
+              <option value="all" selected>
+                All
+              </option>
+              <option value="title">약속명</option>
+              <option value="date">약속 날짜</option>
+            </SearchOption>
+            <SearchInput type="search"></SearchInput>
+            <SearchIcon src={`${process.env.PUBLIC_URL}/assets/plancalendar/SearchIcon.png`}></SearchIcon>
+          </SearchWrapper>
+          <Slider></Slider>
+        </>
+      ) : (
+        <EmptyPlan></EmptyPlan>
+      )}
     </div>
   );
 };

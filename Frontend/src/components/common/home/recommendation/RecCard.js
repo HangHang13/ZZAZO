@@ -13,7 +13,7 @@ const Card = styled.div`
 
   background: #fff;
   margin: 2rem;
-  width: 13rem;
+  width: 15rem;
   border: none;
   flex-direction: column;
 `;
