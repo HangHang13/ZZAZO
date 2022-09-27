@@ -8,13 +8,11 @@ import {
   InputWrapper,
 } from "../../components/styled/Wrapper";
 import InputCheckButton from "../../components/common/buttons/InputCheckButton";
-import DivButton from "./../../components/common/buttons/DivButton";
 import Modal from "../../components/modals/Modal";
 import ProfileImageListContent from "../../components/modals/contents/ProfileImageListContent";
 import ProfileTitle from "./../../components/mypage/ProfileTitle";
 import { nickNameDuplicateCheck } from "../../api/AuthAPI";
 import { useSelector, useDispatch } from "react-redux";
-import Button from "../../components/common/buttons/Button";
 import { updateProfile } from "../../api/MyPageAPI";
 import { useNavigate } from "react-router-dom";
 import { storeSetUserProfile } from "../../store/reducers/user";
@@ -82,9 +80,12 @@ ProfileUpdateBtn.defaultProps = {
 const UpdateProfile = () => {
   //유저 정보 받아오기
   const user = useSelector((state) => state.user.value);
+  //redux 상태변경을 위한 useDispatch
   const dispatch = useDispatch();
+  //프로필 변경 후 페이지 이동을 위한 useNavigate
   const navigate = useNavigate();
 
+  //프로필 상태관리
   const [profile, setProfile] = useState({
     userEmail: user.data.userEmail,
     userName: user.data.userName,
@@ -97,6 +98,7 @@ const UpdateProfile = () => {
     day: user.data.Birth !== null ? user.data.userBirth.substr(8, 2) : "00",
     userNickNameChecked: true,
   });
+  //프로필 변경 전 기존 프로필 상태관리
   const OriginProfile = {
     userEmail: user.data.userEmail,
     userName: user.data.userName,
@@ -109,19 +111,22 @@ const UpdateProfile = () => {
     day: user.data.Birth !== null ? user.data.userBirth.substr(8, 2) : "00",
     userNickNameChecked: true,
   };
+  //프로필 이미지 상태관리
   const [profileImgState, setProfileImgState] = useState({
     imgId: "",
   });
-
+  //프로필 생년월일 상태관리
   const [birthDate, setBirthDate] = useState({
     year: user.data.Birth !== null ? user.data.userBirth.substr(0, 4) : "0000",
     month: user.data.Birth !== null ? user.data.userBirth.substr(5, 2) : "00",
     day: user.data.Birth !== null ? user.data.userBirth.substr(8, 2) : "00",
   });
-
+  //닉네임 입력창 중복확인 선택관리
   const nickNameConfirmRef = useRef();
+  //프로필 이미지 모달 상태관리
   const [modalState, setModalState] = useState(false);
   useEffect(() => {
+    //업데이트 프로필 갱신 정보 관리(이미지 등록 되지 않은 새로운 사용자를 위해 사용)
     const userProfileRequest = {
       userName: profile.userName,
       userNickName: profile.userNickName,
@@ -132,19 +137,24 @@ const UpdateProfile = () => {
       month: birthDate.month,
       day: birthDate.day,
     };
+    //프로필 이미지 상태 갱신
     setProfileImgState((prevState) => {
       return { ...prevState, imgId: userProfileRequest.profileUrl };
     });
+    //프로필 상태 갱신
     setProfile((prevState) => {
       return { ...prevState, ...userProfileRequest };
     });
   }, []);
+  //프로필 이미지 모달 열기
   const openModal = () => {
     setModalState(true);
   };
+  //프로필 이미지 모달 닫기
   const closeModal = () => {
     setModalState(false);
   };
+  //새로운 프로필 이미지 갱신 함수
   const onHandleChangeProfileImage = (profileImageId) => {
     setProfileImgState({ ...profileImgState, imgId: profileImageId });
     closeModal();
@@ -157,9 +167,11 @@ const UpdateProfile = () => {
   //닉네임 중복 체크
   const onHandleNickNameDuplicateCheck = async (e) => {
     e.preventDefault();
+    //닉네임 중복 검사 api 호출을 위한 data
     const data = {
       userNickName: profile.userNickName,
     };
+    //닉네임 중복 검사 api 호출
     const result = await nickNameDuplicateCheck(data);
     if (
       user.data.userNickName === profile.userNickName ||
@@ -180,6 +192,7 @@ const UpdateProfile = () => {
       nickNameConfirmRef.current.focus();
       setProfile({ ...profile, userNickNameChecked: false });
     }
+    //닉네임 길이가 1보다 작을 때
     if (profile.userNickName.length < 1) {
       alert("닉네임을 입력해주세요.");
       nickNameConfirmRef.current.focus();
@@ -187,6 +200,7 @@ const UpdateProfile = () => {
       return;
     }
   };
+  //되돌리기 버튼 함수
   const returnState = () => {
     nickNameConfirmRef.current.disabled = false;
     nickNameConfirmRef.current.style.backgroundColor = "#ffffff";
@@ -198,7 +212,9 @@ const UpdateProfile = () => {
       day: OriginProfile.day,
     });
   };
+  //업데이트 프로필 함수
   const submitState = async () => {
+    //true면 진행 false면 취소
     if (!confirm("변경을 완료하시겠습니까?")) {
       return;
     }
@@ -224,8 +240,8 @@ const UpdateProfile = () => {
       return;
     }
     //휴대폰번호 : 길이체크
-    if (profile.userPhone.length !== 9) {
-      alert("휴대폰 번호는 0~9의 수로 이루어진 9자입니다.");
+    if (profile.userPhone.length !== 11) {
+      alert("휴대폰 번호는 0~9의 수로 이루어진 11자입니다.");
       return;
     }
     // 휴대폰번호 : 유효성 체크
@@ -234,7 +250,9 @@ const UpdateProfile = () => {
       alert("휴대폰 번호를 올바르게 입력해주세요.");
       return;
     }
+    //업데이트할 생년월일
     const userBirthday = `${birthDate.year}-${birthDate.month}-${birthDate.day}`;
+    //프로필 업데이트 api 호출을 위한 data
     const data = {
       userName: profile.userName,
       userBirth: userBirthday,
@@ -243,22 +261,20 @@ const UpdateProfile = () => {
       userRadius: 0,
       profileUrl: profileImgState.imgId,
     };
-
+    //프로필 업데이트 api 호출
     const result = await updateProfile(data);
-
+    //프로필 업데이트 실패시
     if (!result.code === 200) {
       alert("프로필 정보 변경에 실패했습니다.");
       return;
     }
-
+    //프로필 업데이트 성공시
     alert("프로필 정보가 변경되었습니다.");
+    //redux 상태갱신
     dispatch(storeSetUserProfile({ isLogin: true, data: data }));
+    //홈화면으로 페이지 갱신
+    navigate("/");
   };
-  //1. 맨처음 초기값 null
-  //2. null이므로 1로 setProfile
-  //profileImgState가 리랜더링 되면서 useEffect에 있는 setProfile 동작
-  //3. 1=> 1 setProfile
-  //4. Img = > 1
 
   //날짜 구하는 로직
   const now = new Date();
@@ -380,7 +396,7 @@ const UpdateProfile = () => {
             name="userPhone"
             type="text"
             value={profile.userPhone}
-            placeholder="휴대폰 번호를 입력해주세요. (ex. 01012341234) 숫자 9자"
+            placeholder="휴대폰 번호를 입력해주세요. (ex. 01012341234) 숫자 11자"
             onChange={onHandleInput}
             width="100%"
           />

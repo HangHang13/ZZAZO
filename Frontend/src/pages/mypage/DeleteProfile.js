@@ -1,8 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { ButtonWrapper } from "./../../components/styled/Wrapper";
-import InputCheckButton from "./../../components/common/buttons/InputCheckButton";
-import Button from "./../../components/common/buttons/Button";
 import { useSelector } from "react-redux";
 import { deleteProfile } from "../../api/MyPageAPI";
 const Body = styled.div`
@@ -95,17 +92,15 @@ ProfileUpdateBtn.defaultProps = {
 
 const DeleteProfile = () => {
   const user = useSelector((state) => state.user.value);
-  console.log(user);
+  // console.log(user);
   const deleteUser = async () => {
     const result = await deleteProfile();
     if (result.code === 200) {
       alert("계정이 탈퇴되었습니다.");
-      // console.log(state.confirmPassword);
-      console.log(result.data);
+      // console.log(result.data);
     } else {
       alert("계정탈퇴에 실패하였습니다.");
-      // console.log(state.confirmPassword);
-      console.log(result.data);
+      // console.log(result.data);
     }
   };
   return (
