@@ -305,6 +305,7 @@ const PlanMakeCard = () => {
 		lat: 0.0,
 		lng: 0.0,
 	});
+	const [mapLevel, setMapLevel] = useState(3);
 
 	// States_추천/목록 리스트
 	const [recommendListToggle, setRecommendListToggle] = useState(true); // [추천,목록] 메뉴 토글
@@ -375,9 +376,16 @@ const PlanMakeCard = () => {
 
 	// 반경 기준으로 장소 리스트 요청 함수
 	const onHandleRadius = async () => {
-		console.log(radius);
-
 		setLoading(true);
+		if (radius < 250) {
+			setMapLevel(3);
+		} else if (radius < 700) {
+			setMapLevel(4);
+		} else if (radius < 900) {
+			setMapLevel(5);
+		} else {
+			setMapLevel(6);
+		}
 		const recommendListResponse = await getRecommendList({
 			radius: radius,
 			longitude: parseFloat(location.state.position.lng),
@@ -410,25 +418,26 @@ const PlanMakeCard = () => {
 		setModalToggle(!modalToggle);
 	};
 
+	// 약속카드 - 약속이름 변경 이벤트
 	const onHandleName = (e) => {
 		setPlanInfo({ ...planInfo, name: e.target.value });
 	};
 
+	// 약속카드 - 약속날짜 변경 이벤트
 	const onHandleDate = (value) => {
 		setPlanInfo({ ...planInfo, date: moment(value).format("YYYY-MM-DD") });
 	};
 
+	// 약속카드 - 약속시간 변경 이벤트
 	const onHandleTime = (e) => {
 		setPlanInfo({ ...planInfo, time: e.target.value });
 	};
 
+	// 리로드 이벤트
 	const onHandleReload = () => {
 		reloadAudio.volume = 0.3;
 		reloadAudio.play();
 		setPage(page + 1);
-		console.log(recommendList);
-		console.log("page : " + page);
-		console.log("start : " + ((page * 5) % recommendList.length));
 	};
 
 	// +, - 버튼 누를 시 이벤트
@@ -488,13 +497,14 @@ const PlanMakeCard = () => {
 							{/* 반경 */}
 							<RadiusWrapper>
 								<Radius radius={radius} setRadius={setRadius} />
-								<RadiusButton onClick={onHandleRadius}>입력</RadiusButton>
+								<RadiusButton onClick={onHandleRadius}>설정</RadiusButton>
 							</RadiusWrapper>
 							{/* 카카오맵 */}
 							<MapWrapper mapName="make" width="99%" height="100%">
 								<MapContainer
 									lat={mainLocation.lat}
 									lng={mainLocation.lng}
+									mapLevel={mapLevel}
 									placeList={recommendList.slice((page * 5) % recommendList.length, ((page * 5) % recommendList.length) + 5)}
 									planList={planList}
 								/>

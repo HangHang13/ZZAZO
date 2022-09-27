@@ -10,7 +10,7 @@ const KMap = styled.div`
 
 const { kakao } = window;
 
-const MapContainer = ({ lat, lng, placeList, planList }) => {
+const MapContainer = ({ lat, lng, mapLevel, placeList, planList }) => {
 	// 마커 표시하는 함수
 	const displayMarker = (map, lat, lng, place, index, type) => {
 		let markerImg = place.isMain ? `${process.env.PUBLIC_URL}/assets/plan/main_marker.png` : `${process.env.PUBLIC_URL}/assets/plan/white.png`;
@@ -60,7 +60,7 @@ const MapContainer = ({ lat, lng, placeList, planList }) => {
 		const container = document.getElementById("myMap");
 		const options = {
 			center: new kakao.maps.LatLng(lat, lng),
-			level: 5,
+			level: mapLevel,
 		};
 		const map = new kakao.maps.Map(container, options);
 
