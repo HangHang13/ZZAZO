@@ -71,18 +71,18 @@ const MyPage = () => {
       {/* 헤더 */}
       <Header></Header>
       <Wrapper>
-        {/* <MobileSizeWrapper> */}
         <EditWrapper>
+          {/* 좌측 링크 선택 영역 */}
           <TabWrapper>
             {nestedLink.map((item) => (
               <TabItem {...item} key={item.tabId} />
             ))}
           </TabWrapper>
+          {/* 우측 링크별 페이지 영역 */}
           <EditorWrapper>
             <Outlet />
           </EditorWrapper>
         </EditWrapper>
-        {/* </MobileSizeWrapper> */}
       </Wrapper>
     </>
   );

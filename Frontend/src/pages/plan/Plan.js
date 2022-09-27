@@ -7,7 +7,6 @@ import fontawesome from "@fortawesome/fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import Landing from "../../components/plan/Landing";
 import { SliderWrapper } from "./../../components/styled/SliderWrapper";
-import LandingSample from "./../../components/plan/LandingSample";
 
 const PlanBlock = styled.div`
   display: flex;

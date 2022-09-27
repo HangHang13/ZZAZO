@@ -114,55 +114,29 @@ class UpdateUserSerializer(serializers.Serializer):
     profileUrl = serializers.CharField(max_length=255 ,source="User.profileUrl" )
     userBirth = serializers.DateTimeField(source="User.userBirth" )
     userPhone = serializers.CharField(max_length=12,source="User.userPhone")
-    # GENDER_CHOICES = (
-    #     (u'M', u'Male'),
-    #     (u'F', u'Female'),
-    # )
     userNickName = serializers.CharField(max_length=25, source="User.userNickName")
-
     userRadius = serializers.IntegerField(source="User.userRadius")
+    
     class Meta:
         model = User
         fields=['userName','userNickName', 'userBirth','userPhone','profileUrl','userRadius']
-     
 
-   
-
-    
-    # def validate(self, instance, validated_data):
-    #     instance.userName = validated_data['userName']
-    #     instance.profileUrl = validated_data['profileUrl']
-    #     instance.userBirth = validated_data['userBirth']
-    #     instance.userPhone = validated_data['userPhone']
-    #     instance.userGender = validated_data['userGender']
-    #     user = self.context.get('user')
-    #     print('유저',user)
-    #     user.update(instance.userName)
-    #     user.save()
-    #     instance.save()
-
-    #     return instance
     def validate(self, attrs):
       # print(self.context)
       user = self.context.get('user')
       a=attrs.get('User')
       # print(a.get('userRadius'))
-      user = User.objects.filter(userEmail=user).update(userNickName=a.get('userNickName'),userName=a.get('userName'),userBirth=a.get('userBirth'), 
-     
-      profileUrl=a.get('profileUrl'),
-      userPhone=a.get('userPhone'),
-      userRadius=a.get('userRadius')
-       )
+      user = User.objects.filter(userEmail=user).update(
+        userNickName=a.get('userNickName'),
+        userName=a.get('userName'),
+        userBirth=a.get('userBirth'),
+        profileUrl=a.get('profileUrl'),
+        userPhone=a.get('userPhone'),
+        userRadius=a.get('userRadius')
+      )
 
-    
-      # user.userName = attrs.get('userName')
-      
-      # user.profileUrl = attrs.get('profileUrl')
-      # user.userBirth = attrs.get('userBirth')
-      # user.Birth = attrs.get('Birth')
-      # user.userGender = attrs.get('userGender')
-      # user.update(userName=user.userName, profileUrl=user.profileUrl)
       return attrs
+    
 class UserChangePasswordSerializer(serializers.Serializer):
   password = serializers.CharField(max_length=255, style={'input_type':'password'}, write_only=True)
   password2 = serializers.CharField(max_length=255, style={'input_type':'password'}, write_only=True)
@@ -308,3 +282,15 @@ class SendEmailSerializer(serializers.Serializer):
   
     return attrs
  
+# class UpdateRadiusSerializer(serializers.Serializer):
+  
+#   class Meta:
+#       model = User
+#       fields=['userName','userRadius']
+      
+#   def validate(self, attrs):
+#       # print(self.context)
+#       user = self.context.get('user')
+#       a=attrs.get('userRadius')
+#       print(a)
+#       user = User.objects.filter(userEmail=user).update(userRadius=a)
