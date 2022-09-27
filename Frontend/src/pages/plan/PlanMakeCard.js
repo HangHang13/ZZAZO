@@ -10,12 +10,13 @@ import AuthButton from "../../components/common/buttons/AuthButton";
 import moment from "moment";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { SliderWrapper } from "../../components/styled/SliderWrapper";
-import PlanInformHeader from "../../components/plan/cards/PlanInformHeader";
+import RecommendHeader from "../../components/plan/cards/RecommendHeader";
 import { ListTypes } from "./../../constants/ListTypes";
-import { getRecommendList } from "../../api/PlanAPI";
+import { getPlaceList, getRecommendList } from "../../api/PlanAPI";
 import MapContainer from "./../../components/kakaomap/MapContainer";
 import Loading from "./../../components/common/Loading";
 import CardDetail from "../../components/locationdetail/CardDetail";
+import ListHeader from "../../components/plan/cards/ListHeader";
 
 const BeforeButton = styled(ButtonWrapper)`
 	position: absolute;
@@ -158,6 +159,7 @@ const MapWrapper = styled.div`
 		height: calc(100% - 4rem);
 	}
 	@media screen and (max-width: 500px) {
+		width: 100%;
 		height: 25vh;
 		margin-bottom: -15vh;
 	}
@@ -307,7 +309,11 @@ const PlanMakeCard = () => {
 	// States_추천/목록 리스트
 	const [recommendListToggle, setRecommendListToggle] = useState(true); // [추천,목록] 메뉴 토글
 	const radius = useSelector((state) => state.radius.value); // 반경
-	const [recommendList, setRecommendList] = useState([]);
+	const [recommendList, setRecommendList] = useState([]); // [추천]리스트
+	const [placeList, setPlaceList] = useState([]); // [목록]리스트
+	const [page, setPage] = useState(0); // [추천] 페이지
+	const [categoryNum, setCategoryNum] = useState(0); // [목록] 카테고리 번호
+	const [reloadAudio] = useState(new Audio(`${process.env.PUBLIC_URL}/assets/sounds/reload.mp3`));
 
 	// States_약속카드 리스트
 	const [planInfo, setPlanInfo] = useState({
@@ -321,6 +327,7 @@ const PlanMakeCard = () => {
 	const [trashList, setTrashList] = useState([]); // 휴지통 리스트
 	const [trashToggle, setTrashToggle] = useState(false); // 휴지통 토글
 
+	// useEffect_첫 화면 렌더링 시
 	useEffect(async () => {
 		// 화면 제일 위에서 시작
 		window.scrollTo(0, 0);
@@ -342,13 +349,27 @@ const PlanMakeCard = () => {
 			lng: location.state.position.lng,
 		});
 
-		const response = await getRecommendList({
+		const recommendListResponse = await getRecommendList({
 			longitude: parseFloat(location.state.position.lng),
 			latitude: parseFloat(location.state.position.lat),
 		});
-		setRecommendList(response.data.Place);
+		const placeListResponse = await getPlaceList("한식", {
+			longitude: parseFloat(location.state.position.lng),
+			latitude: parseFloat(location.state.position.lat),
+		});
+		setRecommendList(recommendListResponse.data.Place);
+		setPlaceList(placeListResponse.data.Place);
 		setLoading(false);
 	}, []);
+
+	// useEffect_추천/목록 토글 시
+	useEffect(() => {
+		if (recommendListToggle) {
+			// '추천' 선택 시
+		} else {
+			// '목록' 선택 시
+		}
+	}, [recommendListToggle]);
 
 	// 반경 기준으로 장소 리스트 요청 함수
 	const onHandleRadius = () => {
@@ -362,7 +383,6 @@ const PlanMakeCard = () => {
 
 	// 장소 상세보기 모달창 띄우기
 	const openModal = (placeId) => {
-		console.log(placeId);
 		window.scrollTo(0, 0);
 		if (modalToggle) {
 			document.body.style = `overflow: auto`;
@@ -379,21 +399,18 @@ const PlanMakeCard = () => {
 
 	const onHandleDate = (value) => {
 		setPlanInfo({ ...planInfo, date: moment(value).format("YYYY-MM-DD") });
-		console.log(planInfo);
 	};
 
 	const onHandleTime = (e) => {
 		setPlanInfo({ ...planInfo, time: e.target.value });
 	};
 
-	const onHandleMarkerHover = (place) => {
-		// console.log(place._id);
-		// console.log(planList[0]._id, planList[1]._id, planList[2]._id);
-		// const targetList = planList.filter((item) => item._id === place._id);
-		// const target = targetList[0];
-		// console.log(target);
-
-		console.log(place);
+	const onHandleReload = () => {
+		reloadAudio.play();
+		setPage(page + 1);
+		console.log(recommendList);
+		console.log("page : " + page);
+		console.log("start : " + ((page * 5) % recommendList.length));
 	};
 
 	// +, - 버튼 누를 시 이벤트
@@ -402,8 +419,9 @@ const PlanMakeCard = () => {
 		const arr2 = Array.from(planList);
 		const arr3 = Array.from(trashList);
 		if (listType === ListTypes.RECOMMEND) {
-			arr2.push(arr1[index]);
-			arr1.splice(index, 1);
+			const arr1Index = (page * 5 + index) % recommendList.length;
+			arr2.push(arr1[arr1Index]);
+			arr1.splice(arr1Index, 1);
 		} else if (listType === ListTypes.PLAN) {
 			arr3.push(arr2[index]);
 			arr2.splice(index, 1);
@@ -455,8 +473,13 @@ const PlanMakeCard = () => {
 								<RadiusButton onClick={onHandleRadius}>입력</RadiusButton>
 							</RadiusWrapper>
 							{/* 카카오맵 */}
-							<MapWrapper mapName="make" width="100%" height="100%">
-								<MapContainer lat={mainLocation.lat} lng={mainLocation.lng} planList={planList} onHandleMarkerHover={onHandleMarkerHover} />
+							<MapWrapper mapName="make" width="99%" height="100%">
+								<MapContainer
+									lat={mainLocation.lat}
+									lng={mainLocation.lng}
+									placeList={recommendList.slice((page * 5) % recommendList.length, ((page * 5) % recommendList.length) + 5)}
+									planList={planList}
+								/>
 							</MapWrapper>
 						</PlanMakeWrapper>
 						{/* 추천 목록, 전체 목록 */}
@@ -470,9 +493,9 @@ const PlanMakeCard = () => {
 								</SectionTitle>
 							</BaseFlexWrapper>
 							<PlanCard mWidth="50vh">
-								<PlanInformHeader />
+								{recommendListToggle ? <RecommendHeader onHandleReload={onHandleReload} /> : <ListHeader />}
 								<PlanList
-									pList={recommendList}
+									pList={recommendList.slice((page * 5) % recommendList.length, ((page * 5) % recommendList.length) + 5)}
 									setPList={setRecommendList}
 									openModal={openModal}
 									onHandleList={onHandleList}

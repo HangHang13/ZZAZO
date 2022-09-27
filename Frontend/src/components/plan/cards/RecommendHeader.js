@@ -44,7 +44,7 @@ const ReloadImg = styled.img`
 	}
 `;
 
-const PlanInformHeader = () => {
+const RecommendHeader = ({ onHandleReload }) => {
 	return (
 		<PlanHeaderWrapper flexDirection="row" height="80px">
 			<InformMark>
@@ -52,10 +52,10 @@ const PlanInformHeader = () => {
 			</InformMark>
 			<InformMent>고객님과 유사한 사용자의 기록을 바탕으로 장소를 추천합니다.</InformMent>
 			<ReloadButtonWrapper>
-				<ReloadImg src={`${process.env.PUBLIC_URL}/assets/plan/reload.png`} alt="새로고침" />
+				<ReloadImg src={`${process.env.PUBLIC_URL}/assets/plan/reload.png`} alt="새로고침" onClick={onHandleReload} />
 			</ReloadButtonWrapper>
 		</PlanHeaderWrapper>
 	);
 };
 
-export default PlanInformHeader;
+export default RecommendHeader;
