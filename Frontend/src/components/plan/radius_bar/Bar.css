@@ -4,12 +4,12 @@
 	width: calc(100% - 12rem);
 	height: 4px;
 	background: #222;
-	border-radius: 5px;
+	border-radius: 16px;
 }
 
 @media (max-width: 500px) {
 	.seek-bar {
-		width: calc(100% - 10rem);
+		width: calc(100% - 8rem);
 		font-size: 0.8rem;
 	}
 }
@@ -27,12 +27,14 @@
 .seek-bar > .circle > span {
 	position: absolute;
 	display: block;
-	width: 42px;
-	line-height: 28px;
+	width: 40px;
+	line-height: 40px;
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
 	background: #80e080;
-	border-radius: 32px;
+	border-radius: 16px;
 	text-align: center;
+	font-size: 0.8rem;
+	font-weight: bold;
 }
