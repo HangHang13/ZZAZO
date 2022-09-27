@@ -96,14 +96,18 @@ const MainPlaceInput = styled.input`
 `;
 
 const MarkerInfo = styled.div`
-  padding: 5px;
-  width: 17rem;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: max-content;
   color: #000;
+  font-weight: bold;
 `;
 const SearchResult = styled.div`
   // margin: 1rem;
   width: 100%;
-  height: 100%;
+  height: 85%;
   overflow: auto;
 `;
 const ScrollList = styled.ul`
@@ -573,12 +577,15 @@ const Landing = ({ onHandlePageOut }) => {
             spriteOrigin: spriteOrigin,
           },
         }}
+        infoWindowOptions={{
+          zIndex: 2,
+        }}
       >
         {info && info.content === marker.content && (
           <MarkerInfo>
             {/* <span>선택위치</span>
                   <br /> */}
-            <span>{marker.content.placename}</span>
+            {marker.content.placename}
             {/* <br />
                   <span>{marker.content.addressname}</span>
                   <br />
