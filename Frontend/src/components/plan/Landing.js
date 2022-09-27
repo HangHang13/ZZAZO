@@ -522,13 +522,13 @@ const Landing = ({ onHandlePageOut }) => {
   };
   const MARKER_WIDTH = 36; // 기본, 클릭 마커의 너비
   const MARKER_HEIGHT = 40; // 기본, 클릭 마커의 높이
-  const OFFSET_X = 10; // 기본, 클릭 마커의 기준 X좌표
+  const OFFSET_X = 18; // 기본, 클릭 마커의 기준 X좌표
   const OFFSET_Y = MARKER_HEIGHT; // 기본, 클릭 마커의 기준 Y좌표
   const OVER_MARKER_WIDTH = 36; // 오버 마커의 너비
   const OVER_MARKER_HEIGHT = 40; // 오버 마커의 높이
   const OVER_OFFSET_X = 10; // 오버 마커의 기준 X좌표
   const OVER_OFFSET_Y = OVER_MARKER_HEIGHT; // 오버 마커의 기준 Y좌표
-  const SPRITE_MARKER_URL = "assets/markerImage/selectMarker3.png"; // 스프라이트 마커 이미지 URL
+  const SPRITE_MARKER_URL = `${process.env.PUBLIC_URL}/assets/markerImage/selectMarker3.png`; // 스프라이트 마커 이미지 URL
   const SPRITE_WIDTH = 109; // 스프라이트 이미지 너비
   const SPRITE_HEIGHT = 78; // 스프라이트 이미지 높이
   const SPRITE_GAP = 0; // 스프라이트 이미지에서 마커간 간격
