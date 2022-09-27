@@ -263,8 +263,9 @@ const UpdateProfile = () => {
     };
     //프로필 업데이트 api 호출
     const result = await updateProfile(data);
+
     //프로필 업데이트 실패시
-    if (!result.code === 200) {
+    if (result.code !== 200) {
       alert("프로필 정보 변경에 실패했습니다.");
       return;
     }
