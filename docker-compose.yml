@@ -20,7 +20,7 @@ services:
     volumes:
       - ./nginx/nginx-setup.conf:/etc/nginx/conf.d/default.conf:ro
       - react_build:/var/www/frontend
-      - ./nginx/nginx-setup.conf:/etc/nginx/sites-available/j7b307.p.ssafy.io
+      - ./nginx/nginx-setup.conf:/etc/nginx/sites-available/j7b307.p.ssafy.io:ro
       # - ../certbot/conf:/etc/letsencrypt # 추가
       # - ../certbot/www:/var/www/certbot # 추가
     depends_on:
