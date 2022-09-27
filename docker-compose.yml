@@ -15,6 +15,7 @@ services:
 
   nginx:
     image: nginx:latest
+    restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
@@ -30,12 +31,12 @@ services:
       - backend
       - frontend
 
-    certbot:
-      image: certbot/certbot
-      restart: unless-stopped
-      volumes:
-        - ./data/certbot/conf:/etc/letsencrypt
-        - ./data/certbot/www:/var/www/certbot
+  certbot:
+    image: certbot/certbot
+    restart: unless-stopped
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
 
 volumes:
   react_build:
