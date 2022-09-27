@@ -2,13 +2,9 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { updatePassword } from "../../api/MyPageAPI";
 import { SignupBody } from "../../components/auth/signup/Signup";
-import {
-  InputFullWrapper,
-  InputWrapper,
-} from "../../components/styled/Wrapper";
-import InputCheckButton from "./../../components/common/buttons/InputCheckButton";
-import Button from "./../../components/common/buttons/Button";
+import { InputFullWrapper } from "../../components/styled/Wrapper";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Body = styled.div`
   display: flex;
@@ -67,51 +63,55 @@ ProfileUpdateBtn.defaultProps = {
   borderRadius: "8px",
   activeBackground: "rgba(0, 0, 0, 0.5)",
 };
-
+const AlertTag = styled.div`
+  display: ${({ display }) => display};
+  color: ${({ color }) => color};
+  font-size: 0.8rem;
+`;
 const UpdatePassword = () => {
+  //유저 정보 받아오기
   const user = useSelector((state) => state.user.value);
-  console.log(user);
+  //비밀번호 변경 후 페이지 이동을 위한 useNavigate
+  const navigate = useNavigate();
+  //비밀번호 상태관리
   const [state, setState] = useState({
     newPassword: "",
     confirmPassword: "",
   });
+  //비밀번호 유효성 검증 관리
   const [valid, setValid] = useState({
     passwordNotDuplicate: false,
     passwordNotValid: false,
     passwordNotMatch: false,
   });
+  //비밀번호 입력창 선택관리
   const passwordRef = useRef([]);
+  //입력창 값을 통해 비밀번호 상태갱신하는 함수
   const onHandleInput = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
-  const AlertTag = styled.div`
-    display: ${({ display }) => display};
-    color: ${({ color }) => color};
-    font-size: 0.8rem;
-  `;
-  //비밀번호 유효성 체크
+
+  //새 비밀번호 유효성 체크
   const userPwRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,12}$/i;
   const userPwCheck = (e) => {
     onHandleInput(e);
 
     if (!userPwRegex.test(state.newPassword)) {
-      // setValid({ ...valid, passwordNotMatch: false });
       setValid({ ...valid, passwordNotValid: true });
     } else {
-      // setValid({ ...valid, passwordNotMatch: false });
       setValid({ ...valid, passwordNotValid: false });
     }
   };
+  //새 비밀번호 일치 체크
   const userPwMatch = (e) => {
     onHandleInput(e);
     if (state.newPassword !== state.confirmPassword) {
-      // setValid({ ...valid, passwordNotValid: false });
       setValid({ ...valid, passwordNotMatch: true });
     } else {
-      // setValid({ ...valid, passwordNotValid: false });
       setValid({ ...valid, passwordNotMatch: false });
     }
   };
+  //새 비밀번호 업데이트 함수
   const submitState = async () => {
     if (!confirm("비밀번호를 변경하시겠습니까?")) {
       return;
@@ -121,18 +121,12 @@ const UpdatePassword = () => {
       password2: state.confirmPassword,
     };
     const result = await updatePassword(data);
-    console.log(result);
-    // const response = {
-    // 	code: 200,
-    // };
+
     if (result.code === 200) {
       alert("비밀번호가 변경되었습니다.");
-      // console.log(state.confirmPassword);
-      console.log(result.data);
+      navigate("/");
     } else {
       alert("비밀번호 변경에 실패하였습니다.");
-      // console.log(state.confirmPassword);
-      console.log(result.data);
     }
   };
   return (
@@ -153,6 +147,7 @@ const UpdatePassword = () => {
               ref={(el) => (passwordRef.current[0] = el)}
             />
           </InputBlock>
+          {/* 새 비밀번호 유효성 경고 */}
           {valid.passwordNotValid ? (
             <AlertTag color="red">사용할 수 없는 비밀번호입니다.</AlertTag>
           ) : (
@@ -172,7 +167,7 @@ const UpdatePassword = () => {
               ref={(el) => (passwordRef.current[1] = el)}
             />
           </InputBlock>
-
+          {/* 새 비밀번호 확인 일치 경고 */}
           {valid.passwordNotMatch ? (
             <AlertTag color="red">비밀번호가 일치하지 않습니다.</AlertTag>
           ) : (
