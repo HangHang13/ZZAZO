@@ -1,5 +1,3 @@
-
-import re
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView 
@@ -391,3 +389,37 @@ def chceck_email(request, userEmail):
 
 # @permission_classes([AllowAny])
 # @csrf_exempt
+
+
+# 반경만 변경하는 API를 만드려고 했으나 실패함
+# class UserChangeRadiusView(APIView):
+#   renderer_classes = [UserRenderer]
+#   permission_classes = [IsAuthenticated]
+#   @swagger_auto_schema(operation_summary='회원 반경 수정', request_body=serializers.UpdateUserSerializer)
+#   def post(self, request, format=None):
+#     # serializer = UpdateUserSerializer
+#     serializer = UpdateRadiusSerializer(data=request.data, context={'user':request.user})
+ 
+#     serializer.is_valid(raise_exception=True)
+
+#     code = 200
+#     message = "반경 수정"
+#     res = {
+#         "code": code,
+#         "message": message,
+#         }
+#     return Response(res)
+  
+  
+# @api_view(['POST'])
+# def update_radius(request):
+#   # radius = request.data['userRadius']
+#   serializer = UpdateRadiusSerializer(context={'user':request.user}, data=request.data)
+#   serializer.is_valid(raise_exception=True)
+#   code = 200
+#   message = "반경 수정"
+#   res = {
+#       "code": code,
+#       "message": message,
+#       }
+#   return Response(res)

@@ -11,15 +11,18 @@ const Slide = (leftStart, leftEnd) => keyframes`
 
 export const SliderWrapper = styled.div`
 	position: absolute;
-	width: 100%;
+	width: 90%;
 	height: 100%;
 	display: flex;
+	overflow-y: hidden;
 
 	animation-duration: 0.4s;
 	animation-timing-function: ease-out;
 	animation-name: ${({ leftStart, leftEnd }) => Slide(leftStart, leftEnd)};
-	animation-fill-mode: forwards;
+	animation-fill-mode: both;
 
 	@media screen and (max-width: 500px) {
+		width: 100%;
+		overflow-y: scroll;
 		animation-name: ${({ leftStart, leftEnd }) => Slide(leftStart, leftEnd - 5)};
 `;

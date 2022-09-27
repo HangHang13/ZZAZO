@@ -18,7 +18,6 @@ import { useEffect } from "react";
 import { storeLogout } from "./store/reducers/user";
 import PlanCalendar from "./pages/plancalendar/PlanCalendar";
 import PlanMakeCard from "./pages/plan/PlanMakeCard";
-import { TransitionGroup } from "react-transition-group";
 
 function App() {
 	// const location = useLocation();

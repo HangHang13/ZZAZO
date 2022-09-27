@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
+from django.db.models import Avg
 
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -7,31 +8,72 @@ from rest_framework.response import Response
 from place.models import Place
 from .serializers.review import ReviewCreateSerializer, ReviewViewSerializer
 from .models import Review
-from place.serializers.place import PlaceTest2Serializer
+from place.serializers.place import PlaceDetailSerializer
 
-@api_view(['POST'])
-def place_review_create(request, place_id):
+@api_view(['GET', 'POST'])
+def place_review_create_or_create_form(request, place_id):
     place = Place.objects.using('place').get(_id = place_id)
-
-    serializer = ReviewCreateSerializer(data=request.data)
-    if serializer.is_valid(raise_exception=True):
-        serializer.save(user=request.user, place=place)
-        code = 200
-        message = "리뷰 생성"
-        res = {
-            "code": code,
-            "message": message,
-        }
-        return Response(res, status=status.HTTP_201_CREATED)
     
-    else:
-        code = 401
-        message = "리뷰 생성 실패"
-        res = {
-            "code": code,
-            "message": message,
-        }
-        return Response(res)
+    def review_create():
+        serializer = ReviewCreateSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(user=request.user, place=place)
+            code = 200
+            message = "리뷰 생성"
+            res = {
+                "code": code,
+                "message": message,
+            }
+            return Response(res, status=status.HTTP_201_CREATED)
+        
+        else:
+            code = 401
+            message = "리뷰 생성 실패"
+            res = {
+                "code": code,
+                "message": message,
+            }
+            return Response(res)
+    
+    def review_create_form():
+        user_review = Review.objects.filter(user = request.user, place_id = place_id)
+        placeSerializer = PlaceDetailSerializer(place)
+        placeScore =  Review.objects.filter(place=place_id).aggregate(placeScore = Avg('score'))
+        placeData = (dict(placeSerializer.data))
+        placeData.update(placeScore)
+        if user_review:
+            review_serializer = ReviewViewSerializer(user_review[0])
+            code = 200
+            message = "리뷰 작성 폼"
+            data = {
+                "Place": placeData,
+                "reviews": review_serializer.data
+            }
+            res = {
+                "code": code,
+                "message": message,
+                "data": data
+            }
+            return Response(res)
+        
+        else:
+            code = 200
+            message = "리뷰 작성 폼"
+            res = {
+                "code": code,
+                "message": message,
+                "data": {
+                    "Place": placeData,
+                    "reviews": []
+                }
+            }
+            return Response(res)
+        
+    if request.method == 'POST':
+        return review_create()
+    
+    elif request.method == 'GET':
+        return review_create_form() 
         
 @api_view(['PUT', 'DELETE'])
 def place_review_update_or_delete(request, place_id, review_id):
