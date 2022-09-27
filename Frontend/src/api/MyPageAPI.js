@@ -12,7 +12,7 @@ const getUser = async () => {
 //회원 정보 수정
 const updateProfile = async (data) => {
   const result = await client
-    .put(`/users`, data)
+    .put(`/users/`, data)
     .then((response) => response.data)
     .catch((error) => error.response);
   return result;
