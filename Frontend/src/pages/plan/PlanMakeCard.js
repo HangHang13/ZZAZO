@@ -493,6 +493,12 @@ const PlanMakeCard = () => {
 		setTrashList(arr3);
 	};
 
+	// 약속 저장하기 누를 시 이벤트
+	const onHandleSavePlan = () => {
+		console.log(planInfo);
+		console.log(planList);
+	};
+
 	return (
 		<div align="center">
 			<Header />
@@ -582,7 +588,7 @@ const PlanMakeCard = () => {
 							</PlanCard>
 						</PlanMakeWrapper>
 					</PlanBlock>
-					<AfterButton>약속 저장하기</AfterButton>
+					<AfterButton onClick={onHandleSavePlan}>약속 저장하기</AfterButton>
 				</PlanPageWrapper>
 			</SliderWrapper>
 		</div>
