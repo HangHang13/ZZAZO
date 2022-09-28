@@ -165,12 +165,13 @@ const CardDetail = ({ placeId, modalClose }) => {
 
 	useEffect(async () => {
 		const response = await getPlaceInfo(placeId);
+		console.log(response.data.Place);
 		setState({
 			...state,
 			title: response.data.Place.name,
 			address: response.data.Place.address,
 			score: response.data.Place.placeScore ? parseFloat(response.data.Place.placeScore) : 0.0,
-			// category: response.data.Place.place_type
+			category: response.data.Place.place_type,
 		});
 	}, [placeId]);
 
