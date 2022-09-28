@@ -13,6 +13,7 @@ const Radius = ({ radius, setRadius }) => {
 			clientX = 0;
 		elmnt.onmousedown = dragMouseDown;
 		elmnt.addEventListener("touchstart", dragMouseDown);
+
 		function dragMouseDown(e) {
 			e = e || window.event;
 			e.preventDefault();
@@ -45,11 +46,10 @@ const Radius = ({ radius, setRadius }) => {
 				leftVal = elmnt.offsetLeft + clientX_gab;
 			}
 
-			v = Math.round((leftVal / parentElmnt.clientWidth) * 1000) + 100;
+			v = Math.round((leftVal / parentElmnt.clientWidth) * 900) + 100;
 			elmnt.querySelector("span").innerText = v + "m";
 
 			let isMobile = /Mobi/i.test(window.navigator.userAgent);
-			console.log(e.clientX);
 			if (isMobile) {
 				elmnt.style.left = leftVal + "px";
 			} else {

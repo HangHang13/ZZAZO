@@ -11,6 +11,8 @@ import CardDetail from "../../components/locationdetail/CardDetail.js";
 import { getRec } from "../../api/HomeApi";
 import { ImgSearch } from "../../api/KaKaoImgSearch";
 
+const { kakao } = window;
+
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -35,6 +37,44 @@ const Home = () => {
     const RecData = await getRec();
     setRecList(RecData);
   };
+
+  //장소명에 따른 좌표얻기
+  function getCoords(address) {
+    var geocoder = new kakao.maps.services.Geocoder();
+    geocoder.addressSearch(address, function (result, status) {
+      if (status === kakao.maps.services.Status.OK) {
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+        console.log(coords);
+      }
+    });
+
+    // return coords;
+  }
+
+  //카테고리에 따른 이미지 다르게 보여주기
+  function CategoryImg(categorys) {
+    switch (categorys) {
+      case "한식":
+        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/korea.png`;
+      case "한정식":
+        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/koreapremium.png`;
+      case "커피전문점":
+        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/coffee.png`;
+      case "펜션":
+        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/pension.png`;
+      case "국밥":
+        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/kukbab.png`;
+      case "닭요리":
+        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/chickenfood.png`;
+      case "육류,고기":
+        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/meat.png`;
+      case "치킨":
+        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/chicken.png`;
+      default:
+        return `${process.env.PUBLIC_URL}/assets/card/gazi.png`;
+    }
+  }
+
   //장소 이미지 검색 kakao api 호출
   const ImgSearchHttpHandler = async (query) => {
     const params = {
@@ -106,8 +146,9 @@ const Home = () => {
               <>
                 {recList.data.Place.map((item, idx) => (
                   <RecCard
+                    // onClick={getCoords(item.address)}
                     key={idx}
-                    src={`${process.env.PUBLIC_URL}/assets/card/location.png`}
+                    src={CategoryImg(item.place_type)}
                     name={item.name}
                     address={item.address}
                     target="20대 여성이 주로 방문해요"
