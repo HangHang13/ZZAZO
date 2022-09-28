@@ -25,4 +25,4 @@ COPY . .
 # COPY --from=build-stage . /usr/share/nginx/html
 RUN npm install
 RUN npm run build
-CMD ["nginx", "-g", "daemon off;"]
+# CMD ["nginx", "-g", "daemon off;"]
