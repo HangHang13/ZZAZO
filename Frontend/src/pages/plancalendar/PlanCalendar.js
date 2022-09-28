@@ -6,7 +6,7 @@ import Slider from "../../components/plancalendar/Slider";
 import EmptyPlan from "./../../components/plancalendar/EmptyPlan";
 import ReviewDetail from "../../components/plancalendar/ReviewDetail";
 import Rating from "../../components/plancalendar/Rating";
-
+import { getReview } from "../../api/ReviewAPI";
 const PageHeaderBlock = styled.div`
   display: flex;
   flex-direciton: column;
@@ -154,9 +154,19 @@ const PlanCalendar = () => {
     setuserPlan(!userPlan);
   };
 
+  //장소카드 상세보기 데이터
+  // const [reviewList, setReviewList] = useState(false);
+
+  // //장소카드 상세보기 클릭시 get api호출
+  // const reviewLoad = async () => {
+  //   const reviewData = await getReview(23);
+  //   setReviewList(reviewData);
+  //   console.log(reviewData);
+  // };
   // useEffects
   useEffect(() => {
     window.scrollTo(0, 0);
+    reviewLoad();
   }, []);
 
   return (
