@@ -19,9 +19,7 @@ FROM node:16.16.0 as build-stage
 # EXPOSE 80
 # CMD ["nginx", "-g", "daemon off;"]
 # CMD ["npm", "run", "start"]
-EXPOSE 80
-EXPOSE 443
-USER root
+
 WORKDIR /Frontend
 COPY . .
 # COPY --from=build-stage . /usr/share/nginx/html
