@@ -1,5 +1,10 @@
 import "./App.css";
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  BrowserRouter as Router,
+  useLocation,
+} from "react-router-dom";
 import MyPage from "./pages/mypage/MyPage";
 import Home from "./pages/home/Home";
 import Signup from "./pages/auth/Signup";
@@ -16,9 +21,13 @@ import FindIdResult from "./pages/auth/find/FindIdResult";
 import PrivateRoute from "./routes/PrivateRoute";
 import { useEffect } from "react";
 import { storeLogout } from "./store/reducers/user";
-import Plan_Copy from "./pages/plan/Plan_Copy";
+import PlanCalendar from "./pages/plancalendar/PlanCalendar";
+import PlanMakeCard from "./pages/plan/PlanMakeCard";
+import PlanShare from "./pages/planshare/PlanShare";
 
 function App() {
+  // const location = useLocation();
+
   const onHandleLogOut = () => {
     dispatch(storeLogout());
     navigate("/");
@@ -28,7 +37,6 @@ function App() {
     e.preventDefault();
     onHandleLogOut();
   };
-
   useEffect(() => {
     (() => {
       window.addEventListener("beforeunload", onHandleBrowserClose);
@@ -40,7 +48,7 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
+      <Router>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
@@ -60,12 +68,14 @@ function App() {
           <Route path="/findpw" element={<FindPwMain />} />
           <Route path="/plan" element={<PrivateRoute component={<Plan />} />} />
           <Route
-            path="/plancopy"
-            element={<PrivateRoute component={<Plan_Copy />} />}
+            path="/planmakecard"
+            element={<PrivateRoute component={<PlanMakeCard />} />}
           />
+          <Route path="/plancalendar" element={<PlanCalendar />} />
+          <Route path="/planshare" element={<PlanShare />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
+      </Router>
     </div>
   );
 }

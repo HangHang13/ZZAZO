@@ -47,7 +47,8 @@ const NavItem = styled.a`
   font-weight: bold;
   color: black;
   @media screen and (max-width: 500px) {
-    margin: 0.5rem;
+    margin: 0.3rem;
+    padding-left: 10rem;
   }
 `;
 
@@ -58,8 +59,8 @@ const Menubar = styled.a`
     align-items: center;
     font-size: 2.5rem;
     position: absolute;
-    margin-top: 1rem;
-    right: 2rem;
+    margin-top: 2rem;
+    margin-left: 15rem;
     height: 2rem;
   }
 `;
@@ -77,16 +78,11 @@ const ImgWrapper = styled.img`
     height: 5rem;
   }
   @media screen and (max-width: 500px) {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 4rem;
+    height: 4rem;
     margin-right: 0.8rem;
-    margin-left: 0.8rem;
-  }
-  @media screen and (max-width: 400px) {
-    width: 2rem;
-    height: 2rem;
-    margin-right: 0.7rem;
-    margin-left: 0.7rem;
+    padding-top: 1.3rem;
+    padding-right: 22rem;
   }
 `;
 
@@ -99,7 +95,7 @@ const Header = () => {
   const currUserisLogin = user.isLogin; //로그인 여부
   const loginUser = user.data ? user.data : "";
   //console.log(loginUser);
-  const email = loginUser.userEmail ? loginUser.userEmail : "";
+  const nickname = loginUser.userNickName ? loginUser.userNickName : "";
 
   //data.UserEmail
 
@@ -117,7 +113,7 @@ const Header = () => {
             <NavItem onClick={() => navigate("/plan")}>약속잡기</NavItem>
             <NavItem onClick={() => navigate("/plancalendar")}>공유일정확인</NavItem>
             <NavItem onClick={() => navigate("/mypage")}>마이페이지</NavItem>
-            <NavItem>{email ? email : ""}님 환영합니다.</NavItem>
+            <NavItem>{nickname ? nickname : ""}님 환영합니다.</NavItem>
             <NavItem onClick={() => onHandleLogOut()}>로그아웃</NavItem>
           </>
         ) : (

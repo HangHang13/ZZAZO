@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, get_list_or_404
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -12,7 +12,7 @@ from place.models import Place
 @api_view(['GET'])
 def list(request):
     # card_list = Card.objects.filter(user = request.user)
-    card_list = Card.objects.all()
+    card_list = get_list_or_404(Card)
     serializer = CardListSerializer(card_list, many=True)
     data = {'cards': serializer.data}
     code = 200
@@ -74,9 +74,23 @@ def plan_create(request):
                 }
     return Response(res) 
 
-@api_view(['PUT', 'DELETE'])
-def plan_put_or_delete(request, card_id):
+@api_view(['GET', 'PUT', 'DELETE'])
+def plan_detail_put_or_delete(request, card_id):
     card = Card.objects.get(pk = card_id)
+    def plan_detail():
+        if card is None:
+            return Response("invalid request", status =status.HTTP_400_BAD_REQUEST)
+        serializer = CardSerializer(instance = card)
+        data = {'cards': serializer.data}
+        code = 200
+        message = "약속 조회"
+        res = {
+            "code": code,
+            "message": message,
+            "data": data
+            }
+        return Response(res)
+    
     def plan_put():
         if card is None:
             return Response("invalid request", status =status.HTTP_400_BAD_REQUEST)
@@ -127,3 +141,5 @@ def plan_put_or_delete(request, card_id):
         return plan_put()
     elif request.method == 'DELETE':
         return plan_delete()
+    elif request.method == 'GET':
+        return plan_detail()

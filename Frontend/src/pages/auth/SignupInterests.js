@@ -8,8 +8,8 @@ import { MobileSizeWrapper, Wrapper } from "./../../components/styled/Wrapper";
 import DivButton from "./../../components/common/buttons/DivButton";
 import { signup } from "../../api/AuthAPI";
 import Header from "../../components/layout/Header";
-import { HeaderSpace } from "../../components/styled/HeaderSpace";
 import Loading from "./../../components/common/Loading";
+import Footer from "../../components/layout/Footer";
 
 // 임시 interests 더미데이터
 const intList = [
@@ -114,6 +114,7 @@ const SignupInterests = () => {
 	};
 
 	useEffect(() => {
+		window.scrollTo(0, 0);
 		if (state === null) {
 			alert("비정상적인 접근입니다.");
 			navigate("/");
@@ -123,7 +124,6 @@ const SignupInterests = () => {
 	return (
 		<>
 			<Header />
-			<HeaderSpace />
 			<Wrapper>
 				{loading ? <Loading /> : null}
 				<MobileSizeWrapper>
@@ -171,9 +171,10 @@ const SignupInterests = () => {
 				/> */}
 						</InterestsWrapper>
 					</SignupBody>
-					<DivButton message="완 료" width="100%" borderColor="#80E080" color="#80C0A0" clickEvent={() => submitForm()}></DivButton>
+					<DivButton message="완 료" width="98%" borderColor="#80E080" color="#80C0A0" clickEvent={() => submitForm()}></DivButton>
 				</MobileSizeWrapper>
 			</Wrapper>
+			<Footer />
 		</>
 	);
 };
