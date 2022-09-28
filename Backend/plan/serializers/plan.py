@@ -10,7 +10,7 @@ class CardListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Card
         fields = ('cardId','title', 'date', 'appointed_time', 'place_id', 'priority',
-        'name', 'address')
+        'name', 'place_type','address')
 
 class CardSerializer(serializers.ModelSerializer):
     # class PlaceSerializer(serializers.ModelSerializer):
@@ -20,4 +20,4 @@ class CardSerializer(serializers.ModelSerializer):
     # place = PlaceSerializer(read_only = True)
     class Meta:
         model = Card
-        fields = ('title', 'date', 'appointed_time', 'place_id', 'priority', 'cardId','address', 'latitude', 'longitude', 'isMain', 'name')
+        fields = ('title', 'date', 'appointed_time', 'place_id', 'priority', 'cardId', 'place_type','address', 'latitude', 'longitude', 'isMain', 'name')

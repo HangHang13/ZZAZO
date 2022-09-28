@@ -1,3 +1,4 @@
+from unittest.util import _MAX_LENGTH
 from djongo import models
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -11,5 +12,8 @@ class Place(models.Model):
     longitude = models.FloatField()
     latitude = models.FloatField()
     place_type = models.CharField(max_length=100)
+    firstCategory = models.CharField(max_length=30)
+    secondCategory = models.CharField(max_length=30)
+
     class Meta:
         app_label = 'place'
