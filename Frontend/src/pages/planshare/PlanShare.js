@@ -58,7 +58,35 @@ const PlanShare = () => {
   //   setStart(end);
   //   setEnd(-100);
   // };
-  window.Kakao.init(`%REACT_APP_KAKAOMAP_API_KEY%`);
+  useEffect(() => {
+    console.log(process.env.REACT_APP_KAKAOLINK_API_KEY);
+    Kakao.init(process.env.REACT_APP_KAKAOLINK_API_KEY);
+    console.log(Kakao.isInitialized());
+  }, []);
+  const SharePage = () => {
+    Kakao.Link.sendDefault({
+      objectType: "feed",
+      content: {
+        title: "딸기 치즈 케익",
+        description: "#케익 #딸기 #삼평동 #카페 #분위기 #소개팅",
+        imageUrl:
+          "http://mud-kage.kakao.co.kr/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png",
+        link: {
+          mobileWebUrl: "/login",
+          webUrl: "/login",
+        },
+      },
+      buttons: [
+        {
+          title: "함께 해보기",
+          link: {
+            mobileWebUrl: "/login",
+            webUrl: "/login",
+          },
+        },
+      ],
+    });
+  };
 
   return (
     <div align="center">
@@ -69,7 +97,7 @@ const PlanShare = () => {
           <Title>약속 공유</Title>
         </PlanBlock>
         <PlanBlock height="calc(70vh - 3rem)" justifyContent="space-between">
-          <div>공유</div>
+          <button onClick={SharePage}>공유</button>
         </PlanBlock>
       </PlanPageWrapper>
       {/* </SliderWrapper> */}
