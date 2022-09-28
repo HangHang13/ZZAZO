@@ -384,7 +384,7 @@ def chceck_email(request, userEmail):
       'body':body,
       'to_email':userEmail
     }
-  # Util.send_email(data)
+  Util.send_email(data)
   return Response(res)
 
 # @permission_classes([AllowAny])
