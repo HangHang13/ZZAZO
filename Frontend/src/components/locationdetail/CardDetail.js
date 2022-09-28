@@ -36,7 +36,7 @@ const CardWrapper = styled.div`
 	transform: translate(-50%, -50%);
 	z-index: 100;
 	@media screen and (max-width: 500px) {
-		width: 25rem;
+		width: 100%;
 		height: 48rem;
 		flex-direction: column;
 		margin-bottom: 0;
@@ -95,10 +95,12 @@ const CardInfo = styled.div`
 	display: flex;
 	height: 8rem;
 	flex-direction: column;
+	align-items: start;
 `;
 const CardInfoItem = styled.div`
 	margin: 0.4rem;
 	font-weight: bold;
+	justify-content: left;
 `;
 const InfoIcon = styled.img`
 	width: 1rem;
@@ -165,7 +167,6 @@ const CardDetail = ({ placeId, modalClose }) => {
 
 	useEffect(async () => {
 		const response = await getPlaceInfo(placeId);
-		console.log(response.data.Place);
 		setState({
 			...state,
 			title: response.data.Place.name,

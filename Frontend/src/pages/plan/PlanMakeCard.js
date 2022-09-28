@@ -11,7 +11,7 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { SliderWrapper } from "../../components/styled/SliderWrapper";
 import RecommendHeader from "../../components/plan/cards/RecommendHeader";
 import { ListTypes } from "./../../constants/ListTypes";
-import { getPlaceList, getRecommendList } from "../../api/PlanAPI";
+import { getPlaceList, getPlan, getPlanList, getRecommendList, savePlan } from "../../api/PlanAPI";
 import MapContainer from "./../../components/kakaomap/MapContainer";
 import Loading from "./../../components/common/Loading";
 import CardDetail from "../../components/locationdetail/CardDetail";
@@ -294,12 +294,15 @@ TrashWrapper.defaultProps = {
 
 const PlanMakeCard = () => {
 	const ELEMENTS_PER_PAGE = 5;
+	const LOADING_DEFAULT = "추천 장소들을 불러오고 있습니다...";
+	const LOADING_SAVE = "약속 카드 등록중입니다...";
 
 	const location = useLocation(); // location.state.content, location.state.position
 	const navigate = useNavigate();
 
 	// States_공통
 	const [loading, setLoading] = useState(false);
+	const [loadingText, setLoadingText] = useState(LOADING_DEFAULT);
 	const [start, setStart] = useState(100); // 화면 슬라이딩 효과를 위한 state
 	const [end, setEnd] = useState(5); // 화면 슬라이딩 효과를 위한 state
 	const [modalToggle, setModalToggle] = useState(false); // 장소 상세보기 모달
@@ -494,15 +497,50 @@ const PlanMakeCard = () => {
 	};
 
 	// 약속 저장하기 누를 시 이벤트
-	const onHandleSavePlan = () => {
-		console.log(planInfo);
-		console.log(planList);
+	const onHandleSavePlan = async () => {
+		if (planInfo.name.length < 1) {
+			alert("약속 이름을 입력해주세요.");
+			return;
+		} else if (planInfo.date.length < 1) {
+			alert("약속 날짜를 입력해주세요.");
+			return;
+		}
+
+		// 제출용 데이터 정제
+		setLoadingText(LOADING_SAVE);
+		setLoading(true);
+		let form = [];
+		planList.map((item, index) => {
+			form.push({
+				title: planInfo.name,
+				date: planInfo.date,
+				appointed_time: planInfo.time,
+				place_id: item._id ? item._id : null,
+				address: item.address,
+				isMain: item.isMain ? 1 : 0,
+				latitude: item.latitude,
+				longitude: item.longitude,
+				place_type: item.place_type,
+				name: item.name,
+				priority: index + 1,
+			});
+		});
+
+		const response = await savePlan(form);
+		setLoading(false);
+		setLoadingText(LOADING_DEFAULT);
+		if (response.code !== 200) {
+			alert("등록에 실패했습니다.");
+			return;
+		}
+		alert("약속 카드가 등록되었습니다!");
+		navigate("/planshare", { replace: true, state: form });
 	};
 
 	return (
 		<div align="center">
 			<Header />
-			{loading ? <Loading text="추천 장소들을 불러오고 있습니다..." /> : null}
+			{loading ? <Loading text={loadingText} /> : null}
 			{modalToggle ? <CardDetail modalClose={openModal} placeId={modalPlaceId} /> : null}
 			<SliderWrapper leftStart={start} leftEnd={end}>
 				<PlanPageWrapper width="90vw">
