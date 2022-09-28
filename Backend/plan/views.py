@@ -24,6 +24,22 @@ def list(request):
     }
     return Response(res)
 
+@api_view(['GET'])
+def listCardId(request, cardId):
+    card = Card.objects.filter(cardId = cardId)
+    print(card)
+    serializer = CardListSerializer(card, many=True)
+    data = {'card' : serializer.data}
+    code = 200
+    message = "해당 공유 일정 리스트"
+    res = {
+        "code": code,
+        "message": message,
+        "data": data
+    }
+    return Response(res) 
+
+
 @api_view(['POST'])
 def plan_create(request):
     card_id = Card.objects.aggregate(cardId = Max('cardId'))
@@ -47,7 +63,7 @@ def plan_create(request):
             res = {
                 "code": code,
                 "message": message,
-                "data" : cid
+                "data" : { 'cardId' : cid}
                 }
         else:
             code = 401
