@@ -11,6 +11,8 @@ import CardDetail from "../../components/locationdetail/CardDetail.js";
 import { getRec } from "../../api/HomeApi";
 import { ImgSearch } from "../../api/KaKaoImgSearch";
 import { getReview } from "../../api/ReviewAPI";
+import { Wrapper } from "../../components/styled/Wrapper";
+
 const { kakao } = window;
 
 const Home = () => {
@@ -36,20 +38,8 @@ const Home = () => {
   const RecLoad = async () => {
     const RecData = await getRec();
     setRecList(RecData);
+    console.log(RecData);
   };
-
-  //장소명에 따른 좌표얻기
-  // function getCoords(address) {
-  //   var geocoder = new kakao.maps.services.Geocoder();
-  //   geocoder.addressSearch(address, function (result, status) {
-  //     if (status === kakao.maps.services.Status.OK) {
-  //       var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-  //       console.log(coords);
-  //     }
-  //   });
-
-  //   // return coords;
-  // }
 
   //카테고리에 따른 이미지 다르게 보여주기
   function CategoryImg(categorys) {
@@ -75,102 +65,92 @@ const Home = () => {
     }
   }
 
-  //장소 이미지 검색 kakao api 호출
-  const ImgSearchHttpHandler = async (query) => {
-    const params = {
-      query: query,
-      sort: "accuracy",
-      page: 1,
-      size: 1,
-    };
-    const { data } = await ImgSearch(params);
-    console.log(data.documents[0].image_url);
-    return data.documents[0].image_url;
-  };
   return (
     <>
       <Header></Header>
-      <HomeWrapper>
-        <HomeBanner>
-          <BackgroundCloud></BackgroundCloud>
-          <HomeBannerArea>
-            <HomeBannerText>넌 놀기만 해! </HomeBannerText>
-            <HomeBannerText>
-              <BoldText>일정은</BoldText> &nbsp; 내가 짜조!
-            </HomeBannerText>
+      <Wrapper>
+        <HomeWrapper>
+          <HomeBanner>
+            <BackgroundCloud></BackgroundCloud>
+            <HomeBannerArea>
+              <HomeBannerText>넌 놀기만 해! </HomeBannerText>
+              <HomeBannerText>
+                <BoldText>일정은</BoldText> &nbsp; 내가 짜조!
+              </HomeBannerText>
+              <BtnWrapper>
+                <PlanBtn onClick={() => navigate("/plan")}>약속잡기</PlanBtn>
+              </BtnWrapper>
+            </HomeBannerArea>
+            <BannerImg src="../assets/main/play.png"></BannerImg>
+          </HomeBanner>
+
+          <br />
+          <br />
+          <MiddleTitle>약속 장소 추천 서비스 - ZZAZO</MiddleTitle>
+          <br></br>
+          <hr></hr>
+          <br />
+          <br />
+          <IntroduceList>
+            <Introduce>
+              <ImgWrapper width="7rem" height="7rem" src="../assets/introduce/introduce1.png"></ImgWrapper>
+              <Text fontsize="0.7rem">약속 상대와 만나고</Text>
+              <Text fontsize="0.7rem">싶은 위치를 선택하세요!</Text>
+            </Introduce>
+            <Introduce>
+              <ImgWrapper width="7rem" height="7rem" src="../assets/introduce/introduce2.png"></ImgWrapper>
+              <Text fontsize="0.7rem"> 나와 취향이 비슷한 사람들이 </Text>
+              <Text fontsize="0.7rem">방문한 장소를 추천받을 수 있어요!</Text>
+            </Introduce>
+            <Introduce>
+              <ImgWrapper width="7rem" height="7rem" src="../assets/introduce/introduce3.png"></ImgWrapper>
+              <Text fontsize="0.7rem">내가 선호하는</Text>
+              <Text fontsize="0.7rem">장소들을 추천 받을수 있어요!</Text>
+            </Introduce>
+            <Introduce>
+              <ImgWrapper width="7rem" height="7rem" src="../assets/introduce/introduce4.png"></ImgWrapper>
+              <Text fontsize="0.7rem"> 추천 받은 장소들을 골라</Text>
+              <Text fontsize="0.7rem"> 약속 일정을 만들어 보세요!</Text>
+            </Introduce>
+            <Introduce>
+              <ImgWrapper width="7rem" height="7rem" src="../assets/introduce/introduce5.png"></ImgWrapper>
+              <Text fontsize="0.7rem">만든 일정을 친구에게</Text>
+              <Text fontsize="0.7rem"> 공유할 수 있어요!</Text>
+            </Introduce>
+          </IntroduceList>
+          <RecTitle>이런 장소는 어때요?</RecTitle>
+          <RecArea>
+            <CardWrapper>
+              {recList.data ? (
+                <>
+                  {recList.data.Place.map((item, idx) => (
+                    <RecCard
+                      // onClick={(item.name, item.address, item.longitude, item.latitude, item.place_type) => navigate("/plan")}
+                      key={idx}
+                      src={CategoryImg(item.place_type)}
+                      name={item.name}
+                      address={item.address}
+                      target="20대 여성이 주로 방문해요"
+                      place_type={item.place_type}
+                    />
+                  ))}
+                </>
+              ) : (
+                <></>
+              )}
+            </CardWrapper>
+          </RecArea>
+
+          <BottomArea>
             <BtnWrapper>
               <PlanBtn onClick={() => navigate("/plan")}>약속잡기</PlanBtn>
             </BtnWrapper>
-          </HomeBannerArea>
-          <BannerImg src="../assets/main/play.png"></BannerImg>
-        </HomeBanner>
-
-        <br />
-        <br />
-        <MiddleTitle>약속 장소 추천 서비스 - ZZAZO</MiddleTitle>
-        <br></br>
-        <hr></hr>
-        <br />
-        <br />
-        <IntroduceList>
-          <Introduce>
-            <ImgWrapper width="7rem" height="7rem" src="../assets/introduce/introduce1.png"></ImgWrapper>
-            <Text fontsize="0.7rem">약속 상대와 만나고</Text>
-            <Text fontsize="0.7rem">싶은 위치를 선택하세요!</Text>
-          </Introduce>
-          <Introduce>
-            <ImgWrapper width="7rem" height="7rem" src="../assets/introduce/introduce2.png"></ImgWrapper>
-            <Text fontsize="0.7rem"> 나와 취향이 비슷한 사람들이 </Text>
-            <Text fontsize="0.7rem">방문한 장소를 추천받을 수 있어요!</Text>
-          </Introduce>
-          <Introduce>
-            <ImgWrapper width="7rem" height="7rem" src="../assets/introduce/introduce3.png"></ImgWrapper>
-            <Text fontsize="0.7rem">내가 선호하는</Text>
-            <Text fontsize="0.7rem">장소들을 추천 받을수 있어요!</Text>
-          </Introduce>
-          <Introduce>
-            <ImgWrapper width="7rem" height="7rem" src="../assets/introduce/introduce4.png"></ImgWrapper>
-            <Text fontsize="0.7rem"> 추천 받은 장소들을 골라</Text>
-            <Text fontsize="0.7rem"> 약속 일정을 만들어 보세요!</Text>
-          </Introduce>
-          <Introduce>
-            <ImgWrapper width="7rem" height="7rem" src="../assets/introduce/introduce5.png"></ImgWrapper>
-            <Text fontsize="0.7rem">만든 일정을 친구에게</Text>
-            <Text fontsize="0.7rem"> 공유할 수 있어요!</Text>
-          </Introduce>
-        </IntroduceList>
-        <RecTitle>이런 장소는 어때요?</RecTitle>
-        <RecArea>
-          <CardWrapper>
-            {recList.data ? (
-              <>
-                {recList.data.Place.map((item, idx) => (
-                  <RecCard
-                    // onClick={getCoords(item.address)}
-                    key={idx}
-                    src={CategoryImg(item.place_type)}
-                    name={item.name}
-                    address={item.address}
-                    target="20대 여성이 주로 방문해요"
-                    place_type={item.place_type}
-                  />
-                ))}
-              </>
-            ) : (
-              <></>
-            )}
-          </CardWrapper>
-        </RecArea>
-
-        <BottomArea>
-          <BtnWrapper>
-            <PlanBtn onClick={() => navigate("/plan")}>약속잡기</PlanBtn>
-          </BtnWrapper>
-        </BottomArea>
-        {/* 상세보기 모달 띄우기 */}
-        <button onClick={modalClose}>모달열기</button>
-        {modalOpen && <CardDetail modalClose={modalClose} title="석촌 호수 공원" address="서울시 강남대로 123" category="음식점 - 일식" target="20대 여성이 주로 방문해요" score="4.7"></CardDetail>}
-      </HomeWrapper>
+          </BottomArea>
+          {/* 상세보기 모달 띄우기 */}
+          <button onClick={modalClose}>모달열기</button>
+          {modalOpen && <CardDetail modalClose={modalClose} title="석촌 호수 공원" address="서울시 강남대로 123" category="음식점 - 일식" target="20대 여성이 주로 방문해요" score="4.7"></CardDetail>}
+        </HomeWrapper>
+      </Wrapper>
     </>
   );
 };
@@ -214,7 +194,6 @@ const PlanBtn = styled.button`
 
 const HomeWrapper = styled.div`
   content-direction: column;
-  padding-top: 5rem;
   margin: 0 auto;
   width: 70vw;
 `;
@@ -224,6 +203,7 @@ const CardWrapper = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   @media screen and (max-width: 500px) {
+    margin-right: 4.5rem;
     width: 15rem;
     display: flex;
     flex-direction: column;
@@ -238,7 +218,8 @@ const HomeBanner = styled.div`
   background-color: rgba(192, 240, 176, 0.2);
   align-items: center;
   height: 35rem;
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 605px) {
+    padding-top: 2rem;
     display: flex;
     flex-direction: column;
   }

@@ -7,6 +7,8 @@ import EmptyPlan from "./../../components/plancalendar/EmptyPlan";
 import ReviewDetail from "../../components/plancalendar/ReviewDetail";
 import Rating from "../../components/plancalendar/Rating";
 import { getReview } from "../../api/ReviewAPI";
+import { Wrapper } from "../../components/styled/Wrapper";
+
 const PageHeaderBlock = styled.div`
   display: flex;
   flex-direciton: column;
@@ -102,6 +104,14 @@ const SearchWrapper = styled.div`
   justify-content: space-evenly;
   align-items: center;
   box-shadow: 4px 2px 2px grey;
+  @media screen and (max-width: 860px) {
+    width: 40rem;
+    height: 4rem;
+  }
+  @media screen and (max-width: 690px) {
+    width: 32rem;
+    height: 4rem;
+  }
   @media screen and (max-width: 500px) {
     width: 25rem;
     height: 3rem;
@@ -114,6 +124,13 @@ const SearchOption = styled.select`
   height: 2.5rem;
   font-size: 1.5rem;
   box-shadow: 4px 2px 2px grey;
+  @media screen and (max-width: 860px) {
+    width: 8rem;
+    height: 2.5rem;
+  }
+  @media screen and (max-width: 690px) {
+    width: 6rem;
+  }
   @media screen and (max-width: 500px) {
     height: 2rem;
     width: 5rem;
@@ -126,6 +143,13 @@ const SearchInput = styled.input`
   height: 2.5rem;
   font-size: 1.5rem;
   box-shadow: 4px 2px 2px grey;
+  @media screen and (max-width: 860px) {
+    width: 25rem;
+    height: 2.5rem;
+  }
+  @media screen and (max-width: 690px) {
+    width: 20rem;
+  }
   @media screen and (max-width: 500px) {
     height: 2rem;
     width: 15rem;
@@ -166,40 +190,46 @@ const PlanCalendar = () => {
   // useEffects
   useEffect(() => {
     window.scrollTo(0, 0);
-    reviewLoad();
+    // reviewLoad();
   }, []);
 
   return (
-    <div align="center">
+    <>
       <Header />
 
-      <PlanPageWrapper width="90vw">
-        <PageHeaderBlock height="calc(20vh)" bg="yellow">
-          <Title>공유 일정 확인</Title>
-        </PageHeaderBlock>
-      </PlanPageWrapper>
-      <button onClick={TestPlan}>테스트용버튼</button>
-      <button onClick={modalClose}>모달열기</button>
-      {modalOpen && <ReviewDetail modalClose={modalClose} title="석촌 호수 공원" address="서울시 강남대로 123" category="음식점 - 일식" target="20대 여성이 주로 방문해요" score="4.7"></ReviewDetail>}
-      {userPlan ? (
-        <>
-          <SearchWrapper>
-            <SearchOption>
-              <option value="all" selected>
-                All
-              </option>
-              <option value="title">약속명</option>
-              <option value="date">약속 날짜</option>
-            </SearchOption>
-            <SearchInput type="search"></SearchInput>
-            <SearchIcon src={`${process.env.PUBLIC_URL}/assets/plancalendar/SearchIcon.png`}></SearchIcon>
-          </SearchWrapper>
-          <Slider></Slider>
-        </>
-      ) : (
-        <EmptyPlan></EmptyPlan>
-      )}
-    </div>
+      <Wrapper>
+        <div align="center">
+          <PlanPageWrapper width="90vw">
+            <PageHeaderBlock height="calc(20vh)" bg="yellow">
+              <Title>공유 일정 확인</Title>
+            </PageHeaderBlock>
+          </PlanPageWrapper>
+          <button onClick={TestPlan}>테스트용버튼</button>
+          <button onClick={modalClose}>모달열기</button>
+          {modalOpen && (
+            <ReviewDetail modalClose={modalClose} title="석촌 호수 공원" address="서울시 강남대로 123" category="음식점 - 일식" target="20대 여성이 주로 방문해요" score="4.7"></ReviewDetail>
+          )}
+          {userPlan ? (
+            <>
+              <SearchWrapper>
+                <SearchOption>
+                  <option value="all" selected>
+                    All
+                  </option>
+                  <option value="title">약속명</option>
+                  <option value="date">약속 날짜</option>
+                </SearchOption>
+                <SearchInput type="search"></SearchInput>
+                <SearchIcon src={`${process.env.PUBLIC_URL}/assets/plancalendar/SearchIcon.png`}></SearchIcon>
+              </SearchWrapper>
+              <Slider></Slider>
+            </>
+          ) : (
+            <EmptyPlan></EmptyPlan>
+          )}
+        </div>
+      </Wrapper>
+    </>
   );
 };
 
