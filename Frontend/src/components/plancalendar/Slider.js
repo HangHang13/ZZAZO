@@ -41,11 +41,7 @@ export default function Slider() {
   return (
     <LayOutWrapper>
       <ButtonWrapper>
-        <FontAwesomeIcon
-          onClick={PrevSlide}
-          icon={faCaretLeft}
-          size="8x"
-        ></FontAwesomeIcon>
+        <FontAwesomeIcon onClick={PrevSlide} icon={faCaretLeft} size="8x"></FontAwesomeIcon>
       </ButtonWrapper>
       <Container>
         <SliderContainer ref={slideRef}>
@@ -55,11 +51,7 @@ export default function Slider() {
         </SliderContainer>
       </Container>
       <ButtonWrapper>
-        <FontAwesomeIcon
-          onClick={NextSlide}
-          icon={faCaretRight}
-          size="8x"
-        ></FontAwesomeIcon>
+        <FontAwesomeIcon onClick={NextSlide} icon={faCaretRight} size="8x"></FontAwesomeIcon>
       </ButtonWrapper>
     </LayOutWrapper>
   );
@@ -85,6 +77,14 @@ const ButtonWrapper = styled.div`
   padding: 2rem 6rem;
   &:hover {
     transform: scale(1.1);
+  }
+  @media screen and (max-width: 720px) {
+    padding: 1rem 2rem;
+    transform: scale(0.8);
+  }
+  @media screen and (max-width: 620px) {
+    padding: 0;
+    transform: scale(0.5);
   }
 `;
 
