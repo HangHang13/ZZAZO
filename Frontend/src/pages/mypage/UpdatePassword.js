@@ -69,30 +69,31 @@ const AlertTag = styled.div`
   font-size: 0.8rem;
 `;
 const UpdatePassword = () => {
-  //유저 정보 받아오기
+  /**유저 정보 받아오기*/
   const user = useSelector((state) => state.user.value);
-  //비밀번호 변경 후 페이지 이동을 위한 useNavigate
+  /**비밀번호 변경 후 페이지 이동을 위한 useNavigate*/
   const navigate = useNavigate();
-  //비밀번호 상태관리
+  /**비밀번호 상태관리*/
   const [state, setState] = useState({
     newPassword: "",
     confirmPassword: "",
   });
-  //비밀번호 유효성 검증 관리
+  /**비밀번호 유효성 검증 관리*/
   const [valid, setValid] = useState({
     passwordNotDuplicate: false,
     passwordNotValid: false,
     passwordNotMatch: false,
   });
-  //비밀번호 입력창 선택관리
+  /**비밀번호 입력창 선택관리*/
   const passwordRef = useRef([]);
-  //입력창 값을 통해 비밀번호 상태갱신하는 함수
+  /**입력창 값을 통해 비밀번호 상태갱신하는 함수*/
   const onHandleInput = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
 
-  //새 비밀번호 유효성 체크
+  /**새 비밀번호 유효성 체크*/
   const userPwRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,12}$/i;
+  /**새 비밀번호 유효성 체크 함수 */
   const userPwCheck = (e) => {
     onHandleInput(e);
 
@@ -102,7 +103,7 @@ const UpdatePassword = () => {
       setValid({ ...valid, passwordNotValid: false });
     }
   };
-  //새 비밀번호 일치 체크
+  /**새 비밀번호 일치 체크 함수*/
   const userPwMatch = (e) => {
     onHandleInput(e);
     if (state.newPassword !== state.confirmPassword) {
@@ -111,7 +112,7 @@ const UpdatePassword = () => {
       setValid({ ...valid, passwordNotMatch: false });
     }
   };
-  //새 비밀번호 업데이트 함수
+  /**새 비밀번호 업데이트 함수*/
   const submitState = async () => {
     if (!confirm("비밀번호를 변경하시겠습니까?")) {
       return;
