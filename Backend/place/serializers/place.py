@@ -3,11 +3,13 @@ from ..models import Place
 from review.models import Review
 
 class PlaceTestSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = Place
         fields = ('_id', 'name', 'address')
 
 class PlaceTest2Serializer(serializers.ModelSerializer):
+    
     class Meta:
         model = Place
         fields = '__all__'
@@ -19,6 +21,7 @@ class PlaceListSerializer(serializers.ModelSerializer):
         fields = ('_id', 'name', 'address', "place_type", "latitude", 'longitude')
 
 class PlaceRecommendListSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = Place
         fields = ('_id', 'name', 'address', 'place_type')

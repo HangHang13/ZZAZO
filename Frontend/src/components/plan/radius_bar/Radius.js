@@ -1,26 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./Bar.css";
-import { useDispatch } from "react-redux";
-import { storeSetUserProfile } from "../../../store/reducers/user";
-import { storeSetRadius } from "../../../store/reducers/radius";
 
-const Radius = ({}) => {
+const Radius = ({ radius, setRadius }) => {
 	useEffect(() => {
 		dragElement(document.getElementById("circle"));
 	});
 
-	const [radius, setRadius] = useState(100);
-	const dispatch = useDispatch();
-
-	useEffect(() => {
-		dispatch(storeSetRadius(parseInt(radius)));
-	}, [radius]);
+	let v = radius; // 라디우스 값
 
 	function dragElement(elmnt) {
 		let clientX_gab = 0,
 			clientX = 0;
 		elmnt.onmousedown = dragMouseDown;
 		elmnt.addEventListener("touchstart", dragMouseDown);
+
 		function dragMouseDown(e) {
 			e = e || window.event;
 			e.preventDefault();
@@ -53,11 +46,15 @@ const Radius = ({}) => {
 				leftVal = elmnt.offsetLeft + clientX_gab;
 			}
 
-			let v = Math.round((leftVal / parentElmnt.clientWidth) * 1000) + 100;
+			v = Math.round((leftVal / parentElmnt.clientWidth) * 900) + 100;
 			elmnt.querySelector("span").innerText = v + "m";
-			setRadius(v);
 
-			elmnt.style.left = leftVal + "px"; // 이 부분 수정해야 모바일에서도 매끄러움
+			let isMobile = /Mobi/i.test(window.navigator.userAgent);
+			if (isMobile) {
+				elmnt.style.left = leftVal + "px";
+			} else {
+				elmnt.style.left = leftVal + "px"; // 이 부분 수정해야 모바일에서도 매끄러움
+			}
 		}
 
 		function closeDragElement() {
@@ -66,6 +63,7 @@ const Radius = ({}) => {
 			document.removeEventListener("touchend", closeDragElement);
 			document.onmousemove = null;
 			document.removeEventListener("touchmove", elementDrag);
+			setRadius(v);
 		}
 	}
 

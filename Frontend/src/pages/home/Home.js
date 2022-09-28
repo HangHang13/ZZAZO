@@ -8,23 +8,85 @@ import BackgroundCloud from "../../components/common/home/banner/BackgroundCloud
 import { useDispatch } from "react-redux";
 import { storeLogout } from "../../store/reducers/user";
 import CardDetail from "../../components/locationdetail/CardDetail.js";
+import { getRec } from "../../api/HomeApi";
+import { ImgSearch } from "../../api/KaKaoImgSearch";
+
+const { kakao } = window;
 
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  //약속카드 상세 모달
-  const [modalOpen, setModalOpen] = useState(false);
-  const modalClose = () => {
-    setModalOpen(!modalOpen);
-  };
-
   useEffect(() => {
     if (!sessionStorage.getItem("ACCESS_TOKEN")) {
       dispatch(storeLogout());
     }
+    RecLoad();
   }, []);
 
+  //약속카드 상세 모달
+  const [modalOpen, setModalOpen] = useState(false);
+  //메인페이지 추천 장소
+  const [recList, setRecList] = useState(false);
+  //모달 열고 닫기
+  const modalClose = () => {
+    setModalOpen(!modalOpen);
+  };
+
+  //메인페이지 추천장소 api 호출
+  const RecLoad = async () => {
+    const RecData = await getRec();
+    setRecList(RecData);
+  };
+
+  //장소명에 따른 좌표얻기
+  function getCoords(address) {
+    var geocoder = new kakao.maps.services.Geocoder();
+    geocoder.addressSearch(address, function (result, status) {
+      if (status === kakao.maps.services.Status.OK) {
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+        console.log(coords);
+      }
+    });
+
+    // return coords;
+  }
+
+  //카테고리에 따른 이미지 다르게 보여주기
+  function CategoryImg(categorys) {
+    switch (categorys) {
+      case "한식":
+        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/korea.png`;
+      case "한정식":
+        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/koreapremium.png`;
+      case "커피전문점":
+        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/coffee.png`;
+      case "펜션":
+        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/pension.png`;
+      case "국밥":
+        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/kukbab.png`;
+      case "닭요리":
+        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/chickenfood.png`;
+      case "육류,고기":
+        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/meat.png`;
+      case "치킨":
+        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/chicken.png`;
+      default:
+        return `${process.env.PUBLIC_URL}/assets/card/gazi.png`;
+    }
+  }
+
+  //장소 이미지 검색 kakao api 호출
+  const ImgSearchHttpHandler = async (query) => {
+    const params = {
+      query: query,
+      sort: "accuracy",
+      page: 1,
+      size: 1,
+    };
+    const { data } = await ImgSearch(params);
+    console.log(data.documents[0].image_url);
+    return data.documents[0].image_url;
+  };
   return (
     <>
       <Header></Header>
@@ -37,7 +99,7 @@ const Home = () => {
               <BoldText>일정은</BoldText> &nbsp; 내가 짜조!
             </HomeBannerText>
             <BtnWrapper>
-              <PlanBtn>약속잡기</PlanBtn>
+              <PlanBtn onClick={() => navigate("/plan")}>약속잡기</PlanBtn>
             </BtnWrapper>
           </HomeBannerArea>
           <BannerImg src="../assets/main/play.png"></BannerImg>
@@ -80,22 +142,29 @@ const Home = () => {
         <RecTitle>이런 장소는 어때요?</RecTitle>
         <RecArea>
           <CardWrapper>
-            <RecCard src="../assets/main/location/location1.jpg" text="을지로" address="서울 특별시 중구" target="20대 여성이 주로 방문해요"></RecCard>
-            <RecCard src="../assets/main/location/location2.jpg" text="여의도 한강공원" address="서울 특별시 중구" target="20대 여성이 주로 방문해요"></RecCard>
-            <RecCard src="../assets/main/location/location3.jpg" text="남산 타워" address="서울 특별시 중구" target="20대 여성이 주로 방문해요"></RecCard>
-            <RecCard src="../assets/main/location/location4.jpg" text="한밭 수목원" address="서울 특별시 중구" target="20대 여성이 주로 방문해요"></RecCard>
-          </CardWrapper>
-          <CardWrapper>
-            <RecCard src="../assets/main/location/location5.jpg" text="한빛탑" address="서울 특별시 중구" target="20대 여성이 주로 방문해요"></RecCard>
-            <RecCard src="../assets/main/location/location6.jpg" text="덕수궁" address="서울 특별시 중구" target="20대 여성이 주로 방문해요"></RecCard>
-            <RecCard src="../assets/main/location/location7.jpg" text="홍대" address="서울 특별시 중구" target="20대 여성이 주로 방문해요"></RecCard>
-            <RecCard src="../assets/main/location/location8.jpg" text="단풍" address="서울 특별시 중구" target="20대 여성이 주로 방문해요"></RecCard>
+            {recList.data ? (
+              <>
+                {recList.data.Place.map((item, idx) => (
+                  <RecCard
+                    // onClick={getCoords(item.address)}
+                    key={idx}
+                    src={CategoryImg(item.place_type)}
+                    name={item.name}
+                    address={item.address}
+                    target="20대 여성이 주로 방문해요"
+                    place_type={item.place_type}
+                  />
+                ))}
+              </>
+            ) : (
+              <></>
+            )}
           </CardWrapper>
         </RecArea>
 
         <BottomArea>
           <BtnWrapper>
-            <PlanBtn>약속잡기</PlanBtn>
+            <PlanBtn onClick={() => navigate("/plan")}>약속잡기</PlanBtn>
           </BtnWrapper>
         </BottomArea>
         {/* 상세보기 모달 띄우기 */}
@@ -152,7 +221,10 @@ const HomeWrapper = styled.div`
 
 const CardWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   @media screen and (max-width: 500px) {
+    width: 15rem;
     display: flex;
     flex-direction: column;
   }
