@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
+from django.db.models import Max
 from .models import Card
 from .serializers.plan import CardListSerializer, CardSerializer
 from place.models import Place
@@ -26,16 +26,28 @@ def list(request):
 
 @api_view(['POST'])
 def plan_create(request):
+    card_id = Card.objects.aggregate(cardId = Max('cardId'))
+    cid = card_id.get('cardId')
+    print(cid)
+    if cid == None:
+        cid = 1
+    else:
+        cid +=1
     for i in range(len(request.data)):
-        place = Place.objects.using('place').get(_id = request.data[i].get("place_id"))
-        serializer = CardSerializer(data=request.data[i])
+        # place = Place.objects.using('place').get(_id = request.data[i].get("place_id"))
+        requestData = request.data[i]
+        print(requestData)  
+        requestData['cardId'] = cid
+        serializer = CardSerializer(data=requestData)
         if serializer.is_valid(raise_exception=True):
-            serializer.save(user=request.user, place = place)
+            # serializer.save(user=request.user, place = place)
+            serializer.save(user=request.user)
             code = 200
             message = "약속 생성"
             res = {
                 "code": code,
                 "message": message,
+                "data" : cid
                 }
         else:
             code = 401
