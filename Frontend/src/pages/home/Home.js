@@ -10,7 +10,7 @@ import { storeLogout } from "../../store/reducers/user";
 import CardDetail from "../../components/locationdetail/CardDetail.js";
 import { getRec } from "../../api/HomeApi";
 import { ImgSearch } from "../../api/KaKaoImgSearch";
-
+import { getReview } from "../../api/ReviewAPI";
 const { kakao } = window;
 
 const Home = () => {
@@ -39,17 +39,17 @@ const Home = () => {
   };
 
   //장소명에 따른 좌표얻기
-  function getCoords(address) {
-    var geocoder = new kakao.maps.services.Geocoder();
-    geocoder.addressSearch(address, function (result, status) {
-      if (status === kakao.maps.services.Status.OK) {
-        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-        console.log(coords);
-      }
-    });
+  // function getCoords(address) {
+  //   var geocoder = new kakao.maps.services.Geocoder();
+  //   geocoder.addressSearch(address, function (result, status) {
+  //     if (status === kakao.maps.services.Status.OK) {
+  //       var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+  //       console.log(coords);
+  //     }
+  //   });
 
-    // return coords;
-  }
+  //   // return coords;
+  // }
 
   //카테고리에 따른 이미지 다르게 보여주기
   function CategoryImg(categorys) {
