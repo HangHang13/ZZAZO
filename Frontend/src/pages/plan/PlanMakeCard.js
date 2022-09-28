@@ -303,6 +303,7 @@ const PlanMakeCard = () => {
 	const [start, setStart] = useState(100); // 화면 슬라이딩 효과를 위한 state
 	const [end, setEnd] = useState(5); // 화면 슬라이딩 효과를 위한 state
 	const [modalToggle, setModalToggle] = useState(false); // 장소 상세보기 모달
+	const [modalPlaceId, setModalPlaceId] = useState(0); // 장소 상세보기 장소번호
 	const [mainLocation, setMainLocation] = useState({
 		lat: 0.0,
 		lng: 0.0,
@@ -428,6 +429,7 @@ const PlanMakeCard = () => {
 			document.body.style = `overflow: hidden`;
 		}
 
+		setModalPlaceId(placeId);
 		setModalToggle(!modalToggle);
 	};
 
@@ -495,7 +497,7 @@ const PlanMakeCard = () => {
 		<div align="center">
 			<Header />
 			{loading ? <Loading text="추천 장소들을 불러오고 있습니다..." /> : null}
-			{modalToggle ? <CardDetail modalClose={openModal} title="제목" address="주소 주소" category="카테고리" target="타겟" score={4.3} /> : null}
+			{modalToggle ? <CardDetail modalClose={openModal} placeId={modalPlaceId} /> : null}
 			<SliderWrapper leftStart={start} leftEnd={end}>
 				<PlanPageWrapper width="90vw">
 					<BeforeButton
