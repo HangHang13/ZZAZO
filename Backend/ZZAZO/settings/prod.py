@@ -21,9 +21,9 @@ def get_secret(setting, secrets=secrets):
         error_msg = "Set the {} environment variable".format(setting)
         raise ImproperlyConfigured(error_msg)
 
-
 mongo = get_secret('DATABASE_MONGO')
 mysql = get_secret('DATABASE_MYSQL')
+
 DATABASE_ROUTERS = ['ZZAZO.placeRouter.placeRouter']
 DATABASES = {
     # 디폴트에 서버에 올릴 MySQL 적어야 함 

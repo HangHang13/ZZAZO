@@ -38,5 +38,26 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
 
+  # mongodb:
+  #   image: mongo
+  #   container_name: mongodb
+  #   restart: always
+  #   ports:
+  #     - 27017:27017
+  #   volumes:
+  #     - ./mongodb:/data/db
+  #   environment:
+  #     - MONGO_INITDB_ROOT_USERNAME=root
+  #     - MONGO_INITDB_ROOT_PASSWORD=1234
+  #     - MONGO_INITDB_DATABASE=mydb
+
+  # mysql:
+  #   image: mysql:5.7
+  #   volumes:
+  #     - todo-mysql-data:/var/lib/mysql
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: <your-password>
+  #     MYSQL_DATABASE: todos
+
 volumes:
   react_build:
