@@ -6,10 +6,14 @@
 .pnp.js
 
 #api keys
+
 .env
 .env.development
 .env.local
 .env.production
+
+# .env
+
 
 # testing
 /coverage
