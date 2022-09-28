@@ -13,6 +13,7 @@
 		"@testing-library/user-event": "13.5.0",
 		"axios": "0.27.2",
 		"dotenv": "^16.0.2",
+		"env-cmd": "10.1.0",
 		"http-proxy-middleware": "^2.0.6",
 		"moment": "^2.29.4",
 		"npm": "^8.15.0",
@@ -34,7 +35,7 @@
 	},
 	"scripts": {
 		"start": "react-scripts start",
-		"build": "react-scripts build",
+		"build": "env-cmd -f .env.production react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"
 	},
