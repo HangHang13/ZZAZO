@@ -136,9 +136,7 @@ const PlanList = ({ pList, setPList, openModal, onHandleList, listType }) => {
 								{provided.placeholder}
 							</>
 						) : (
-							<>
-								<NotFoundMessage>주변에 추천 가능한 장소가 없습니다.</NotFoundMessage>
-							</>
+							<>{listType === ListTypes.RECOMMEND ? <NotFoundMessage>주변에 추천 가능한 장소가 없습니다.</NotFoundMessage> : null}</>
 						)}
 					</PlanListWrapper>
 				)}
