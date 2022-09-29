@@ -4,6 +4,7 @@ import { IoIosMenu } from "react-icons/io";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { storeLogin, storeLogout } from "../../store/reducers/user";
+import { logout } from "../../api/AuthAPI";
 
 const Common = styled.div`
   padding-left: 2rem;
@@ -45,7 +46,6 @@ const NavItem = styled.a`
   margin-right: 5rem;
   padding-right: 3rem;
   font-size: 1.1rem;
-
   text-decoration: none;
   font-weight: bold;
   color: black;
@@ -174,21 +174,30 @@ const Header = () => {
 
   //data.UserEmail
 
-  const onHandleLogOut = () => {
+  const onHandleLogOut = async () => {
     dispatch(storeLogout());
     navigate("/");
   };
 
   return (
     <Common>
-      <ImgWrapper onClick={() => navigate("/")} width="5rem" height="4rem" src="../assets/ZZAZOLOGO.png"></ImgWrapper>
+      <ImgWrapper
+        onClick={() => navigate("/")}
+        width="5rem"
+        height="4rem"
+        src="../assets/ZZAZOLOGO.png"
+      ></ImgWrapper>
       <NavbarItemList menu={menu}>
         {currUserisLogin ? (
           <>
             <NavItem onClick={() => navigate("/plan")}>약속잡기</NavItem>
-            <NavItem onClick={() => navigate("/plancalendar")}>공유일정확인</NavItem>
+            <NavItem onClick={() => navigate("/plancalendar")}>
+              공유일정확인
+            </NavItem>
             <NavItem onClick={() => navigate("/mypage")}>마이페이지</NavItem>
-            <NicknameItem>{nickname ? nickname : ""}님 환영합니다.</NicknameItem>
+            <NicknameItem>
+              {nickname ? nickname : ""}님 환영합니다.
+            </NicknameItem>
             <NavItem onClick={() => onHandleLogOut()}>로그아웃</NavItem>
           </>
         ) : (

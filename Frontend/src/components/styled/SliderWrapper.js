@@ -15,6 +15,7 @@ export const SliderWrapper = styled.div`
 	height: 100%;
 	display: flex;
 	overflow-y: hidden;
+	overflow-x: hidden;
 
 	animation-duration: 0.4s;
 	animation-timing-function: ease-out;
