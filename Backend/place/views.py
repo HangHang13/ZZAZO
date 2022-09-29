@@ -7,6 +7,7 @@ from rest_framework.response import Response
 
 from .serializers.place import PlaceDetailSerializer, PlaceListSerializer, PlaceTestSerializer
 from .serializers.place import PlaceTestSerializer
+from plan.serializers.plan import CardListSerializer
 from review.serializers.review import ReviewViewSerializer
 from review.models import Review
 from django.db.models import Avg
@@ -20,9 +21,11 @@ from haversine import haversine
 
 @api_view(['GET'])
 def home(request):
-    # place_list = Card.objects.all.order_by('-place_id')
+    place_list = Card.objects.raw(''' SELECT * FROM plan_card GROUP BY place_id ORDER BY count(place_id) desc
+    ''')[:10]
     # place_list = Place.objects.all()[:10]
-    serializer = PlaceListSerializer(place_list, many=True)
+    # serializer = PlaceListSerializer(place_list, many=True)
+    serializer = CardListSerializer(place_list, many=True)
     data = {'Place': serializer.data}
     code = 200
     message = "추천 목록"
