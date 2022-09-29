@@ -67,12 +67,12 @@ def place_recommend(request):
     # 카테고리가 일치하는 곳
     
     serializer = PlaceListSerializer(near_place_list, many=True)
-    for i in range(len(serializer.data)):
-        for key, val in serializer.data[i].items():
-            if key == "_id":
-                placeScore = Review.objects.filter(place=val).aggregate(placeScore = Avg('score'))
-                serializer.data[i].update(placeScore)
-                break
+    # for i in range(len(serializer.data)):
+    #     for key, val in serializer.data[i].items():
+    #         if key == "_id":
+    #             placeScore = Review.objects.filter(place=val).aggregate(placeScore = Avg('score'))
+    #             serializer.data[i].update(placeScore)
+    #             break
     data = {'Place': serializer.data}
     code = 200
     message = "추천 목록"
@@ -104,12 +104,12 @@ def place_list(request, place_type):
             )
     near_place_list = [info for info in place_list if haversine(position, (info.latitude, info.longitude)) <= 2 * (radius / 1000)]
     serializer = PlaceListSerializer(near_place_list, many=True)
-    for i in range(len(serializer.data)):
-        for key, val in serializer.data[i].items():
-            if key == "_id":
-                placeScore = Review.objects.filter(place=val).aggregate(placeScore = Avg('score'))
-                serializer.data[i].update(placeScore)
-                break
+    # for i in range(len(serializer.data)):
+    #     for key, val in serializer.data[i].items():
+    #         if key == "_id":
+    #             placeScore = Review.objects.filter(place=val).aggregate(placeScore = Avg('score'))
+    #             serializer.data[i].update(placeScore)
+    #             break
     data = {'Place': serializer.data}
     code = 200
     message = "장소 목록"
@@ -139,10 +139,8 @@ def place_detail(request, place_id):
     place = Place.objects.get(_id = place_id)
     print(place)
     review = Review.objects.filter(place = place_id)
-    placeScore =  Review.objects.filter(place=place_id).aggregate(placeScore = Avg('score'))
     placeSerializer = PlaceDetailSerializer(place)
     placeData = (dict(placeSerializer.data))
-    placeData.update(placeScore)
     reviewSerializer = ReviewViewSerializer(review, many=True)
     data = {
         'Place': placeData,
