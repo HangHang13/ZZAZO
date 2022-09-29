@@ -25,6 +25,8 @@ const Home = () => {
     RecLoad();
   }, []);
 
+  //약속 선택으로 넘길
+
   //약속카드 상세 모달
   const [modalOpen, setModalOpen] = useState(false);
   //메인페이지 추천 장소
@@ -71,7 +73,7 @@ const Home = () => {
       <Wrapper>
         <HomeWrapper>
           <HomeBanner>
-            <BackgroundCloud></BackgroundCloud>
+            {/* <BackgroundCloud></BackgroundCloud> */}
             <HomeBannerArea>
               <HomeBannerText>넌 놀기만 해! </HomeBannerText>
               <HomeBannerText>
@@ -145,7 +147,24 @@ const Home = () => {
                 <>
                   {recList.data.Place.map((item, idx) => (
                     <RecCard
-                      // onClick={(item.name, item.address, item.longitude, item.latitude, item.place_type) => navigate("/plan")}
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                      }}
+                      onClick={() =>
+                        navigate("/planmakecard", {
+                          state: {
+                            content: {
+                              addressname: item.address,
+                              placename: item.name,
+                              roadname: item.address,
+                            },
+                            position: {
+                              lat: item.latitude,
+                              lng: item.longitude,
+                            },
+                          },
+                        })
+                      }
                       key={idx}
                       src={CategoryImg(item.place_type)}
                       name={item.name}
@@ -228,6 +247,7 @@ const HomeWrapper = styled.div`
 `;
 
 const CardWrapper = styled.div`
+  z-index: 2000;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -403,6 +423,7 @@ const RecTitle = styled.div`
 `;
 
 const RecArea = styled.div`
+  z-index: 2000;
   width: 100vw;
   margin-left: -21.5%;
   display: flex;
