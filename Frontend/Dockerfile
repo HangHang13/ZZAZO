@@ -26,5 +26,5 @@ COPY . .
 RUN npm install
 RUN npm run build
 # RUN mkdir ./build
-COPY ./build ./build
+# COPY ./build ./build
 # CMD ["nginx", "-g", "daemon off;"]
