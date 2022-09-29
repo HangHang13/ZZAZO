@@ -28,4 +28,4 @@ RUN npm run build
 # RUN mkdir ./build
 # COPY ./build ./build
 CMD ["nginx", "-g", "daemon off;"]
-RUN npm run start
+
