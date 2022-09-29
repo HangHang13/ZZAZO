@@ -90,7 +90,7 @@ def place_list(request, place_type):
                 # 1km 기준
                 Q(latitude__range  = (latitude - 0.01 * (radius / 1000), latitude + 0.01 * (radius / 1000))) &
                 Q(longitude__range = (longitude - 0.015 * (radius / 1000), longitude + 0.015 * (radius / 1000))) &
-                Q(place_type__contains=place_type)
+                Q(firstCategory=place_type)
             )
     place_list = (
                 Place
