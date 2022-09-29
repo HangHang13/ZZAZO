@@ -19,7 +19,7 @@ FROM node:16.16.0 as build-stage
 # EXPOSE 80
 # CMD ["nginx", "-g", "daemon off;"]
 # CMD ["npm", "run", "start"]
-
+EXPOSE 3000
 WORKDIR /Frontend
 COPY . .
 # COPY --from=build-stage . /usr/share/nginx/html
@@ -27,4 +27,5 @@ RUN npm install
 RUN npm run build
 # RUN mkdir ./build
 # COPY ./build ./build
-# CMD ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
+RUN npm run start
