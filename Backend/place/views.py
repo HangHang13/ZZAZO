@@ -20,7 +20,8 @@ from haversine import haversine
 
 @api_view(['GET'])
 def home(request):
-    place_list = Place.objects.all()[:10]
+    # place_list = Card.objects.all.order_by('-place_id')
+    # place_list = Place.objects.all()[:10]
     serializer = PlaceListSerializer(place_list, many=True)
     data = {'Place': serializer.data}
     code = 200
@@ -90,8 +91,9 @@ def place_list(request, place_type):
                 # 1km 기준
                 Q(latitude__range  = (latitude - 0.01 * (radius / 1000), latitude + 0.01 * (radius / 1000))) &
                 Q(longitude__range = (longitude - 0.015 * (radius / 1000), longitude + 0.015 * (radius / 1000))) &
-                Q(firstCategory=place_type)
+                Q(firstCategory__contains = place_type)
             )
+    print(condition)
     place_list = (
                 Place
                 .objects
