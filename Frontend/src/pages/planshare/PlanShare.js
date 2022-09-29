@@ -1,7 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Header from "../../components/layout/Header";
 
-import { PlanPageWrapper, Wrapper } from "../../components/styled/Wrapper";
+import {
+  ButtonWrapper,
+  PlanPageWrapper,
+  Wrapper,
+} from "../../components/styled/Wrapper";
 import styled, { keyframes } from "styled-components";
 import fontawesome from "@fortawesome/fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
@@ -12,6 +16,7 @@ import { useDispatch } from "react-redux";
 import MapContainer from "../../components/kakaomap/MapContainer";
 import PlanHeader from "../../components/plan/cards/PlanHeader";
 import PlanList from "../../components/plan/cards/PlanList";
+import { getPlan } from "../../api/PlanAPI";
 
 const PlanBlock = styled.div`
   display: flex;
@@ -25,6 +30,8 @@ const PlanBlock = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 100%;
+    margin: 1rem;
   }
 `;
 
@@ -84,6 +91,7 @@ const PlanMakeWrapper = styled.div`
   @media screen and (max-width: 500px) {
     width: 100%;
     margin-top: 1rem;
+    margin-bottom: -10rem;
   }
 `;
 
@@ -101,9 +109,10 @@ const MapWrapper = styled.div`
     height: calc(100% - 4rem);
   }
   @media screen and (max-width: 500px) {
+    justify-content: center;
     width: 100%;
-    height: 25vh;
-    margin-bottom: -15vh;
+    height: 300px;
+    margin-bottom: -25vh;
   }
 `;
 
@@ -142,7 +151,16 @@ SectionTitle.defaultProps = {
   width: "100%",
   bg: "#80e080",
 };
-
+const PlanListWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 40%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding-bottom: 6rem;
+`;
 const PlanCard = styled.div`
   display: flex;
   flex-direction: column;
@@ -158,17 +176,150 @@ const PlanCard = styled.div`
     margin-bottom: 0.5rem;
   }
 `;
+const PlaceCard = styled.div`
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  padding: 1rem;
+  width: 80%;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  background-color: ${({ bg }) => bg};
+  border-radius: 16px;
+  box-shadow: 4px 4px 16px 4px rgba(0, 0, 0, 0.25);
 
+  @media screen and (max-width: 1024px) and (min-width: 500px) {
+    width: 60%;
+  }
+`;
+const ShareButton = styled(ButtonWrapper)`
+  animation: motion 0.5s linear infinite alternate;
+  margin-top: 0px;
+  width: 240px;
+  background-color: #80e080;
+  border: 1px solid #80c0a0;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
+  color: white;
+  @keyframes motion {
+    0% {
+      margin-top: 0px;
+    }
+    100% {
+      margin-top: 0.2rem;
+    }
+  }
+  @media screen and (max-width: 1000px) {
+    width: 100vw;
+  }
+  @media screen and (max-width: 800px) {
+    width: 70vw;
+  }
+  @media screen and (max-width: 500px) {
+    width: 40vw;
+    @keyframes motion {
+      0% {
+        margin-top: 0px;
+      }
+      100% {
+        margin-top: 0px;
+      }
+    }
+  }
+`;
+const PlaceTitle = styled.p`
+  display: flex;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  margin-right: 10%;
+`;
+const PlaceCategory = styled.p`
+  display: flex;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  margin-right: 10%;
+`;
+const PlaceAddress = styled.p`
+  display: flex;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  margin-right: 10%;
+`;
+const PlanHeaderWrapper = styled.div`
+  display: flex;
+  flex-direction: ${({ flexDirection }) => flexDirection};
+  // align-items: center;
+  text-align: center;
+  width: 100%;
+  height: ${({ height }) => height};
+  background-color: #c0f0e0;
+  border-bottom: 3px solid black;
+  word-wrap: break-word;
+`;
+const PlanHeaderItem = styled.div`
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  width: 90%;
+  height: 32px;
+  justify-content: center;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+`;
+const PlanHeaderName = styled.p`
+  display: flex;
+  width: 30%;
+  height: 100%;
+  line-height: 100%;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-right: 5%;
+
+  @media screen and (max-width: 1000px) {
+    font-size: 0.9rem;
+  }
+
+  @media screen and (max-width: 500px) {
+    font-size: 1rem;
+  }
+`;
+PlanHeaderWrapper.defaultProps = {
+  height: "120px",
+  flexDirection: "column",
+};
+const PlanHeaderInput = styled.div`
+  display: flex;
+  width: calc(65% - 1rem);
+  height: 100%;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  line-height: 100%;
+  border: none;
+  background-color: white;
+  // justify-content: center;
+  align-items: center;
+`;
+const CalendarWrapper = styled.div`
+  z-index: 100;
+  position: absolute;
+  top: 0;
+`;
 const PlanShare = () => {
   const isShared = location.href.includes("?shared=true");
 
   const uselocation = useLocation();
   const dispatch = useDispatch();
-  console.log(uselocation);
+  // console.log(uselocation);
   const [cardData, setCardData] = useState();
 
   const sharedUrl = `${location.href}${isShared ? "" : "?shared=true"}`;
-  console.log(sharedUrl);
+  // console.log(sharedUrl);
 
   const returnHome = () => dispatch("/");
 
@@ -209,19 +360,26 @@ const PlanShare = () => {
   const getCardData = useCallback(async () => {
     const { pathname, state } = uselocation;
     const result = isShared ? pathname.split("/")[0] : state;
+    // console.log(result);
     if (!result) {
       dispatch("/");
       return;
     }
-    console.log(result);
-    // const data = await getCardResult(cardId);
-    setCardData(result);
+    // console.log(result);
+    const data = await getPlan(state.cardId);
+    // console.log(data);
+    // console.log(data.data.card);
+    setCardData(data.data.card);
   }, [isShared, uselocation]);
   useEffect(() => {
     // console.log(process.env.REACT_APP_KAKAOLINK_API_KEY);
     // Kakao.init(process.env.REACT_APP_KAKAOLINK_API_KEY);
     // console.log(Kakao.isInitialized());
     getCardData();
+    // console.log(cardData);
+    // console.log(
+    //   cardData ? cardData.filter((item) => !item.place_id)[0].latitude : 0
+    // );
     // console.log(cardData);
     // const result = cardData.filter((item) => item.isMain === 1);
     // console.log(result);
@@ -232,31 +390,34 @@ const PlanShare = () => {
       <Header display="none" />
       {/* <SliderWrapper leftStart={start} leftEnd={end}> */}
       <PlanPageWrapper width="90vw">
-        <PlanBlock height="calc(25vh - 3rem)">
+        <PlanBlock height="calc(15vh - 3rem)">
           <Title>약속 공유</Title>
         </PlanBlock>
-        <PlanBlock height="calc(25vh - 3rem)" justifyContent="center">
-          <button onClick={onKakaoClick}>
+        <PlanBlock height="calc(15vh - 3rem)" justifyContent="center">
+          <ShareButton onClick={onKakaoClick}>
+            카카오톡으로 공유하기
+          </ShareButton>
+          {/* <button onClick={onKakaoClick}>
             <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"></img>
-          </button>
+          </button> */}
         </PlanBlock>
         <PlanBlock
           justifyContent="center"
           width="100%"
-          height="calc(80vh - 1rem)"
+          height="calc(72vh - 1rem)"
         >
           <PlanMakeWrapper width="calc(60% - 1rem)" height="100%">
             <MapWrapper mapName="make" width="99%" height="100%">
               <MapContainer
                 lat={
                   cardData
-                    ? cardData.filter((item) => item.isMain === 1)[0].latitude
-                    : 0
+                    ? cardData.filter((item) => !item.place_id)[0].latitude
+                    : 34
                 }
                 lng={
                   cardData
-                    ? cardData.filter((item) => item.isMain === 1)[0].longitude
-                    : 0
+                    ? cardData.filter((item) => !item.place_id)[0].longitude
+                    : 127
                 }
                 mapLevel={5}
                 placeList={[]}
@@ -268,19 +429,51 @@ const PlanShare = () => {
           <PlanMakeWrapper width="calc(30% - 1rem)" height="100%">
             <SectionTitle width="100%">약 속 카 드</SectionTitle>
             <PlanCard mWidth="50vh">
-              <PlanHeader
-              // dateValue={planInfo.date}
-              // onHandleName={onHandleName}
-              // onHandleDate={onHandleDate}
-              // onHandleTime={onHandleTime}
-              />
-              {/* <PlanList
-                pList={planList}
-                setPList={setPlanList}
-                openModal={openModal}
-                onHandleList={onHandleList}
-                listType={ListTypes.PLAN}
-              /> */}
+              <PlanHeaderWrapper>
+                <PlanHeaderItem>
+                  <PlanHeaderName>약속이름</PlanHeaderName>
+                  <PlanHeaderInput>
+                    {cardData ? cardData[0].title : ""}
+                  </PlanHeaderInput>
+                </PlanHeaderItem>
+                <PlanHeaderItem>
+                  <PlanHeaderName>약속날짜</PlanHeaderName>
+                  <PlanHeaderInput>
+                    {cardData ? cardData[0].date : ""}
+                  </PlanHeaderInput>
+                </PlanHeaderItem>
+                <PlanHeaderItem>
+                  <PlanHeaderName>약속시간</PlanHeaderName>
+                  <PlanHeaderInput>
+                    {cardData ? cardData[0].appointed_time : ""}
+                  </PlanHeaderInput>
+                </PlanHeaderItem>
+              </PlanHeaderWrapper>
+              <PlanListWrapper>
+                {cardData ? (
+                  cardData.map((item, index) => (
+                    <PlaceCard
+                      key={index}
+                      bg={!item.place_id ? "#FF9BA9" : "#C0F0B0"}
+                    >
+                      <PlaceTitle>
+                        {item.name ? item.name : "사용자 지정 위치"}
+                      </PlaceTitle>
+                      {!item.isMain && (
+                        <PlaceCategory>{item.place_type}</PlaceCategory>
+                      )}
+                      <PlaceAddress>{item.address}</PlaceAddress>
+                      {/* {!item.isMain && (
+                            <PlaceInfoButton onClick={() => openModal(item._id)}>
+                              <FontAwesomeIcon icon={faCircleInfo} size="lg" />
+                            </PlaceInfoButton>
+                          )} */}
+                    </PlaceCard>
+                  ))
+                ) : (
+                  <></>
+                )}
+              </PlanListWrapper>
             </PlanCard>
           </PlanMakeWrapper>
         </PlanBlock>
