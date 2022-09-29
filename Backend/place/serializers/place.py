@@ -6,7 +6,7 @@ class PlaceTestSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Place
-        fields = ('_id', 'name', 'address')
+        fields = ('_id', 'name', 'address', 'placeScore')
 
 class PlaceTest2Serializer(serializers.ModelSerializer):
     
@@ -18,16 +18,16 @@ class PlaceListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Place
-        fields = ('_id', 'name', "firstCategory", "secondCategory", "place_type", 'address', "latitude", 'longitude')
+        fields = ('_id', 'name', "firstCategory", "secondCategory", "place_type", 'address', "latitude", 'longitude', 'placeScore')
 
 class PlaceRecommendListSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Place
-        fields = ('_id', 'name', "firstCategory", "secondCategory", 'place_type', 'address')
+        fields = ('_id', 'name', "firstCategory", "secondCategory", 'place_type', 'address', 'placeScore')
 
 class PlaceDetailSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Place
-        fields = ('_id', 'name', "firstCategory", "secondCategory", 'place_type', 'address')
+        fields = ('_id', 'name', "firstCategory", "secondCategory", 'place_type', 'address', 'placeScore')

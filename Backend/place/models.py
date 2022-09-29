@@ -9,11 +9,12 @@ class Place(models.Model):
     _id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
-    longitude = models.FloatField()
-    latitude = models.FloatField()
+    longitude = models.FloatField(null = True)
+    latitude = models.FloatField(null = True)
     place_type = models.CharField(max_length=100)
     firstCategory = models.CharField(max_length=30)
     secondCategory = models.CharField(max_length=30)
+    placeScore = models.FloatField(null = True)
 
     class Meta:
         app_label = 'place'
