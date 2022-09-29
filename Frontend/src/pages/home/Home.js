@@ -93,27 +93,47 @@ const Home = () => {
           <br />
           <IntroduceList>
             <Introduce>
-              <ImgWrapper width="7rem" height="7rem" src="../assets/introduce/introduce1.png"></ImgWrapper>
+              <ImgWrapper
+                width="7rem"
+                height="7rem"
+                src="../assets/introduce/introduce1.png"
+              ></ImgWrapper>
               <Text fontsize="0.7rem">약속 상대와 만나고</Text>
               <Text fontsize="0.7rem">싶은 위치를 선택하세요!</Text>
             </Introduce>
             <Introduce>
-              <ImgWrapper width="7rem" height="7rem" src="../assets/introduce/introduce2.png"></ImgWrapper>
+              <ImgWrapper
+                width="7rem"
+                height="7rem"
+                src="../assets/introduce/introduce2.png"
+              ></ImgWrapper>
               <Text fontsize="0.7rem"> 나와 취향이 비슷한 사람들이 </Text>
               <Text fontsize="0.7rem">방문한 장소를 추천받을 수 있어요!</Text>
             </Introduce>
             <Introduce>
-              <ImgWrapper width="7rem" height="7rem" src="../assets/introduce/introduce3.png"></ImgWrapper>
+              <ImgWrapper
+                width="7rem"
+                height="7rem"
+                src="../assets/introduce/introduce3.png"
+              ></ImgWrapper>
               <Text fontsize="0.7rem">내가 선호하는</Text>
               <Text fontsize="0.7rem">장소들을 추천 받을수 있어요!</Text>
             </Introduce>
             <Introduce>
-              <ImgWrapper width="7rem" height="7rem" src="../assets/introduce/introduce4.png"></ImgWrapper>
+              <ImgWrapper
+                width="7rem"
+                height="7rem"
+                src="../assets/introduce/introduce4.png"
+              ></ImgWrapper>
               <Text fontsize="0.7rem"> 추천 받은 장소들을 골라</Text>
               <Text fontsize="0.7rem"> 약속 일정을 만들어 보세요!</Text>
             </Introduce>
             <Introduce>
-              <ImgWrapper width="7rem" height="7rem" src="../assets/introduce/introduce5.png"></ImgWrapper>
+              <ImgWrapper
+                width="7rem"
+                height="7rem"
+                src="../assets/introduce/introduce5.png"
+              ></ImgWrapper>
               <Text fontsize="0.7rem">만든 일정을 친구에게</Text>
               <Text fontsize="0.7rem"> 공유할 수 있어요!</Text>
             </Introduce>
@@ -148,7 +168,16 @@ const Home = () => {
           </BottomArea>
           {/* 상세보기 모달 띄우기 */}
           <button onClick={modalClose}>모달열기</button>
-          {modalOpen && <CardDetail modalClose={modalClose} title="석촌 호수 공원" address="서울시 강남대로 123" category="음식점 - 일식" target="20대 여성이 주로 방문해요" score="4.7"></CardDetail>}
+          {modalOpen && (
+            <CardDetail
+              modalClose={modalClose}
+              title="석촌 호수 공원"
+              address="서울시 강남대로 123"
+              category="음식점 - 일식"
+              target="20대 여성이 주로 방문해요"
+              score="4.7"
+            ></CardDetail>
+          )}
         </HomeWrapper>
       </Wrapper>
     </>

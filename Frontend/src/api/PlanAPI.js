@@ -20,17 +20,27 @@ const getPlaceList = async (placeType, data) => {
 
 // 약속 카드 작성
 const savePlan = async (data) => {
+	console.log(data);
 	const result = await client
-		.post(`/place/plan`, data)
+		.post(`/plan/`, data)
 		.then((response) => response.data)
 		.catch((error) => error.response);
 	return result;
 };
 
 // 약속 카드 리스트 정보
-const getPlanList = async (data) => {
+const getPlanList = async () => {
 	const result = await client
 		.get(`/plan/list`)
+		.then((response) => response.data)
+		.catch((error) => error.response);
+	return result;
+};
+
+// 약속 카드 상세 정보
+const getPlan = async (cardId) => {
+	const result = await client
+		.get(`/plan/list/${cardId}`)
 		.then((response) => response.data)
 		.catch((error) => error.response);
 	return result;
@@ -95,6 +105,7 @@ export {
 	getPlaceList,
 	savePlan,
 	getPlanList,
+	getPlan,
 	updatePlan,
 	deletePlan,
 	getPlaceInfo,

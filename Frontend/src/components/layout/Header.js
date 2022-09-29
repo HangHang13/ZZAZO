@@ -4,6 +4,7 @@ import { IoIosMenu } from "react-icons/io";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { storeLogin, storeLogout } from "../../store/reducers/user";
+import { logout } from "../../api/AuthAPI";
 
 const Common = styled.div`
   padding-left: 2rem;
@@ -49,87 +50,9 @@ const NavItem = styled.a`
   text-decoration: none;
   font-weight: bold;
   color: black;
-  @media screen and (max-width: 1150px) {
-    margin-right: 3rem;
-  }
-  @media screen and (max-width: 1050px) {
-    margin-right: 2rem;
-    padding-right: 2rem;
-  }
-  @media screen and (max-width: 900px) {
-    margin-right: 2rem;
-    padding-right: 1rem;
-  }
-  @media screen and (max-width: 750px) {
-    margin-right: 1.5rem;
-    padding-right: 1.5rem;
-    font-size: 0.8rem;
-  }
-  @media screen and (max-width: 630px) {
-    margin-right: 1.5rem;
-    padding-right: 1rem;
-    font-size: 0.8rem;
-  }
-  @media screen and (max-width: 595px) {
-    margin-right: 2rem;
-    padding-right: 1rem;
-    font-size: 0.8rem;
-    font-size: 0.5rem;
-  }
-  @media screen and (max-width: 540px) {
-    margin-right: 1rem;
-    padding-right: 1rem;
-    font-size: 0.8rem;
-    font-size: 0.5rem;
-  }
-
   @media screen and (max-width: 500px) {
-    margin-right: 5rem;
-    font-size: 1.1rem;
-    text-align: right;
-    margin-bottom: 0.8rem;
-    padding-right: 4rem;
-    padding-left: 12rem;
-    width: 6rem;
-  }
-`;
-
-const NicknameItem = styled.a`
-  &:hover {
-    transform: scale(1.2);
-  }
-  text-shadow: 2px 1px 1px #b7e769;
-  margin-right: 5rem;
-  padding-right: 3rem;
-  font-size: 1.1rem;
-
-  text-decoration: none;
-  font-weight: bold;
-  color: black;
-  @media screen and (max-width: 1150px) {
-    margin-right: 3rem;
-  }
-  @media screen and (max-width: 1050px) {
-    margin-right: 2rem;
-    padding-right: 2rem;
-  }
-  @media screen and (max-width: 900px) {
-    margin-right: 1rem;
-    padding-right: 1rem;
-  }
-  @media screen and (max-width: 750px) {
-    margin-right: 1.5rem;
-    padding-right: 1rem;
-    font-size: 0.8rem;
-  }
-  @media screen and (max-width: 595px) {
-    margin-right: 0.5rem;
-    padding-right: 1rem;
-    font-size: 0.5rem;
-  }
-
-  @media screen and (max-width: 500px) {
-    display: none;
+    margin: 0.3rem;
+    padding-left: 10rem;
   }
 `;
 
@@ -181,14 +104,21 @@ const Header = () => {
 
   return (
     <Common>
-      <ImgWrapper onClick={() => navigate("/")} width="5rem" height="4rem" src="../assets/ZZAZOLOGO.png"></ImgWrapper>
+      <ImgWrapper
+        onClick={() => navigate("/")}
+        width="5rem"
+        height="4rem"
+        src="../assets/ZZAZOLOGO.png"
+      ></ImgWrapper>
       <NavbarItemList menu={menu}>
         {currUserisLogin ? (
           <>
             <NavItem onClick={() => navigate("/plan")}>약속잡기</NavItem>
-            <NavItem onClick={() => navigate("/plancalendar")}>공유일정확인</NavItem>
+            <NavItem onClick={() => navigate("/plancalendar")}>
+              공유일정확인
+            </NavItem>
             <NavItem onClick={() => navigate("/mypage")}>마이페이지</NavItem>
-            <NicknameItem>{nickname ? nickname : ""}님 환영합니다.</NicknameItem>
+            <NavItem>{nickname ? nickname : ""}님 환영합니다.</NavItem>
             <NavItem onClick={() => onHandleLogOut()}>로그아웃</NavItem>
           </>
         ) : (
