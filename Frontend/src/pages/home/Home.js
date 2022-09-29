@@ -102,7 +102,7 @@ const Home = () => {
               <PlanBtn onClick={() => navigate("/plan")}>약속잡기</PlanBtn>
             </BtnWrapper>
           </HomeBannerArea>
-          <BannerImg src="../assets/main/play.png"></BannerImg>
+          <BannerImg src={`${process.env.PUBLIC_URL}/assets/main/play.png`} />
         </HomeBanner>
 
         <br />
