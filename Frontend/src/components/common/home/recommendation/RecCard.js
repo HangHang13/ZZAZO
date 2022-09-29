@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Card = styled.div`
+  z-index: 2000;
   &:hover {
     transform: scale(1.1);
     transition: all 0.15s ease-in;
@@ -64,15 +65,24 @@ const RecCard = ({ src, name, address, place_type, target }) => {
       <CardHeader>{name}</CardHeader>
       <CardBody>
         <CardPlaceType>
-          <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/sushi.png`} alt="location"></InfoIcon>
+          <InfoIcon
+            src={`${process.env.PUBLIC_URL}/assets/card/sushi.png`}
+            alt="location"
+          ></InfoIcon>
           {place_type}
         </CardPlaceType>
         <CardAddress>
-          <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/location.png`} alt="location"></InfoIcon>
+          <InfoIcon
+            src={`${process.env.PUBLIC_URL}/assets/card/location.png`}
+            alt="location"
+          ></InfoIcon>
           {address}
         </CardAddress>
         <CardTarget>
-          <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/women.png`} alt="location"></InfoIcon>
+          <InfoIcon
+            src={`${process.env.PUBLIC_URL}/assets/card/women.png`}
+            alt="location"
+          ></InfoIcon>
           {target}
         </CardTarget>
       </CardBody>
