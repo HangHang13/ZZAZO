@@ -8,35 +8,23 @@ from .models import Card
 from .serializers.plan import CardListSerializer, CardSerializer
 from place.models import Place
 
+def success_res(code, message, data=[]):
+    res = {"code": code, "message": message, "data" : data}
+    return res
+
 # Create your views here.
 @api_view(['GET'])
 def list(request):
-    # card_list = Card.objects.filter(user = request.user)
-    card_list = get_list_or_404(Card)
+    card_list = Card.objects.filter(user = request.user)
     serializer = CardListSerializer(card_list, many=True)
-    data = {'cards': serializer.data}
-    code = 200
-    message = "공유 일정 리스트"
-    res = {
-        "code": code,
-        "message": message,
-        "data": data
-    }
+    res = success_res(200, "공유 일정 리스트", {'cards': serializer.data})
     return Response(res)
 
 @api_view(['GET'])
 def listCardId(request, cardId):
     card = Card.objects.filter(cardId = cardId)
-    print(card)
     serializer = CardListSerializer(card, many=True)
-    data = {'card' : serializer.data}
-    code = 200
-    message = "해당 공유 일정 리스트"
-    res = {
-        "code": code,
-        "message": message,
-        "data": data
-    }
+    res = success_res(200, "해당 공유 일정 리스트", {'card' : serializer.data})
     return Response(res) 
 
 
@@ -58,20 +46,11 @@ def plan_create(request):
         if serializer.is_valid(raise_exception=True):
             # serializer.save(user=request.user, place = place)
             serializer.save(user=request.user)
-            code = 200
-            message = "약속 생성"
-            res = {
-                "code": code,
-                "message": message,
-                "data" : { 'cardId' : cid}
-                }
+            res = success_res(200, "약속 생성", {'cardId' : cid})
+     
         else:
-            code = 401
-            message = "약속 생성 실패"
-            res = {
-                "code": code,
-                "message": message,
-                }
+            res = success_res(401, "약속 생성 실패")
+            
     return Response(res) 
 
 @api_view(['GET', 'PUT', 'DELETE'])
@@ -80,14 +59,7 @@ def plan_detail_put_or_delete(request, cardId):
     def plan_detail():
         cards = Card.objects.filter(cardId = cardId)
         serializer = CardSerializer(instance = cards, many = True)
-        data = {'cards': serializer.data}
-        code = 200
-        message = "약속 조회"
-        res = {
-            "code": code,
-            "message": message,
-            "data": data
-            }
+        res = success_res(200, "약속 조회", {'cards': serializer.data})
         return Response(res)
     
     def plan_put():
