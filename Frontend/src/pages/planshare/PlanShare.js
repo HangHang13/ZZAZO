@@ -4,18 +4,11 @@ import Header from "../../components/layout/Header";
 import {
   ButtonWrapper,
   PlanPageWrapper,
-  Wrapper,
 } from "../../components/styled/Wrapper";
 import styled, { keyframes } from "styled-components";
-import fontawesome from "@fortawesome/fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import Landing from "../../components/plan/Landing";
-import { SliderWrapper } from "../../components/styled/SliderWrapper";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import MapContainer from "../../components/kakaomap/MapContainer";
-import PlanHeader from "../../components/plan/cards/PlanHeader";
-import PlanList from "../../components/plan/cards/PlanList";
 import { getPlan } from "../../api/PlanAPI";
 
 const PlanBlock = styled.div`
@@ -305,11 +298,7 @@ const PlanHeaderInput = styled.div`
   // justify-content: center;
   align-items: center;
 `;
-const CalendarWrapper = styled.div`
-  z-index: 100;
-  position: absolute;
-  top: 0;
-`;
+
 const PlanShare = () => {
   const isShared = location.href.includes("?shared=true");
 
@@ -330,12 +319,14 @@ const PlanShare = () => {
     // // Kakao.Link.sendCustom({
     // //   templateId: 83518, // 내가 만든 템플릿 아이디를 넣어주면 된다
     // // });
+    const image = `https://ifh.cc/g/AdX7fO.png`;
+    console.log(image);
     Kakao.Link.sendDefault({
       objectType: "feed",
       content: {
-        title: "ZZAZO 일정 공유" + title,
+        title: "ZZAZO 일정 공유 \n약속이름 : " + title,
         description: "일정 공유 확인하세요.",
-        imageUrl: `${process.env.PUBLIC_URL}/assets/ZZAZOLOGO.png`,
+        imageUrl: image,
         link: {
           mobileWebUrl: shareUrl,
           webUrl: shareUrl,
