@@ -73,7 +73,7 @@ function App() {
             element={<PrivateRoute component={<PlanMakeCard />} />}
           />
           <Route path="/plancalendar" element={<PlanCalendar />} />
-          <Route path="/planshare" element={<PlanShare />} />
+          <Route path="/planshare/:cardId" element={<PlanShare />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
