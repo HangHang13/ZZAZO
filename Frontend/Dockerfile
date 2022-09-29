@@ -23,7 +23,7 @@ FROM node:16.16.0 as build-stage
 WORKDIR /Frontend
 COPY . .
 # COPY --from=build-stage . /usr/share/nginx/html
-# RUN npm install
+RUN npm install
 RUN npm run build
 # RUN mkdir ./build
 COPY ./build ./build
