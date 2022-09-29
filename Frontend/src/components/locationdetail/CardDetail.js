@@ -34,6 +34,7 @@ const CardWrapper = styled.div`
   top: 50%;
   transform: translate(-50%, -50%);
   z-index: 100;
+  overflow: hidden;
   @media screen and (max-width: 870px) {
     width: 45rem;
     height: 28rem;
@@ -111,6 +112,7 @@ const CardInfoWrapper = styled.div`
   width: 24rem;
   flex-direction: column;
   background-color: white;
+  overflow: hidden;
   @media screen and (max-width: 870px) {
     width: 40rem;
   }
@@ -132,6 +134,7 @@ const CardInfo = styled.div`
   display: flex;
   height: 8rem;
   flex-direction: column;
+  overflow: hidden;
 `;
 const CardInfoItem = styled.div`
   margin: 0.4rem;
@@ -215,9 +218,10 @@ const CardDetail = ({ placeId, modalClose }) => {
     score: 0.0,
   });
 
+  const [reviews, setReviews] = useState([]);
+
   useEffect(async () => {
     const response = await getPlaceInfo(placeId);
-    console.log(response.data.Place);
     setState({
       ...state,
       title: response.data.Place.name,
@@ -227,6 +231,7 @@ const CardDetail = ({ placeId, modalClose }) => {
         : 0.0,
       category: response.data.Place.place_type,
     });
+    setReviews(response.data.Review);
   }, [placeId]);
 
   return (
@@ -276,7 +281,19 @@ const CardDetail = ({ placeId, modalClose }) => {
             <CardLine width="100%"></CardLine>
             <ReviewTitle>Review</ReviewTitle>
             <ReviewWrapper>
-              <ReviewCard
+              {reviews.length > 0 ? (
+                reviews.map((item, index) => (
+                  <ReviewCard
+                    writer={item.reviewWriter}
+                    writeday={item.reviewRegist}
+                    score={parseFloat(item.reviewScore)}
+                    content={item.reviewContent}
+                  ></ReviewCard>
+                ))
+              ) : (
+                <p align="center">작성된 리뷰가 없습니다.</p>
+              )}
+              {/* <ReviewCard
                 writer="김성수"
                 writeday="2022 - 09 - 20"
                 score="4.7"
@@ -287,7 +304,7 @@ const CardDetail = ({ placeId, modalClose }) => {
                 writeday="2022 - 09 - 20"
                 score="4.7"
                 content="내 인생에 있어 가지는 변수가 아닌 상수다.내 인생에 있어 가지는 변수가 아닌 상수다. 내 인생에 있어 가지는 변수가 아닌 상수다."
-              ></ReviewCard>
+              ></ReviewCard> */}
             </ReviewWrapper>
           </CardInfoWrapper>
           <CardImgWrapper>

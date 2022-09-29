@@ -351,6 +351,7 @@ const PlanMakeCard = () => {
   useEffect(async () => {
     // 화면 제일 위에서 시작
     window.scrollTo(0, 0);
+    console.log(location.state);
 
     setLoading(true);
     // 약속카드 리스트에 메인 장소 설정
@@ -552,7 +553,7 @@ const PlanMakeCard = () => {
     console.log(r.data);
 
     alert("약속 카드가 등록되었습니다!");
-    navigate("/planshare", { replace: true, state: form });
+    navigate("/planshare", { replace: true, state: response.data.cardId });
   };
 
   return (
