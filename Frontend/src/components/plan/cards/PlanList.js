@@ -110,6 +110,11 @@ const PlanList = ({ pList, setPList, openModal, onHandleList, listType }) => {
     setPList(items);
   };
 
+  useEffect(() => {
+    console.log("plist가 바뀌어습니다!");
+    console.log(pList);
+  });
+
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <Droppable droppableId="list">

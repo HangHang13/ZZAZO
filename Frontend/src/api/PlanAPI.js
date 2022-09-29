@@ -10,22 +10,31 @@ const getRecommendList = async (data) => {
 };
 
 // 장소 목록 불러오기
-const getPlaceList = async (placeType, data) => {
-  const result = await client
-    .post(`/place/list/${placeType}`, data)
-    .then((response) => response.data)
-    .catch((error) => error.response);
+const getPlaceList = async (placeTypes, data) => {
+  let result = [];
+  placeTypes.map(async (firstCategory) => {
+    let r = await client
+      .post(`/place/list/${firstCategory}`, data)
+      .then((response) => response.data.data.Place)
+      .then((places) =>
+        places.map((place) => {
+          result.push(place);
+        })
+      )
+      .catch((error) => error.response);
+  });
+
+  console.log("장소 목록 불러오기 결과입니다.");
+  console.log(result);
   return result;
 };
 
 // 약속 카드 작성
 const savePlan = async (data) => {
-  console.log(data);
   const result = await client
     .post(`/plan/`, data)
     .then((response) => response.data)
     .catch((error) => error.response);
-  console.log(result.data);
   return result;
 };
 

@@ -27,6 +27,7 @@ import MapContainer from "./../../components/kakaomap/MapContainer";
 import Loading from "./../../components/common/Loading";
 import CardDetail from "../../components/locationdetail/CardDetail";
 import ListHeader from "../../components/plan/cards/ListHeader";
+import { CATEGORIES } from "./../../constants/PlaceCategories";
 
 const BeforeButton = styled(ButtonWrapper)`
   position: absolute;
@@ -398,6 +399,7 @@ const PlanMakeCard = () => {
       setMapLevel(6);
     }
 
+    //setPlaceList([]);
     if (isRecommend) {
       const recommendListResponse = await getRecommendList({
         radius: radius,
@@ -406,12 +408,12 @@ const PlanMakeCard = () => {
       });
       setRecommendList(recommendListResponse.data.Place);
     } else {
-      const placeListResponse = await getPlaceList([], {
+      const placeListResponse = await getPlaceList(CATEGORIES, {
         radius: radius,
         longitude: parseFloat(location.state.position.lng),
         latitude: parseFloat(location.state.position.lat),
       });
-      setPlaceList(placeListResponse);
+      setPlaceList(...placeList, placeListResponse);
     }
 
     setLoading(false);
