@@ -197,7 +197,7 @@ ROOT_URLCONF = 'ZZAZO.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['build'],
+        'DIRS': [os.path.join(BASE_DIR, 'build')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -210,10 +210,9 @@ TEMPLATES = [
     },
 ]
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static_cdn"),
-    os.path.join(BASE_DIR, 'build','static')
+    os.path.join(BASE_DIR,'build','static'),
 ]
 WSGI_APPLICATION = 'ZZAZO.wsgi.application'
 

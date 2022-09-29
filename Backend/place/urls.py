@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 app_name = 'place'
 urlpatterns = [
     path('home', views.home),
@@ -9,3 +9,4 @@ urlpatterns = [
     path('place/list/<str:place_type>', views.place_list),
     path('place/<str:place_id>', views.place_detail, name='detail'),
 ]
+urlpatterns += staticfiles_urlpatterns()
