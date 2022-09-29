@@ -351,7 +351,6 @@ const PlanMakeCard = () => {
   useEffect(async () => {
     // 화면 제일 위에서 시작
     window.scrollTo(0, 0);
-    console.log(location.state);
 
     setLoading(true);
     // 약속카드 리스트에 메인 장소 설정
@@ -375,27 +374,19 @@ const PlanMakeCard = () => {
       longitude: parseFloat(location.state.position.lng),
       latitude: parseFloat(location.state.position.lat),
     });
-    const placeListResponse = await getPlaceList("한식", {
-      radius: radius,
-      longitude: parseFloat(location.state.position.lng),
-      latitude: parseFloat(location.state.position.lat),
-    });
     setRecommendList(recommendListResponse.data.Place);
-    setPlaceList(placeListResponse.data.Place);
+
     setLoading(false);
   }, []);
 
   // useEffect_추천/목록 토글 시
   useEffect(() => {
-    if (recommendListToggle) {
-      // '추천' 선택 시
-    } else {
-      // '목록' 선택 시
-    }
+    onHandleRadius(recommendListToggle);
   }, [recommendListToggle]);
 
   // 반경 기준으로 장소 리스트 요청 함수
-  const onHandleRadius = async () => {
+  const onHandleRadius = async (isRecommend) => {
+    console.log(isRecommend);
     setLoading(true);
     if (radius <= 200) {
       setMapLevel(3);
@@ -406,36 +397,61 @@ const PlanMakeCard = () => {
     } else {
       setMapLevel(6);
     }
-    const recommendListResponse = await getRecommendList({
-      radius: radius,
-      longitude: parseFloat(location.state.position.lng),
-      latitude: parseFloat(location.state.position.lat),
-    });
-    const placeListResponse = await getPlaceList("한식", {
-      radius: radius,
-      longitude: parseFloat(location.state.position.lng),
-      latitude: parseFloat(location.state.position.lat),
-    });
-    setRecommendList(recommendListResponse.data.Place);
-    setPlaceList(placeListResponse.data.Place);
+
+    if (isRecommend) {
+      const recommendListResponse = await getRecommendList({
+        radius: radius,
+        longitude: parseFloat(location.state.position.lng),
+        latitude: parseFloat(location.state.position.lat),
+      });
+      setRecommendList(recommendListResponse.data.Place);
+    } else {
+      const placeListResponse = await getPlaceList([], {
+        radius: radius,
+        longitude: parseFloat(location.state.position.lng),
+        latitude: parseFloat(location.state.position.lat),
+      });
+      setPlaceList(placeListResponse);
+    }
+
     setLoading(false);
   };
 
   // [추천리스트, 목록리스트] 버튼 누를 시 이벤트
   const onHandleChangeList = (toggle) => {
     setRecommendListToggle(toggle);
+    if (toggle) {
+      setPlaceList([]);
+    } else {
+      setRecommendList([]);
+    }
   };
 
   // [목록]에서 카테고리 클릭 시 이벤트
-  const onHandleCategoryClick = (categoryName) => {
+  const onHandleCategoryClick = async (categoryName) => {
+    setPlaceList([]);
+    setLoading(true);
     let arr = Array.from(selectedCategories);
+    let newarr = arr;
     if (arr.includes(categoryName)) {
-      arr = arr.filter((item) => item !== categoryName);
-      console.log(arr);
+      newarr = arr.filter((item) => item !== categoryName);
     } else {
-      arr.push(categoryName);
+      newarr.push(categoryName);
     }
-    setSelectedCategories(arr);
+    setSelectedCategories(newarr);
+
+    const placeListResponse = await getPlaceList(newarr, {
+      radius: radius,
+      longitude: parseFloat(location.state.position.lng),
+      latitude: parseFloat(location.state.position.lat),
+    });
+    setPlaceList(placeListResponse);
+    console.log("r list");
+    console.log(recommendList);
+    console.log("p list");
+    console.log(placeList);
+    setPlaceList(placeList);
+    setLoading(false);
   };
 
   // 장소 상세보기 모달창 띄우기
@@ -554,7 +570,7 @@ const PlanMakeCard = () => {
     console.log(r.data);
 
     alert("약속 카드가 등록되었습니다!");
-    navigate("/planshare", {
+    navigate(`/planshare/${response.data.cardId}`, {
       replace: true,
       state: {
         cardId: response.data.cardId,
@@ -614,7 +630,11 @@ const PlanMakeCard = () => {
               {/* 반경 */}
               <RadiusWrapper>
                 <Radius radius={radius} setRadius={setRadius} />
-                <RadiusButton onClick={onHandleRadius}>설정</RadiusButton>
+                <RadiusButton
+                  onClick={() => onHandleRadius(recommendListToggle)}
+                >
+                  설정
+                </RadiusButton>
               </RadiusWrapper>
               {/* 카카오맵 */}
               <MapWrapper mapName="make" width="99%" height="100%">
@@ -655,17 +675,27 @@ const PlanMakeCard = () => {
                 ) : (
                   <ListHeader onHandleCategoryClick={onHandleCategoryClick} />
                 )}
-                <PlanList
-                  pList={recommendList.slice(
-                    (page * ELEMENTS_PER_PAGE) % recommendList.length,
-                    ((page * ELEMENTS_PER_PAGE) % recommendList.length) +
-                      ELEMENTS_PER_PAGE
-                  )}
-                  setPList={setRecommendList}
-                  openModal={openModal}
-                  onHandleList={onHandleList}
-                  listType={ListTypes.RECOMMEND}
-                />
+                {recommendListToggle ? (
+                  <PlanList
+                    pList={recommendList.slice(
+                      (page * ELEMENTS_PER_PAGE) % recommendList.length,
+                      ((page * ELEMENTS_PER_PAGE) % recommendList.length) +
+                        ELEMENTS_PER_PAGE
+                    )}
+                    setPList={setRecommendList}
+                    openModal={openModal}
+                    onHandleList={onHandleList}
+                    listType={ListTypes.RECOMMEND}
+                  />
+                ) : (
+                  <PlanList
+                    pList={placeList}
+                    setPList={setPlaceList}
+                    openModal={openModal}
+                    onHandleList={onHandleList}
+                    listType={ListTypes.RECOMMEND}
+                  />
+                )}
               </PlanCard>
             </PlanMakeWrapper>
             {/* 약속 카드 */}
