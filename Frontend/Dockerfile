@@ -24,9 +24,7 @@ WORKDIR /Frontend
 COPY . .
 # COPY --from=build-stage . /usr/share/nginx/html
 # RUN npm install
-RUN npm install -g serve
 RUN npm run build
 # RUN mkdir ./build
 COPY ./build ./build
 # CMD ["nginx", "-g", "daemon off;"]
-ENTRYPOINT ["serve", "-s", "build"]
