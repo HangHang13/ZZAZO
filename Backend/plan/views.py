@@ -78,9 +78,8 @@ def plan_create(request):
 def plan_detail_put_or_delete(request, card_id):
     card = Card.objects.get(pk = card_id)
     def plan_detail():
-        if card is None:
-            return Response("invalid request", status =status.HTTP_400_BAD_REQUEST)
-        serializer = CardSerializer(instance = card)
+        cards = Card.objects.filter(cardId = card_id)
+        serializer = CardSerializer(instance = cards, many = True)
         data = {'cards': serializer.data}
         code = 200
         message = "약속 조회"

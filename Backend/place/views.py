@@ -51,6 +51,17 @@ def place_recommend(request):
             )
     near_place_list = [info for info in place_list
                                 if haversine(position, (info.latitude, info.longitude)) <= 2 * (radius / 1000)]
+    
+    # 리뷰 별점이 높은 곳
+    
+    # 리뷰가 많은 곳
+    
+    # 약속 장소로 등록한 곳이 많은 곳
+    
+    # 협업 필터링 점수가 높은 곳
+    
+    # 카테고리가 일치하는 곳
+    
     serializer = PlaceListSerializer(near_place_list, many=True)
     for i in range(len(serializer.data)):
         for key, val in serializer.data[i].items():
