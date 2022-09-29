@@ -222,7 +222,6 @@ const PlanBtn = styled.button`
 `;
 
 const HomeWrapper = styled.div`
-<<<<<<< HEAD
   content-direction: column;
   margin: 0 auto;
   width: 70vw;
@@ -253,37 +252,6 @@ const HomeBanner = styled.div`
     display: flex;
     flex-direction: column;
   }
-=======
-	content-direction: column;
-	padding-top: 5rem;
-	margin: 0 auto;
-	width: 70vw;
-`;
-
-const CardWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  @media screen and (max-width: 500px) {
-    width: 15rem;
-    display: flex;
-    flex-direction: column;
-  }
-`;
-
-const HomeBanner = styled.div`
-	width: 100vw;
-	margin-left: -21.5%;
-	display: flex;
-	justify-content: space-evenly;
-	background-color: rgba(192, 240, 176, 0.2);
-	align-items: center;
-	height: 35rem;
-	@media screen and (max-width: 500px) {
-		display: flex;
-		flex-direction: column;
-	}
->>>>>>> a0a3cbe4c7f59a0fa379dc8be4ff77eeb279d542
 `;
 
 const HomeBannerArea = styled.div`
