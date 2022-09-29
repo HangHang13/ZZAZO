@@ -6,7 +6,7 @@ import {
   PlanPageWrapper,
 } from "../../components/styled/Wrapper";
 import styled, { keyframes } from "styled-components";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import MapContainer from "../../components/kakaomap/MapContainer";
 import { getPlan } from "../../api/PlanAPI";
@@ -301,7 +301,8 @@ const PlanHeaderInput = styled.div`
 
 const PlanShare = () => {
   const isShared = location.href.includes("?shared=true");
-
+  const params = useParams();
+  console.log(params);
   const uselocation = useLocation();
   const dispatch = useDispatch();
   // console.log(uselocation);
@@ -313,7 +314,7 @@ const PlanShare = () => {
   const returnHome = () => dispatch("/");
 
   const SharePage = (title) => {
-    const shareUrl = `${location.href}?shared=true`;
+    const shareUrl = sharedUrl;
     // const DOMAIN = "http://localhost:3000";
     // const CUSTOMURL = "/login";
     // // Kakao.Link.sendCustom({
@@ -349,16 +350,18 @@ const PlanShare = () => {
     SharePage(`${card[0].title}`);
   };
   const getCardData = useCallback(async () => {
-    const { pathname, state } = uselocation;
-    const result = isShared ? pathname.split("/")[0] : state;
+    // const { pathname, state } = uselocation;
+    // console.log(pathname);
+    // const result = isShared ? pathname.split("/")[0] : state;
+    // const result = state ? state :
     // console.log(result);
-    if (!result) {
-      dispatch("/");
-      return;
-    }
+    // if (!result) {
+    //   // dispatch("/");
+    //   return;
+    // }
     // console.log(result);
-    const data = await getPlan(state.cardId);
-    // console.log(data);
+    const data = await getPlan(params.cardId);
+    console.log(data);
     // console.log(data.data.card);
     setCardData(data.data.card);
   }, [isShared, uselocation]);
