@@ -41,6 +41,7 @@ function App() {
     (() => {
       window.addEventListener("beforeunload", onHandleBrowserClose);
     })();
+    Kakao.init(process.env.REACT_APP_KAKAOLINK_API_KEY);
     return () => {
       window.removeEventListener("beforeunload", onHandleBrowserClose);
     };
