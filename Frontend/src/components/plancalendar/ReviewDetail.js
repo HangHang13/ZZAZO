@@ -1,8 +1,117 @@
-import React from "react";
+import { React, useRef, useState } from "react";
 import styled from "styled-components";
 import { BaseForm } from "../common/forms/Form";
 import ReviewCard from "../locationdetail/ReviewCard";
 import Rating from "./Rating";
+import { postReview } from "../../api/ReviewAPI";
+
+const CreateReview = async () => {
+  await postReview();
+};
+
+//title : 장소명
+//address : 주소
+//category : 장소 카테고리
+//target : 주요 이용 고객
+//score : 별점
+const ReviewDetail = ({
+  modalClose,
+  title,
+  address,
+  category,
+  target,
+  score,
+}) => {
+  const [review, setreview] = useState(false);
+  let searchTitle = title.replace(/ /g, "");
+  return (
+    <Background>
+      <CardWrapper>
+        <ExitBtnWrapper>
+          <ImgButton
+            src={`${process.env.PUBLIC_URL}/assets/card/exit.png`}
+            alt="exit"
+            onClick={() => modalClose(3)}
+          ></ImgButton>
+        </ExitBtnWrapper>
+        <TitleWrapper>
+          <CardTitle>{title}</CardTitle>
+          <a
+            href={`https://www.instagram.com/explore/tags/${searchTitle}/?hl=ko`}
+            target="_blank"
+          >
+            <ImgButton
+              src={`${process.env.PUBLIC_URL}/assets/card/insta.png`}
+              alt="insta"
+            ></ImgButton>
+          </a>
+        </TitleWrapper>
+
+        <CardLine width="80%"></CardLine>
+        <CardMainWrapper>
+          <CardInfoWrapper>
+            <CardInfo>
+              <CardInfoItem>
+                <InfoIcon
+                  src={`${process.env.PUBLIC_URL}/assets/card/location.png`}
+                  alt="location"
+                ></InfoIcon>
+                {address}
+              </CardInfoItem>
+              <CardInfoItem>
+                <InfoIcon
+                  src={`${process.env.PUBLIC_URL}/assets/card/sushi.png`}
+                  alt="location"
+                ></InfoIcon>
+                {category}
+              </CardInfoItem>
+              <CardInfoItem>
+                <InfoIcon
+                  src={`${process.env.PUBLIC_URL}/assets/card/women.png`}
+                  alt="location"
+                ></InfoIcon>
+                {target}
+              </CardInfoItem>
+              <CardInfoItem>
+                <InfoIcon
+                  src={`${process.env.PUBLIC_URL}/assets/card/star.png`}
+                  alt="location"
+                ></InfoIcon>
+                {score}
+              </CardInfoItem>
+            </CardInfo>
+          </CardInfoWrapper>
+          <CardImgWrapper>
+            <CardImg
+              src={`${process.env.PUBLIC_URL}/assets/card/gazi.png`}
+              alt="gazi"
+            ></CardImg>
+          </CardImgWrapper>
+        </CardMainWrapper>
+        <EmptyBorder></EmptyBorder>
+        <CardLine width="80%"></CardLine>
+
+        <StarWrapper>
+          <Rating></Rating>
+        </StarWrapper>
+
+        <ReviewTextArea
+          onMouseOut={(e) => {
+            console.log(e.currentTarget.value);
+            setreview(e.currentTarget.value);
+          }}
+        ></ReviewTextArea>
+
+        <ReviewWrapper>
+          <SubmitBtn
+            onClick={CreateReview(review)}
+            value="리뷰 등록"
+          ></SubmitBtn>
+        </ReviewWrapper>
+      </CardWrapper>
+    </Background>
+  );
+};
 
 const Background = styled.div`
   position: absolute;
@@ -275,68 +384,4 @@ const EmptyBorder = styled.div`
     height: 20rem;
   }
 `;
-
-//title : 장소명
-//address : 주소
-//category : 장소 카테고리
-//target : 주요 이용 고객
-//score : 별점
-const ReviewDetail = ({ modalClose, title, address, category, target, score }) => {
-  let searchTitle = title.replace(/ /g, "");
-  return (
-    <Background>
-      <CardWrapper>
-        <ExitBtnWrapper>
-          <ImgButton src={`${process.env.PUBLIC_URL}/assets/card/exit.png`} alt="exit" onClick={() => modalClose(3)}></ImgButton>
-        </ExitBtnWrapper>
-        <TitleWrapper>
-          <CardTitle>{title}</CardTitle>
-          <a href={`https://www.instagram.com/explore/tags/${searchTitle}/?hl=ko`} target="_blank">
-            <ImgButton src={`${process.env.PUBLIC_URL}/assets/card/insta.png`} alt="insta"></ImgButton>
-          </a>
-        </TitleWrapper>
-
-        <CardLine width="80%"></CardLine>
-        <CardMainWrapper>
-          <CardInfoWrapper>
-            <CardInfo>
-              <CardInfoItem>
-                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/location.png`} alt="location"></InfoIcon>
-                {address}
-              </CardInfoItem>
-              <CardInfoItem>
-                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/sushi.png`} alt="location"></InfoIcon>
-                {category}
-              </CardInfoItem>
-              <CardInfoItem>
-                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/women.png`} alt="location"></InfoIcon>
-                {target}
-              </CardInfoItem>
-              <CardInfoItem>
-                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/star.png`} alt="location"></InfoIcon>
-                {score}
-              </CardInfoItem>
-            </CardInfo>
-          </CardInfoWrapper>
-          <CardImgWrapper>
-            <CardImg src={`${process.env.PUBLIC_URL}/assets/card/gazi.png`} alt="gazi"></CardImg>
-          </CardImgWrapper>
-        </CardMainWrapper>
-        <EmptyBorder></EmptyBorder>
-        <CardLine width="80%"></CardLine>
-
-        <StarWrapper>
-          <Rating></Rating>
-        </StarWrapper>
-
-        <ReviewTextArea></ReviewTextArea>
-
-        <ReviewWrapper>
-          <SubmitBtn value="리뷰 등록"></SubmitBtn>
-        </ReviewWrapper>
-      </CardWrapper>
-    </Background>
-  );
-};
-
 export default ReviewDetail;

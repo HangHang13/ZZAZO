@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Header from "./../../components/layout/Header";
-import { BaseFlexWrapper, PlanPageWrapper } from "./../../components/styled/Wrapper";
+import {
+  BaseFlexWrapper,
+  PlanPageWrapper,
+} from "./../../components/styled/Wrapper";
 import styled from "styled-components";
 import Slider from "../../components/plancalendar/Slider";
 import EmptyPlan from "./../../components/plancalendar/EmptyPlan";
@@ -178,19 +181,20 @@ const PlanCalendar = () => {
     setuserPlan(!userPlan);
   };
 
-  //장소카드 상세보기 데이터
-  // const [reviewList, setReviewList] = useState(false);
+  // 장소카드 상세보기 데이터
+  const [reviewList, setReviewList] = useState(false);
 
-  // //장소카드 상세보기 클릭시 get api호출
-  // const reviewLoad = async () => {
-  //   const reviewData = await getReview(23);
-  //   setReviewList(reviewData);
-  //   console.log(reviewData);
-  // };
+  //장소카드 상세보기 클릭시 get api호출
+  const reviewLoad = async () => {
+    const reviewData = await getReview(23);
+    setReviewList(reviewData);
+    console.log(reviewData);
+  };
+
   // useEffects
   useEffect(() => {
     window.scrollTo(0, 0);
-    // reviewLoad();
+    reviewLoad();
   }, []);
 
   return (
@@ -207,7 +211,14 @@ const PlanCalendar = () => {
           <button onClick={TestPlan}>테스트용버튼</button>
           <button onClick={modalClose}>모달열기</button>
           {modalOpen && (
-            <ReviewDetail modalClose={modalClose} title="석촌 호수 공원" address="서울시 강남대로 123" category="음식점 - 일식" target="20대 여성이 주로 방문해요" score="4.7"></ReviewDetail>
+            <ReviewDetail
+              modalClose={modalClose}
+              title="석촌 호수 공원"
+              address="서울시 강남대로 123"
+              category="음식점 - 일식"
+              target="20대 여성이 주로 방문해요"
+              score="4.7"
+            ></ReviewDetail>
           )}
           {userPlan ? (
             <>
@@ -220,7 +231,9 @@ const PlanCalendar = () => {
                   <option value="date">약속 날짜</option>
                 </SearchOption>
                 <SearchInput type="search"></SearchInput>
-                <SearchIcon src={`${process.env.PUBLIC_URL}/assets/plancalendar/SearchIcon.png`}></SearchIcon>
+                <SearchIcon
+                  src={`${process.env.PUBLIC_URL}/assets/plancalendar/SearchIcon.png`}
+                ></SearchIcon>
               </SearchWrapper>
               <Slider></Slider>
             </>
