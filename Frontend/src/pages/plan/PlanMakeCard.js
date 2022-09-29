@@ -431,6 +431,7 @@ const PlanMakeCard = () => {
     let arr = Array.from(selectedCategories);
     if (arr.includes(categoryName)) {
       arr = arr.filter((item) => item !== categoryName);
+      console.log(arr);
     } else {
       arr.push(categoryName);
     }
@@ -553,7 +554,13 @@ const PlanMakeCard = () => {
     console.log(r.data);
 
     alert("약속 카드가 등록되었습니다!");
-    navigate("/planshare", { replace: true, state: response.data.cardId });
+    navigate("/planshare", {
+      replace: true,
+      state: {
+        cardId: response.data.cardId,
+        form: form,
+      },
+    });
   };
 
   return (
