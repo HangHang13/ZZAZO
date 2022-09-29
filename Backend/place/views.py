@@ -12,7 +12,7 @@ from review.models import Review
 from django.db.models import Avg
 from collections import OrderedDict
 
-
+from plan.models import Card
 from place.models import Place
 from drf_yasg.utils import swagger_auto_schema
 from django.db.models import Q
@@ -52,12 +52,12 @@ def place_recommend(request):
     near_place_list = [info for info in place_list
                                 if haversine(position, (info.latitude, info.longitude)) <= 2 * (radius / 1000)]
     
-    # 리뷰 별점이 높은 곳
-    
-    # 리뷰가 많은 곳
+    # 약속 장소로 등록한 사람이 많고 별점이 높은 곳
+    near_place_list.sort(key= lambda x: len(Card.objects.filter(place_id = x._id)))
     
     # 약속 장소로 등록한 곳이 많은 곳
-    
+    # many_visited = len(Card.objects.filter(place_id = x['_id']))
+    # print(many_visited)
     # 협업 필터링 점수가 높은 곳
     
     # 카테고리가 일치하는 곳

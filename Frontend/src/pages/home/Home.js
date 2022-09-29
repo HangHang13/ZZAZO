@@ -147,25 +147,9 @@ const Home = () => {
                 <>
                   {recList.data.Place.map((item, idx) => (
                     <RecCard
-                      onMouseDown={(e) => {
-                        e.preventDefault();
-                      }}
-                      onClick={() =>
-                        navigate("/planmakecard", {
-                          state: {
-                            content: {
-                              addressname: item.address,
-                              placename: item.name,
-                              roadname: item.address,
-                            },
-                            position: {
-                              lat: item.latitude,
-                              lng: item.longitude,
-                            },
-                          },
-                        })
-                      }
                       key={idx}
+                      lat={item.latitude}
+                      lng={item.longitude}
                       src={CategoryImg(item.place_type)}
                       name={item.name}
                       address={item.address}
