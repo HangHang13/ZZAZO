@@ -31,3 +31,5 @@ class PlaceDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Place
         fields = ('_id', 'name', "firstCategory", "secondCategory", 'place_type', 'address', 'placeScore')
+
+
