@@ -300,28 +300,27 @@ const PlanHeaderInput = styled.div`
 `;
 
 const PlanShare = () => {
+  /**공유여부판단 url */
   const isShared = location.href.includes("?shared=true");
+  /**url 파라미터(cardId) */
   const params = useParams();
-  console.log(params);
+  /**전달값 받는 용도의 useLocation */
   const uselocation = useLocation();
+  /**페이지 이동을 위한 디스패치 */
   const dispatch = useDispatch();
-  // console.log(uselocation);
+  /**약속카드 상태관리 */
   const [cardData, setCardData] = useState();
-
+  /**공유링크 url */
   const sharedUrl = `${location.href}${isShared ? "" : "?shared=true"}`;
-  // console.log(sharedUrl);
 
   const returnHome = () => dispatch("/");
-
+  /**페이지 공유링크 전송 함수 */
   const SharePage = (title) => {
+    /**공유링크 url */
     const shareUrl = sharedUrl;
-    // const DOMAIN = "http://localhost:3000";
-    // const CUSTOMURL = "/login";
-    // // Kakao.Link.sendCustom({
-    // //   templateId: 83518, // 내가 만든 템플릿 아이디를 넣어주면 된다
-    // // });
+    /**공유링크 썸네일 이미지 url */
     const image = `https://ifh.cc/g/AdX7fO.png`;
-    console.log(image);
+    /**커스텀 메시지 */
     Kakao.Link.sendDefault({
       objectType: "feed",
       content: {
@@ -344,11 +343,13 @@ const PlanShare = () => {
       ],
     });
   };
+  /**카카오 공유버튼 클릭 시 호출 */
   const onKakaoClick = () => {
+    /**제목 정하기 위한 약속카드 정보 */
     const card = cardData;
-    console.log(card);
     SharePage(`${card[0].title}`);
   };
+  /**약속카드 조회 api 호출 후 약속카드 상태갱신 */
   const getCardData = useCallback(async () => {
     // const { pathname, state } = uselocation;
     // console.log(pathname);
@@ -360,29 +361,19 @@ const PlanShare = () => {
     //   return;
     // }
     // console.log(result);
+    /**약속 카드 조회 호출 데이터 */
     const data = await getPlan(params.cardId);
-    console.log(data);
-    // console.log(data.data.card);
+    /**약속카드 상태 갱신 */
     setCardData(data.data.card);
   }, [isShared, uselocation]);
+
   useEffect(() => {
-    // console.log(process.env.REACT_APP_KAKAOLINK_API_KEY);
-    // Kakao.init(process.env.REACT_APP_KAKAOLINK_API_KEY);
-    // console.log(Kakao.isInitialized());
     getCardData();
-    // console.log(cardData);
-    // console.log(
-    //   cardData ? cardData.filter((item) => !item.place_id)[0].latitude : 0
-    // );
-    // console.log(cardData);
-    // const result = cardData.filter((item) => item.isMain === 1);
-    // console.log(result);
   }, [getCardData, isShared]);
 
   return (
     <div align="center">
       <Header display="none" />
-      {/* <SliderWrapper leftStart={start} leftEnd={end}> */}
       <PlanPageWrapper width="90vw">
         <PlanBlock height="calc(15vh - 3rem)">
           <Title>약속 공유</Title>
@@ -391,9 +382,6 @@ const PlanShare = () => {
           <ShareButton onClick={onKakaoClick}>
             카카오톡으로 공유하기
           </ShareButton>
-          {/* <button onClick={onKakaoClick}>
-            <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"></img>
-          </button> */}
         </PlanBlock>
         <PlanBlock
           justifyContent="center"
@@ -457,11 +445,6 @@ const PlanShare = () => {
                         <PlaceCategory>{item.place_type}</PlaceCategory>
                       )}
                       <PlaceAddress>{item.address}</PlaceAddress>
-                      {/* {!item.isMain && (
-                            <PlaceInfoButton onClick={() => openModal(item._id)}>
-                              <FontAwesomeIcon icon={faCircleInfo} size="lg" />
-                            </PlaceInfoButton>
-                          )} */}
                     </PlaceCard>
                   ))
                 ) : (
@@ -472,7 +455,6 @@ const PlanShare = () => {
           </PlanMakeWrapper>
         </PlanBlock>
       </PlanPageWrapper>
-      {/* </SliderWrapper> */}
     </div>
   );
 };
