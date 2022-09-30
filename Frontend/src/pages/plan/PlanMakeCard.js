@@ -629,7 +629,7 @@ const PlanMakeCard = () => {
 									추천
 								</SectionTitle>
 								<SectionTitle width="50%" bg={!recommendListToggle ? "#80E080" : "#D9D9D9"} onClick={() => onHandleChangeList(false)}>
-									목록
+									전체
 								</SectionTitle>
 							</BaseFlexWrapper>
 							<PlanCard mWidth="50vh">
