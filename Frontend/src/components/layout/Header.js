@@ -16,9 +16,12 @@ const Common = styled.div`
   width: 100vw;
   background-color: white;
   height: 6rem;
-  z-index: 10;
+  z-index: 2001;
   @media screen and (max-width: 500px) {
+    z-index: 2020;
     flex-direction: column;
+    height: auto;
+    transition: all 1s;
   }
 `;
 
@@ -26,12 +29,14 @@ const NavbarItemList = styled.div`
   display: flex;
   align-items: center;
   @media screen and (max-width: 500px) {
+    transition: all 1s;
     flex-direction: column;
     align-items: flex-end;
     margin-top: 6rem;
     display: ${({ menu }) => {
       return menu === false ? "none" : "flex";
     }};
+
     margin-left: ${({ currUserisLogin }) => {
       return currUserisLogin ? "7rem" : "12rem";
     }};
@@ -42,6 +47,7 @@ const NavItem = styled.a`
   &:hover {
     transform: scale(1.2);
   }
+  cursor: pointer;
   text-shadow: 2px 1px 1px #b7e769;
   margin-right: 5rem;
   padding-right: 3rem;
@@ -87,7 +93,7 @@ const NavItem = styled.a`
     margin-right: 5rem;
     font-size: 1.1rem;
     text-align: right;
-    margin-bottom: 0.8rem;
+    margin-bottom: 3rem;
     padding-right: 4rem;
     padding-left: 12rem;
     width: 6rem;
@@ -98,6 +104,7 @@ const NicknameItem = styled.a`
   &:hover {
     transform: scale(1.2);
   }
+  cursor: pointer;
   text-shadow: 2px 1px 1px #b7e769;
   margin-right: 5rem;
   padding-right: 3rem;
@@ -150,9 +157,9 @@ const ImgWrapper = styled.img`
   display: flex;
   width: ${({ width }) => width};
   height: ${({ height }) => height};
-
+  cursor: pointer;
   @media screen and (max-width: 500px) {
-    position: absolute;
+    position: fixed;
     width: 4rem;
     height: 4rem;
     margin-right: 0.8rem;
