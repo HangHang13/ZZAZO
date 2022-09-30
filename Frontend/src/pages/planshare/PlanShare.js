@@ -7,6 +7,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import MapContainer from "../../components/kakaomap/MapContainer";
 import { getPlan } from "../../api/PlanAPI";
+import ReviewDetail from "./../../components/plancalendar/ReviewDetail";
 import {
 	MapWrapper,
 	PlaceAddress,
@@ -105,6 +106,8 @@ const PlanShare = () => {
 	const dispatch = useDispatch();
 	/**약속카드 상태관리 */
 	const [cardData, setCardData] = useState();
+	/**모달 state */
+	const [modalOpen, setModalOpen] = useState(false);
 	/**공유링크 url */
 	const sharedUrl = `${location.href}${isShared ? "" : "?shared=true"}`;
 
@@ -162,6 +165,12 @@ const PlanShare = () => {
 		setCardData(data.data.card);
 	}, [isShared, uselocation]);
 
+	const onHandleOpenModal = (placeId) => {
+		if (placeId === null) return;
+
+		setModalOpen(!modalOpen);
+	};
+
 	useEffect(() => {
 		getCardData();
 	}, [getCardData, isShared]);
@@ -170,6 +179,16 @@ const PlanShare = () => {
 		<div align="center">
 			<Header display="none" />
 			<PlanPageWrapper width="90vw">
+				{modalOpen && (
+					<ReviewDetail
+						modalClose={onHandleOpenModal}
+						title="석촌 호수 공원"
+						address="서울시 강남대로 123"
+						category="음식점 - 일식"
+						target="20대 여성이 주로 방문해요"
+						score="4.7"
+					></ReviewDetail>
+				)}
 				<PlanBlock height="calc(15vh - 3rem)">
 					<Title>약속 공유</Title>
 				</PlanBlock>
@@ -209,7 +228,7 @@ const PlanShare = () => {
 							<PlanListWrapper>
 								{cardData ? (
 									cardData.map((item, index) => (
-										<PlaceCard key={index} bg={!item.place_id ? "#FF9BA9" : "#C0F0B0"}>
+										<PlaceCard key={index} bg={!item.place_id ? "#FF9BA9" : "#C0F0B0"} onClick={() => onHandleOpenModal(item.place_id)}>
 											<PlaceTitle>{item.name ? item.name : "사용자 지정 위치"}</PlaceTitle>
 											{!item.isMain && <PlaceCategory>{item.place_type}</PlaceCategory>}
 											<PlaceAddress>{item.address}</PlaceAddress>
