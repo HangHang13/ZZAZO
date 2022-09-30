@@ -25,6 +25,7 @@ COPY . .
 # COPY --from=build-stage . /usr/share/nginx/html
 RUN npm install
 RUN npm run build
+RUN npm run relocate
 # RUN mkdir ./build
 # COPY ./build ./build
 CMD ["nginx", "-g", "daemon off;"]
