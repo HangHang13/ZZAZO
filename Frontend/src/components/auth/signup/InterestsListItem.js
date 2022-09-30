@@ -9,7 +9,6 @@ const InterestsItem = styled.div`
 	flex-direction: column;
 	width: 80%;
 	height: ${({ height }) => height};
-	line-height: ${({ height }) => height};
 	margin-bottom: 1rem;
 	justify-content: center;
 	align-items: center;
@@ -17,12 +16,15 @@ const InterestsItem = styled.div`
 	border: 1px solid ${({ borderColor }) => borderColor};
 	background-color: ${({ bg }) => bg};
 	overflow: hidden;
-	white-space: nowrap;
+	white-space: normal;
+	word-break: keep-all;
+	user-select: none;
+	transition: 0.15s ease;
 	color: #383838;
 `;
 
 InterestsItem.defaultProps = {
-	height: "100px",
+	height: "60px",
 };
 
 const InterestTag = styled.p`
@@ -34,7 +36,7 @@ InterestTag.defaultProps = {
 	fontSize: "1.2rem",
 };
 
-const InterestsListItem = ({ mainCategoryId, subCategoryId, categoryName, icon, onHandleInterestClick, height, fontSize }) => {
+const InterestsListItem = ({ categoryName, onHandleInterestClick, height, fontSize }) => {
 	const [state, setState] = useState({
 		isClicked: false,
 	});

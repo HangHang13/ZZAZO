@@ -45,7 +45,9 @@ const intList = [
 	},
 ];
 
-const intListqaaaaaaa = [
+const firstCategoryList = ["식사", "카페,주류", "놀거리,취미", "관람", "걷기"];
+
+const secondCategoryList = [
 	[
 		"간식 / 분식 / 후식",
 		"고기",
@@ -86,6 +88,11 @@ const InterestsHeader = styled.div`
 	font-size: 1.5rem;
 	font-weight: bold;
 	border-bottom: 2px solid grey;
+`;
+
+const EmptySpace = styled.div`
+	width: 100%;
+	height: 160px;
 `;
 
 const SignupInterests = () => {
@@ -161,43 +168,17 @@ const SignupInterests = () => {
 						</ProgressBlock>
 					</SignupHeader>
 					<SignupBody>
-						<InterestsWrapper>
-							<InterestsHeader>식사</InterestsHeader>
-							<InterestsList intList={intList} onHandleInterestClick={onHandleInterestClick} />
-						</InterestsWrapper>
-						<InterestsWrapper>
-							<InterestsHeader>카페 / 주류</InterestsHeader>
-							{/* <InterestsList
-					intList={intList}
-					onHandleInterestClick={onHandleInterestClick}
-				/> */}
-						</InterestsWrapper>
-						<InterestsWrapper>
-							<InterestsHeader>게임 / 놀거리</InterestsHeader>
-							{/* <InterestsList
-					intList={intList}
-					onHandleInterestClick={onHandleInterestClick}
-				/> */}
-						</InterestsWrapper>
-						<InterestsWrapper>
-							<InterestsHeader>관람</InterestsHeader>
-							{/* <InterestsList
-					intList={intList}
-					onHandleInterestClick={onHandleInterestClick}
-				/> */}
-						</InterestsWrapper>
-						<InterestsWrapper>
-							<InterestsHeader>걷기</InterestsHeader>
-							{/* <InterestsList
-					intList={intList}
-					onHandleInterestClick={onHandleInterestClick}
-				/> */}
-						</InterestsWrapper>
+						{firstCategoryList.map((item, index) => (
+							<InterestsWrapper key={index}>
+								<InterestsHeader>{item}</InterestsHeader>
+								<InterestsList intList={secondCategoryList[index]} onHandleInterestClick={onHandleInterestClick} />
+							</InterestsWrapper>
+						))}
 					</SignupBody>
 					<DivButton message="완 료" width="98%" borderColor="#80E080" color="#80C0A0" clickEvent={() => submitForm()}></DivButton>
+					<EmptySpace></EmptySpace>
 				</MobileSizeWrapper>
 			</Wrapper>
-			<Footer />
 		</>
 	);
 };
