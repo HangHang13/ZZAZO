@@ -41,6 +41,7 @@ function App() {
     (() => {
       window.addEventListener("beforeunload", onHandleBrowserClose);
     })();
+    Kakao.init(process.env.REACT_APP_KAKAOLINK_API_KEY);
     return () => {
       window.removeEventListener("beforeunload", onHandleBrowserClose);
     };
@@ -72,7 +73,7 @@ function App() {
             element={<PrivateRoute component={<PlanMakeCard />} />}
           />
           <Route path="/plancalendar" element={<PlanCalendar />} />
-          <Route path="/planshare" element={<PlanShare />} />
+          <Route path="/planshare/:cardId" element={<PlanShare />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

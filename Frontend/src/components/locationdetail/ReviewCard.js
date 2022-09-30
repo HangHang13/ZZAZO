@@ -5,6 +5,14 @@ const ReviewCardWrapper = styled.div`
   width: 20rem;
   background-color: #d9d9d9;
   margin-bottom: 0.5rem;
+  @media screen and (max-width: 770px) {
+    width: 21.5rem;
+  }
+  @media screen and (max-width: 635px) {
+    margin-left: 0.5rem;
+
+    width: 20.5rem;
+  }
 `;
 const ReviewHeader = styled.div`
   display : flex;

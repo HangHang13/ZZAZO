@@ -10,27 +10,44 @@ const getRecommendList = async (data) => {
 };
 
 // 장소 목록 불러오기
-const getPlaceList = async (placeType, data) => {
-	const result = await client
-		.post(`/place/list/${placeType}`, data)
-		.then((response) => response.data)
-		.catch((error) => error.response);
+const getPlaceList = async (placeTypes, data) => {
+	let result = [];
+	for (const firstCategory of placeTypes) {
+		await client
+			.post(`/place/list/${firstCategory}`, data)
+			.then((response) => response.data.data.Place)
+			.then((places) =>
+				places.map((place) => {
+					result.push(place);
+				})
+			)
+			.catch((error) => error.response);
+	}
 	return result;
 };
 
 // 약속 카드 작성
 const savePlan = async (data) => {
 	const result = await client
-		.post(`/place/plan`, data)
+		.post(`/plan/`, data)
 		.then((response) => response.data)
 		.catch((error) => error.response);
 	return result;
 };
 
 // 약속 카드 리스트 정보
-const getPlanList = async (data) => {
+const getPlanList = async () => {
 	const result = await client
 		.get(`/plan/list`)
+		.then((response) => response.data)
+		.catch((error) => error.response);
+	return result;
+};
+
+// 약속 카드 상세 정보
+const getPlan = async (cardId) => {
+	const result = await client
+		.get(`/plan/list/${cardId}`)
 		.then((response) => response.data)
 		.catch((error) => error.response);
 	return result;
@@ -95,6 +112,7 @@ export {
 	getPlaceList,
 	savePlan,
 	getPlanList,
+	getPlan,
 	updatePlan,
 	deletePlan,
 	getPlaceInfo,
