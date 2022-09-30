@@ -55,7 +55,7 @@ const SliderContainer = styled.div`
 
 const Slider = ({ placeList }) => {
 	// Constants
-	const TOTAL_SLIDES = placeList.length - 1; // 전체 슬라이드 개수(총3개. 배열로 계산)
+	const TOTAL_SLIDES = placeList.length - 1; // 전체 슬라이드 개수
 
 	// States, Refs
 	const [currentSlide, setCurrentSlide] = useState(0);
