@@ -99,7 +99,7 @@ const Home = () => {
               <BoldText>일정은</BoldText> &nbsp; 내가 짜조!
             </HomeBannerText>
             <BtnWrapper>
-              <PlanBtn onClick={() => nadvigate("/plan")}>약속잡기</PlanBtn>
+              <PlanBtn onClick={() => navigate("/plan")}>약속잡기</PlanBtn>
             </BtnWrapper>
           </HomeBannerArea>
           <BannerImg
