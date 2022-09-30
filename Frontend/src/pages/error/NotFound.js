@@ -15,23 +15,35 @@ const FirstPhrase = styled.h1`
   font-weight: bold;
   color: white;
   margin-bottom: 0.4rem;
+  @media screen and (max-width: 500px) {
+    font-size: 2.5rem;
+  }
 `;
 const SecondPhrase = styled.h1`
   font-size: 6rem;
   font-weight: bolder;
   color: white;
   margin-bottom: 0.4rem;
+  @media screen and (max-width: 500px) {
+    font-size: 3rem;
+  }
 `;
 const ThirdPhrase = styled.h2`
   font-size: 4rem;
   font-weight: bold;
   color: green;
   margin-bottom: 0.4rem;
+  @media screen and (max-width: 500px) {
+    font-size: 2rem;
+  }
 `;
 const Description = styled.div`
   color: white;
   font-size: 3rem;
   margin-bottom: 0.4rem;
+  @media screen and (max-width: 500px) {
+    font-size: 1rem;
+  }
 `;
 const ExeImage = styled.img.attrs({
   src: `assets/notfound/notfound.png`,
