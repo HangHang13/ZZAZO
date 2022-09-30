@@ -1,6 +1,6 @@
 FROM python:3.9.13
 # 컨테이너 내에서 코드가 실행될 경로 설정
-ENV PYTHONUNBUFFERED 1
+# ENV PYTHONUNBUFFERED 1
 
 WORKDIR /Backend
 
@@ -14,6 +14,6 @@ COPY . .
 EXPOSE 8000
 # gunicorn 실행
 # RUN python manage.py runserver
-CMD ["python", "manage.py ",  "runserver","0.0.0.0:8000"]
+CMD ["python","manage.py","runserver","0.0.0.0:8000"]
 # CMD ["gunicorn", "--bind", "0.0.0.0:8000", "ZAZZO.wsgi"]
 # CMD ["gunicorn", "--bind", "0.0.0.0:8000", "project_name.wsgi:application"]
