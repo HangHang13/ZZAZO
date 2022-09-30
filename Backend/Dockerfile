@@ -14,6 +14,6 @@ COPY . .
 EXPOSE 8000
 # gunicorn 실행
 # RUN python manage.py runserver
-CMD ["python","manage.py","runserver","0.0.0.0:8000"]
-# CMD ["gunicorn", "--bind", "0.0.0.0:8000", "ZAZZO.wsgi"]
+# CMD ["python","manage.py","runserver","0.0.0.0:8000"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "ZAZZO.wsgi"]
 # CMD ["gunicorn", "--bind", "0.0.0.0:8000", "project_name.wsgi:application"]
