@@ -14,11 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg       import openapi
+from django.shortcuts import render
 from ZZAZO import views
+from django.conf.urls.static import static
+from django.conf import settings
 schema_view = get_schema_view(
     openapi.Info(
         title="ZZAZO",
@@ -30,15 +33,20 @@ schema_view = get_schema_view(
     public=True,
     permission_classes=[permissions.AllowAny],
 )
+
+def render_react(request):
+    return render(request, "index.html")
 urlpatterns = [
     path(r'swagger(?P<format>\.json|\.yaml)', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path(r'swagger', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path(r'redoc', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc-v1'),
     path('',views.index, name='index'),
+    # re_path(r"^$", render_react),
+    # re_path(r"^(?:.*)/?$", views.index, name='index'),
     path('admin/', admin.site.urls),
     path('api/v1/users/', include('accounts.urls')),
     path('api/v1/plan/', include('plan.urls')),
     path('api/v1/review/', include('review.urls')),
     path('api/v1/', include('place.urls'))
 
-]
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
