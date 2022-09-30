@@ -147,7 +147,7 @@ const Login = () => {
         {loading ? <Loading /> : null}
         <ColWrapper>
           <AuthWrapper>
-            <LogoImage src="/assets/logo.png" />
+            <LogoImage src="/static/images/logo.png" />
             <AuthInput
               name="userEmail"
               value={state.userEmail}

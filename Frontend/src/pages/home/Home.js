@@ -55,23 +55,23 @@ const Home = () => {
   function CategoryImg(categorys) {
     switch (categorys) {
       case "한식":
-        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/koreapremium.png`;
+        return `${process.env.PUBLIC_URL}/static/images/card/categoryImg/koreapremium.png`;
       case "한정식":
-        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/koreapremium.png`;
+        return `${process.env.PUBLIC_URL}/static/images/card/categoryImg/koreapremium.png`;
       case "커피전문점":
-        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/coffee.png`;
+        return `${process.env.PUBLIC_URL}/static/images/card/categoryImg/coffee.png`;
       case "펜션":
-        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/pension.png`;
+        return `${process.env.PUBLIC_URL}/static/images/card/categoryImg/pension.png`;
       case "국밥":
-        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/kukbab.png`;
+        return `${process.env.PUBLIC_URL}/static/images/card/categoryImg/kukbab.png`;
       case "닭요리":
-        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/chickenfood.png`;
+        return `${process.env.PUBLIC_URL}/static/images/card/categoryImg/chickenfood.png`;
       case "육류,고기":
-        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/meat.png`;
+        return `${process.env.PUBLIC_URL}/static/images/card/categoryImg/meat.png`;
       case "치킨":
-        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/chicken.png`;
+        return `${process.env.PUBLIC_URL}/static/images/card/categoryImg/chicken.png`;
       default:
-        return `${process.env.PUBLIC_URL}/assets/card/gazi.png`;
+        return `${process.env.PUBLIC_URL}/static/images/card/gazi.png`;
     }
   }
 
@@ -99,10 +99,12 @@ const Home = () => {
               <BoldText>일정은</BoldText> &nbsp; 내가 짜조!
             </HomeBannerText>
             <BtnWrapper>
-              <PlanBtn onClick={() => navigate("/plan")}>약속잡기</PlanBtn>
+              <PlanBtn onClick={() => nadvigate("/plan")}>약속잡기</PlanBtn>
             </BtnWrapper>
           </HomeBannerArea>
-          <BannerImg src={`${process.env.PUBLIC_URL}/assets/main/play.png`} />
+          <BannerImg
+            src={`${process.env.PUBLIC_URL}/static/images/main/play.png`}
+          />
         </HomeBanner>
 
         <br />
@@ -117,7 +119,7 @@ const Home = () => {
             <ImgWrapper
               width="7rem"
               height="7rem"
-              src="../assets/introduce/introduce1.png"
+              src="../static/images/introduce/introduce1.png"
             ></ImgWrapper>
             <Text fontsize="0.7rem">약속 상대와 만나고</Text>
             <Text fontsize="0.7rem">싶은 위치를 선택하세요!</Text>
@@ -126,7 +128,8 @@ const Home = () => {
             <ImgWrapper
               width="7rem"
               height="7rem"
-              src="../assets/introduce/introduce2.png"
+              src="../static/images/introduce/introduce2.png"
+              //url("../banner/music1.png");
             ></ImgWrapper>
             <Text fontsize="0.7rem"> 나와 취향이 비슷한 사람들이 </Text>
             <Text fontsize="0.7rem">방문한 장소를 추천받을 수 있어요!</Text>
@@ -135,7 +138,7 @@ const Home = () => {
             <ImgWrapper
               width="7rem"
               height="7rem"
-              src="../assets/introduce/introduce3.png"
+              src="../static/images/introduce/introduce3.png"
             ></ImgWrapper>
             <Text fontsize="0.7rem">내가 선호하는</Text>
             <Text fontsize="0.7rem">장소들을 추천 받을수 있어요!</Text>
@@ -144,7 +147,7 @@ const Home = () => {
             <ImgWrapper
               width="7rem"
               height="7rem"
-              src="../assets/introduce/introduce4.png"
+              src="../static/images/introduce/introduce4.png"
             ></ImgWrapper>
             <Text fontsize="0.7rem"> 추천 받은 장소들을 골라</Text>
             <Text fontsize="0.7rem"> 약속 일정을 만들어 보세요!</Text>
@@ -153,7 +156,7 @@ const Home = () => {
             <ImgWrapper
               width="7rem"
               height="7rem"
-              src="../assets/introduce/introduce5.png"
+              src="../static/images/introduce/introduce5.png"
             ></ImgWrapper>
             <Text fontsize="0.7rem">만든 일정을 친구에게</Text>
             <Text fontsize="0.7rem"> 공유할 수 있어요!</Text>

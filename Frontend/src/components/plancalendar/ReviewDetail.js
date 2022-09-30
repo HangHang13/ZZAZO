@@ -193,18 +193,35 @@ const SubmitBtn = styled.input`
 //category : 장소 카테고리
 //target : 주요 이용 고객
 //score : 별점
-const ReviewDetail = ({ modalClose, title, address, category, target, score }) => {
+const ReviewDetail = ({
+  modalClose,
+  title,
+  address,
+  category,
+  target,
+  score,
+}) => {
   let searchTitle = title.replace(/ /g, "");
   return (
     <Background>
       <CardWrapper>
         <ExitBtnWrapper>
-          <ImgButton src={`${process.env.PUBLIC_URL}/assets/card/exit.png`} alt="exit" onClick={() => modalClose(3)}></ImgButton>
+          <ImgButton
+            src={`${process.env.PUBLIC_URL}/static/images/card/exit.png`}
+            alt="exit"
+            onClick={() => modalClose(3)}
+          ></ImgButton>
         </ExitBtnWrapper>
         <TitleWrapper>
           <CardTitle>{title}</CardTitle>
-          <a href={`https://www.instagram.com/explore/tags/${searchTitle}/?hl=ko`} target="_blank">
-            <ImgButton src={`${process.env.PUBLIC_URL}/assets/card/insta.png`} alt="insta"></ImgButton>
+          <a
+            href={`https://www.instagram.com/explore/tags/${searchTitle}/?hl=ko`}
+            target="_blank"
+          >
+            <ImgButton
+              src={`${process.env.PUBLIC_URL}/static/images/card/insta.png`}
+              alt="insta"
+            ></ImgButton>
           </a>
         </TitleWrapper>
 
@@ -213,25 +230,40 @@ const ReviewDetail = ({ modalClose, title, address, category, target, score }) =
           <CardInfoWrapper>
             <CardInfo>
               <CardInfoItem>
-                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/location.png`} alt="location"></InfoIcon>
+                <InfoIcon
+                  src={`${process.env.PUBLIC_URL}/static/images/card/location.png`}
+                  alt="location"
+                ></InfoIcon>
                 {address}
               </CardInfoItem>
               <CardInfoItem>
-                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/sushi.png`} alt="location"></InfoIcon>
+                <InfoIcon
+                  src={`${process.env.PUBLIC_URL}/static/images/card/sushi.png`}
+                  alt="location"
+                ></InfoIcon>
                 {category}
               </CardInfoItem>
               <CardInfoItem>
-                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/women.png`} alt="location"></InfoIcon>
+                <InfoIcon
+                  src={`${process.env.PUBLIC_URL}/static/images/card/women.png`}
+                  alt="location"
+                ></InfoIcon>
                 {target}
               </CardInfoItem>
               <CardInfoItem>
-                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/star.png`} alt="location"></InfoIcon>
+                <InfoIcon
+                  src={`${process.env.PUBLIC_URL}/static/images/card/star.png`}
+                  alt="location"
+                ></InfoIcon>
                 {score}
               </CardInfoItem>
             </CardInfo>
           </CardInfoWrapper>
           <CardImgWrapper>
-            <CardImg src={`${process.env.PUBLIC_URL}/assets/card/gazi.png`} alt="gazi"></CardImg>
+            <CardImg
+              src={`${process.env.PUBLIC_URL}/static/images/card/gazi.png`}
+              alt="gazi"
+            ></CardImg>
           </CardImgWrapper>
         </CardMainWrapper>
         <></>

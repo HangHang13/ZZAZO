@@ -64,15 +64,24 @@ const RecCard = ({ src, name, address, place_type, target }) => {
       <CardHeader>{name}</CardHeader>
       <CardBody>
         <CardPlaceType>
-          <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/sushi.png`} alt="location"></InfoIcon>
+          <InfoIcon
+            src={`${process.env.PUBLIC_URL}/static/images/card/sushi.png`}
+            alt="location"
+          ></InfoIcon>
           {place_type}
         </CardPlaceType>
         <CardAddress>
-          <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/location.png`} alt="location"></InfoIcon>
+          <InfoIcon
+            src={`${process.env.PUBLIC_URL}/static/images/card/location.png`}
+            alt="location"
+          ></InfoIcon>
           {address}
         </CardAddress>
         <CardTarget>
-          <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/women.png`} alt="location"></InfoIcon>
+          <InfoIcon
+            src={`${process.env.PUBLIC_URL}/static/images/card/women.png`}
+            alt="location"
+          ></InfoIcon>
           {target}
         </CardTarget>
       </CardBody>
