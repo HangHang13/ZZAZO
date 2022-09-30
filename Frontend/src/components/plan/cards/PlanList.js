@@ -14,6 +14,20 @@ const PlanListWrapper = styled.div`
 	overflow-x: hidden;
 	overflow-y: scroll;
 	padding-bottom: 6rem;
+
+	::-webkit-scrollbar {
+		width: 8px;
+		border-radius: 8px;
+	}
+
+	::-webkit-scrollbar-track {
+		background: #eeeeee;
+		border-radius: 8px;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: linear-gradient(#c2e59c, #64b3f4);
+	}
 `;
 
 const NotFoundMessage = styled.p`
@@ -137,7 +151,9 @@ const PlanList = ({ pList, setPList, openModal, onHandleList, listType }) => {
 							</>
 						) : (
 							<>
-								<NotFoundMessage>주변에 추천 가능한 장소가 없습니다.</NotFoundMessage>
+								{listType === ListTypes.RECOMMEND || listType === ListTypes.PLACE ? (
+									<NotFoundMessage>주변에 추천 가능한 장소가 없습니다.</NotFoundMessage>
+								) : null}
 							</>
 						)}
 					</PlanListWrapper>

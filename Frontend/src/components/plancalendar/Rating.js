@@ -67,6 +67,9 @@ const Wrap = styled.div`
 const StarText = styled.div`
   font-size: 1.2rem;
   font-weight: bold;
+  @media screen and (max-width: 500px) {
+    margin-bottom: 0.5rem;
+  }
 `;
 
 const Stars = styled.div`

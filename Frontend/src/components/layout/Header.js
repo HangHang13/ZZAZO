@@ -4,6 +4,7 @@ import { IoIosMenu } from "react-icons/io";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { storeLogin, storeLogout } from "../../store/reducers/user";
+import { logout } from "../../api/AuthAPI";
 
 const Common = styled.div`
   padding-left: 2rem;
@@ -15,9 +16,12 @@ const Common = styled.div`
   width: 100vw;
   background-color: white;
   height: 6rem;
-  z-index: 10;
+  z-index: 2001;
   @media screen and (max-width: 500px) {
+    z-index: 2020;
     flex-direction: column;
+    height: auto;
+    transition: all 1s;
   }
 `;
 
@@ -25,11 +29,16 @@ const NavbarItemList = styled.div`
   display: flex;
   align-items: center;
   @media screen and (max-width: 500px) {
+    transition: all 1s;
     flex-direction: column;
     align-items: flex-end;
-    margin-top: 1rem;
+    margin-top: 6rem;
     display: ${({ menu }) => {
       return menu === false ? "none" : "flex";
+    }};
+
+    margin-left: ${({ currUserisLogin }) => {
+      return currUserisLogin ? "7rem" : "12rem";
     }};
   }
 `;
@@ -38,6 +47,7 @@ const NavItem = styled.a`
   &:hover {
     transform: scale(1.2);
   }
+  cursor: pointer;
   text-shadow: 2px 1px 1px #b7e769;
   margin-right: 5rem;
   padding-right: 3rem;
@@ -46,9 +56,87 @@ const NavItem = styled.a`
   text-decoration: none;
   font-weight: bold;
   color: black;
+  @media screen and (max-width: 1150px) {
+    margin-right: 3rem;
+  }
+  @media screen and (max-width: 1050px) {
+    margin-right: 2rem;
+    padding-right: 2rem;
+  }
+  @media screen and (max-width: 900px) {
+    margin-right: 2rem;
+    padding-right: 1rem;
+  }
+  @media screen and (max-width: 750px) {
+    margin-right: 1.5rem;
+    padding-right: 1.5rem;
+    font-size: 0.8rem;
+  }
+  @media screen and (max-width: 630px) {
+    margin-right: 1.5rem;
+    padding-right: 1rem;
+    font-size: 0.8rem;
+  }
+  @media screen and (max-width: 595px) {
+    margin-right: 2rem;
+    padding-right: 1rem;
+    font-size: 0.8rem;
+    font-size: 0.5rem;
+  }
+  @media screen and (max-width: 540px) {
+    margin-right: 1rem;
+    padding-right: 1rem;
+    font-size: 0.8rem;
+    font-size: 0.5rem;
+  }
   @media screen and (max-width: 500px) {
-    margin: 0.3rem;
-    padding-left: 10rem;
+    margin-right: 5rem;
+    font-size: 1.1rem;
+    text-align: right;
+    margin-bottom: 3rem;
+    padding-right: 4rem;
+    padding-left: 12rem;
+    width: 6rem;
+  }
+`;
+
+const NicknameItem = styled.a`
+  &:hover {
+    transform: scale(1.2);
+  }
+  cursor: pointer;
+  text-shadow: 2px 1px 1px #b7e769;
+  margin-right: 5rem;
+  padding-right: 3rem;
+  font-size: 1.1rem;
+
+  text-decoration: none;
+  font-weight: bold;
+  color: black;
+  @media screen and (max-width: 1150px) {
+    margin-right: 3rem;
+  }
+  @media screen and (max-width: 1050px) {
+    margin-right: 2rem;
+    padding-right: 2rem;
+  }
+  @media screen and (max-width: 900px) {
+    margin-right: 1rem;
+    padding-right: 1rem;
+  }
+  @media screen and (max-width: 750px) {
+    margin-right: 1.5rem;
+    padding-right: 1rem;
+    font-size: 0.8rem;
+  }
+  @media screen and (max-width: 595px) {
+    margin-right: 0.5rem;
+    padding-right: 1rem;
+    font-size: 0.5rem;
+  }
+
+  @media screen and (max-width: 500px) {
+    display: none;
   }
 `;
 
@@ -60,7 +148,7 @@ const Menubar = styled.a`
     font-size: 2.5rem;
     position: absolute;
     margin-top: 2rem;
-    margin-left: 15rem;
+    margin-left: 18rem;
     height: 2rem;
   }
 `;
@@ -69,15 +157,9 @@ const ImgWrapper = styled.img`
   display: flex;
   width: ${({ width }) => width};
   height: ${({ height }) => height};
-  @media screen and (max-width: 900px) {
-    width: 6rem;
-    height: 6rem;
-  }
-  @media screen and (max-width: 700px) {
-    width: 5rem;
-    height: 5rem;
-  }
+  cursor: pointer;
   @media screen and (max-width: 500px) {
+    position: fixed;
     width: 4rem;
     height: 4rem;
     margin-right: 0.8rem;
@@ -106,14 +188,23 @@ const Header = () => {
 
   return (
     <Common>
-      <ImgWrapper onClick={() => navigate("/")} width="5rem" height="4rem" src="../assets/ZZAZOLOGO.png"></ImgWrapper>
+      <ImgWrapper
+        onClick={() => navigate("/")}
+        width="5rem"
+        height="4rem"
+        src="../assets/ZZAZOLOGO.png"
+      ></ImgWrapper>
       <NavbarItemList menu={menu}>
         {currUserisLogin ? (
           <>
             <NavItem onClick={() => navigate("/plan")}>약속잡기</NavItem>
-            <NavItem onClick={() => navigate("/plancalendar")}>공유일정확인</NavItem>
+            <NavItem onClick={() => navigate("/plancalendar")}>
+              공유일정확인
+            </NavItem>
             <NavItem onClick={() => navigate("/mypage")}>마이페이지</NavItem>
-            <NavItem>{nickname ? nickname : ""}님 환영합니다.</NavItem>
+            <NicknameItem>
+              {nickname ? nickname : ""}님 환영합니다.
+            </NicknameItem>
             <NavItem onClick={() => onHandleLogOut()}>로그아웃</NavItem>
           </>
         ) : (
