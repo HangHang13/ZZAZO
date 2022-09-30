@@ -165,7 +165,7 @@ const PlanShare = () => {
 		setCardData(data.data.card);
 	}, [isShared, uselocation]);
 
-	const onHandleOpenModal = (placeId) => {
+	const onHandleModal = (placeId) => {
 		if (placeId === null) return;
 
 		setModalOpen(!modalOpen);
@@ -177,18 +177,18 @@ const PlanShare = () => {
 
 	return (
 		<div align="center">
+			{modalOpen && (
+				<ReviewDetail
+					modalClose={onHandleModal}
+					title="석촌 호수 공원"
+					address="서울시 강남대로 123"
+					category="음식점 - 일식"
+					target="20대 여성이 주로 방문해요"
+					score="4.7"
+				></ReviewDetail>
+			)}
 			<Header display="none" />
 			<PlanPageWrapper width="90vw">
-				{modalOpen && (
-					<ReviewDetail
-						modalClose={onHandleOpenModal}
-						title="석촌 호수 공원"
-						address="서울시 강남대로 123"
-						category="음식점 - 일식"
-						target="20대 여성이 주로 방문해요"
-						score="4.7"
-					></ReviewDetail>
-				)}
 				<PlanBlock height="calc(15vh - 3rem)">
 					<Title>약속 공유</Title>
 				</PlanBlock>
@@ -228,7 +228,7 @@ const PlanShare = () => {
 							<PlanListWrapper>
 								{cardData ? (
 									cardData.map((item, index) => (
-										<PlaceCard key={index} bg={!item.place_id ? "#FF9BA9" : "#C0F0B0"} onClick={() => onHandleOpenModal(item.place_id)}>
+										<PlaceCard key={index} bg={!item.place_id ? "#FF9BA9" : "#C0F0B0"} onClick={() => onHandleModal(item.place_id)}>
 											<PlaceTitle>{item.name ? item.name : "사용자 지정 위치"}</PlaceTitle>
 											{!item.isMain && <PlaceCategory>{item.place_type}</PlaceCategory>}
 											<PlaceAddress>{item.address}</PlaceAddress>
