@@ -8,9 +8,13 @@ from .models import Card
 from .serializers.plan import CardListSerializer, CardSerializer
 from place.models import Place
 
-def success_res(code, message, data=[]):
-    res = {"code": code, "message": message, "data" : data}
-    return res
+def success_res(code, message, data=None):
+    if data != None:
+        res = {"code": code, "message": message, "data" : data}
+        return res
+    else:
+        res = {"code": code, "message": message}
+        return res
 
 # Create your views here.
 @api_view(['GET'])
@@ -70,20 +74,10 @@ def plan_detail_put_or_delete(request, cardId):
             if update_serializer.is_valid(raise_exception=True):
                 if request.user.id == card.user_id:
                     update_serializer.save()
-                    code = 200
-                    message = "약속 수정"
-                    res = {
-                        "code": code,
-                        "message": message,
-                        }
+                    res = success_res(200, "약속 수정")
                     return Response(res)
             else:
-                code = 401
-                message = "약속 수정 실패"
-                res = {
-                    "code": code,
-                    "message": message,
-                }
+                res = success_res(401, "약속 수정 실패")
                 return Response(res)
 
     def plan_delete():
@@ -92,20 +86,11 @@ def plan_detail_put_or_delete(request, cardId):
         else: 
             if request.user.id == card.user_id:
                 card.delete()
-                code = 200
-                message = "약속 삭제 성공"
-                res = {
-                    "code": code,
-                    "message": message,
-                    }
-                return Response(res, status=status.HTTP_201_CREATED)
+                res = success_res(200, "약속 삭제 성공")
+                return Response(res)
+            
             else:
-                code = 401
-                message = "약속 삭제 실패"
-                res = {
-                    "code": code,
-                    "message": message,
-                    }
+                res = success_res(401, "약속 삭제 실패")
                 return Response(res)
                 
     if request.method == 'PUT':
