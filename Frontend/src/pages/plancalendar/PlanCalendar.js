@@ -203,7 +203,6 @@ const PlanCalendar = () => {
 		window.scrollTo(0, 0);
 		setLoading(true);
 		plancardLoad();
-		reviewLoad();
 		setLoading(false);
 	}, []);
 
