@@ -1,0 +1,22 @@
+[
+  {
+    "userEmail": "aaa@naver.com",
+    "userName": "홍길동",
+    "password": "1q2w3e4r!@",
+    "userNickName": "닉네임1",
+    "userPhone": "01050059667",
+    "userBirth": "1999-01-01",
+    "userGender": 1,
+    "userCategory": ["한식", "양식", "노래방"]
+  },
+  {
+    "userEmail": "String",
+    "userName": "String",
+    "password": "String",
+    "userNickName": "String",
+    "userPhone": "01012345678",
+    "userBirth": "yy-mm-dd",
+    "userGender": 0,
+    "userCategory": ["중식"]
+  }
+]
