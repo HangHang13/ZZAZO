@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 const Card = styled.div`
-  z-index: 2000;
   &:hover {
     transform: scale(1.1);
     transition: all 0.15s ease-in;

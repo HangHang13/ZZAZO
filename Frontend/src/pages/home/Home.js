@@ -407,7 +407,6 @@ const RecTitle = styled.div`
 `;
 
 const RecArea = styled.div`
-  z-index: 2000;
   width: 100vw;
   margin-left: -21.5%;
   display: flex;
