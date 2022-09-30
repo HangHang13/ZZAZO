@@ -3,7 +3,7 @@ FROM python:3.9.13
 ENV PYTHONUNBUFFERED 1
 
 WORKDIR /Backend
-# WORKDIR /usr/src/app
+WORKDIR /usr/src/app
 # requirements.txt에 명시된 필요한 packages 설치
 COPY requirements.txt ./
 RUN pip install --upgrade pip
