@@ -26,10 +26,7 @@ COPY . .
 RUN npm install
 RUN npm run build
 
-FROM nginx:latest as production-stage
 
-RUN rm -rf /var/www/
-COPY ./Frontend/build /var/www/
 # RUN npm run relocate
 # RUN mkdir ./build
 # COPY ./build ./build
