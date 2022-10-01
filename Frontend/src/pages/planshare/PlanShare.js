@@ -95,6 +95,27 @@ const ShareButton = styled(ButtonWrapper)`
   }
 `;
 
+const CardTitle = styled.div`
+	display: flex;
+	font-size: 1.1rem;
+	font-weight: bold;
+`;
+
+const CardNumber = styled.div`
+	display: flex;
+	font-size: 0.9rem;
+	padding: 0.1rem;
+	font-weight: bold;
+	border: 1px solid black;
+	border-radius: 100%;
+	width: 16px;
+	height: 16px;
+	margin-right: 0.5rem;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+`;
+
 const PlanShare = () => {
   /**공유여부판단 url */
   const isShared = location.href.includes("?shared=true");
@@ -178,6 +199,7 @@ const PlanShare = () => {
     getCardData();
   }, [getCardData, isShared]);
 
+<<<<<<< Frontend/src/pages/planshare/PlanShare.js
   return (
     <div align="center">
       {modalOpen && (

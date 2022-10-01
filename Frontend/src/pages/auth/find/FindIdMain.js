@@ -48,6 +48,7 @@ const FindIdMain = () => {
 	};
 
 	const onSubmit = async () => {
+		console.log("submit!");
 		if (state.userName.length < 1) {
 			alert("이름을 입력해주세요.");
 			nameRef.current.focus();
@@ -61,14 +62,15 @@ const FindIdMain = () => {
 
 		const response = await findId(state);
 
-		if (response.code === 200) {
+		console.log(response);
+		if (response.data.code === 200) {
 			navigate("/findid/result", {
 				state: {
 					code: 200,
-					userEmail: response.userEmail,
+					userEmail: response.data.userEmail,
 				},
 			});
-		} else if (response.code === 401) {
+		} else if (response.data.code === 401) {
 			alert("일치하는 회원 정보가 없습니다.");
 			return;
 		} else {
