@@ -87,7 +87,7 @@ class Getcheck_email(APIView):
 
 #아이디 찾기
 @csrf_exempt
-@api_view(['GET'])
+@api_view(['POST'])
 def find_userEmail(request):
  
   userName = request.data.get('userName')

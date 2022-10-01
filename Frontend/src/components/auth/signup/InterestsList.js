@@ -18,8 +18,8 @@ const InterestsList = React.memo(({ intList, onHandleInterestClick }) => {
 		<>
 			{intList.length !== 0 ? (
 				<InterestsBody>
-					{intList.map((item) => (
-						<InterestsListItem {...item} key={item.subCategoryId} onHandleInterestClick={onHandleInterestClick} />
+					{intList.map((item, index) => (
+						<InterestsListItem categoryName={item} key={index} onHandleInterestClick={onHandleInterestClick} fontSize="1rem" />
 					))}
 				</InterestsBody>
 			) : (
