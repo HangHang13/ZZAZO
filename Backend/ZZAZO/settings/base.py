@@ -12,13 +12,13 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
-import os, json
+import os, json, sys
 from django.core.exceptions import ImproperlyConfigured
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+sys.path.append(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -104,7 +104,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
 
 ]
 
@@ -139,7 +138,7 @@ EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = 'smtp.naver.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "hanghangjin@naver.com"
-EMAIL_HOST_PASSWORD = SECRET_KEY
+EMAIL_HOST_PASSWORD = 'dlwlsgod!'
 
 EMAIL_USE_TLS = True
 REST_USE_JWT = True
@@ -212,7 +211,7 @@ TEMPLATES = [
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static_cdn"),
+    # os.path.join(BASE_DIR, "static_cdn"),
     os.path.join(BASE_DIR, 'build','static')
 ]
 WSGI_APPLICATION = 'ZZAZO.wsgi.application'

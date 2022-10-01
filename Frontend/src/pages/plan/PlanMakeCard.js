@@ -11,11 +11,12 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { SliderWrapper } from "../../components/styled/SliderWrapper";
 import RecommendHeader from "../../components/plan/cards/RecommendHeader";
 import { ListTypes } from "./../../constants/ListTypes";
-import { getPlaceList, getRecommendList } from "../../api/PlanAPI";
+import { getPlaceList, getPlan, getPlanList, getRecommendList, savePlan } from "../../api/PlanAPI";
 import MapContainer from "./../../components/kakaomap/MapContainer";
 import Loading from "./../../components/common/Loading";
 import CardDetail from "../../components/locationdetail/CardDetail";
 import ListHeader from "../../components/plan/cards/ListHeader";
+import { CATEGORIES } from "./../../constants/PlaceCategories";
 
 const BeforeButton = styled(ButtonWrapper)`
 	position: absolute;
@@ -294,12 +295,15 @@ TrashWrapper.defaultProps = {
 
 const PlanMakeCard = () => {
 	const ELEMENTS_PER_PAGE = 5;
+	const LOADING_DEFAULT = "추천 장소들을 불러오고 있습니다...";
+	const LOADING_SAVE = "약속 카드 등록중입니다...";
 
 	const location = useLocation(); // location.state.content, location.state.position
 	const navigate = useNavigate();
 
 	// States_공통
 	const [loading, setLoading] = useState(false);
+	const [loadingText, setLoadingText] = useState(LOADING_DEFAULT);
 	const [start, setStart] = useState(100); // 화면 슬라이딩 효과를 위한 state
 	const [end, setEnd] = useState(5); // 화면 슬라이딩 효과를 위한 state
 	const [modalToggle, setModalToggle] = useState(false); // 장소 상세보기 모달
@@ -316,7 +320,7 @@ const PlanMakeCard = () => {
 	const [recommendList, setRecommendList] = useState([]); // [추천]리스트
 	const [placeList, setPlaceList] = useState([]); // [목록]리스트
 	const [page, setPage] = useState(0); // [추천] 페이지 number
-	const [selectedCategories, setSelectedCategories] = useState([]); // [목록] 카테고리 번호
+	const [selectedCategories, setSelectedCategories] = useState([]); // [목록] 카테고리 이름들
 	const [reloadAudio] = useState(new Audio(`${process.env.PUBLIC_URL}/assets/sounds/reload.mp3`));
 
 	// States_약속카드 리스트
@@ -358,27 +362,18 @@ const PlanMakeCard = () => {
 			longitude: parseFloat(location.state.position.lng),
 			latitude: parseFloat(location.state.position.lat),
 		});
-		const placeListResponse = await getPlaceList("한식", {
-			radius: radius,
-			longitude: parseFloat(location.state.position.lng),
-			latitude: parseFloat(location.state.position.lat),
-		});
 		setRecommendList(recommendListResponse.data.Place);
-		setPlaceList(placeListResponse.data.Place);
+
 		setLoading(false);
 	}, []);
 
 	// useEffect_추천/목록 토글 시
 	useEffect(() => {
-		if (recommendListToggle) {
-			// '추천' 선택 시
-		} else {
-			// '목록' 선택 시
-		}
+		onHandleRadius(recommendListToggle);
 	}, [recommendListToggle]);
 
 	// 반경 기준으로 장소 리스트 요청 함수
-	const onHandleRadius = async () => {
+	const onHandleRadius = async (isRecommend) => {
 		setLoading(true);
 		if (radius <= 200) {
 			setMapLevel(3);
@@ -389,35 +384,56 @@ const PlanMakeCard = () => {
 		} else {
 			setMapLevel(6);
 		}
-		const recommendListResponse = await getRecommendList({
-			radius: radius,
-			longitude: parseFloat(location.state.position.lng),
-			latitude: parseFloat(location.state.position.lat),
-		});
-		const placeListResponse = await getPlaceList("한식", {
-			radius: radius,
-			longitude: parseFloat(location.state.position.lng),
-			latitude: parseFloat(location.state.position.lat),
-		});
-		setRecommendList(recommendListResponse.data.Place);
-		setPlaceList(placeListResponse.data.Place);
+
+		if (isRecommend) {
+			const recommendListResponse = await getRecommendList({
+				radius: radius,
+				longitude: parseFloat(location.state.position.lng),
+				latitude: parseFloat(location.state.position.lat),
+			});
+			setRecommendList(recommendListResponse.data.Place);
+		} else {
+			const placeListResponse = await getPlaceList(selectedCategories, {
+				radius: radius,
+				longitude: parseFloat(location.state.position.lng),
+				latitude: parseFloat(location.state.position.lat),
+			});
+			setPlaceList(placeListResponse);
+		}
+
 		setLoading(false);
 	};
 
 	// [추천리스트, 목록리스트] 버튼 누를 시 이벤트
 	const onHandleChangeList = (toggle) => {
 		setRecommendListToggle(toggle);
+		if (toggle) {
+			setSelectedCategories([]);
+			setPlaceList([]);
+		} else {
+			setRecommendList([]);
+		}
 	};
 
 	// [목록]에서 카테고리 클릭 시 이벤트
-	const onHandleCategoryClick = (categoryName) => {
+	const onHandleCategoryClick = async (categoryName) => {
+		setLoading(true);
 		let arr = Array.from(selectedCategories);
+		let newarr = arr;
 		if (arr.includes(categoryName)) {
-			arr = arr.filter((item) => item !== categoryName);
+			newarr = arr.filter((item) => item !== categoryName);
 		} else {
-			arr.push(categoryName);
+			newarr.push(categoryName);
 		}
-		setSelectedCategories(arr);
+		setSelectedCategories(newarr);
+
+		const placeListResponse = await getPlaceList(newarr, {
+			radius: radius,
+			longitude: parseFloat(location.state.position.lng),
+			latitude: parseFloat(location.state.position.lat),
+		});
+		setPlaceList(placeListResponse);
+		setLoading(false);
 	};
 
 	// 장소 상세보기 모달창 띄우기
@@ -457,13 +473,18 @@ const PlanMakeCard = () => {
 
 	// +, - 버튼 누를 시 이벤트
 	const onHandleList = (listType, index) => {
-		const arr1 = Array.from(recommendList);
-		const arr2 = Array.from(planList);
-		const arr3 = Array.from(trashList);
-
+		let arr1 = [];
 		if (listType === ListTypes.RECOMMEND) {
-			// [추천] -> [약속]
-			const arr1Index = (page * ELEMENTS_PER_PAGE + index) % recommendList.length;
+			arr1 = Array.from(recommendList);
+		} else if (listType === ListTypes.PLACE) {
+			arr1 = Array.from(placeList);
+		}
+		let arr2 = Array.from(planList);
+		let arr3 = Array.from(trashList);
+
+		if (listType === ListTypes.RECOMMEND || listType === ListTypes.PLACE) {
+			// [추천/목록] -> [약속]
+			const arr1Index = listType === ListTypes.RECOMMEND ? (page * ELEMENTS_PER_PAGE + index) % recommendList.length : parseInt(index);
 
 			// 중복 방지 로직
 			let tmpStr = JSON.stringify(arr1[arr1Index]);
@@ -488,15 +509,71 @@ const PlanMakeCard = () => {
 			arr2.push(arr3[index]);
 			arr3.splice(index, 1);
 		}
-		setRecommendList(arr1);
+
+		// 저장
+		if (listType === ListTypes.RECOMMEND) {
+			setRecommendList(arr1);
+		} else if (listType === ListTypes.PLACE) {
+			setPlaceList(arr1);
+		}
 		setPlanList(arr2);
 		setTrashList(arr3);
+	};
+
+	// 약속 저장하기 누를 시 이벤트
+	const onHandleSavePlan = async () => {
+		if (planInfo.name.length < 1) {
+			alert("약속 이름을 입력해주세요.");
+			return;
+		} else if (planInfo.date.length < 1) {
+			alert("약속 날짜를 입력해주세요.");
+			return;
+		}
+
+		// 제출용 데이터 정제
+		setLoadingText(LOADING_SAVE);
+		setLoading(true);
+		let form = [];
+		planList.map((item, index) => {
+			form.push({
+				title: planInfo.name,
+				date: planInfo.date,
+				appointed_time: planInfo.time,
+				place_id: item._id ? item._id : null,
+				address: item.address,
+				isMain: item.isMain ? 1 : 0,
+				latitude: item.latitude,
+				longitude: item.longitude,
+				place_type: item.place_type,
+				name: item.name,
+				priority: index + 1,
+			});
+		});
+
+		const response = await savePlan(form);
+		setLoading(false);
+		setLoadingText(LOADING_DEFAULT);
+		if (response.code !== 200) {
+			alert("등록에 실패했습니다.");
+			return;
+		}
+
+		const r = await getPlan(response.data.cardId);
+
+		alert("약속 카드가 등록되었습니다!");
+		navigate(`/planshare/${response.data.cardId}`, {
+			replace: true,
+			state: {
+				cardId: response.data.cardId,
+				form: form,
+			},
+		});
 	};
 
 	return (
 		<div align="center">
 			<Header />
-			{loading ? <Loading text="추천 장소들을 불러오고 있습니다..." /> : null}
+			{loading ? <Loading text={loadingText} /> : null}
 			{modalToggle ? <CardDetail modalClose={openModal} placeId={modalPlaceId} /> : null}
 			<SliderWrapper leftStart={start} leftEnd={end}>
 				<PlanPageWrapper width="90vw">
@@ -529,7 +606,7 @@ const PlanMakeCard = () => {
 							{/* 반경 */}
 							<RadiusWrapper>
 								<Radius radius={radius} setRadius={setRadius} />
-								<RadiusButton onClick={onHandleRadius}>설정</RadiusButton>
+								<RadiusButton onClick={() => onHandleRadius(recommendListToggle)}>설정</RadiusButton>
 							</RadiusWrapper>
 							{/* 카카오맵 */}
 							<MapWrapper mapName="make" width="99%" height="100%">
@@ -552,7 +629,7 @@ const PlanMakeCard = () => {
 									추천
 								</SectionTitle>
 								<SectionTitle width="50%" bg={!recommendListToggle ? "#80E080" : "#D9D9D9"} onClick={() => onHandleChangeList(false)}>
-									목록
+									전체
 								</SectionTitle>
 							</BaseFlexWrapper>
 							<PlanCard mWidth="50vh">
@@ -561,16 +638,20 @@ const PlanMakeCard = () => {
 								) : (
 									<ListHeader onHandleCategoryClick={onHandleCategoryClick} />
 								)}
-								<PlanList
-									pList={recommendList.slice(
-										(page * ELEMENTS_PER_PAGE) % recommendList.length,
-										((page * ELEMENTS_PER_PAGE) % recommendList.length) + ELEMENTS_PER_PAGE
-									)}
-									setPList={setRecommendList}
-									openModal={openModal}
-									onHandleList={onHandleList}
-									listType={ListTypes.RECOMMEND}
-								/>
+								{recommendListToggle ? (
+									<PlanList
+										pList={recommendList.slice(
+											(page * ELEMENTS_PER_PAGE) % recommendList.length,
+											((page * ELEMENTS_PER_PAGE) % recommendList.length) + ELEMENTS_PER_PAGE
+										)}
+										setPList={setRecommendList}
+										openModal={openModal}
+										onHandleList={onHandleList}
+										listType={ListTypes.RECOMMEND}
+									/>
+								) : (
+									<PlanList pList={placeList} setPList={setPlaceList} openModal={openModal} onHandleList={onHandleList} listType={ListTypes.PLACE} />
+								)}
 							</PlanCard>
 						</PlanMakeWrapper>
 						{/* 약속 카드 */}
@@ -582,7 +663,7 @@ const PlanMakeCard = () => {
 							</PlanCard>
 						</PlanMakeWrapper>
 					</PlanBlock>
-					<AfterButton>약속 저장하기</AfterButton>
+					<AfterButton onClick={onHandleSavePlan}>약속 저장하기</AfterButton>
 				</PlanPageWrapper>
 			</SliderWrapper>
 		</div>
