@@ -96,24 +96,24 @@ const ShareButton = styled(ButtonWrapper)`
 `;
 
 const CardTitle = styled.div`
-	display: flex;
-	font-size: 1.1rem;
-	font-weight: bold;
+  display: flex;
+  font-size: 1.1rem;
+  font-weight: bold;
 `;
 
 const CardNumber = styled.div`
-	display: flex;
-	font-size: 0.9rem;
-	padding: 0.1rem;
-	font-weight: bold;
-	border: 1px solid black;
-	border-radius: 100%;
-	width: 16px;
-	height: 16px;
-	margin-right: 0.5rem;
-	text-align: center;
-	align-items: center;
-	justify-content: center;
+  display: flex;
+  font-size: 0.9rem;
+  padding: 0.1rem;
+  font-weight: bold;
+  border: 1px solid black;
+  border-radius: 100%;
+  width: 16px;
+  height: 16px;
+  margin-right: 0.5rem;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
 `;
 
 const PlanShare = () => {
@@ -199,7 +199,6 @@ const PlanShare = () => {
     getCardData();
   }, [getCardData, isShared]);
 
-<<<<<<< Frontend/src/pages/planshare/PlanShare.js
   return (
     <div align="center">
       {modalOpen && (
