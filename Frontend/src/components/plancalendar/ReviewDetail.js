@@ -115,7 +115,7 @@ const ReviewDetail = ({ modalClose, title, address, category, target, score, pla
                     {cardContent.data.Place.name}
                   </CardInfoItem>
                   <CardInfoItem>
-                    <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/sushi.png`} alt="location"></InfoIcon>
+                    <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/category.png`} alt="location"></InfoIcon>
                     {cardContent.data.Place.address}
                   </CardInfoItem>
                   <CardInfoItem>
