@@ -13,11 +13,5 @@ COPY . .
 # 포트 설정
 EXPOSE 8000
 # gunicorn 실행
-<<<<<<< HEAD
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "Backend.ZAZZO.wsgi"]
-=======
-# RUN python manage.py runserver
-# CMD ["python","manage.py","runserver","0.0.0.0:8000"]
-CMD ["gunicorn","ZAZZO.wsgi:application","--bind","0.0.0.0:8000"]
->>>>>>> dc5d78fff35bdcaef975d942b3f3af6c9c479159
-# CMD ["gunicorn", "--bind", "0.0.0.0:8000", "project_name.wsgi:application"]
+
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "ZAZZO.wsgi:application"]

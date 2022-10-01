@@ -12,7 +12,7 @@ import os
 from django.core.wsgi import get_wsgi_application
 # sys.path.append('/home/django_projects/MyProject')
 # sys.path.append('/home/django_projects/MyProject/ZZAZO')
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ZZAZO.settings.prod')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
 
 application = get_wsgi_application()
 
