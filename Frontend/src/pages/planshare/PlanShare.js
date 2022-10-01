@@ -95,6 +95,27 @@ const ShareButton = styled(ButtonWrapper)`
 	}
 `;
 
+const CardTitle = styled.div`
+	display: flex;
+	font-size: 1.1rem;
+	font-weight: bold;
+`;
+
+const CardNumber = styled.div`
+	display: flex;
+	font-size: 0.9rem;
+	padding: 0.1rem;
+	font-weight: bold;
+	border: 1px solid black;
+	border-radius: 100%;
+	width: 16px;
+	height: 16px;
+	margin-right: 0.5rem;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+`;
+
 const PlanShare = () => {
 	/**공유여부판단 url */
 	const isShared = location.href.includes("?shared=true");
@@ -229,7 +250,16 @@ const PlanShare = () => {
 								{cardData ? (
 									cardData.map((item, index) => (
 										<PlaceCard key={index} bg={!item.place_id ? "#FF9BA9" : "#C0F0B0"} onClick={() => onHandleModal(item.place_id)}>
-											<PlaceTitle>{item.name ? item.name : "사용자 지정 위치"}</PlaceTitle>
+											<PlaceTitle>
+												{item.name ? (
+													<>
+														<CardNumber>{index + 1}</CardNumber>
+														<CardTitle>{item.name}</CardTitle>
+													</>
+												) : (
+													"사용자 지정 위치"
+												)}
+											</PlaceTitle>
 											{!item.isMain && <PlaceCategory>{item.place_type}</PlaceCategory>}
 											<PlaceAddress>{item.address}</PlaceAddress>
 										</PlaceCard>
