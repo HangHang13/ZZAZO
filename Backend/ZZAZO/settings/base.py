@@ -139,7 +139,7 @@ EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = 'smtp.naver.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "hanghangjin@naver.com"
-EMAIL_HOST_PASSWORD = SECRET_KEY
+EMAIL_HOST_PASSWORD = 'dlwlsgod!'
 
 EMAIL_USE_TLS = True
 REST_USE_JWT = True
