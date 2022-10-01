@@ -60,14 +60,12 @@ const FindPwMain = () => {
 
 		const response = await findPw(state);
 
+		console.log(response);
 		if (response.code === 200) {
 			alert(state.userEmail + " 로 재설정된 비밀번호를 발송했습니다. 해당 비밀번호로 로그인 후 비밀번호 변경 바랍니다.");
 			navigate("/login");
-		} else if (response.code === 401) {
-			alert("일치하는 회원 정보가 없습니다.");
-			return;
 		} else {
-			alert("오류가 발생했습니다.");
+			alert("일치하는 회원정보가 없거나, 오류가 발생했습니다.");
 			return;
 		}
 	};
