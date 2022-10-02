@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Header from "../../components/layout/Header";
-
-import { ButtonWrapper, PlanPageWrapper } from "../../components/styled/Wrapper";
+import {
+  ButtonWrapper,
+  PlanPageWrapper,
+} from "../../components/styled/Wrapper";
 import styled, { keyframes } from "styled-components";
 import { useLocation, useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MapContainer from "../../components/kakaomap/MapContainer";
 import { getPlan } from "../../api/PlanAPI";
 import ReviewDetail from "./../../components/plancalendar/ReviewDetail";
@@ -131,7 +133,8 @@ const PlanShare = () => {
   const [modalOpen, setModalOpen] = useState(false);
   /**공유링크 url */
   const sharedUrl = `${location.href}${isShared ? "" : "?shared=true"}`;
-
+  /**로그인 여부 판단 */
+  const authenticated = useSelector((state) => state.user.value.isLogin);
   const returnHome = () => dispatch("/");
   /**페이지 공유링크 전송 함수 */
   const SharePage = (title) => {
@@ -217,15 +220,31 @@ const PlanShare = () => {
         <PlanBlock height="calc(15vh - 3rem)">
           <Title>약속 공유</Title>
         </PlanBlock>
-        <PlanBlock height="calc(15vh - 3rem)" justifyContent="center">
-          <ShareButton onClick={onKakaoClick}>카카오톡으로 공유하기</ShareButton>
-        </PlanBlock>
-        <PlanBlock justifyContent="center" width="100%" height="calc(72vh - 1rem)">
+        {authenticated && (
+          <PlanBlock height="calc(15vh - 3rem)" justifyContent="center">
+            <ShareButton onClick={onKakaoClick}>
+              카카오톡으로 공유하기
+            </ShareButton>
+          </PlanBlock>
+        )}
+        <PlanBlock
+          justifyContent="center"
+          width="100%"
+          height="calc(72vh - 1rem)"
+        >
           <PlanMakeWrapper width="calc(60% - 1rem)" height="100%">
             <MapWrapper mapName="make" width="99%" height="100%">
               <MapContainer
-                lat={cardData ? cardData.filter((item) => !item.place_id)[0].latitude : 34}
-                lng={cardData ? cardData.filter((item) => !item.place_id)[0].longitude : 127}
+                lat={
+                  cardData
+                    ? cardData.filter((item) => !item.place_id)[0].latitude
+                    : 34
+                }
+                lng={
+                  cardData
+                    ? cardData.filter((item) => !item.place_id)[0].longitude
+                    : 127
+                }
                 mapLevel={5}
                 placeList={[]}
                 planList={cardData ? cardData : []}
@@ -239,23 +258,37 @@ const PlanShare = () => {
               <PlanHeaderWrapper>
                 <PlanHeaderItem>
                   <PlanHeaderName>약속이름</PlanHeaderName>
-                  <PlanHeaderInput>{cardData ? cardData[0].title : ""}</PlanHeaderInput>
+                  <PlanHeaderInput>
+                    {cardData ? cardData[0].title : ""}
+                  </PlanHeaderInput>
                 </PlanHeaderItem>
                 <PlanHeaderItem>
                   <PlanHeaderName>약속날짜</PlanHeaderName>
-                  <PlanHeaderInput>{cardData ? cardData[0].date : ""}</PlanHeaderInput>
+                  <PlanHeaderInput>
+                    {cardData ? cardData[0].date : ""}
+                  </PlanHeaderInput>
                 </PlanHeaderItem>
                 <PlanHeaderItem>
                   <PlanHeaderName>약속시간</PlanHeaderName>
-                  <PlanHeaderInput>{cardData ? cardData[0].appointed_time : ""}</PlanHeaderInput>
+                  <PlanHeaderInput>
+                    {cardData ? cardData[0].appointed_time : ""}
+                  </PlanHeaderInput>
                 </PlanHeaderItem>
               </PlanHeaderWrapper>
               <PlanListWrapper>
                 {cardData ? (
                   cardData.map((item, index) => (
-                    <PlaceCard key={index} bg={!item.place_id ? "#FF9BA9" : "#C0F0B0"} onClick={() => onHandleModal(item.place_id)}>
-                      <PlaceTitle>{item.name ? item.name : "사용자 지정 위치"}</PlaceTitle>
-                      {!item.isMain && <PlaceCategory>{item.place_type}</PlaceCategory>}
+                    <PlaceCard
+                      key={index}
+                      bg={!item.place_id ? "#FF9BA9" : "#C0F0B0"}
+                      onClick={() => onHandleModal(item.place_id)}
+                    >
+                      <PlaceTitle>
+                        {item.name ? item.name : "사용자 지정 위치"}
+                      </PlaceTitle>
+                      {!item.isMain && (
+                        <PlaceCategory>{item.place_type}</PlaceCategory>
+                      )}
                       <PlaceAddress>{item.address}</PlaceAddress>
                     </PlaceCard>
                   ))
