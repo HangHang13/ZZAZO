@@ -5,6 +5,7 @@ import ReviewCard from "../locationdetail/ReviewCard";
 import Rating from "./Rating";
 import { getReview, postReview, putReview } from "../../api/ReviewAPI";
 import { FaStar } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 //title : 장소명
 //address : 주소
@@ -13,9 +14,9 @@ import { FaStar } from "react-icons/fa";
 //score : 별점
 const ARRAY = [0, 1, 2, 3, 4];
 
-const ReviewDetail = ({ modalClose, title, address, category, target, score, placeid }) => {
-  let searchTitle = title.replace(/ /g, "");
-
+const ReviewDetail = ({ myrating, modalClose, placeinfo, target, placeid }) => {
+  let searchTitle = placeinfo.name.replace(/ /g, "");
+  const authenticated = useSelector((state) => state.user.value.isLogin);
   /** 별점관련 부분 **/
   const [clicked, setClicked] = useState([false, false, false, false, false]);
   const ratings = clicked.filter(Boolean).length;
@@ -26,7 +27,7 @@ const ReviewDetail = ({ modalClose, title, address, category, target, score, pla
       clickStates[i] = i <= index ? true : false;
     }
     setClicked(clickStates);
-    setreview({ ...review, ["reviewScore"]: clicked.filter(Boolean).length });
+    setreview({ ...review, ["score"]: clicked.filter(Boolean).length });
     // console.log(clickStates);
     // console.log(clicked.filter(Boolean).length);
   };
@@ -43,7 +44,7 @@ const ReviewDetail = ({ modalClose, title, address, category, target, score, pla
     /* place Id로 리뷰 정보 조회 */
     const ReviewCardData = await getReview(placeid);
     setcardContent(ReviewCardData);
-    console.log(ReviewCardData.data.reviews);
+    console.log(ReviewCardData.data);
     if (ReviewCardData.data.reviews != "") {
       setisreview(true);
       setreviewcontents(ReviewCardData.data.reviews.content);
@@ -54,11 +55,11 @@ const ReviewDetail = ({ modalClose, title, address, category, target, score, pla
   /** 새 리뷰 등록 post api **/
   const [review, setreview] = useState({
     content: "",
-    reviewScore: 0,
+    score: 0,
   });
   const WriteReview = (val, rating) => {
     console.log(val);
-    setreview({ ...review, ["reviewScore"]: rating, ["content"]: val });
+    setreview({ ...review, ["score"]: rating, ["content"]: val });
   };
 
   //리뷰 등록
@@ -72,17 +73,20 @@ const ReviewDetail = ({ modalClose, title, address, category, target, score, pla
     alert("리뷰가 수정되었습니다.");
     const result = await putReview(placeid, reviewid, review);
     console.log(result);
+    modalClose();
   };
 
   useEffect(() => {
+    console.log("내가 기존에 준 별점");
+    console.log(myrating);
     let clickStates = [...clicked];
-    for (let i = 0; i < score; i++) {
+    for (let i = 0; i < myrating; i++) {
       clickStates[i] = true;
     }
     setClicked(clickStates);
     //초기 카드 정보 조회
     ReviewCardLoad();
-  }, []);
+  }, [myrating]);
 
   return (
     <Background>
@@ -93,7 +97,7 @@ const ReviewDetail = ({ modalClose, title, address, category, target, score, pla
         <TitleWrapper>
           {cardContent ? (
             <>
-              <CardTitle>{cardContent.data.Place.name}</CardTitle>
+              <CardTitle>{placeinfo.name}</CardTitle>
             </>
           ) : (
             <></>
@@ -112,11 +116,11 @@ const ReviewDetail = ({ modalClose, title, address, category, target, score, pla
                 <>
                   <CardInfoItem>
                     <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/location.png`} alt="location"></InfoIcon>
-                    {cardContent.data.Place.name}
+                    {placeinfo.address}
                   </CardInfoItem>
                   <CardInfoItem>
                     <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/category.png`} alt="location"></InfoIcon>
-                    {cardContent.data.Place.address}
+                    {placeinfo.place_type}
                   </CardInfoItem>
                   <CardInfoItem>
                     <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/women.png`} alt="location"></InfoIcon>
@@ -124,7 +128,7 @@ const ReviewDetail = ({ modalClose, title, address, category, target, score, pla
                   </CardInfoItem>
                   <CardInfoItem>
                     <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/star.png`} alt="location"></InfoIcon>
-                    {score}
+                    {placeinfo.placeScore ? <>{placeinfo.placeScore}</> : "별점을 입력해주세요"}
                   </CardInfoItem>
                 </>
               ) : (
@@ -137,27 +141,24 @@ const ReviewDetail = ({ modalClose, title, address, category, target, score, pla
           </CardImgWrapper>
         </CardMainWrapper>
         <EmptyBorder></EmptyBorder>
-        <CardLine width="80%"></CardLine>
+        <EmptyBorder></EmptyBorder>
+        {authenticated && (
+          <>
+            <CardLine width="80%"></CardLine>
+            <StarWrapper>
+              <Wrap>
+                <Stars>
+                  {ARRAY.map((el, idx) => {
+                    return <FaStar key={idx} size="40" onClick={() => handleStarClick(el)} className={clicked[el] && "yellowStar"} />;
+                  })}
+                </Stars>
+                <StarText>{ratings}/5</StarText>
+              </Wrap>
+            </StarWrapper>
+          </>
+        )}
 
-        <StarWrapper>
-          <Wrap>
-            <Stars>
-              {ARRAY.map((el, idx) => {
-                return <FaStar key={idx} size="40" onClick={() => handleStarClick(el)} className={clicked[el] && "yellowStar"} />;
-              })}
-            </Stars>
-            <StarText>{ratings}/5</StarText>
-          </Wrap>
-        </StarWrapper>
-        {/* 
-        <ReviewTextArea
-          onMouseOut={(e) => {
-            console.log(e.currentTarget.value);
-            setreview(e.currentTarget.value);
-          }}
-        ></ReviewTextArea> */}
-
-        {isreview && (
+        {authenticated && isreview && (
           <>
             <ReviewTextArea
               value={reviewcontents}
@@ -175,7 +176,8 @@ const ReviewDetail = ({ modalClose, title, address, category, target, score, pla
             </ReviewWrapper>
           </>
         )}
-        {!isreview && (
+
+        {authenticated && !isreview && (
           <>
             <ReviewTextArea
               name="content"
@@ -194,6 +196,12 @@ const ReviewDetail = ({ modalClose, title, address, category, target, score, pla
     </Background>
   );
 };
+
+const authBorder = styled.div`
+  width: 100%;
+  font-size: 2rem;
+  height: 1.5rem;
+`;
 
 const Wrap = styled.div`
   display: flex;
@@ -247,7 +255,8 @@ const CardWrapper = styled.div`
   align-items: center;
   background-color: white;
   width: 55rem;
-  height: 41rem;
+
+  padding-bottom: 1.5rem;
   padding-top: 1.5rem;
   padding-left: 1.5rem;
   border-radius: 16px;
@@ -264,23 +273,19 @@ const CardWrapper = styled.div`
   }
   @media screen and (max-width: 970px) {
     width: 45rem;
-    height: 43rem;
     flex-direction: column;
   }
   @media screen and (max-width: 780px) {
     width: 36rem;
-    height: 43rem;
     flex-direction: column;
   }
   @media screen and (max-width: 645px) {
     width: 30rem;
-    height: 43rem;
     flex-direction: column;
   }
   @media screen and (max-width: 500px) {
     top: 80%;
     width: 27rem;
-    height: 48rem;
     flex-direction: column;
     margin-bottom: 0;
   }
@@ -441,7 +446,7 @@ const ReviewWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: 1rem;
-  margin-bottom: 2rem;
+
   width: 50rem;
   @media screen and (max-width: 970px) {
     margin-bottom: 0;
@@ -449,7 +454,6 @@ const ReviewWrapper = styled.div`
   }
   @media screen and (max-width: 500px) {
     width: 12rem;
-    margin-bottom: 2rem;
   }
 `;
 
@@ -495,7 +499,8 @@ const SubmitBtn = styled.input`
 const EmptyBorder = styled.div`
   @media screen and (max-width: 500px) {
     width: 100%;
-    height: 20rem;
+    margin-top: 3rem;
   }
 `;
+
 export default ReviewDetail;

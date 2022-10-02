@@ -30,6 +30,7 @@ const Writer = styled.div`
 `;
 
 const WriteDay = styled.div`
+  text-align: left;
   padding-top: 0.6rem;
   width: 13rem;
   font-size: 0.5rem;
@@ -48,17 +49,22 @@ const Score = styled.div`
   font-weight: bold;
 `;
 const ReviewContents = styled.div`
+  text-align: left;
   padding: 0.5rem;
   font-size: 0.8rem;
   font-weight: bold;
 `;
 
 const ReviewCard = ({ writer, writeday, score, content }) => {
-  return (
+  let parsing = writeday.substring(0, 10);
+
+  return writer == "" ? (
+    <></>
+  ) : (
     <ReviewCardWrapper>
       <ReviewHeader>
         <Writer>{writer}</Writer>
-        <WriteDay>{writeday}</WriteDay>
+        <WriteDay>{parsing}</WriteDay>
         <StarImg src={`${process.env.PUBLIC_URL}/assets/card/star.png`}></StarImg>
         <Score>{score}</Score>
       </ReviewHeader>
