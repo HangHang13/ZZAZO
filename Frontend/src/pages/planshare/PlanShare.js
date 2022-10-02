@@ -86,6 +86,7 @@ const ShareButton = styled(ButtonWrapper)`
   }
   @media screen and (max-width: 500px) {
     width: 40vw;
+    font-size: 0.7rem;
     @keyframes motion {
       0% {
         margin-top: 0px;
@@ -223,6 +224,11 @@ const PlanShare = () => {
         {authenticated && (
           <PlanBlock height="calc(15vh - 3rem)" justifyContent="center">
             <ShareButton onClick={onKakaoClick}>
+              <img
+                src="https://i0.wp.com/forhappywomen.com/wp-content/uploads/2018/11/%EC%82%B0%EB%B6%80%EC%9D%B8%EA%B3%BC-%ED%8F%AC%ED%95%B4%ED%94%BC%EC%9A%B0%EB%A8%BC-%EB%AC%B8%EC%9D%98-%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%94%8C%EB%9F%AC%EC%8A%A4%EC%B9%9C%EA%B5%AC-%EB%B2%84%ED%8A%BC.png?w=586&ssl=1"
+                alt="kakao_logo"
+                style={{ width: 30, height: 30, marginRight: 5 }}
+              ></img>
               카카오톡으로 공유하기
             </ShareButton>
           </PlanBlock>
