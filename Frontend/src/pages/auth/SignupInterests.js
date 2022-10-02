@@ -9,7 +9,7 @@ import DivButton from "./../../components/common/buttons/DivButton";
 import { signup } from "../../api/AuthAPI";
 import Header from "../../components/layout/Header";
 import Loading from "./../../components/common/Loading";
-import Footer from "../../components/layout/Footer";
+import EmptySpace from "./../../components/layout/EmptySpace";
 
 // 임시 interests 더미데이터
 const intList = [
@@ -88,11 +88,6 @@ const InterestsHeader = styled.div`
 	font-size: 1.5rem;
 	font-weight: bold;
 	border-bottom: 2px solid grey;
-`;
-
-const EmptySpace = styled.div`
-	width: 100%;
-	height: 160px;
 `;
 
 const SignupInterests = () => {
