@@ -58,7 +58,7 @@ const CardBody = styled.div`
   padding-left: 0.5rem;
 `;
 
-const RecCard = ({ src, name, address, place_type, target, lat, lng }) => {
+const RecCard = ({ src, name, address, place_type, target, lat, lng, targetgender, targetage }) => {
   const navigate = useNavigate();
   return (
     <Card
@@ -82,25 +82,24 @@ const RecCard = ({ src, name, address, place_type, target, lat, lng }) => {
       <CardHeader>{name}</CardHeader>
       <CardBody>
         <CardPlaceType>
-          <InfoIcon
-            src={`${process.env.PUBLIC_URL}/assets/card/sushi.png`}
-            alt="location"
-          ></InfoIcon>
+          <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/category.png`} alt="location"></InfoIcon>
           {place_type}
         </CardPlaceType>
         <CardAddress>
-          <InfoIcon
-            src={`${process.env.PUBLIC_URL}/assets/card/location.png`}
-            alt="location"
-          ></InfoIcon>
+          <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/location.png`} alt="location"></InfoIcon>
           {address}
         </CardAddress>
         <CardTarget>
-          <InfoIcon
-            src={`${process.env.PUBLIC_URL}/assets/card/women.png`}
-            alt="location"
-          ></InfoIcon>
-          {target}
+          {targetgender == "male" ? (
+            <>
+              <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/man.png`} alt="location"></InfoIcon>
+            </>
+          ) : (
+            <>
+              <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/women.png`} alt="location"></InfoIcon>
+            </>
+          )}
+          {targetage} 대 {targetgender == "male" ? "남성" : "여성"} 이 많이 이용합니다.
         </CardTarget>
       </CardBody>
     </Card>
