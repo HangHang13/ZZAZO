@@ -78,11 +78,12 @@ def place_review_create_or_create_form(request, place_id):
 @api_view(['PUT', 'DELETE'])
 def place_review_update_or_delete(request, place_id, review_id):
     review = Review.objects.get(pk = review_id, place_id = place_id)
+    place = Place.objects.using('place').get(_id = place_id)
     def review_update():
         if request.user.id == review.user_id:
             serializer = ReviewCreateSerializer(instance=review, data=request.data)
             if serializer.is_valid(raise_exception=True):
-                serializer.save()
+                serializer.save(user=request.user, place=place)
                 code = 200
                 message = "리뷰 수정"
                 res = {
