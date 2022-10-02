@@ -1,9 +1,4 @@
-from asyncio.windows_events import NULL
-import enum
-from turtle import pos
-from django.shortcuts import get_object_or_404
 
-from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -12,8 +7,7 @@ from .serializers.place import PlaceTestSerializer
 from plan.serializers.plan import CardListSerializer
 from review.serializers.review import ReviewViewSerializer
 from review.models import Review
-from django.db.models import Avg
-from collections import OrderedDict
+
 
 from plan.models import Card
 from place.models import Place
