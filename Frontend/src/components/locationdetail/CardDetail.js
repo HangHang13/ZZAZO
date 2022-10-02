@@ -27,6 +27,7 @@ const CardWrapper = styled.div`
   height: 28rem;
   padding-top: 1.5rem;
   padding-left: 1.5rem;
+  padding-bottom: 1rem;
   border-radius: 16px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8);
   margin-bottom: 3rem;
@@ -45,6 +46,7 @@ const CardWrapper = styled.div`
     top: 80%;
     width: 28rem;
     height: 50rem;
+    padding-bottom: 0;
     flex-direction: column;
     margin-bottom: 0;
   }
@@ -131,9 +133,20 @@ const CardImgWrapper = styled.div`
 `;
 const CardInfo = styled.div`
   display: flex;
-  height: 8rem;
+  height: 11rem;
   flex-direction: column;
   overflow: hidden;
+
+  @media screen and (max-width: 870px) {
+    height: 9rem;
+  }
+  @media screen and (max-width: 770px) {
+    padding-top: 1rem;
+    height: 8rem;
+  }
+  @media screen and (max-width: 635px) {
+    width: 24rem;
+  }
 `;
 const CardInfoItem = styled.div`
   margin: 0.4rem;
@@ -181,6 +194,8 @@ const ImgButton = styled.img`
   }
 `;
 const ReviewWrapper = styled.div`
+  border: solid;
+  border-color: grey;
   height: 10rem;
   border-radius: 10px;
   padding: 1rem;
