@@ -20,26 +20,28 @@ const Common = styled.div`
   @media screen and (max-width: 500px) {
     z-index: 2020;
     flex-direction: column;
-    height: auto;
+    height: 6rem;
     transition: all 1s;
+    right: 1%;
+    margin-right: -20%;
   }
 `;
 
 const NavbarItemList = styled.div`
   display: flex;
   align-items: center;
+  transition: all 1s;
   @media screen and (max-width: 500px) {
-    transition: all 1s;
+    background-color: white;
+
     flex-direction: column;
     align-items: flex-end;
     margin-top: 6rem;
     display: ${({ menu }) => {
       return menu === false ? "none" : "flex";
     }};
-
-    margin-left: ${({ currUserisLogin }) => {
-      return currUserisLogin ? "7rem" : "12rem";
-    }};
+    margin-left: -2rem;
+    padding-left: 13rem;
   }
 `;
 
@@ -165,6 +167,12 @@ const ImgWrapper = styled.img`
     margin-right: 0.8rem;
     padding-top: 1.3rem;
     padding-right: 22rem;
+  }
+  @media screen and (max-width: 410px) {
+    padding-left: 10%;
+  }
+  @media screen and (max-width: 390px) {
+    padding-left: 20%;
   }
 `;
 
