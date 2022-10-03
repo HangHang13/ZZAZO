@@ -10,9 +10,13 @@ from .serializers.review import ReviewCreateSerializer, ReviewViewSerializer
 from .models import Review
 from place.serializers.place import PlaceDetailSerializer
 
+
+
 @api_view(['GET', 'POST'])
+
 def place_review_create_or_create_form(request, place_id):
     place = Place.objects.using('place').get(_id = place_id)
+
     
     def review_create():
         serializer = ReviewCreateSerializer(data=request.data)
@@ -34,9 +38,10 @@ def place_review_create_or_create_form(request, place_id):
                 "message": message,
             }
             return Response(res)
-    
     def review_create_form():
         user_review = Review.objects.filter(user = request.user, place_id = place_id)
+
+        
         placeSerializer = PlaceDetailSerializer(place)
         placeScore =  Review.objects.filter(place=place_id).aggregate(placeScore = Avg('score'))
         placeData = (dict(placeSerializer.data))
@@ -74,7 +79,9 @@ def place_review_create_or_create_form(request, place_id):
     
     elif request.method == 'GET':
         return review_create_form() 
-        
+
+
+
 @api_view(['PUT', 'DELETE'])
 def place_review_update_or_delete(request, place_id, review_id):
     review = Review.objects.get(pk = review_id, place_id = place_id)
