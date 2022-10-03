@@ -7,23 +7,18 @@ import Header from "../../components/layout/Header";
 import BackgroundCloud from "../../components/common/home/banner/BackgroundCloud";
 import { useDispatch } from "react-redux";
 import { storeLogout } from "../../store/reducers/user";
-import CardDetail from "../../components/locationdetail/CardDetail.js";
 import { getRec } from "../../api/HomeApi";
-import { ImgSearch } from "../../api/KaKaoImgSearch";
-import { getReview } from "../../api/ReviewAPI";
 import { Wrapper } from "../../components/styled/Wrapper";
 import Footer from "../../components/layout/Footer";
-
-const { kakao } = window;
 
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  useEffect(() => {
+  useEffect(async () => {
     if (!sessionStorage.getItem("ACCESS_TOKEN")) {
       dispatch(storeLogout());
     }
-    RecLoad();
+    await RecLoad();
   }, []);
 
   //약속 선택으로 넘길
@@ -31,7 +26,7 @@ const Home = () => {
   //약속카드 상세 모달
   const [modalOpen, setModalOpen] = useState(false);
   //메인페이지 추천 장소
-  const [recList, setRecList] = useState(false);
+  const [recList, setRecList] = useState(null);
   //모달 열고 닫기
   const modalClose = () => {
     setModalOpen(!modalOpen);
@@ -183,11 +178,6 @@ const Home = () => {
   );
 };
 
-const BottomArea = styled.div`
-  display: flex;
-  margin: 4rem;
-`;
-
 const PlanBtn = styled.button`
   &:hover {
     transform: scale(1.1);
@@ -212,11 +202,11 @@ const PlanBtn = styled.button`
     width: 9rem;
   }
   @media screen and (max-width: 700px) {
-    width: 7rem;
+    width: 40vw;
   }
   @media screen and (max-width: 500px) {
-    width: 5rem;
-    font-size: 0.2rem;
+    width: 80vw;
+    font-size: 1rem;
   }
 `;
 
