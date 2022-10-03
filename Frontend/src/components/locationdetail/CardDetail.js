@@ -15,6 +15,7 @@ const Background = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow: scroll;
 `;
 
 const CardWrapper = styled.div`
@@ -26,31 +27,33 @@ const CardWrapper = styled.div`
   height: 28rem;
   padding-top: 1.5rem;
   padding-left: 1.5rem;
+  padding-bottom: 1rem;
   border-radius: 16px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8);
   margin-bottom: 3rem;
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 60%;
   transform: translate(-50%, -50%);
   z-index: 100;
-  overflow: hidden;
+
   @media screen and (max-width: 870px) {
     width: 45rem;
-    height: 28rem;
+    height: 29rem;
     margin-bottom: 0;
   }
   @media screen and (max-width: 770px) {
     top: 80%;
-    width: 35rem;
+    width: 28rem;
     height: 50rem;
+    padding-bottom: 0;
     flex-direction: column;
     margin-bottom: 0;
   }
 
   @media screen and (max-width: 635px) {
     width: 25rem;
-    height: 45rem;
+    height: 48rem;
     flex-direction: column;
     margin-bottom: 0;
   }
@@ -63,7 +66,7 @@ const ExitBtnWrapper = styled.div`
     width: 43rem;
   }
   @media screen and (max-width: 770px) {
-    width: 33rem;
+    width: 26rem;
   }
   justify-content: flex-end;
   @media screen and (max-width: 635px) {
@@ -93,16 +96,15 @@ const CardMainWrapper = styled.div`
     width: 40rem;
   }
   @media screen and (max-width: 770px) {
-    margin-top: 18rem;
     width: 25rem;
-    height: 10rem;
+    height: 40rem;
     flex-direction: column;
   }
 
   @media screen and (max-width: 635px) {
-    margin-top: 15rem;
+    margin-top: 13rem;
     width: 25rem;
-    height: 10rem;
+    height: 12rem;
     flex-direction: column;
   }
 `;
@@ -111,8 +113,7 @@ const CardInfoWrapper = styled.div`
   display: flex;
   width: 24rem;
   flex-direction: column;
-  background-color: white;
-  overflow: hidden;
+
   @media screen and (max-width: 870px) {
     width: 40rem;
   }
@@ -132,9 +133,20 @@ const CardImgWrapper = styled.div`
 `;
 const CardInfo = styled.div`
   display: flex;
-  height: 8rem;
+  height: 11rem;
   flex-direction: column;
   overflow: hidden;
+
+  @media screen and (max-width: 870px) {
+    height: 9rem;
+  }
+  @media screen and (max-width: 770px) {
+    padding-top: 1rem;
+    height: 8rem;
+  }
+  @media screen and (max-width: 635px) {
+    width: 24rem;
+  }
 `;
 const CardInfoItem = styled.div`
   margin: 0.4rem;
@@ -169,6 +181,9 @@ const InstaButtonWrapper = styled.div`
   @media screen and (max-width: 870px) {
     width: 21.5rem;
   }
+  @media screen and (max-width: 635px) {
+    width: 23rem;
+  }
 `;
 const ImgButton = styled.img`
   border-radius: 5px;
@@ -179,6 +194,8 @@ const ImgButton = styled.img`
   }
 `;
 const ReviewWrapper = styled.div`
+  border: solid;
+  border-color: grey;
   height: 10rem;
   border-radius: 10px;
   padding: 1rem;
@@ -194,7 +211,6 @@ const ReviewWrapper = styled.div`
     padding-bottom: 0;
   }
   @media screen and (max-width: 635px) {
-    overflow: hidden;
     width: 20rem;
   }
 `;
@@ -219,9 +235,16 @@ const CardDetail = ({ placeId, modalClose }) => {
   });
 
   const [reviews, setReviews] = useState([]);
+  const reviewItem = {
+    content: "",
+    score: 0,
+    regist: "",
+    userNickName: "",
+  };
 
   useEffect(async () => {
     const response = await getPlaceInfo(placeId);
+    console.log(response);
     setState({
       ...state,
       title: response.data.Place.name,
@@ -229,7 +252,7 @@ const CardDetail = ({ placeId, modalClose }) => {
       score: response.data.Place.placeScore ? parseFloat(response.data.Place.placeScore) : 0.0,
       category: response.data.Place.place_type,
     });
-    setReviews(response.data.Review);
+    setReviews([reviewItem, ...response.data.Review]);
   }, [placeId]);
 
   return (
@@ -263,23 +286,11 @@ const CardDetail = ({ placeId, modalClose }) => {
             <CardLine width="100%"></CardLine>
             <ReviewTitle>Review</ReviewTitle>
             <ReviewWrapper>
-              {reviews.length > 0 ? (
-                reviews.map((item, index) => <ReviewCard writer={item.reviewWriter} writeday={item.reviewRegist} score={parseFloat(item.reviewScore)} content={item.reviewContent}></ReviewCard>)
+              {reviews.length > 1 ? (
+                reviews.map((item, index) => <ReviewCard writer={item.userNickName} writeday={item.regist} score={parseFloat(item.score)} content={item.content}></ReviewCard>)
               ) : (
                 <p align="center">작성된 리뷰가 없습니다.</p>
               )}
-              {/* <ReviewCard
-                writer="김성수"
-                writeday="2022 - 09 - 20"
-                score="4.7"
-                content="인생은 가지덮밥을 먹기 전과 후로 나뉜다."
-              ></ReviewCard>
-              <ReviewCard
-                writer="김성수"
-                writeday="2022 - 09 - 20"
-                score="4.7"
-                content="내 인생에 있어 가지는 변수가 아닌 상수다.내 인생에 있어 가지는 변수가 아닌 상수다. 내 인생에 있어 가지는 변수가 아닌 상수다."
-              ></ReviewCard> */}
             </ReviewWrapper>
           </CardInfoWrapper>
           <CardImgWrapper>

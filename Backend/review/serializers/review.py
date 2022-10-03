@@ -22,3 +22,16 @@ class ReviewViewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = ('id', 'content', 'score', 'regist')
+        
+class ReviewDetailSerializer(serializers.ModelSerializer):
+    
+    class UserSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = User
+            fields = ("userNickName",) 
+    
+    userNickName = serializers.CharField(source='user.userNickName')
+    
+    class Meta:
+        model = Review
+        fields = ('id', 'userNickName', 'content', 'score', 'regist')

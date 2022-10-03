@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from .serializers.place import PlaceDetailSerializer, PlaceListSerializer, PlaceTestSerializer
 from .serializers.place import PlaceTestSerializer
 from plan.serializers.plan import CardListSerializer
-from review.serializers.review import ReviewViewSerializer
+from review.serializers.review import ReviewDetailSerializer
 from review.models import Review
 
 
@@ -343,7 +343,7 @@ def place_detail(request, place_id):
     val['popularAge'] = allPlace.get(val.get('place_id'))
     
     #      ==================================================
-    reviewSerializer = ReviewViewSerializer(review, many=True)
+    reviewSerializer = ReviewDetailSerializer(review, many=True)
     data = {
         'Place': val,
         'Review' : reviewSerializer.data,
