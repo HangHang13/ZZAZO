@@ -11,11 +11,11 @@ from review.models import Review
 
 from plan.models import Card
 from place.models import Place
-from drf_yasg.utils import swagger_auto_schema
 from django.db.models import Q
 from haversine import haversine
 from django.db import connection
 from pprint import pprint
+
 @api_view(['GET'])
 def home(request):
     place_list = Card.objects.raw(''' SELECT * FROM plan_card GROUP BY place_id ORDER BY count(place_id) desc
