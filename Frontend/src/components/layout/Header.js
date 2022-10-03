@@ -21,6 +21,8 @@ const Common = styled.div`
     z-index: 2020;
     flex-direction: column;
     height: 6rem;
+    right: 1%;
+    margin-right: -20%;
     transition: all 1s;
     right: 1%;
     margin-right: -20%;
@@ -37,6 +39,7 @@ const NavbarItemList = styled.div`
     flex-direction: column;
     align-items: flex-end;
     margin-top: 6rem;
+    background-color: white;
     display: ${({ menu }) => {
       return menu === false ? "none" : "flex";
     }};
@@ -169,7 +172,7 @@ const ImgWrapper = styled.img`
     padding-right: 22rem;
   }
   @media screen and (max-width: 410px) {
-    padding-left: 10%;
+    padding-left: 15%;
   }
   @media screen and (max-width: 390px) {
     padding-left: 20%;
