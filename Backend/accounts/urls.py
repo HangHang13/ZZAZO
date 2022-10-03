@@ -48,7 +48,9 @@ urlpatterns = [
     path('findEmail', views.find_userEmail, name='find_email'),
     #회원탈퇴
     # path('<str:userEmail>/', views.delete_user, name='delete_user'),
+
     path('<str:userEmail>/', Delete_user.as_view(), name='delete_user'),
+
     
     #비밀번호 변경
     path('pw', UserChangePasswordView.as_view(), name='changepassword'),
