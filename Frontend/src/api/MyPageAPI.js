@@ -26,9 +26,9 @@ const updatePassword = async (data) => {
   return result;
 };
 /**회원 탈퇴 */
-const deleteProfile = async () => {
+const deleteProfile = async (data) => {
   const result = await client
-    .delete(`/userEmail`)
+    .delete(`/users/delete/${data}`)
     .then((response) => response.data)
     .catch((error) => error.response);
   return result;

@@ -1,9 +1,9 @@
 FROM python:3.9.13
 # 컨테이너 내에서 코드가 실행될 경로 설정
-ENV PYTHONUNBUFFERED 1
+# ENV PYTHONUNBUFFERED 1
 
 WORKDIR /Backend
-# WORKDIR /usr/src/app
+
 # requirements.txt에 명시된 필요한 packages 설치
 COPY requirements.txt ./
 RUN pip install --upgrade pip
@@ -13,5 +13,5 @@ COPY . .
 # 포트 설정
 EXPOSE 8000
 # gunicorn 실행
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "ZAZZO.wsgi"]
-# CMD ["gunicorn", "--bind", "0.0.0.0:8000", "project_name.wsgi:application"]
+
+CMD ["gunicorn","--bind","0.0.0.0:8000","ZZAZO.wsgi:application"]

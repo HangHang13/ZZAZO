@@ -7,23 +7,18 @@ import Header from "../../components/layout/Header";
 import BackgroundCloud from "../../components/common/home/banner/BackgroundCloud";
 import { useDispatch } from "react-redux";
 import { storeLogout } from "../../store/reducers/user";
-import CardDetail from "../../components/locationdetail/CardDetail.js";
 import { getRec } from "../../api/HomeApi";
-import { ImgSearch } from "../../api/KaKaoImgSearch";
-import { getReview } from "../../api/ReviewAPI";
 import { Wrapper } from "../../components/styled/Wrapper";
 import Footer from "../../components/layout/Footer";
-
-const { kakao } = window;
 
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  useEffect(() => {
+  useEffect(async () => {
     if (!sessionStorage.getItem("ACCESS_TOKEN")) {
       dispatch(storeLogout());
     }
-    RecLoad();
+    await RecLoad();
   }, []);
 
   //약속 선택으로 넘길
@@ -31,7 +26,7 @@ const Home = () => {
   //약속카드 상세 모달
   const [modalOpen, setModalOpen] = useState(false);
   //메인페이지 추천 장소
-  const [recList, setRecList] = useState(false);
+  const [recList, setRecList] = useState(null);
   //모달 열고 닫기
   const modalClose = () => {
     setModalOpen(!modalOpen);
@@ -94,7 +89,9 @@ const Home = () => {
                 <PlanBtn onClick={() => navigate("/plan")}>약속잡기</PlanBtn>
               </BtnWrapper>
             </HomeBannerArea>
-            <BannerImg src={`${process.env.PUBLIC_URL}/assets/main/play.png`}></BannerImg>
+            <BannerImg
+              src={`${process.env.PUBLIC_URL}/assets/main/play.png`}
+            ></BannerImg>
           </HomeBanner>
 
           <br />
@@ -106,27 +103,47 @@ const Home = () => {
           <br />
           <IntroduceList>
             <Introduce>
-              <ImgWrapper width="7rem" height="7rem" src={`${process.env.PUBLIC_URL}/assets/introduce/introduce1.png`}></ImgWrapper>
+              <ImgWrapper
+                width="7rem"
+                height="7rem"
+                src={`${process.env.PUBLIC_URL}/assets/introduce/introduce1.png`}
+              ></ImgWrapper>
               <Text fontsize="0.7rem">약속 상대와 만나고</Text>
               <Text fontsize="0.7rem">싶은 위치를 선택하세요!</Text>
             </Introduce>
             <Introduce>
-              <ImgWrapper width="7rem" height="7rem" src={`${process.env.PUBLIC_URL}/assets/introduce/introduce2.png`}></ImgWrapper>
+              <ImgWrapper
+                width="7rem"
+                height="7rem"
+                src={`${process.env.PUBLIC_URL}/assets/introduce/introduce2.png`}
+              ></ImgWrapper>
               <Text fontsize="0.7rem"> 나와 취향이 비슷한 사람들이 </Text>
               <Text fontsize="0.7rem">방문한 장소를 추천받을 수 있어요!</Text>
             </Introduce>
             <Introduce>
-              <ImgWrapper width="7rem" height="7rem" src={`${process.env.PUBLIC_URL}/assets/introduce/introduce3.png`}></ImgWrapper>
+              <ImgWrapper
+                width="7rem"
+                height="7rem"
+                src={`${process.env.PUBLIC_URL}/assets/introduce/introduce3.png`}
+              ></ImgWrapper>
               <Text fontsize="0.7rem">내가 선호하는</Text>
               <Text fontsize="0.7rem">장소들을 추천 받을수 있어요!</Text>
             </Introduce>
             <Introduce>
-              <ImgWrapper width="7rem" height="7rem" src={`${process.env.PUBLIC_URL}/assets/introduce/introduce4.png`}></ImgWrapper>
+              <ImgWrapper
+                width="7rem"
+                height="7rem"
+                src={`${process.env.PUBLIC_URL}/assets/introduce/introduce4.png`}
+              ></ImgWrapper>
               <Text fontsize="0.7rem"> 추천 받은 장소들을 골라</Text>
               <Text fontsize="0.7rem"> 약속 일정을 만들어 보세요!</Text>
             </Introduce>
             <Introduce>
-              <ImgWrapper width="7rem" height="7rem" src={`${process.env.PUBLIC_URL}/assets/introduce/introduce5.png`}></ImgWrapper>
+              <ImgWrapper
+                width="7rem"
+                height="7rem"
+                src={`${process.env.PUBLIC_URL}/assets/introduce/introduce5.png`}
+              ></ImgWrapper>
               <Text fontsize="0.7rem">만든 일정을 친구에게</Text>
               <Text fontsize="0.7rem"> 공유할 수 있어요!</Text>
             </Introduce>
@@ -134,7 +151,7 @@ const Home = () => {
           <RecTitle>이런 장소는 어때요?</RecTitle>
           <RecArea>
             <CardWrapper>
-              {recList.data ? (
+              {recList && (
                 <>
                   {recList.data.Place.map((item, idx) => (
                     <RecCard
@@ -150,8 +167,6 @@ const Home = () => {
                     />
                   ))}
                 </>
-              ) : (
-                <></>
               )}
             </CardWrapper>
           </RecArea>
@@ -162,11 +177,6 @@ const Home = () => {
     </>
   );
 };
-
-const BottomArea = styled.div`
-  display: flex;
-  margin: 4rem;
-`;
 
 const PlanBtn = styled.button`
   &:hover {
@@ -192,11 +202,11 @@ const PlanBtn = styled.button`
     width: 9rem;
   }
   @media screen and (max-width: 700px) {
-    width: 7rem;
+    width: 40vw;
   }
   @media screen and (max-width: 500px) {
-    width: 5rem;
-    font-size: 0.2rem;
+    width: 80vw;
+    font-size: 1rem;
   }
 `;
 
