@@ -15,6 +15,6 @@ class Place(models.Model):
     firstCategory = models.CharField(max_length=30)
     secondCategory = models.CharField(max_length=30)
     placeScore = models.FloatField(null = True)
-
+    placeUrl = models.TextField(null = True)
     class Meta:
         app_label = 'place'
