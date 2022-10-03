@@ -48,6 +48,11 @@ const ProfileUpdateBtn = styled.button`
   user-select: none;
 
   transition: all 0.2s ease-in;
+  &:hover {
+    cursor: pointer;
+    background: skyblue;
+    border: 1px solid blue;
+  }
   &:active {
     background: ${({ activeBackground }) => activeBackground};
     border: 1px solid ${({ borderColor }) => borderColor};

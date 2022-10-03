@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Header from "../../components/layout/Header";
-
 import { ButtonWrapper, PlanPageWrapper } from "../../components/styled/Wrapper";
 import styled, { keyframes } from "styled-components";
 import { useLocation, useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MapContainer from "../../components/kakaomap/MapContainer";
 import { getPlan } from "../../api/PlanAPI";
 import ReviewDetail from "./../../components/plancalendar/ReviewDetail";
@@ -24,6 +23,7 @@ import {
   PlanMakeWrapper,
   SectionTitle,
 } from "../../components/styled/PlanCard";
+import { getReview } from "../../api/ReviewAPI";
 
 const ButtonBlock = styled.div`
   display: flex;
@@ -84,6 +84,7 @@ const ShareButton = styled(ButtonWrapper)`
   }
   @media screen and (max-width: 500px) {
     width: 40vw;
+    font-size: 0.7rem;
     @keyframes motion {
       0% {
         margin-top: 0px;
@@ -131,7 +132,8 @@ const PlanShare = () => {
   const [modalOpen, setModalOpen] = useState(false);
   /**공유링크 url */
   const sharedUrl = `${location.href}${isShared ? "" : "?shared=true"}`;
-
+  /**로그인 여부 판단 */
+  const authenticated = useSelector((state) => state.user.value.isLogin);
   const returnHome = () => dispatch("/");
   /**페이지 공유링크 전송 함수 */
   const SharePage = (title) => {
@@ -182,44 +184,66 @@ const PlanShare = () => {
     // console.log(result);
     /**약속 카드 조회 호출 데이터 */
     const data = await getPlan(params.cardId);
+    console.log(data);
     /**약속카드 상태 갱신 */
     setCardData(data.data.card);
   }, [isShared, uselocation]);
 
   const [placeselect, setplaceselect] = useState(0);
+  const [placeinfo, setplaceinfo] = useState({
+    _id: 0,
+    name: "",
+    placeScore: 0,
+    address: "",
+    place_type: "",
+  });
+  const [myrating, setmyrating] = useState(0);
 
   const onHandleModal = (placeId) => {
-    console.log(cardData);
     if (placeId === null) return;
+    const ReviewCardLoad = async () => {
+      const ReviewCardData = await getReview(placeId);
+      if (ReviewCardData.data.reviews != "") {
+        setmyrating(ReviewCardData.data.reviews.score);
+      }
+      setplaceinfo({
+        ...placeinfo,
+        ["_id"]: placeId,
+        ["name"]: ReviewCardData.data.Place.name,
+        ["placeScore"]: ReviewCardData.data.Place.placeScore,
+        ["address"]: ReviewCardData.data.Place.address,
+        ["place_type"]: ReviewCardData.data.Place.place_type,
+      });
+    };
+    ReviewCardLoad();
     setplaceselect(placeId);
     setModalOpen(!modalOpen);
   };
 
   useEffect(() => {
     getCardData();
-  }, [getCardData, isShared]);
+  }, [getCardData, isShared, myrating]);
 
   return (
     <div align="center">
-      {modalOpen && (
-        <ReviewDetail
-          placeid={placeselect}
-          modalClose={onHandleModal}
-          title="석촌 호수 공원"
-          address="서울시 강남대로 123"
-          category="음식점 - 일식"
-          target="20대 여성이 주로 방문해요"
-          score={4}
-        ></ReviewDetail>
-      )}
+      {modalOpen && <ReviewDetail myrating={myrating} placeid={placeselect} placeinfo={placeinfo} modalClose={onHandleModal} target="20대 여성이 주로 방문해요"></ReviewDetail>}
       <Header display="none" />
       <PlanPageWrapper width="90vw">
         <PlanBlock height="calc(15vh - 3rem)">
           <Title>약속 공유</Title>
         </PlanBlock>
-        <PlanBlock height="calc(15vh - 3rem)" justifyContent="center">
-          <ShareButton onClick={onKakaoClick}>카카오톡으로 공유하기</ShareButton>
-        </PlanBlock>
+        {authenticated && (
+          <PlanBlock height="calc(15vh - 3rem)" justifyContent="center">
+            <ShareButton onClick={onKakaoClick}>
+              <img
+                src="https://i0.wp.com/forhappywomen.com/wp-content/uploads/2018/11/%EC%82%B0%EB%B6%80%EC%9D%B8%EA%B3%BC-%ED%8F%AC%ED%95%B4%ED%94%BC%EC%9A%B0%EB%A8%BC-%EB%AC%B8%EC%9D%98-%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%94%8C%EB%9F%AC%EC%8A%A4%EC%B9%9C%EA%B5%AC-%EB%B2%84%ED%8A%BC.png?w=586&ssl=1"
+                alt="kakao_logo"
+                style={{ width: 30, height: 30, marginRight: 5 }}
+              ></img>
+              카카오톡으로 공유하기
+            </ShareButton>
+          </PlanBlock>
+        )}
         <PlanBlock justifyContent="center" width="100%" height="calc(72vh - 1rem)">
           <PlanMakeWrapper width="calc(60% - 1rem)" height="100%">
             <MapWrapper mapName="make" width="99%" height="100%">

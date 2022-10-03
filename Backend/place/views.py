@@ -1,27 +1,21 @@
-from asyncio.windows_events import NULL
-import enum
-from turtle import pos
-from django.shortcuts import get_object_or_404
 
-from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .serializers.place import PlaceDetailSerializer, PlaceListSerializer, PlaceTestSerializer
 from .serializers.place import PlaceTestSerializer
 from plan.serializers.plan import CardListSerializer
-from review.serializers.review import ReviewViewSerializer
+from review.serializers.review import ReviewDetailSerializer
 from review.models import Review
-from django.db.models import Avg
-from collections import OrderedDict
+
 
 from plan.models import Card
 from place.models import Place
-from drf_yasg.utils import swagger_auto_schema
 from django.db.models import Q
 from haversine import haversine
 from django.db import connection
 from pprint import pprint
+
 @api_view(['GET'])
 def home(request):
     place_list = Card.objects.raw(''' SELECT * FROM plan_card GROUP BY place_id ORDER BY count(place_id) desc
@@ -46,7 +40,7 @@ def home(request):
     male = dict(conmale)
     for i, val in enumerate(serializer.data):
         print(val.get('place_id'))
-        if val.get('place_id') == NULL:
+        if val.get('place_id') is None:
             continue
 
         if female.get(val.get('place_id')) != None:
@@ -58,8 +52,9 @@ def home(request):
         elif male.get(val.get('place_id')) == None :
             malecnt = 0
 
+
         if malecnt == 0 & femalecnt == 0 :
-            serializer.data[i]['popularGender'] = "-"
+            serializer.data[i]['popularGender'] = None
         elif femalecnt > malecnt:
             serializer.data[i]['popularGender'] = 'female'
         elif malecnt > femalecnt:
@@ -72,11 +67,19 @@ def home(request):
     with connection.cursor() as cursor:
         cursor.execute(placeAge)
         all_Place = cursor.fetchall()
-    allPlace = dict(all_Place)
+    
+    allPlace = {}
+    for i in all_Place:
+        if i[0] in allPlace:
+            allPlace[i[0]] = allPlace[i[0]] +" & " + i[1]
+        else:
+            allPlace[i[0]] = i[1]
     for i, val in enumerate(serializer.data):
-        if val.get('place_id') == NULL:
+        if val.get('place_id') == None:
             continue
         serializer.data[i]['popularAge'] = allPlace.get(val.get('place_id'))
+            
+            
     #      ==================================================
 
     data = {'Place': serializer.data}
@@ -140,7 +143,7 @@ def place_recommend(request):
     print(type(serializer.data))
     for i, val in enumerate(serializer.data):
         print(val)
-        if val.get('_id') == NULL:
+        if val.get('_id') == None:
             continue
 
         if female.get(val.get('_id')) != None:
@@ -153,7 +156,7 @@ def place_recommend(request):
             malecnt = 0
         
         if malecnt == 0 & femalecnt == 0 :
-            serializer.data[i]['popularGender'] = "-"
+            serializer.data[i]['popularGender'] = None
         elif femalecnt > malecnt:
             serializer.data[i]['popularGender'] = 'female'
         elif malecnt > femalecnt:
@@ -166,9 +169,14 @@ def place_recommend(request):
     with connection.cursor() as cursor:
         cursor.execute(placeAge)
         all_Place = cursor.fetchall()
-    allPlace = dict(all_Place)
+    allPlace = {}
+    for i in all_Place:
+        if i[0] in allPlace:
+            allPlace[i[0]] = allPlace[i[0]] +" & " + i[1]
+        else:
+            allPlace[i[0]] = i[1]
     for i, val in enumerate(serializer.data):
-        if val.get('place_id') == NULL:
+        if val.get('place_id') == None:
             continue
         serializer.data[i]['popularAge'] = allPlace.get(val.get('place_id'))
     #      ==================================================
@@ -216,7 +224,7 @@ def place_list(request, place_type):
     male = dict(conmale)
     for i, val in enumerate(serializer.data):
         print(val)
-        if val.get('_id') == NULL:
+        if val.get('_id') == None:
             continue
 
         if female.get(val.get('_id')) != None:
@@ -229,7 +237,7 @@ def place_list(request, place_type):
             malecnt = 0
         
         if malecnt == 0 & femalecnt == 0 :
-            serializer.data[i]['popularGender'] = "-"
+            serializer.data[i]['popularGender'] = None
         elif femalecnt > malecnt:
             serializer.data[i]['popularGender'] = 'female'
         elif malecnt > femalecnt:
@@ -242,9 +250,14 @@ def place_list(request, place_type):
     with connection.cursor() as cursor:
         cursor.execute(placeAge)
         all_Place = cursor.fetchall()
-    allPlace = dict(all_Place)
+    allPlace = {}
+    for i in all_Place:
+        if i[0] in allPlace:
+            allPlace[i[0]] = allPlace[i[0]] +" & " + i[1]
+        else:
+            allPlace[i[0]] = i[1]
     for i, val in enumerate(serializer.data):
-        if val.get('_id') == NULL:
+        if val.get('_id') == None:
             continue
         serializer.data[i]['popularAge'] = allPlace.get(val.get('place_id'))
     #      ==================================================
@@ -293,7 +306,7 @@ def place_detail(request, place_id):
     val = dict(serializer.data)
     print(val)
     print(val.get('_id'))
-    if val.get('_id') == NULL:
+    if val.get('_id') == None:
         return
 
     if female.get(val.get('_id')) != None:
@@ -306,7 +319,7 @@ def place_detail(request, place_id):
         malecnt = 0
         
     if malecnt == 0 & femalecnt == 0 :
-        val['popularGender'] = "-"
+        val['popularGender'] = None
     elif femalecnt > malecnt:
         val['popularGender'] = 'female'
     elif malecnt > femalecnt:
@@ -319,13 +332,18 @@ def place_detail(request, place_id):
     with connection.cursor() as cursor:
         cursor.execute(placeAge)
         all_Place = cursor.fetchall()
-    allPlace = dict(all_Place)
-
-    if val.get('_id') == NULL:
+    allPlace = {}
+    for i in all_Place:
+        if i[0] in allPlace:
+            allPlace[i[0]] = allPlace[i[0]] +" & " + i[1]
+        else:
+            allPlace[i[0]] = i[1]
+    if val.get('_id') is None:
         return
     val['popularAge'] = allPlace.get(val.get('place_id'))
+    
     #      ==================================================
-    reviewSerializer = ReviewViewSerializer(review, many=True)
+    reviewSerializer = ReviewDetailSerializer(review, many=True)
     data = {
         'Place': val,
         'Review' : reviewSerializer.data,
@@ -345,5 +363,5 @@ placeFemale = "SELECT pc.place_id, count(au.userGender) AS gender FROM plan_card
 placeMale = "SELECT pc.place_id, count(au.userGender) AS gender FROM plan_card AS pc join accounts_user AS au where au.userGender = 'M'  group BY place_id"
 
 # 약속 카드 장소에 대한 가장 많이 사용하는 연령 대
-placeAge = "SELECT t1.place_id, t1.ageGroup FROM (SELECT g.place_id, g.ageGroup, g.total AS total  FROM (SELECT a.place_id, case when age >= 10 AND age<20 then'10대' when age >= 20 AND age < 30 then '20대' when age >= 30 AND age < 40 then '30대' when age >= 40 AND age < 50 then '40대' when age >= 50 AND age < 60 then '50대' when age >= 60 AND age < 70 then '60대' ELSE '만족없음'END AS ageGroup , COUNT(*) AS total FROM  (select pc.place_id, FLOOR((CAST(REPLACE(CURRENT_DATE,'-','') AS UNSIGNED) - CAST(REPLACE(au.userBirth,'-','') AS UNSIGNED)) / 10000 ) + 1 AS age FROM plan_card AS pc JOIN accounts_user AS au) AS a GROUP BY a.place_id, ageGroup) AS g GROUP BY g.place_id, g.ageGroup) AS t1, (SELECT g.place_id, max(g.total) AS max_total  FROM (SELECT a.place_id, case when age >= 10 AND age<20 then'10대' when age >= 20 AND age < 30 then '20대' when age >= 30 AND age < 40 then '30대' when age >= 40 AND age < 50 then '40대' when age >= 50 AND age < 60 then '50대' when age >= 60 AND age < 70 then '60대' ELSE '만족없음' END AS ageGroup , COUNT(*) AS total FROM (select pc.place_id, FLOOR((CAST(REPLACE(CURRENT_DATE,'-','') AS UNSIGNED) - CAST(REPLACE(au.userBirth,'-','') AS UNSIGNED)) / 10000 ) + 1 AS age FROM plan_card AS pc JOIN accounts_user AS au) AS a GROUP BY a.place_id, ageGroup) AS g GROUP BY g.place_id) AS t2 WHERE t1.total = t2.max_total AND t1.place_id = t2.place_id"
+placeAge = "SELECT t1.place_id, t1.ageGroup FROM (SELECT g.place_id, g.ageGroup, g.total AS total  FROM (SELECT a.place_id, case when age >= 10 AND age<20 then'10대' when age >= 20 AND age < 30 then '20대' when age >= 30 AND age < 40 then '30대' when age >= 40 AND age < 50 then '40대' when age >= 50 AND age < 60 then '50대' when age >= 60 AND age < 70 then '60대' ELSE '만족없음'END AS ageGroup , COUNT(*) AS total FROM  (select pc.place_id, FLOOR((CAST(REPLACE(CURRENT_DATE,'-','') AS UNSIGNED) - CAST(REPLACE(au.userBirth,'-','') AS UNSIGNED)) / 10000 ) + 1 AS age FROM plan_card AS pc JOIN accounts_user AS au ON pc.user_id = au.id) AS a GROUP BY a.place_id, ageGroup) AS g GROUP BY g.place_id, g.ageGroup) AS t1, (SELECT g.place_id, max(g.total) AS max_total  FROM (SELECT a.place_id, case when age >= 10 AND age<20 then'10대' when age >= 20 AND age < 30 then '20대' when age >= 30 AND age < 40 then '30대' when age >= 40 AND age < 50 then '40대' when age >= 50 AND age < 60 then '50대' when age >= 60 AND age < 70 then '60대' ELSE '만족없음' END AS ageGroup , COUNT(*) AS total FROM (select pc.place_id, FLOOR((CAST(REPLACE(CURRENT_DATE,'-','') AS UNSIGNED) - CAST(REPLACE(au.userBirth,'-','') AS UNSIGNED)) / 10000 ) + 1 AS age FROM plan_card AS pc JOIN accounts_user AS au ON pc.user_id = au.id) AS a GROUP BY a.place_id, ageGroup) AS g GROUP BY g.place_id) AS t2 WHERE t1.total = t2.max_total AND t1.place_id = t2.place_id"
 
