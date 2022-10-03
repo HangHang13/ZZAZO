@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { deleteProfile } from "../../api/MyPageAPI";
+import { storeLogout } from "../../store/reducers/user";
+import { useNavigate } from "react-router-dom";
 const Body = styled.div`
   position: relative;
 `;
@@ -97,15 +99,16 @@ ProfileUpdateBtn.defaultProps = {
 
 const DeleteProfile = () => {
   const user = useSelector((state) => state.user.value);
-  // console.log(user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const deleteUser = async () => {
-    const result = await deleteProfile();
+    const result = await deleteProfile(user.data.userEmail);
     if (result.code === 200) {
       alert("계정이 탈퇴되었습니다.");
-      // console.log(result.data);
+      dispatch(storeLogout());
+      navigate("/");
     } else {
       alert("계정탈퇴에 실패하였습니다.");
-      // console.log(result.data);
     }
   };
   return (
