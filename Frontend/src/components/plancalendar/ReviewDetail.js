@@ -234,7 +234,7 @@ const Stars = styled.div`
 `;
 
 const Background = styled.div`
-  z-index: 3000;
+  z-index: 9999;
   position: absolute;
   width: 100vw;
   height: 100vh;
@@ -249,7 +249,7 @@ const Background = styled.div`
 `;
 
 const CardWrapper = styled.div`
-  z-index: 3000;
+  z-index: 9999;
   display: flex;
   flex-direction: column;
   align-items: center;

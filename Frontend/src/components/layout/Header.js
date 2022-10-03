@@ -24,14 +24,18 @@ const Common = styled.div`
     right: 1%;
     margin-right: -20%;
     transition: all 1s;
+    right: 1%;
+    margin-right: -20%;
   }
 `;
 
 const NavbarItemList = styled.div`
   display: flex;
   align-items: center;
+  transition: all 1s;
   @media screen and (max-width: 500px) {
-    transition: all 1s;
+    background-color: white;
+
     flex-direction: column;
     align-items: flex-end;
     margin-top: 6rem;

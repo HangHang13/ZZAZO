@@ -379,6 +379,7 @@ def chceck_email(request, userEmail):
   # Send EMail
   body = '인증번호를 입력해 주세요. '+ token
   print(token)
+  print(userEmail)
   data = {
       'subject':'ZZAZO 회원가입 인증번호 이메일입니다.',
       'body':body,
