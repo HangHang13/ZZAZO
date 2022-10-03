@@ -193,7 +193,7 @@ def place_recommend(request):
 
 
 @api_view(['POST'])
-def place_list(request, place_type):
+def place_list(request, firstCategory):
     longitude = float(request.data['longitude'])
     latitude  = float(request.data['latitude'])
     radius = request.data['radius'] if request.data['radius'] else 500
@@ -202,7 +202,7 @@ def place_list(request, place_type):
                 # 1km 기준
                 Q(latitude__range  = (latitude - 0.01 * (radius / 1000), latitude + 0.01 * (radius / 1000))) &
                 Q(longitude__range = (longitude - 0.015 * (radius / 1000), longitude + 0.015 * (radius / 1000))) &
-                Q(firstCategory__contains = place_type)
+                Q(firstCategory__contains = firstCategory)
             )
     print(condition)
     place_list = (
