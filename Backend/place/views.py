@@ -6,12 +6,15 @@ from plan.serializers.plan import CardListSerializer
 from review.serializers.review import ReviewDetailSerializer
 from review.models import Review
 
+from ZZAZO.settings.prod import mongo
 
 from plan.models import Card
 from place.models import Place
 from django.db.models import Q
-from haversine import haversine
 from django.db import connection
+from haversine import haversine
+
+from pymongo import MongoClient
 
 @api_view(['GET'])
 def home(request):
@@ -82,6 +85,14 @@ def home(request):
     
 @api_view(['POST'])
 def place_recommend(request):
+    # 몽고디비 데이터 가져오기
+    host = 'mongodb+srv://S07P22B307:6bqIN7398L@ssafy.ngivl.mongodb.net/S07P22B307?authSource=admin'
+    port = 27017
+    username = 'S07P22B307'
+    password= mongo
+    
+    
+    
     longitude = float(request.data['longitude'])
     latitude  = float(request.data['latitude'])
     radius = request.data['radius'] if request.data['radius'] else 500
@@ -95,12 +106,22 @@ def place_recommend(request):
                 Place
                 .objects
                 .filter(condition)
+                .order_by('-placeScore')
             )
     near_place_list = [info for info in place_list
                                 if haversine(position, (info.latitude, info.longitude)) <= 2 * (radius / 1000)]
-    
-    # 약속 장소로 등록한 사람이 많고 별점이 높은 곳
-    near_place_list.sort(key= lambda x: len(Card.objects.filter(place_id = x._id)))
+    if len(Review.objects.filter(user = request.user)) >= 10:
+        client = MongoClient(host=host, port=port, username=username, password=password)
+        db = client['S07P22B307']
+        target_col = db['recommend_score']
+        # user_recommend = target_col.find_one({"user_id" : request.user.id})['1']
+        # print(user_recommend)
+        near_place_list.sort(key = lambda x: -target_col.find_one({"user_id" : request.user.id}).get(str(x._id), 0))
+        print(target_col.find_one({"user_id" : request.user.id}).get(str(near_place_list[0]._id), 0))
+    # 약속 장소로 등록한 사람이 많은 곳
+    else:
+        # 카테고리 사용
+        near_place_list.sort(key= lambda x: (len(Card.objects.filter(place_id = x._id))))
     
 
     
