@@ -22,12 +22,7 @@ const OpenProfileImageModalButton = styled.button`
   background: transparent;
   color: #80c0a0;
 `;
-const OpenDefaultProfileImageModalButton = styled.button`
-  border: none;
-  cursor: pointer;
-  background: transparent;
-  color: cornflowerblue;
-`;
+
 const ButtonBlock = styled.div`
   display: flex;
   flex-direction: column;
@@ -57,7 +52,6 @@ const ProfileTitle = ({
               <OpenProfileImageModalButton onClick={openModal}>
                 프로필 사진 바꾸기
               </OpenProfileImageModalButton>
-              {/* <button>기본 이미지로 변경</button> */}
             </ButtonBlock>
           </>
         ) : (

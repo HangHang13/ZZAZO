@@ -1,13 +1,11 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
 import userReducer from "./reducers/user";
-import radiusReducer from "./reducers/radius";
 import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/es/persistReducer";
 import positionReducer from "./reducers/position";
 const reducers = combineReducers({
   user: userReducer,
-  radius: radiusReducer,
   position: positionReducer,
 });
 

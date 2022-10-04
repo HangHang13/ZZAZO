@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { updatePassword } from "../../api/MyPageAPI";
-import { SignupBody } from "../../components/auth/signup/Signup";
+import { SignupBody } from "../../components/styled/Signup";
 import { InputFullWrapper } from "../../components/styled/Wrapper";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";

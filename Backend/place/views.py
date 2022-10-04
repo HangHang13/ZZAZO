@@ -6,12 +6,15 @@ from plan.serializers.plan import CardListSerializer
 from review.serializers.review import ReviewDetailSerializer
 from review.models import Review
 
+from ZZAZO.settings.prod import mongo
 
 from plan.models import Card
 from place.models import Place
 from django.db.models import Q
-from haversine import haversine
 from django.db import connection
+from haversine import haversine
+
+from pymongo import MongoClient
 
 @api_view(['GET'])
 def home(request):
@@ -82,6 +85,14 @@ def home(request):
     
 @api_view(['POST'])
 def place_recommend(request):
+    # 몽고디비 데이터 가져오기
+    host = 'mongodb+srv://S07P22B307:6bqIN7398L@ssafy.ngivl.mongodb.net/S07P22B307?authSource=admin'
+    port = 27017
+    username = 'S07P22B307'
+    password= mongo
+    
+    
+    
     longitude = float(request.data['longitude'])
     latitude  = float(request.data['latitude'])
     radius = request.data['radius'] if request.data['radius'] else 500
@@ -95,12 +106,22 @@ def place_recommend(request):
                 Place
                 .objects
                 .filter(condition)
+                .order_by('-placeScore')
             )
     near_place_list = [info for info in place_list
                                 if haversine(position, (info.latitude, info.longitude)) <= 2 * (radius / 1000)]
-    
-    # 약속 장소로 등록한 사람이 많고 별점이 높은 곳
-    near_place_list.sort(key= lambda x: len(Card.objects.filter(place_id = x._id)))
+    if len(Review.objects.filter(user = request.user)) >= 10:
+        client = MongoClient(host=host, port=port, username=username, password=password)
+        db = client['S07P22B307']
+        target_col = db['recommend_score']
+        # user_recommend = target_col.find_one({"user_id" : request.user.id})['1']
+        # print(user_recommend)
+        near_place_list.sort(key = lambda x: -target_col.find_one({"user_id" : request.user.id}).get(str(x._id), 0))
+        print(target_col.find_one({"user_id" : request.user.id}).get(str(near_place_list[0]._id), 0))
+    # 약속 장소로 등록한 사람이 많은 곳
+    else:
+        # 카테고리 사용
+        near_place_list.sort(key= lambda x: (len(Card.objects.filter(place_id = x._id))))
     
 
     
@@ -277,11 +298,6 @@ def place_detail(request, place_id):
     }
     return Response(res)
 
-
-# 약속 카드 장소에 대한 남, 녀 작성 수
-placeFemale = "SELECT pc.place_id, count(au.userGender) AS gender FROM plan_card AS pc join accounts_user AS au where au.userGender = 'F'  group BY place_id"
-placeMale = "SELECT pc.place_id, count(au.userGender) AS gender FROM plan_card AS pc join accounts_user AS au where au.userGender = 'M'  group BY place_id"
-
 def genderFemale(placeFemale):
     with connection.cursor() as cursor:
         cursor.execute(placeFemale)
@@ -297,6 +313,11 @@ def popularAge(placeAge):
         cursor.execute(placeAge)
         all_Place = cursor.fetchall()
     return all_Place
+
+# 약속 카드 장소에 대한 남, 녀 작성 수
+placeFemale = "SELECT pc.place_id, count(au.userGender) AS gender FROM plan_card AS pc join accounts_user AS au where au.userGender = 'F'  group BY place_id"
+placeMale = "SELECT pc.place_id, count(au.userGender) AS gender FROM plan_card AS pc join accounts_user AS au where au.userGender = 'M'  group BY place_id"
+
 # 약속 카드 장소에 대한 가장 많이 사용하는 연령 대
 placeAge = "SELECT t1.place_id, t1.ageGroup FROM (SELECT g.place_id, g.ageGroup, g.total AS total  FROM (SELECT a.place_id, case when age >= 10 AND age<20 then'10대' when age >= 20 AND age < 30 then '20대' when age >= 30 AND age < 40 then '30대' when age >= 40 AND age < 50 then '40대' when age >= 50 AND age < 60 then '50대' when age >= 60 AND age < 70 then '60대' ELSE '만족없음'END AS ageGroup , COUNT(*) AS total FROM  (select pc.place_id, FLOOR((CAST(REPLACE(CURRENT_DATE,'-','') AS UNSIGNED) - CAST(REPLACE(au.userBirth,'-','') AS UNSIGNED)) / 10000 ) + 1 AS age FROM plan_card AS pc JOIN accounts_user AS au ON pc.user_id = au.id) AS a GROUP BY a.place_id, ageGroup) AS g GROUP BY g.place_id, g.ageGroup) AS t1, (SELECT g.place_id, max(g.total) AS max_total  FROM (SELECT a.place_id, case when age >= 10 AND age<20 then'10대' when age >= 20 AND age < 30 then '20대' when age >= 30 AND age < 40 then '30대' when age >= 40 AND age < 50 then '40대' when age >= 50 AND age < 60 then '50대' when age >= 60 AND age < 70 then '60대' ELSE '만족없음' END AS ageGroup , COUNT(*) AS total FROM (select pc.place_id, FLOOR((CAST(REPLACE(CURRENT_DATE,'-','') AS UNSIGNED) - CAST(REPLACE(au.userBirth,'-','') AS UNSIGNED)) / 10000 ) + 1 AS age FROM plan_card AS pc JOIN accounts_user AS au ON pc.user_id = au.id) AS a GROUP BY a.place_id, ageGroup) AS g GROUP BY g.place_id) AS t2 WHERE t1.total = t2.max_total AND t1.place_id = t2.place_id"
 
