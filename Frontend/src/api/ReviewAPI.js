@@ -10,6 +10,8 @@ const getReview = async (placeId) => {
 };
 
 const postReview = async (placeId, data) => {
+  console.log("등록 요청 api");
+  console.log(data);
   const result = await client
     .post(`review/${placeId}`, data)
     .then((response) => response.data)
@@ -18,8 +20,10 @@ const postReview = async (placeId, data) => {
 };
 
 const putReview = async (placeId, reviewId, data) => {
+  console.log("수정 api 요청데이터");
+  console.log(data);
   const result = await client
-    .post(`review/${placeId}/${reviewId}`, data)
+    .put(`review/${placeId}/${reviewId}`, data)
     .then((response) => response.data)
     .catch((error) => error.response);
   return result;
