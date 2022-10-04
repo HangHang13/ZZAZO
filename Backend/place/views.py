@@ -1,3 +1,5 @@
+import enum
+from numpy import place
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -62,8 +64,12 @@ def home(request):
             
             
     #      ==================================================
-
-    data = {'Place': serializer.data}
+    pdata = {}
+    for i, val in enumerate(serializer.data):
+        placeUrlData = Place.objects.filter(_id = val.get('place_id'))
+        placeUrlSerializer = PlaceListSerializer(placeUrlData, many=True)
+        pdata[i] = placeUrlSerializer.data
+    data = {'Place': pdata}
     code = 200
     message = "추천 목록"
     res = {
