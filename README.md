@@ -16,7 +16,7 @@ ZZAZO 시연 시나리오는 👉[여기](README.assets/시연시나리오/시�
 
 1. [서비스 소개](https://lab.ssafy.com/s07-bigdata-recom-sub2/S07P22B307#%E2%85%B0-%EC%84%9C%EB%B9%84%EC%8A%A4-%EC%86%8C%EA%B0%9C)
 2. [기술 스택](https://lab.ssafy.com/s07-bigdata-recom-sub2/S07P22B307#%E2%85%B1-%EA%B8%B0%EC%88%A0%EC%8A%A4%ED%83%9D)
-3. [프로젝트 진행](https://www.notion.so/e75687722f0a4cd1b33a5fd7e0610abf)
+3. [프로젝트 진행](https://lab.ssafy.com/s07-bigdata-recom-sub2/S07P22B307#%E2%85%B2-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%A7%84%ED%96%89)
 
 # **Ⅰ**. **서비스 소개**
 
