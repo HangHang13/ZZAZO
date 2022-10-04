@@ -1,8 +1,5 @@
-import { React, useRef, useState, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import styled from "styled-components";
-import { BaseForm } from "../common/forms/Form";
-import ReviewCard from "../locationdetail/ReviewCard";
-import Rating from "./Rating";
 import { getReview, postReview, putReview } from "../../api/ReviewAPI";
 import { FaStar } from "react-icons/fa";
 import { useSelector } from "react-redux";
@@ -28,8 +25,6 @@ const ReviewDetail = ({ myrating, modalClose, placeinfo, target, placeid }) => {
     }
     setClicked(clickStates);
     setreview({ ...review, ["score"]: clicked.filter(Boolean).length });
-    // console.log(clickStates);
-    // console.log(clicked.filter(Boolean).length);
   };
   /** 카드 정보 조회 **/
   const [cardContent, setcardContent] = useState(false);
@@ -44,7 +39,6 @@ const ReviewDetail = ({ myrating, modalClose, placeinfo, target, placeid }) => {
     /* place Id로 리뷰 정보 조회 */
     const ReviewCardData = await getReview(placeid);
     setcardContent(ReviewCardData);
-    console.log(ReviewCardData.data);
     if (ReviewCardData.data.reviews != "") {
       setisreview(true);
       setreviewcontents(ReviewCardData.data.reviews.content);
@@ -58,7 +52,6 @@ const ReviewDetail = ({ myrating, modalClose, placeinfo, target, placeid }) => {
     score: 0,
   });
   const WriteReview = (val, rating) => {
-    console.log(val);
     setreview({ ...review, ["score"]: rating, ["content"]: val });
   };
 
@@ -66,19 +59,15 @@ const ReviewDetail = ({ myrating, modalClose, placeinfo, target, placeid }) => {
   const CreateReview = async () => {
     alert("리뷰가 등록되었습니다.");
     const result = await postReview(placeid, review);
-    console.log(result);
   };
   //리뷰 수정
   const UpdateReview = async () => {
     alert("리뷰가 수정되었습니다.");
     const result = await putReview(placeid, reviewid, review);
-    console.log(result);
     modalClose();
   };
 
   useEffect(() => {
-    console.log("내가 기존에 준 별점");
-    console.log(myrating);
     let clickStates = [...clicked];
     for (let i = 0; i < myrating; i++) {
       clickStates[i] = true;
@@ -92,7 +81,11 @@ const ReviewDetail = ({ myrating, modalClose, placeinfo, target, placeid }) => {
     <Background>
       <CardWrapper>
         <ExitBtnWrapper>
-          <ImgButton src={`${process.env.PUBLIC_URL}/assets/card/exit.png`} alt="exit" onClick={modalClose}></ImgButton>
+          <ImgButton
+            src={`${process.env.PUBLIC_URL}/assets/card/exit.png`}
+            alt="exit"
+            onClick={modalClose}
+          ></ImgButton>
         </ExitBtnWrapper>
         <TitleWrapper>
           {cardContent ? (
@@ -103,8 +96,14 @@ const ReviewDetail = ({ myrating, modalClose, placeinfo, target, placeid }) => {
             <></>
           )}
 
-          <a href={`https://www.instagram.com/explore/tags/${searchTitle}/?hl=ko`} target="_blank">
-            <ImgButton src={`${process.env.PUBLIC_URL}/assets/card/insta.png`} alt="insta"></ImgButton>
+          <a
+            href={`https://www.instagram.com/explore/tags/${searchTitle}/?hl=ko`}
+            target="_blank"
+          >
+            <ImgButton
+              src={`${process.env.PUBLIC_URL}/assets/card/insta.png`}
+              alt="insta"
+            ></ImgButton>
           </a>
         </TitleWrapper>
 
@@ -115,20 +114,36 @@ const ReviewDetail = ({ myrating, modalClose, placeinfo, target, placeid }) => {
               {cardContent ? (
                 <>
                   <CardInfoItem>
-                    <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/location.png`} alt="location"></InfoIcon>
+                    <InfoIcon
+                      src={`${process.env.PUBLIC_URL}/assets/card/location.png`}
+                      alt="location"
+                    ></InfoIcon>
                     {placeinfo.address}
                   </CardInfoItem>
                   <CardInfoItem>
-                    <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/category.png`} alt="location"></InfoIcon>
+                    <InfoIcon
+                      src={`${process.env.PUBLIC_URL}/assets/card/category.png`}
+                      alt="location"
+                    ></InfoIcon>
                     {placeinfo.place_type}
                   </CardInfoItem>
                   <CardInfoItem>
-                    <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/women.png`} alt="location"></InfoIcon>
+                    <InfoIcon
+                      src={`${process.env.PUBLIC_URL}/assets/card/women.png`}
+                      alt="location"
+                    ></InfoIcon>
                     {target}
                   </CardInfoItem>
                   <CardInfoItem>
-                    <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/star.png`} alt="location"></InfoIcon>
-                    {placeinfo.placeScore ? <>{placeinfo.placeScore}</> : "별점을 입력해주세요"}
+                    <InfoIcon
+                      src={`${process.env.PUBLIC_URL}/assets/card/star.png`}
+                      alt="location"
+                    ></InfoIcon>
+                    {placeinfo.placeScore ? (
+                      <>{placeinfo.placeScore}</>
+                    ) : (
+                      "별점을 입력해주세요"
+                    )}
                   </CardInfoItem>
                 </>
               ) : (
@@ -137,7 +152,10 @@ const ReviewDetail = ({ myrating, modalClose, placeinfo, target, placeid }) => {
             </CardInfo>
           </CardInfoWrapper>
           <CardImgWrapper>
-            <CardImg src={`${process.env.PUBLIC_URL}/assets/card/gazi.png`} alt="gazi"></CardImg>
+            <CardImg
+              src={`${process.env.PUBLIC_URL}/assets/card/gazi.png`}
+              alt="gazi"
+            ></CardImg>
           </CardImgWrapper>
         </CardMainWrapper>
         <EmptyBorder></EmptyBorder>
@@ -149,7 +167,14 @@ const ReviewDetail = ({ myrating, modalClose, placeinfo, target, placeid }) => {
               <Wrap>
                 <Stars>
                   {ARRAY.map((el, idx) => {
-                    return <FaStar key={idx} size="40" onClick={() => handleStarClick(el)} className={clicked[el] && "yellowStar"} />;
+                    return (
+                      <FaStar
+                        key={idx}
+                        size="40"
+                        onClick={() => handleStarClick(el)}
+                        className={clicked[el] && "yellowStar"}
+                      />
+                    );
                   })}
                 </Stars>
                 <StarText>{ratings}/5</StarText>
@@ -172,7 +197,10 @@ const ReviewDetail = ({ myrating, modalClose, placeinfo, target, placeid }) => {
             ></ReviewTextArea>
 
             <ReviewWrapper>
-              <SubmitBtn onClick={() => UpdateReview(review)} defaultValue="리뷰 수정"></SubmitBtn>
+              <SubmitBtn
+                onClick={() => UpdateReview(review)}
+                defaultValue="리뷰 수정"
+              ></SubmitBtn>
             </ReviewWrapper>
           </>
         )}
@@ -188,7 +216,10 @@ const ReviewDetail = ({ myrating, modalClose, placeinfo, target, placeid }) => {
             ></ReviewTextArea>
 
             <ReviewWrapper>
-              <SubmitBtn onClick={() => CreateReview(review)} defaultValue="리뷰 등록"></SubmitBtn>
+              <SubmitBtn
+                onClick={() => CreateReview(review)}
+                defaultValue="리뷰 등록"
+              ></SubmitBtn>
             </ReviewWrapper>
           </>
         )}
@@ -234,7 +265,7 @@ const Stars = styled.div`
 `;
 
 const Background = styled.div`
-  z-index: 3000;
+  z-index: 9999;
   position: absolute;
   width: 100vw;
   height: 100vh;
@@ -249,7 +280,7 @@ const Background = styled.div`
 `;
 
 const CardWrapper = styled.div`
-  z-index: 3000;
+  z-index: 9999;
   display: flex;
   flex-direction: column;
   align-items: center;
