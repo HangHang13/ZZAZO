@@ -71,7 +71,10 @@ def home(request):
         if val.get('place_id') == None:
             continue
         place_data[i][0]['popularAge'] = allPlace.get(val.get('place_id'))
-    data = {'Place': place_data} 
+    list_place_data = []
+    for i in place_data:
+        list_place_data.append(i[0])
+    data = {'Place': list_place_data} 
     code = 200
     message = "추천 목록"
     res = {
