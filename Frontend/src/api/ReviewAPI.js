@@ -1,4 +1,3 @@
-import axios from "axios";
 import { client } from "../utils/client";
 
 const getReview = async (placeId) => {

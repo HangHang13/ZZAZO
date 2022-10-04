@@ -244,12 +244,13 @@ const CardDetail = ({ placeId, modalClose }) => {
 
   useEffect(async () => {
     const response = await getPlaceInfo(placeId);
-    console.log(response);
     setState({
       ...state,
       title: response.data.Place.name,
       address: response.data.Place.address,
-      score: response.data.Place.placeScore ? parseFloat(response.data.Place.placeScore) : 0.0,
+      score: response.data.Place.placeScore
+        ? parseFloat(response.data.Place.placeScore)
+        : 0.0,
       category: response.data.Place.place_type,
     });
     setReviews([reviewItem, ...response.data.Review]);
@@ -259,7 +260,11 @@ const CardDetail = ({ placeId, modalClose }) => {
     <Background>
       <CardWrapper>
         <ExitBtnWrapper>
-          <ImgButton src={`${process.env.PUBLIC_URL}/assets/card/exit.png`} alt="exit" onClick={() => modalClose(placeId)}></ImgButton>
+          <ImgButton
+            src={`${process.env.PUBLIC_URL}/assets/card/exit.png`}
+            alt="exit"
+            onClick={() => modalClose(placeId)}
+          ></ImgButton>
         </ExitBtnWrapper>
         <CardTitle>{state.title}</CardTitle>
         <CardLine width="50%"></CardLine>
@@ -267,19 +272,31 @@ const CardDetail = ({ placeId, modalClose }) => {
           <CardInfoWrapper>
             <CardInfo>
               <CardInfoItem>
-                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/location.png`} alt="location"></InfoIcon>
+                <InfoIcon
+                  src={`${process.env.PUBLIC_URL}/assets/card/location.png`}
+                  alt="location"
+                ></InfoIcon>
                 {state.address}
               </CardInfoItem>
               <CardInfoItem>
-                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/category.png`} alt="location"></InfoIcon>
+                <InfoIcon
+                  src={`${process.env.PUBLIC_URL}/assets/card/category.png`}
+                  alt="location"
+                ></InfoIcon>
                 {state.category}
               </CardInfoItem>
               <CardInfoItem>
-                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/women.png`} alt="location"></InfoIcon>
+                <InfoIcon
+                  src={`${process.env.PUBLIC_URL}/assets/card/women.png`}
+                  alt="location"
+                ></InfoIcon>
                 {state.target}
               </CardInfoItem>
               <CardInfoItem>
-                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/star.png`} alt="location"></InfoIcon>
+                <InfoIcon
+                  src={`${process.env.PUBLIC_URL}/assets/card/star.png`}
+                  alt="location"
+                ></InfoIcon>
                 {state.score}
               </CardInfoItem>
             </CardInfo>
@@ -287,17 +304,36 @@ const CardDetail = ({ placeId, modalClose }) => {
             <ReviewTitle>Review</ReviewTitle>
             <ReviewWrapper>
               {reviews.length > 1 ? (
-                reviews.map((item, index) => <ReviewCard writer={item.userNickName} writeday={item.regist} score={parseFloat(item.score)} content={item.content}></ReviewCard>)
+                reviews.map((item, index) => (
+                  <ReviewCard
+                    writer={item.userNickName}
+                    writeday={item.regist}
+                    score={parseFloat(item.score)}
+                    content={item.content}
+                  ></ReviewCard>
+                ))
               ) : (
                 <p align="center">작성된 리뷰가 없습니다.</p>
               )}
             </ReviewWrapper>
           </CardInfoWrapper>
           <CardImgWrapper>
-            <CardImg src={`${process.env.PUBLIC_URL}/assets/card/gazi.png`} alt="gazi"></CardImg>
+            <CardImg
+              src={`${process.env.PUBLIC_URL}/assets/card/gazi.png`}
+              alt="gazi"
+            ></CardImg>
             <InstaButtonWrapper>
-              <a href={`https://www.instagram.com/explore/tags/${state.title.replace(/ /g, "")}/?hl=ko`} target="_blank">
-                <ImgButton src={`${process.env.PUBLIC_URL}/assets/card/insta.png`} alt="insta"></ImgButton>
+              <a
+                href={`https://www.instagram.com/explore/tags/${state.title.replace(
+                  / /g,
+                  ""
+                )}/?hl=ko`}
+                target="_blank"
+              >
+                <ImgButton
+                  src={`${process.env.PUBLIC_URL}/assets/card/insta.png`}
+                  alt="insta"
+                ></ImgButton>
               </a>
             </InstaButtonWrapper>
           </CardImgWrapper>
