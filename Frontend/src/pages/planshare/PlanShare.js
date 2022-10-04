@@ -1,6 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Header from "../../components/layout/Header";
-import { ButtonWrapper, PlanPageWrapper } from "../../components/styled/Wrapper";
+import {
+  ButtonWrapper,
+  PlanPageWrapper,
+} from "../../components/styled/Wrapper";
 import styled, { keyframes } from "styled-components";
 import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -83,8 +86,8 @@ const ShareButton = styled(ButtonWrapper)`
     width: 70vw;
   }
   @media screen and (max-width: 500px) {
-    width: 40vw;
-    font-size: 0.7rem;
+    width: 80vw;
+    font-size: 1.2rem;
     @keyframes motion {
       0% {
         margin-top: 0px;
@@ -226,7 +229,15 @@ const PlanShare = () => {
 
   return (
     <div align="center">
-      {modalOpen && <ReviewDetail myrating={myrating} placeid={placeselect} placeinfo={placeinfo} modalClose={onHandleModal} target="20대 여성이 주로 방문해요"></ReviewDetail>}
+      {modalOpen && (
+        <ReviewDetail
+          myrating={myrating}
+          placeid={placeselect}
+          placeinfo={placeinfo}
+          modalClose={onHandleModal}
+          target="20대 여성이 주로 방문해요"
+        ></ReviewDetail>
+      )}
       <Header display="none" />
       <PlanPageWrapper width="90vw">
         <PlanBlock height="calc(15vh - 3rem)">
@@ -244,12 +255,24 @@ const PlanShare = () => {
             </ShareButton>
           </PlanBlock>
         )}
-        <PlanBlock justifyContent="center" width="100%" height="calc(72vh - 1rem)">
+        <PlanBlock
+          justifyContent="center"
+          width="100%"
+          height="calc(72vh - 1rem)"
+        >
           <PlanMakeWrapper width="calc(60% - 1rem)" height="100%">
             <MapWrapper mapName="make" width="99%" height="100%">
               <MapContainer
-                lat={cardData ? cardData.filter((item) => !item.place_id)[0].latitude : 34}
-                lng={cardData ? cardData.filter((item) => !item.place_id)[0].longitude : 127}
+                lat={
+                  cardData
+                    ? cardData.filter((item) => !item.place_id)[0].latitude
+                    : 34
+                }
+                lng={
+                  cardData
+                    ? cardData.filter((item) => !item.place_id)[0].longitude
+                    : 127
+                }
                 mapLevel={5}
                 placeList={[]}
                 planList={cardData ? cardData : []}
@@ -263,23 +286,37 @@ const PlanShare = () => {
               <PlanHeaderWrapper>
                 <PlanHeaderItem>
                   <PlanHeaderName>약속이름</PlanHeaderName>
-                  <PlanHeaderInput>{cardData ? cardData[0].title : ""}</PlanHeaderInput>
+                  <PlanHeaderInput>
+                    {cardData ? cardData[0].title : ""}
+                  </PlanHeaderInput>
                 </PlanHeaderItem>
                 <PlanHeaderItem>
                   <PlanHeaderName>약속날짜</PlanHeaderName>
-                  <PlanHeaderInput>{cardData ? cardData[0].date : ""}</PlanHeaderInput>
+                  <PlanHeaderInput>
+                    {cardData ? cardData[0].date : ""}
+                  </PlanHeaderInput>
                 </PlanHeaderItem>
                 <PlanHeaderItem>
                   <PlanHeaderName>약속시간</PlanHeaderName>
-                  <PlanHeaderInput>{cardData ? cardData[0].appointed_time : ""}</PlanHeaderInput>
+                  <PlanHeaderInput>
+                    {cardData ? cardData[0].appointed_time : ""}
+                  </PlanHeaderInput>
                 </PlanHeaderItem>
               </PlanHeaderWrapper>
               <PlanListWrapper>
                 {cardData ? (
                   cardData.map((item, index) => (
-                    <PlaceCard key={index} bg={!item.place_id ? "#FF9BA9" : "#C0F0B0"} onClick={() => onHandleModal(item.place_id)}>
-                      <PlaceTitle>{item.name ? item.name : "사용자 지정 위치"}</PlaceTitle>
-                      {!item.isMain && <PlaceCategory>{item.place_type}</PlaceCategory>}
+                    <PlaceCard
+                      key={index}
+                      bg={!item.place_id ? "#FF9BA9" : "#C0F0B0"}
+                      onClick={() => onHandleModal(item.place_id)}
+                    >
+                      <PlaceTitle>
+                        {item.name ? item.name : "사용자 지정 위치"}
+                      </PlaceTitle>
+                      {!item.isMain && (
+                        <PlaceCategory>{item.place_type}</PlaceCategory>
+                      )}
                       <PlaceAddress>{item.address}</PlaceAddress>
                     </PlaceCard>
                   ))

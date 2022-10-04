@@ -4,7 +4,6 @@ import {
   Wrapper,
   MobileSizeWrapper,
   InputWrapper,
-  ButtonWrapper,
   InputFullWrapper,
 } from "./../../components/styled/Wrapper";
 import { BaseForm } from "../../components/common/forms/Form";
@@ -16,7 +15,7 @@ import {
   ProgressDescription,
   SignupBody,
   SignupHeader,
-} from "../../components/auth/signup/Signup";
+} from "../../components/styled/Signup";
 import {
   emailConfirm,
   emailDuplicateCheck,
@@ -25,7 +24,7 @@ import {
 } from "../../api/AuthAPI";
 import Header from "./../../components/layout/Header";
 import Button from "./../../components/common/buttons/Button";
-import Footer from "../../components/layout/Footer";
+import EmptySpace from "./../../components/layout/EmptySpace";
 
 const InputBlock = styled.div`
   display: flex;
@@ -520,9 +519,9 @@ const Signup = () => {
               clickEvent={() => submitState()}
             ></Button>
           </SignupBody>
+          <EmptySpace />
         </MobileSizeWrapper>
       </Wrapper>
-      <Footer />
     </>
   );
 };

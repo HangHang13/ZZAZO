@@ -60,3 +60,4 @@ DATABASES = {
     }
 }
 
+EMAIL_HOST_PASSWORD = get_secret("EMAIL_HOST_PASSWORD")

@@ -34,21 +34,6 @@ const ModalContentWrapper = styled.div`
   position: relative;
 `;
 
-const ModalHeader = styled.div`
-  width: 100%;
-  box-sizing: border-box;
-  border-bottom: 1px solid gray;
-  text-align: right;
-  padding: 8px 12px;
-`;
-
-const ModalCloseButton = styled.button`
-  padding: 8px 10px;
-  border: none;
-  background-color: white;
-  cursor: pointer;
-`;
-
 const ModalContent = styled.div`
   display: flex;
   justify-content: center;

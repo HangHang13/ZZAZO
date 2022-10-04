@@ -1,8 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
-import { SignupBody } from "../../components/auth/signup/Signup";
+import { SignupBody } from "../../components/styled/Signup";
 import { BaseForm } from "../../components/common/forms/Form";
-import { client } from "./../../utils/client";
 import {
   InputFullWrapper,
   InputWrapper,
