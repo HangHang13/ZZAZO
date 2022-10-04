@@ -35,8 +35,7 @@ const Home = () => {
   //메인페이지 추천장소 api 호출
   const RecLoad = async () => {
     const RecData = await getRec();
-    setRecList(RecData);
-    console.log(RecData);
+    if (RecData.code === 200) setRecList(RecData);
   };
 
   //카테고리에 따른 이미지 다르게 보여주기
