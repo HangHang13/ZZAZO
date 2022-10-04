@@ -277,11 +277,6 @@ def place_detail(request, place_id):
     }
     return Response(res)
 
-
-# 약속 카드 장소에 대한 남, 녀 작성 수
-placeFemale = "SELECT pc.place_id, count(au.userGender) AS gender FROM plan_card AS pc join accounts_user AS au where au.userGender = 'F'  group BY place_id"
-placeMale = "SELECT pc.place_id, count(au.userGender) AS gender FROM plan_card AS pc join accounts_user AS au where au.userGender = 'M'  group BY place_id"
-
 def genderFemale(placeFemale):
     with connection.cursor() as cursor:
         cursor.execute(placeFemale)
@@ -297,6 +292,11 @@ def popularAge(placeAge):
         cursor.execute(placeAge)
         all_Place = cursor.fetchall()
     return all_Place
+
+# 약속 카드 장소에 대한 남, 녀 작성 수
+placeFemale = "SELECT pc.place_id, count(au.userGender) AS gender FROM plan_card AS pc join accounts_user AS au where au.userGender = 'F'  group BY place_id"
+placeMale = "SELECT pc.place_id, count(au.userGender) AS gender FROM plan_card AS pc join accounts_user AS au where au.userGender = 'M'  group BY place_id"
+
 # 약속 카드 장소에 대한 가장 많이 사용하는 연령 대
 placeAge = "SELECT t1.place_id, t1.ageGroup FROM (SELECT g.place_id, g.ageGroup, g.total AS total  FROM (SELECT a.place_id, case when age >= 10 AND age<20 then'10대' when age >= 20 AND age < 30 then '20대' when age >= 30 AND age < 40 then '30대' when age >= 40 AND age < 50 then '40대' when age >= 50 AND age < 60 then '50대' when age >= 60 AND age < 70 then '60대' ELSE '만족없음'END AS ageGroup , COUNT(*) AS total FROM  (select pc.place_id, FLOOR((CAST(REPLACE(CURRENT_DATE,'-','') AS UNSIGNED) - CAST(REPLACE(au.userBirth,'-','') AS UNSIGNED)) / 10000 ) + 1 AS age FROM plan_card AS pc JOIN accounts_user AS au ON pc.user_id = au.id) AS a GROUP BY a.place_id, ageGroup) AS g GROUP BY g.place_id, g.ageGroup) AS t1, (SELECT g.place_id, max(g.total) AS max_total  FROM (SELECT a.place_id, case when age >= 10 AND age<20 then'10대' when age >= 20 AND age < 30 then '20대' when age >= 30 AND age < 40 then '30대' when age >= 40 AND age < 50 then '40대' when age >= 50 AND age < 60 then '50대' when age >= 60 AND age < 70 then '60대' ELSE '만족없음' END AS ageGroup , COUNT(*) AS total FROM (select pc.place_id, FLOOR((CAST(REPLACE(CURRENT_DATE,'-','') AS UNSIGNED) - CAST(REPLACE(au.userBirth,'-','') AS UNSIGNED)) / 10000 ) + 1 AS age FROM plan_card AS pc JOIN accounts_user AS au ON pc.user_id = au.id) AS a GROUP BY a.place_id, ageGroup) AS g GROUP BY g.place_id) AS t2 WHERE t1.total = t2.max_total AND t1.place_id = t2.place_id"
 
