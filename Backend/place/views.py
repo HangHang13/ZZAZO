@@ -1,5 +1,3 @@
-import enum
-from numpy import place
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -24,31 +22,40 @@ def home(request):
     
     # Model.objects.raw() 실행은 ORM 요청이기 때문에 raw 쿼리 요청 시에도 pk를 요구하는 데
     # sql 문으로 pk 주지 못하니 connection을 이용 해 sql 문 실행
+    
+    #      ==================================================
+    place_data = {}
+    
+    for i, val in enumerate(serializer.data):
+        placeUrlData = Place.objects.filter(_id = val.get('place_id'))
+        placeUrlSerializer = PlaceListSerializer(placeUrlData, many=True)
+        place_data[i] = placeUrlSerializer.data
     # 성별 =====================================================
+
     female = dict(genderFemale(placeFemale))
     male = dict(genderMale(placeMale))
-    for i, val in enumerate(serializer.data):
-        if val.get('place_id') is None:
+    for i in place_data:
+        val = place_data[i][0].get("_id")
+        if val is None:
             continue
 
-        if female.get(val.get('place_id')) != None:
-            femalecnt = female.get(val.get('place_id'))
-        elif female.get(val.get('place_id'))== None:
+        if female.get(val) != None:
+            femalecnt = female.get(val)
+        elif female.get(val)== None:
             femalecnt = 0
-        if male.get(val.get('place_id')) != None:
-            malecnt = male.get(val.get('place_id'))
-        elif male.get(val.get('place_id')) == None :
+        if male.get(val) != None:
+            malecnt = male.get(val)
+        elif male.get(val) == None :
             malecnt = 0
-
-
+        
         if malecnt == 0 & femalecnt == 0 :
-            serializer.data[i]['popularGender'] = None
+            place_data[i][0]['popularGender'] = None
         elif femalecnt > malecnt:
-            serializer.data[i]['popularGender'] = 'female'
+            place_data[i][0]['popularGender'] = 'female'
         elif malecnt > femalecnt:
-            serializer.data[i]['popularGender'] = 'male'
+            place_data[i][0]['popularGender'] = 'male'
         elif malecnt == femalecnt:
-            serializer.data[i]['popularGender'] = 'all'
+            place_data[i][0]['popularGender'] = 'all'
 
     # 연령 ==================================================
     allPlace = {}
@@ -60,16 +67,9 @@ def home(request):
     for i, val in enumerate(serializer.data):
         if val.get('place_id') == None:
             continue
-        serializer.data[i]['popularAge'] = allPlace.get(val.get('place_id'))
+        place_data[i][0]['popularAge'] = allPlace.get(val.get('place_id'))
             
-            
-    #      ==================================================
-    pdata = {}
-    for i, val in enumerate(serializer.data):
-        placeUrlData = Place.objects.filter(_id = val.get('place_id'))
-        placeUrlSerializer = PlaceListSerializer(placeUrlData, many=True)
-        pdata[i] = placeUrlSerializer.data
-    data = {'Place': pdata}
+    data = {'Place': place_data}
     code = 200
     message = "추천 목록"
     res = {
