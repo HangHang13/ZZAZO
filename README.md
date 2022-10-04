@@ -395,12 +395,9 @@ ZZAZO 화면설계서로 대체 예정
 ---
 
 <details>
-<summary>이미지 출처</summary>
+<summary># **이미지 출처**</summary>
 [404 취소 아이콘](https://kor.pngtree.com/freepng/cancel-vector-icon-with-transparent-background_5156945.html)
 </details>
-
-# **이미지 출처**
-
 
 
 ---
