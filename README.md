@@ -146,17 +146,21 @@ ZZAZO 시연 시나리오는 👉[여기](README.assets/시연시나리오/시�
 
 🖱**Frontend**
 
-- Visual Studio Code
-- React
-- Node.js 16.16.0
-- npm (8.15.0)
-- **리액트 라이브러리**
-    - Styled-Components
-    - axios
-    - react-router-dom
-    - redux
-    - react-redux
-    - @reduxjs/toolkit
+- VSCode (1.70.3)
+- React (17.0.2)
+- NodeJS (16.16.0)
+- **Libraries**
+    - axios (0.27.2)
+    - npm (8.15.0)
+    - react-beautiful-dnd (13.1.1)
+    - react-calendar (3.9.0)
+    - react-kakao-maps-sdk (1.1.3)
+    - react-redux (8.0.2)
+    - react-router-dom (6.3.0)
+    - redux (4.2.0)
+    - redux-persist (6.0.0)
+    - redux-thunk (2.4.1)
+    - styled-components (5.3.5)
 - **VSCode Extensions**
     - prettier - code formatter
     - Reactjs code snippets
