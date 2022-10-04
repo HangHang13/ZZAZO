@@ -362,7 +362,12 @@ const PlanMakeCard = () => {
 			longitude: parseFloat(location.state.position.lng),
 			latitude: parseFloat(location.state.position.lat),
 		});
-		setRecommendList(recommendListResponse.data.Place);
+
+		if (recommendListResponse.code === 200) {
+			setRecommendList(recommendListResponse.data.Place);
+		} else if (recommendListResponse.status !== 200) {
+			alert("오류가 발생했습니다.");
+		}
 
 		setLoading(false);
 	}, []);
@@ -391,7 +396,9 @@ const PlanMakeCard = () => {
 				longitude: parseFloat(location.state.position.lng),
 				latitude: parseFloat(location.state.position.lat),
 			});
-			setRecommendList(recommendListResponse.data.Place);
+
+			if (recommendListResponse.code === 200) setRecommendList(recommendListResponse.data.Place);
+			else if (recommendListResponse.status !== 200) alert("오류가 발생했습니다");
 		} else {
 			const placeListResponse = await getPlaceList(selectedCategories, {
 				radius: radius,
@@ -400,7 +407,6 @@ const PlanMakeCard = () => {
 			});
 			setPlaceList(placeListResponse);
 		}
-
 		setLoading(false);
 	};
 
