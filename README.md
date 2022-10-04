@@ -6,7 +6,7 @@
 
 (ucc 영상 혹은 시연영상으로 대체)
 
-![ZZAZOLOGO.png](%E1%84%8E%E1%85%AC%E1%84%8C%E1%85%A9%E1%86%BC%E1%84%89%E1%85%A1%E1%86%AB%E1%84%8E%E1%85%AE%E1%86%AF%E1%84%86%E1%85%AE%E1%86%AF%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%20e75687722f0a4cd1b33a5fd7e0610abf/ZZAZOLOGO.png)
+![ZZAZOLOGO.png](README.assets/ZZAZOLOGO.png)
 
 ZZAZO 시연 시나리오는 👉[여기](https://www.notion.so/7a3b7e28bd1042b79cb32d79c00ae073)👈에서 더 자세히 보실 수 있습니다.
 
