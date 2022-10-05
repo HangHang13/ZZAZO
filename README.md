@@ -145,6 +145,17 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 ---
 
 🖱**Frontend**
+| <img src="https://profilinator.rishav.dev/skills-assets/html5-original-wordmark.svg" alt="HTML5" width="50px" height="50px" /> | <img src="https://profilinator.rishav.dev/skills-assets/css3-original-wordmark.svg" alt="CSS3" width="50px" height="50px" /> |
+| :----------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------: |
+| HTML5 | CSS3 |
+
+| <img src="https://profilinator.rishav.dev/skills-assets/react-original-wordmark.svg" alt="React.js" width="50px" height="50px" /> | <img src="https://profilinator.rishav.dev/skills-assets/redux-original.svg" alt="Redux" width="50px" height="50px" /> |
+| :-------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------: |
+|                                                               React                                                               |                                                         Redux                                                         |
+
+| <img src="https://user-images.githubusercontent.com/46440898/185293492-b3242ac5-e146-43f5-a484-0e1aa4d45c3b.png" alt="Styled-Component" width="50px" height="50px" /> | <img src="https://axios-http.com/assets/logo.svg" alt="MUI" width="50px" height="50px" /> |
+| :-------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
+|                                                                           Styled-Component                                                                            |                                           AXIOS                                           |
 
 - VSCode (1.70.3)
 - React (17.0.2)
@@ -167,6 +178,13 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
   - Auto Import - ES6, …
 
 🖱**Backend**
+| <img src="https://user-images.githubusercontent.com/97587150/193991309-6fc284f4-de12-4395-b1a1-389cec90ffb2.png" alt="Django" width="50px" height="50px" /> |
+| :--------------------------------------------------------------------------------------------------------------------------: |
+| Django |
+
+| <img src="https://res.cloudinary.com/postman/image/upload/t_team_logo/v1629869194/team/2893aede23f01bfcbd2319326bc96a6ed0524eba759745ed6d73405a3a8b67a8" alt="Postman" width="50px" height="50px" /> |
+| :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|                                                                                               Postman                                                                                                |
 
 - Django (4.1)
 - djangorestframework (3.13.1)
@@ -176,10 +194,6 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
   - selenuim (4.4.3)
   - PyJWT (2.4.0)
   - djongo (1.3.6)
-- ubuntu (20.04 LTS)
-- docker (20.10.18)
-- jenkins 2.361.1
-- Nginx 1.18.0
 - certbot 0.40.0
 
 🖱**BigData**
@@ -191,6 +205,17 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 - scikit-learn (1.1.2)
 - Matplotlib (3.1.2)
 - Seaborn (0.9.0)
+
+🖱**DevOps**
+
+| <img src="https://user-images.githubusercontent.com/97587150/193992285-ad0b7049-5f86-499f-87d1-fb53371dba58.png" alt="docker" width="50px" height="50px" /> | <img src="https://user-images.githubusercontent.com/97587150/193991605-9848c286-ad9c-4d53-9b19-458e9804703a.png" alt="Jenkins" width="50px" height="50px" /> | <img src="https://user-images.githubusercontent.com/97587150/193993222-6951f668-ed70-4309-af56-a13e2123b8fe.png" alt="gunicon" width="50px" height="50px" /> |
+| :---------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|                                                                           docker                                                                            |                                                                           Jenkins                                                                            |                                                                           gunicon                                                                            |
+
+- ubuntu (20.04 LTS)
+- docker (20.10.18)
+- jenkins 2.361.1
+- Nginx 1.18.0
 
 ## **💫 서비스 아키텍처(아래는 예시 수정 예정)**
 
