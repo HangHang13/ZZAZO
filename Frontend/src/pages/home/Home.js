@@ -5,20 +5,15 @@ import RecCard from "../../components/common/home/recommendation/RecCard";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/layout/Header";
 import BackgroundCloud from "../../components/common/home/banner/BackgroundCloud";
-import { useDispatch } from "react-redux";
-import { storeLogout } from "../../store/reducers/user";
 import { getRec } from "../../api/HomeApi";
 import { Wrapper } from "../../components/styled/Wrapper";
 import Footer from "../../components/layout/Footer";
 
 const Home = () => {
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
-	useEffect(async () => {
-		if (!sessionStorage.getItem("ACCESS_TOKEN")) {
-			dispatch(storeLogout());
-		}
-		await RecLoad();
+
+	useEffect(() => {
+		RecLoad();
 	}, []);
 
 	//약속 선택으로 넘길
