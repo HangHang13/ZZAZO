@@ -241,6 +241,8 @@ const CardDetail = ({ placeId, modalClose }) => {
     target: "-",
     score: 0.0,
     placeUrl: "",
+    popularAge: "",
+    popularGender: "",
   });
 
   const [reviews, setReviews] = useState([]);
@@ -260,6 +262,8 @@ const CardDetail = ({ placeId, modalClose }) => {
       score: response.data.Place.placeScore ? parseFloat(response.data.Place.placeScore) : 0.0,
       category: response.data.Place.place_type,
       placeUrl: response.data.Place.placeUrl,
+      popularAge: response.data.Place.popularAge,
+      popularGender: response.data.Place.popularGender,
     });
     setReviews([reviewItem, ...response.data.Review]);
   }, [placeId]);
@@ -284,8 +288,16 @@ const CardDetail = ({ placeId, modalClose }) => {
                 {state.category}
               </CardInfoItem>
               <CardInfoItem>
-                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/women.png`} alt="location"></InfoIcon>
-                {state.target}
+                {state.popularGender == "male" ? (
+                  <>
+                    <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/man.png`} alt="location"></InfoIcon>
+                  </>
+                ) : (
+                  <>
+                    <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/women.png`} alt="location"></InfoIcon>
+                  </>
+                )}
+                {state.popularAge == "만족없음" ? "" : state.popularAge} {state.popularGender == "male" ? "남성" : "여성"}이 많이 이용합니다.
               </CardInfoItem>
               <CardInfoItem>
                 <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/star.png`} alt="location"></InfoIcon>
