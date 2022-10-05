@@ -190,10 +190,7 @@ const Header = () => {
 	const user = useSelector((state) => state.user.value);
 	const currUserisLogin = user.isLogin; //로그인 여부
 	const loginUser = user.data ? user.data : "";
-	//console.log(loginUser);
 	const nickname = loginUser.userNickName ? loginUser.userNickName : "";
-
-	//data.UserEmail
 
 	const onHandleLogOut = () => {
 		dispatch(storeLogout());
