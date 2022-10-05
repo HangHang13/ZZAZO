@@ -261,6 +261,20 @@ Nginx를 웹서버로 하여 수동배포 하였습니다.
 
 [빌드 및 배포 가이드](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/blob/master/exec/%EB%B9%8C%EB%93%9C%EB%B0%B0%ED%8F%AC%EA%B0%80%EC%9D%B4%EB%93%9C.md)
 
+### **✨ EC2 포트 정리**
+
+---
+
+|  **PORT**  |        **이름**        |
+| :--------: | :--------------------: |
+|    443     |         HTTPS          |
+|     80     |      HTTP, nginx       |
+|    8443    |        Openvidu        |
+|    3306    |         MySQL          |
+|    8080    |        Jenkins         |
+| 8081, 8082 | Spring boot API Server |
+|    8888    |  Kurento Media Server  |
+
 ## **👨‍👩‍👧협업 툴**
 
 ---
@@ -333,20 +347,6 @@ ZZAZO 화면설계서로 대체 예정
 ---
 
 ![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/README%20md%20(%E1%84%8C%E1%85%A1%E1%86%A8%E1%84%8B%E1%85%A5%E1%86%B8%E1%84%8C%E1%85%AE%E1%86%BC)%20d0c797bba6af4fe48dc8f5506790572f/ERD.png](<https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/README%20md%20(%E1%84%8C%E1%85%A1%E1%86%A8%E1%84%8B%E1%85%A5%E1%86%B8%E1%84%8C%E1%85%AE%E1%86%BC)%20d0c797bba6af4fe48dc8f5506790572f/ERD.png>)
-
-### **✨ EC2 포트 정리**
-
----
-
-|  **PORT**  |        **이름**        |
-| :--------: | :--------------------: |
-|    443     |         HTTPS          |
-|     80     |      HTTP, nginx       |
-|    8443    |        Openvidu        |
-|    3306    |         MySQL          |
-|    8080    |        Jenkins         |
-| 8081, 8082 | Spring boot API Server |
-|    8888    |  Kurento Media Server  |
 
 ### 👨‍👩‍👧‍👧 **개발 팀 소개**
 
