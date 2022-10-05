@@ -402,7 +402,7 @@ ZZAZO 화면설계서로 대체 예정
 </td>
 <td align="center" width="150px">
 <a href="[https://github.com/mindot7](https://github.com/mindot7)" target="_blank">
-<a href="https://github.com/mindot7"><img height="100px" width="100px" src="https://lab.ssafy.com/s07-bigdata-recom-sub2/S07P22B307/-/tree/develop/README.assets/%ED%8C%80%EC%9B%90%EC%86%8C%EA%B0%9C/박성배.png" alt="박성배 프로필"/></a>
+<a href="https://github.com/mindot7"><img height="100px" width="100px" src="https://user-images.githubusercontent.com/97587150/193962622-01d9f2ac-d151-4a11-8707-440685e4958d.png" alt="박성배 프로필"/></a>
 </a>
 </td>
 <td align="center" width="150px">
