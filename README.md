@@ -170,17 +170,17 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 
 - Django (4.1)
 - djangorestframework (3.13.1)
-
-///(아래는 예시)///
-
-- IntelliJ
-- spring boot 2.7.2
-- Java 8
-- AWS EC2
-- mysql 8.0.29
-- redis 5.0.7
-
-//////////////////////
+- MariaDB (10.3.23)
+- MongoDB (5.0.13)
+- **Django 라이브러리**
+  - selenuim (4.4.3)
+  - PyJWT (2.4.0)
+  - djongo (1.3.6)
+- ubuntu (20.04 LTS)
+- docker (20.10.18)
+- jenkins 2.361.1
+- Nginx 1.18.0
+- certbot 0.40.0
 
 🖱**BigData**
 
@@ -301,21 +301,19 @@ ZZAZO 화면설계서로 대체 예정
 
 ![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/%ED%99%94%EB%A9%B4%EC%84%A4%EA%B3%84%EC%84%9C.png](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/%ED%99%94%EB%A9%B4%EC%84%A4%EA%B3%84%EC%84%9C.png)
 
-### **✨코드 컨벤션**
+### **✨Git 컨벤션**
 
 ---
 
-[Front](https://www.notion.so/fa7a60fbc9a4440c80a641eee06a6d22)
-
-[Back](https://www.notion.so/fa7a60fbc9a4440c80a641eee06a6d22)
-
-### **✨Git 컨벤션**
-
 자세한 사항은 다음을 참고해 주세요.
 
-[Git 컨벤션](https://www.notion.so/git-flow-cac95c86d15347c1a92c973d909d6600)
+[Git 컨벤션](exec/컨벤션/깃컨벤션.md)
 
 ### **✨Git Flow**
+
+---
+
+![Git플로우](https://user-images.githubusercontent.com/97587150/193985155-7aa0e73c-38b3-4cee-a2c5-191d34f0b116.png)
 
 자세한 사항은 다음을 참고해 주세요.
 
@@ -325,20 +323,13 @@ ZZAZO 화면설계서로 대체 예정
 
 협업 및 일정, 업무 관리를 위해 Jira를 이용하였습니다. 매주 월요일 오전 스크럼 회의에서 한 주동안 진행되어야 할 1주 단위 계획을 짜고, 진행할 이슈들을 스프린트를 만들어 등록했습니다. 스토리 포인트 1점당 1시간 단위의 작업량으로서 선정하였고, 스프린트는 일주일 단위로 진행하였습니다.
 
-- Epic : 프론트, 백, 공통기능, 문서작업 등 태그를 통해 대분류, 그리고 제목을 통해 중분류로 구성하였습니다.
-- story : Epic에 해당하는 업무 중 가장 작은 업무 단위를 뜻합니다.
-
 이 외에, 협업 메신저(Mattermost)에 알람을 등록하여 작업 상황을 실시간으로 확인할 수 있도록 했습니다.
-
-컨벤션에 관한 내용은 다음을 참고해 주세요.
-
-[Jira 컨벤션](https://www.notion.so/JIRA-2fd16a2267194fa3af1a817e559e7bf3)
 
 ### **👨‍👩‍👧 Notion**
 
 ---
 
-모두가 봐야할 공지, 함께 선정해야하는 주제 및 초기 ERD, API 설계, 공부해야 할 링크, 개발 중 참고 링크, 트러블 슈팅 등을 모아서 관리했습니다. 컨벤션 규칙 등도 노션에 기록하여 모두가 항시 확인할 수 있도록 관리했습니다.
+모두가 봐야할 공지, 함께 선정해야하는 주제 및 초기 ERD, API 설계, 공부해야 할 링크, 개발 중 참고 링크, 트러블 슈팅, 간트 차트 등을 모아서 관리했습니다. 컨벤션 규칙 등도 노션에 기록하여 모두가 항시 확인할 수 있도록 관리했습니다.
 
 [[팀 노션 바로가기]](https://www.notion.so/B307-924dcd959ef94b12a28555b4197f6d17)
 
@@ -346,7 +337,7 @@ ZZAZO 화면설계서로 대체 예정
 
 ---
 
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/README%20md%20(%E1%84%8C%E1%85%A1%E1%86%A8%E1%84%8B%E1%85%A5%E1%86%B8%E1%84%8C%E1%85%AE%E1%86%BC)%20d0c797bba6af4fe48dc8f5506790572f/ERD.png](<https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/README%20md%20(%E1%84%8C%E1%85%A1%E1%86%A8%E1%84%8B%E1%85%A5%E1%86%B8%E1%84%8C%E1%85%AE%E1%86%BC)%20d0c797bba6af4fe48dc8f5506790572f/ERD.png>)
+![ERD 전체](https://user-images.githubusercontent.com/97587150/193989105-fcfe4b92-5dc2-4da3-a996-d17f78ca0f97.png)
 
 ### 👨‍👩‍👧‍👧 **개발 팀 소개**
 
