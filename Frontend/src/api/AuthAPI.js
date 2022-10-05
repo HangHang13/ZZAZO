@@ -64,6 +64,15 @@ const emailConfirm = async (data) => {
 	return result;
 };
 
+// 관심 카테고리 등록
+const saveCategories = async (data) => {
+	const result = await client
+		.post(`/users/category`, data)
+		.then((response) => response.data)
+		.catch((error) => error.response);
+	return result;
+};
+
 // 아이디 찾기
 const findId = async (data) => {
 	const result = await client
@@ -82,4 +91,4 @@ const findPw = async (data) => {
 	return result;
 };
 
-export { login, logout, emailDuplicateCheck, nickNameDuplicateCheck, emailSendConfirm, emailConfirm, signup, findId, findPw };
+export { login, logout, emailDuplicateCheck, nickNameDuplicateCheck, emailSendConfirm, emailConfirm, saveCategories, signup, findId, findPw };
