@@ -116,10 +116,8 @@ def place_recommend(request):
         client = MongoClient(host=host, port=port, username=username, password=password)
         db = client['S07P22B307']
         target_col = db['recommend_score']
-        # user_recommend = target_col.find_one({"user_id" : request.user.id})['1']
-        # print(user_recommend)
         near_place_list.sort(key = lambda x: -target_col.find_one({"user_id" : request.user.id}).get(str(x._id), 0))
-        print(target_col.find_one({"user_id" : request.user.id}).get(str(near_place_list[0]._id), 0))
+        
     # 약속 장소로 등록한 사람이 많은 곳
     else:
         # 카테고리 사용
