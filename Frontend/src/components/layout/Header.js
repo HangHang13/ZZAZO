@@ -23,7 +23,6 @@ const Common = styled.div`
 		height: 6rem;
 		right: 1%;
 		margin-right: -20%;
-		transition: all 1s;
 		right: 1%;
 		margin-right: -20%;
 	}
@@ -42,7 +41,7 @@ const NavbarItemList = styled.div`
 		background-color: white;
 		position: absolute;
 		right: ${({ menu }) => {
-			return menu ? "-1%" : "-150%";
+			return menu ? "-10%" : "-150%";
 		}};
 		transition: 1s all;
 		margin-left: -2rem;
