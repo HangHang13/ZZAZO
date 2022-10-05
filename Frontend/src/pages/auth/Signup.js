@@ -6,10 +6,15 @@ import InputCheckButton from "./../../components/common/buttons/InputCheckButton
 import { useNavigate } from "react-router-dom";
 import NumberCircle from "./../../components/auth/NumberCircle";
 import { ProgressBlock, ProgressDescription, SignupBody, SignupHeader } from "../../components/styled/Signup";
-import { emailConfirm, emailDuplicateCheck, emailSendConfirm, nickNameDuplicateCheck } from "../../api/AuthAPI";
+import { emailConfirm, emailDuplicateCheck, emailSendConfirm, login, nickNameDuplicateCheck, signup } from "../../api/AuthAPI";
 import Header from "./../../components/layout/Header";
 import Button from "./../../components/common/buttons/Button";
 import EmptySpace from "./../../components/layout/EmptySpace";
+import { getUser } from "../../api/MyPageAPI";
+import { useDispatch } from "react-redux";
+import { storeLogin, storeLogout } from "../../store/reducers/user";
+import Loading from "./../../components/common/Loading";
+import { useSelector } from "react-redux";
 
 const InputBlock = styled.div`
 	display: flex;
@@ -43,6 +48,7 @@ const BirthSelectBox = styled.select`
 `;
 
 const Signup = () => {
+	const [loading, setLoading] = useState(false);
 	const [state, setState] = useState({
 		userEmail: "",
 		userEmailCode: "",
@@ -75,6 +81,7 @@ const Signup = () => {
 	const passwordRef = useRef([]);
 
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	// input 창 입력 시 이벤트
 	const onHandleInput = (e) => {
@@ -217,8 +224,46 @@ const Signup = () => {
 		setState({ ...state, userGender: val });
 	};
 
+	const submitForm = async () => {
+		const response = await signup(state);
+
+		if (response.code === 200 || response.code === 201) {
+			return;
+		} else {
+			alert("회원가입에 실패했습니다.");
+		}
+	};
+
+	const loginOnSignup = async () => {
+		const response = await login({
+			userEmail: state.userEmail,
+			password: state.password,
+		});
+		console.log(response);
+		if (response.status === 200) {
+			// 토큰 두 가지 sessionStorage에 저장
+			const accessToken = response.data.token.access;
+			const refreshToken = response.data.token.refresh;
+			sessionStorage.setItem("ACCESS_TOKEN", accessToken);
+			sessionStorage.setItem("REFRESH_TOKEN", refreshToken);
+
+			// 회원 본인 정보 조회 api 요청
+			const userData = await getUser();
+
+			// 받아온 데이터를 밑에 dispatch -> data에 저장
+			dispatch(storeLogin({ isLogin: true, data: userData }));
+
+			// 제출
+			navigate("/signupinterests", { state: state });
+		} else {
+			alert("회원가입 중 오류가 발생했습니다. 다시 시도해주세요.");
+			navigate("/");
+			return;
+		}
+	};
+
 	// 최종 폼 제출
-	const submitState = () => {
+	const submitState = async () => {
 		// 이메일 인증 여부 확인
 		if (!state.userEmailChecked || !state.userEmailConfirmed) {
 			alert("아이디를 다시 확인해주세요.");
@@ -263,12 +308,18 @@ const Signup = () => {
 			return;
 		}
 
-		// 제출
-		navigate("/signupinterests", { state: state });
+		setLoading(true);
+		submitForm();
+		setTimeout(() => loginOnSignup(), 1000);
+		setLoading(false);
 	};
 
+	const userData = useSelector((state) => state.user.value);
 	useEffect(() => {
 		window.scrollTo(0, 0);
+		if (userData.isLogin) {
+			dispatch(storeLogout());
+		}
 	}, []);
 
 	useEffect(() => {
@@ -311,6 +362,7 @@ const Signup = () => {
 		<>
 			<Header />
 			<Wrapper>
+				{loading ? <Loading /> : null}
 				<MobileSizeWrapper>
 					<SignupHeader>
 						<ProgressBlock>
