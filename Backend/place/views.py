@@ -13,8 +13,8 @@ from place.models import Place
 from django.db.models import Q
 from django.db import connection
 from haversine import haversine
-
 from pymongo import MongoClient
+
 
 @api_view(['GET'])
 def home(request):
@@ -27,38 +27,38 @@ def home(request):
     # sql 문으로 pk 주지 못하니 connection을 이용 해 sql 문 실행
     
     #      ==================================================
-    place_data = {}
-    
+    place_data = []
     for i, val in enumerate(serializer.data):
         placeUrlData = Place.objects.filter(_id = val.get('place_id'))
         placeUrlSerializer = PlaceListSerializer(placeUrlData, many=True)
-        place_data[i] = placeUrlSerializer.data
+        place_data.append(placeUrlSerializer.data)
     # 성별 =====================================================
-
     female = dict(genderFemale(placeFemale))
     male = dict(genderMale(placeMale))
-    for i in place_data:
-        val = place_data[i][0].get("_id")
-        if val is None:
-            continue
 
-        if female.get(val) != None:
-            femalecnt = female.get(val)
-        elif female.get(val)== None:
-            femalecnt = 0
-        if male.get(val) != None:
-            malecnt = male.get(val)
-        elif male.get(val) == None :
-            malecnt = 0
-        
-        if malecnt == 0 & femalecnt == 0 :
-            place_data[i][0]['popularGender'] = None
-        elif femalecnt > malecnt:
-            place_data[i][0]['popularGender'] = 'female'
-        elif malecnt > femalecnt:
-            place_data[i][0]['popularGender'] = 'male'
-        elif malecnt == femalecnt:
-            place_data[i][0]['popularGender'] = 'all'
+    for i in place_data:
+        for j in i:
+            id_data = j.get("_id")
+            if id_data is None:
+                continue
+
+            if female.get(id_data) != None:
+                femalecnt = female.get(id_data)
+            elif female.get(id_data)== None:
+                femalecnt = 0
+            if male.get(id_data) != None:
+                malecnt = male.get(id_data)
+            elif male.get(val) == None :
+                malecnt = 0
+            if malecnt == 0 & femalecnt == 0 :
+                j['popularGender'] = None
+            elif femalecnt > malecnt:
+                j['popularGender'] = 'female'
+            elif malecnt > femalecnt:
+                j['popularGender'] = 'male'
+            elif malecnt == femalecnt:
+                j['popularGender'] = 'all'
+    
 
     # 연령 ==================================================
     allPlace = {}
@@ -71,8 +71,10 @@ def home(request):
         if val.get('place_id') == None:
             continue
         place_data[i][0]['popularAge'] = allPlace.get(val.get('place_id'))
-            
-    data = {'Place': place_data}
+    list_place_data = []
+    for i in place_data:
+        list_place_data.append(i[0])
+    data = {'Place': list_place_data} 
     code = 200
     message = "추천 목록"
     res = {
