@@ -87,7 +87,7 @@ const Slider = ({ placeList }) => {
 	return (
 		<LayOutWrapper>
 			<ButtonWrapper loc="left">
-				<FontAwesomeIcon onClick={PrevSlide} icon={faCaretLeft} size="8x"></FontAwesomeIcon>
+				<FontAwesomeIcon onClick={PrevSlide} icon={faCaretLeft} size="8x" opacity={0.3}></FontAwesomeIcon>
 			</ButtonWrapper>
 			<Container>
 				<SliderContainer ref={slideRef} length={placeList.length}>
@@ -97,7 +97,7 @@ const Slider = ({ placeList }) => {
 				</SliderContainer>
 			</Container>
 			<ButtonWrapper loc="right">
-				<FontAwesomeIcon onClick={NextSlide} icon={faCaretRight} size="8x"></FontAwesomeIcon>
+				<FontAwesomeIcon onClick={NextSlide} icon={faCaretRight} size="8x" opacity={0.3}></FontAwesomeIcon>
 			</ButtonWrapper>
 		</LayOutWrapper>
 	);
