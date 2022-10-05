@@ -226,12 +226,23 @@ const ReviewTitle = styled.div`
 //target : 주요 이용 고객
 //score : 별점
 const CardDetail = ({ placeId, modalClose }) => {
+  function imgPath(params) {
+    switch (params.placeUrl) {
+      case null:
+        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/default.png`;
+      default:
+        return params.placeUrl;
+    }
+  }
   const [state, setState] = useState({
     title: "",
     address: "",
     category: "",
     target: "-",
     score: 0.0,
+    placeUrl: "",
+    popularAge: "",
+    popularGender: "",
   });
 
   const [reviews, setReviews] = useState([]);
@@ -248,10 +259,11 @@ const CardDetail = ({ placeId, modalClose }) => {
       ...state,
       title: response.data.Place.name,
       address: response.data.Place.address,
-      score: response.data.Place.placeScore
-        ? parseFloat(response.data.Place.placeScore)
-        : 0.0,
+      score: response.data.Place.placeScore ? parseFloat(response.data.Place.placeScore) : 0.0,
       category: response.data.Place.place_type,
+      placeUrl: response.data.Place.placeUrl,
+      popularAge: response.data.Place.popularAge,
+      popularGender: response.data.Place.popularGender,
     });
     setReviews([reviewItem, ...response.data.Review]);
   }, [placeId]);
@@ -260,11 +272,7 @@ const CardDetail = ({ placeId, modalClose }) => {
     <Background>
       <CardWrapper>
         <ExitBtnWrapper>
-          <ImgButton
-            src={`${process.env.PUBLIC_URL}/assets/card/exit.png`}
-            alt="exit"
-            onClick={() => modalClose(placeId)}
-          ></ImgButton>
+          <ImgButton src={`${process.env.PUBLIC_URL}/assets/card/exit.png`} alt="exit" onClick={() => modalClose(placeId)}></ImgButton>
         </ExitBtnWrapper>
         <CardTitle>{state.title}</CardTitle>
         <CardLine width="50%"></CardLine>
@@ -272,31 +280,27 @@ const CardDetail = ({ placeId, modalClose }) => {
           <CardInfoWrapper>
             <CardInfo>
               <CardInfoItem>
-                <InfoIcon
-                  src={`${process.env.PUBLIC_URL}/assets/card/location.png`}
-                  alt="location"
-                ></InfoIcon>
+                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/location.png`} alt="location"></InfoIcon>
                 {state.address}
               </CardInfoItem>
               <CardInfoItem>
-                <InfoIcon
-                  src={`${process.env.PUBLIC_URL}/assets/card/category.png`}
-                  alt="location"
-                ></InfoIcon>
+                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/category.png`} alt="location"></InfoIcon>
                 {state.category}
               </CardInfoItem>
               <CardInfoItem>
-                <InfoIcon
-                  src={`${process.env.PUBLIC_URL}/assets/card/women.png`}
-                  alt="location"
-                ></InfoIcon>
-                {state.target}
+                {state.popularGender == "male" ? (
+                  <>
+                    <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/man.png`} alt="location"></InfoIcon>
+                  </>
+                ) : (
+                  <>
+                    <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/women.png`} alt="location"></InfoIcon>
+                  </>
+                )}
+                {state.popularAge == "만족없음" ? "" : state.popularAge} {state.popularGender == "male" ? "남성" : "여성"}이 많이 이용합니다.
               </CardInfoItem>
               <CardInfoItem>
-                <InfoIcon
-                  src={`${process.env.PUBLIC_URL}/assets/card/star.png`}
-                  alt="location"
-                ></InfoIcon>
+                <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/star.png`} alt="location"></InfoIcon>
                 {state.score}
               </CardInfoItem>
             </CardInfo>
@@ -304,36 +308,17 @@ const CardDetail = ({ placeId, modalClose }) => {
             <ReviewTitle>Review</ReviewTitle>
             <ReviewWrapper>
               {reviews.length > 1 ? (
-                reviews.map((item, index) => (
-                  <ReviewCard
-                    writer={item.userNickName}
-                    writeday={item.regist}
-                    score={parseFloat(item.score)}
-                    content={item.content}
-                  ></ReviewCard>
-                ))
+                reviews.map((item, index) => <ReviewCard writer={item.userNickName} writeday={item.regist} score={parseFloat(item.score)} content={item.content}></ReviewCard>)
               ) : (
                 <p align="center">작성된 리뷰가 없습니다.</p>
               )}
             </ReviewWrapper>
           </CardInfoWrapper>
           <CardImgWrapper>
-            <CardImg
-              src={`${process.env.PUBLIC_URL}/assets/card/gazi.png`}
-              alt="gazi"
-            ></CardImg>
+            <CardImg src={imgPath(state)} alt="gazi"></CardImg>
             <InstaButtonWrapper>
-              <a
-                href={`https://www.instagram.com/explore/tags/${state.title.replace(
-                  / /g,
-                  ""
-                )}/?hl=ko`}
-                target="_blank"
-              >
-                <ImgButton
-                  src={`${process.env.PUBLIC_URL}/assets/card/insta.png`}
-                  alt="insta"
-                ></ImgButton>
+              <a href={`https://www.instagram.com/explore/tags/${state.title.replace(/ /g, "")}/?hl=ko`} target="_blank">
+                <ImgButton src={`${process.env.PUBLIC_URL}/assets/card/insta.png`} alt="insta"></ImgButton>
               </a>
             </InstaButtonWrapper>
           </CardImgWrapper>

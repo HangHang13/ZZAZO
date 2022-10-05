@@ -11,7 +11,17 @@ import { useSelector } from "react-redux";
 //score : 별점
 const ARRAY = [0, 1, 2, 3, 4];
 
-const ReviewDetail = ({ myrating, modalClose, placeinfo, target, placeid }) => {
+const ReviewDetail = ({ myrating, modalClose, placeinfo, placeid }) => {
+  /**카드 이미지 경로 */
+  function imgPath(placeinfo) {
+    switch (placeinfo.placeUrl) {
+      case null:
+        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/default.png`;
+      default:
+        return placeinfo.placeUrl;
+    }
+  }
+
   let searchTitle = placeinfo.name.replace(/ /g, "");
   const authenticated = useSelector((state) => state.user.value.isLogin);
   /** 별점관련 부분 **/
@@ -81,11 +91,7 @@ const ReviewDetail = ({ myrating, modalClose, placeinfo, target, placeid }) => {
     <Background>
       <CardWrapper>
         <ExitBtnWrapper>
-          <ImgButton
-            src={`${process.env.PUBLIC_URL}/assets/card/exit.png`}
-            alt="exit"
-            onClick={modalClose}
-          ></ImgButton>
+          <ImgButton src={`${process.env.PUBLIC_URL}/assets/card/exit.png`} alt="exit" onClick={modalClose}></ImgButton>
         </ExitBtnWrapper>
         <TitleWrapper>
           {cardContent ? (
@@ -96,14 +102,8 @@ const ReviewDetail = ({ myrating, modalClose, placeinfo, target, placeid }) => {
             <></>
           )}
 
-          <a
-            href={`https://www.instagram.com/explore/tags/${searchTitle}/?hl=ko`}
-            target="_blank"
-          >
-            <ImgButton
-              src={`${process.env.PUBLIC_URL}/assets/card/insta.png`}
-              alt="insta"
-            ></ImgButton>
+          <a href={`https://www.instagram.com/explore/tags/${searchTitle}/?hl=ko`} target="_blank">
+            <ImgButton src={`${process.env.PUBLIC_URL}/assets/card/insta.png`} alt="insta"></ImgButton>
           </a>
         </TitleWrapper>
 
@@ -114,36 +114,28 @@ const ReviewDetail = ({ myrating, modalClose, placeinfo, target, placeid }) => {
               {cardContent ? (
                 <>
                   <CardInfoItem>
-                    <InfoIcon
-                      src={`${process.env.PUBLIC_URL}/assets/card/location.png`}
-                      alt="location"
-                    ></InfoIcon>
+                    <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/location.png`} alt="location"></InfoIcon>
                     {placeinfo.address}
                   </CardInfoItem>
                   <CardInfoItem>
-                    <InfoIcon
-                      src={`${process.env.PUBLIC_URL}/assets/card/category.png`}
-                      alt="location"
-                    ></InfoIcon>
+                    <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/category.png`} alt="location"></InfoIcon>
                     {placeinfo.place_type}
                   </CardInfoItem>
                   <CardInfoItem>
-                    <InfoIcon
-                      src={`${process.env.PUBLIC_URL}/assets/card/women.png`}
-                      alt="location"
-                    ></InfoIcon>
-                    {target}
+                    {placeinfo.popularGender == "male" ? (
+                      <>
+                        <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/man.png`} alt="location"></InfoIcon>
+                      </>
+                    ) : (
+                      <>
+                        <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/women.png`} alt="location"></InfoIcon>
+                      </>
+                    )}
+                    {placeinfo.popularAge == "만족없음" ? "" : placeinfo.popularAge} {placeinfo.popularGender == "male" ? "남성" : "여성"}이 많이 이용해요.
                   </CardInfoItem>
                   <CardInfoItem>
-                    <InfoIcon
-                      src={`${process.env.PUBLIC_URL}/assets/card/star.png`}
-                      alt="location"
-                    ></InfoIcon>
-                    {placeinfo.placeScore ? (
-                      <>{placeinfo.placeScore}</>
-                    ) : (
-                      "별점을 입력해주세요"
-                    )}
+                    <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/star.png`} alt="location"></InfoIcon>
+                    {placeinfo.placeScore ? <>{placeinfo.placeScore}</> : "별점을 입력해주세요"}
                   </CardInfoItem>
                 </>
               ) : (
@@ -152,10 +144,7 @@ const ReviewDetail = ({ myrating, modalClose, placeinfo, target, placeid }) => {
             </CardInfo>
           </CardInfoWrapper>
           <CardImgWrapper>
-            <CardImg
-              src={`${process.env.PUBLIC_URL}/assets/card/gazi.png`}
-              alt="gazi"
-            ></CardImg>
+            <CardImg src={imgPath(placeinfo)}></CardImg>
           </CardImgWrapper>
         </CardMainWrapper>
         <EmptyBorder></EmptyBorder>
@@ -167,14 +156,7 @@ const ReviewDetail = ({ myrating, modalClose, placeinfo, target, placeid }) => {
               <Wrap>
                 <Stars>
                   {ARRAY.map((el, idx) => {
-                    return (
-                      <FaStar
-                        key={idx}
-                        size="40"
-                        onClick={() => handleStarClick(el)}
-                        className={clicked[el] && "yellowStar"}
-                      />
-                    );
+                    return <FaStar key={idx} size="40" onClick={() => handleStarClick(el)} className={clicked[el] && "yellowStar"} />;
                   })}
                 </Stars>
                 <StarText>{ratings}/5</StarText>
@@ -191,16 +173,12 @@ const ReviewDetail = ({ myrating, modalClose, placeinfo, target, placeid }) => {
                 setreviewcontents(e.target.value);
               }}
               onMouseOut={(e) => {
-                console.log(e.currentTarget.value);
                 WriteReview(e.currentTarget.value, ratings);
               }}
             ></ReviewTextArea>
 
             <ReviewWrapper>
-              <SubmitBtn
-                onClick={() => UpdateReview(review)}
-                defaultValue="리뷰 수정"
-              ></SubmitBtn>
+              <SubmitBtn onClick={() => UpdateReview(review)} defaultValue="리뷰 수정"></SubmitBtn>
             </ReviewWrapper>
           </>
         )}
@@ -210,16 +188,12 @@ const ReviewDetail = ({ myrating, modalClose, placeinfo, target, placeid }) => {
             <ReviewTextArea
               name="content"
               onMouseOut={(e) => {
-                console.log(e.currentTarget.value);
                 WriteReview(e.currentTarget.value, ratings);
               }}
             ></ReviewTextArea>
 
             <ReviewWrapper>
-              <SubmitBtn
-                onClick={() => CreateReview(review)}
-                defaultValue="리뷰 등록"
-              ></SubmitBtn>
+              <SubmitBtn onClick={() => CreateReview(review)} defaultValue="리뷰 등록"></SubmitBtn>
             </ReviewWrapper>
           </>
         )}

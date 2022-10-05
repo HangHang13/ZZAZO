@@ -5,20 +5,15 @@ import RecCard from "../../components/common/home/recommendation/RecCard";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/layout/Header";
 import BackgroundCloud from "../../components/common/home/banner/BackgroundCloud";
-import { useDispatch } from "react-redux";
-import { storeLogout } from "../../store/reducers/user";
 import { getRec } from "../../api/HomeApi";
 import { Wrapper } from "../../components/styled/Wrapper";
 import Footer from "../../components/layout/Footer";
 
 const Home = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  useEffect(async () => {
-    if (!sessionStorage.getItem("ACCESS_TOKEN")) {
-      dispatch(storeLogout());
-    }
-    await RecLoad();
+
+  useEffect(() => {
+    RecLoad();
   }, []);
 
   //약속 선택으로 넘길
@@ -67,6 +62,12 @@ const Home = () => {
         return `${process.env.PUBLIC_URL}/assets/card/categoryImg/icecream.png`;
       case "디저트카페":
         return `${process.env.PUBLIC_URL}/assets/card/categoryImg/dessertcafe.png`;
+      case "서점":
+        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/bookstore.png`;
+      case "퓨전한식":
+        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/mixkorean.png`;
+      case "공원":
+        return `${process.env.PUBLIC_URL}/assets/card/categoryImg/park.png`;
       default:
         return `${process.env.PUBLIC_URL}/assets/card/gazi.png`;
     }
@@ -88,9 +89,7 @@ const Home = () => {
                 <PlanBtn onClick={() => navigate("/plan")}>약속잡기</PlanBtn>
               </BtnWrapper>
             </HomeBannerArea>
-            <BannerImg
-              src={`${process.env.PUBLIC_URL}/assets/main/play.png`}
-            ></BannerImg>
+            <BannerImg src={`${process.env.PUBLIC_URL}/assets/main/play.png`}></BannerImg>
           </HomeBanner>
 
           <br />
@@ -102,47 +101,27 @@ const Home = () => {
           <br />
           <IntroduceList>
             <Introduce>
-              <ImgWrapper
-                width="7rem"
-                height="7rem"
-                src={`${process.env.PUBLIC_URL}/assets/introduce/introduce1.png`}
-              ></ImgWrapper>
+              <ImgWrapper width="7rem" height="7rem" src={`${process.env.PUBLIC_URL}/assets/introduce/introduce1.png`}></ImgWrapper>
               <Text fontsize="0.7rem">약속 상대와 만나고</Text>
               <Text fontsize="0.7rem">싶은 위치를 선택하세요!</Text>
             </Introduce>
             <Introduce>
-              <ImgWrapper
-                width="7rem"
-                height="7rem"
-                src={`${process.env.PUBLIC_URL}/assets/introduce/introduce2.png`}
-              ></ImgWrapper>
+              <ImgWrapper width="7rem" height="7rem" src={`${process.env.PUBLIC_URL}/assets/introduce/introduce2.png`}></ImgWrapper>
               <Text fontsize="0.7rem"> 나와 취향이 비슷한 사람들이 </Text>
               <Text fontsize="0.7rem">방문한 장소를 추천받을 수 있어요!</Text>
             </Introduce>
             <Introduce>
-              <ImgWrapper
-                width="7rem"
-                height="7rem"
-                src={`${process.env.PUBLIC_URL}/assets/introduce/introduce3.png`}
-              ></ImgWrapper>
+              <ImgWrapper width="7rem" height="7rem" src={`${process.env.PUBLIC_URL}/assets/introduce/introduce3.png`}></ImgWrapper>
               <Text fontsize="0.7rem">내가 선호하는</Text>
               <Text fontsize="0.7rem">장소들을 추천 받을수 있어요!</Text>
             </Introduce>
             <Introduce>
-              <ImgWrapper
-                width="7rem"
-                height="7rem"
-                src={`${process.env.PUBLIC_URL}/assets/introduce/introduce4.png`}
-              ></ImgWrapper>
+              <ImgWrapper width="7rem" height="7rem" src={`${process.env.PUBLIC_URL}/assets/introduce/introduce4.png`}></ImgWrapper>
               <Text fontsize="0.7rem"> 추천 받은 장소들을 골라</Text>
               <Text fontsize="0.7rem"> 약속 일정을 만들어 보세요!</Text>
             </Introduce>
             <Introduce>
-              <ImgWrapper
-                width="7rem"
-                height="7rem"
-                src={`${process.env.PUBLIC_URL}/assets/introduce/introduce5.png`}
-              ></ImgWrapper>
+              <ImgWrapper width="7rem" height="7rem" src={`${process.env.PUBLIC_URL}/assets/introduce/introduce5.png`}></ImgWrapper>
               <Text fontsize="0.7rem">만든 일정을 친구에게</Text>
               <Text fontsize="0.7rem"> 공유할 수 있어요!</Text>
             </Introduce>
@@ -160,7 +139,7 @@ const Home = () => {
                       src={CategoryImg(item.place_type)}
                       name={item.name}
                       address={item.address}
-                      targetage={20}
+                      targetage={item.popularAge}
                       targetgender={item.popularGender}
                       place_type={item.place_type}
                     />
@@ -216,7 +195,6 @@ const HomeWrapper = styled.div`
 `;
 
 const CardWrapper = styled.div`
-  z-index: 2000;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
