@@ -29,15 +29,32 @@ class Create_category(APIView):
   renderer_classes = [UserRenderer]
   permission_classes = [IsAuthenticated]
   
+  # 회원가입 할 때 유저 생성이 아직 안 되어 있음
+
+  # 1. 만약 한 번에 보내주면 지금 유저 모델에 컬럼을 하나 추가해서 카테고리를 저장해둔다. => 개인 정보 수정에 영향이 있을 수 있다? - 형주, 진행
+  
+  # 2. 분할해서 하려면 다음을 눌렀을 때 회원가입 API과 로그인 API이 된 채로 관심정보를 선택하고 관심정보를 저장한다. - 성배
+  
+  # 3. 프론트에 대가리 박고 카테고리를 없앤다.
+  
+  # 4. 가입하고 추가할 수 있게 페이지를 옮긴다. 프론트 작업 필요
+  
+  # 어떤 방식으로 할까요
+  
   @swagger_auto_schema(operation_summary='회원 카테고리 생성',request_body=serializers.UserCategorySerializer)
   def post(self, request, format=None):
-    serializer = UserCategorySerializer(data=request.data)
-    if serializer.is_valid(): 
-      user = serializer.save(user=request.user)
-    if serializer:
-        return Response({'code': 200, "message": "카테고리 생성",  "category" : serializer.data}, status=status.HTTP_200_OK)
-    else:
+
+    for category in request.data['categoryName']:
+      serializer = UserCategorySerializer(data={'categoryName': category})
+      if serializer.is_valid(): 
+        user = serializer.save(user=request.user)
+        
+      else:
         return Response({'code': 401, "message": "카테고리 생성 실패"}, status=status.HTTP_401_UNAUTHORIZED)
+        
+    else:
+        return Response({'code': 200, "message": "카테고리 생성",  "category" : request.data['categoryName']}, status=status.HTTP_200_OK)
+   
 
 
 
