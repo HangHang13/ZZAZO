@@ -8,15 +8,15 @@
 
 ![ZZAZOLOGO.png](https://user-images.githubusercontent.com/97587150/193963230-e4fea809-5924-4ec5-887e-fe30092abfc7.png)
 
-ZZAZO 시연 시나리오는 👉[여기](README.assets/시연시나리오/시연시나리오.md)👈에서 더 자세히 보실 수 있습니다.
+ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서 더 자세히 보실 수 있습니다.
 
 # 목차
 
 ---
 
-1. [서비스 소개](https://lab.ssafy.com/s07-bigdata-recom-sub2/S07P22B307#%E2%85%B0-%EC%84%9C%EB%B9%84%EC%8A%A4-%EC%86%8C%EA%B0%9C)
-2. [기술 스택](https://lab.ssafy.com/s07-bigdata-recom-sub2/S07P22B307#%E2%85%B1-%EA%B8%B0%EC%88%A0%EC%8A%A4%ED%83%9D)
-3. [프로젝트 진행](https://lab.ssafy.com/s07-bigdata-recom-sub2/S07P22B307#%E2%85%B2-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%A7%84%ED%96%89)
+1. [서비스 소개](#ⅰ-서비스-소개)
+2. [기술 스택](#ⅱ-기술스택)
+3. [프로젝트 진행](#ⅲ-프로젝트-진행)
 
 # **Ⅰ**. **서비스 소개**
 
@@ -326,7 +326,7 @@ ZZAZO 화면설계서로 대체 예정
 
 모두가 봐야할 공지, 함께 선정해야하는 주제 및 초기 ERD, API 설계, 공부해야 할 링크, 개발 중 참고 링크, 트러블 슈팅 등을 모아서 관리했습니다. 컨벤션 규칙 등도 노션에 기록하여 모두가 항시 확인할 수 있도록 관리했습니다.
 
-[[노션 바로가기]](https://www.notion.so/B307-924dcd959ef94b12a28555b4197f6d17)
+[[팀 노션 바로가기]](https://www.notion.so/B307-924dcd959ef94b12a28555b4197f6d17)
 
 ### **✨ ER Diagram**
 
@@ -338,7 +338,15 @@ ZZAZO 화면설계서로 대체 예정
 
 ---
 
-[포트](https://www.notion.so/dd6e41f1de42402c9d927db5f6817b9e)
+|  **PORT**  |        **이름**        |
+| :--------: | :--------------------: |
+|    443     |         HTTPS          |
+|     80     |      HTTP, nginx       |
+|    8443    |        Openvidu        |
+|    3306    |         MySQL          |
+|    8080    |        Jenkins         |
+| 8081, 8082 | Spring boot API Server |
+|    8888    |  Kurento Media Server  |
 
 ### 👨‍👩‍👧‍👧 **개발 팀 소개**
 
@@ -390,18 +398,18 @@ ZZAZO 화면설계서로 대체 예정
 </a>
 </td>
 <td align="center" width="150px">
-<a href="[https://github.com/minwoo9629](https://github.com/minwoo9629)" target="_blank">
-<a href="https://github.com/minwoo9629"><img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/46440898?v=4" alt="김형주 프로필"/></a>
+<a href="[https://github.com/brotherweekkim](https://github.com/brotherweekkim)" target="_blank">
+<a href="https://github.com/brotherweekkim"><img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/46440898?v=4" alt="김형주 프로필"/></a>
 </a>
 </td>
 <td align="center" width="150px">
-<a href="[https://github.com/mindot7](https://github.com/mindot7)" target="_blank">
-<a href="https://github.com/mindot7"><img height="100px" width="100px" src="https://user-images.githubusercontent.com/97587150/193962622-01d9f2ac-d151-4a11-8707-440685e4958d.png" alt="박성배 프로필"/></a>
+<a href="[https://github.com/SeongbaePark1105](https://github.com/SeongbaePark1105)" target="_blank">
+<a href="https://github.com/SeongbaePark1105"><img height="100px" width="100px" src="https://user-images.githubusercontent.com/97587150/193962622-01d9f2ac-d151-4a11-8707-440685e4958d.png" alt="박성배 프로필"/></a>
 </a>
 </td>
 <td align="center" width="150px">
-<a href="[https://github.com/Youji-Sung](https://github.com/Youji-Sung)" target="_blank">
-<a href="https://github.com/Youji-Sung"><img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/97648544?v=4" alt="이진행 프로필"/></a>
+<a href="[https://github.com/HangHang13/](https://github.com/HangHang13/)" target="_blank">
+<a href="https://github.com/HangHang13/"><img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/97648544?v=4" alt="이진행 프로필"/></a>
 </a>
 </td>
 </tr>
@@ -412,7 +420,7 @@ ZZAZO 화면설계서로 대체 예정
 </a>
 </td>
 <td align="center">
-<a href="[https://github.com/daisy6365](https://github.com/daisy6365)" target="_blank">
+<a href="[https://github.com/tjsgnrla97](https://github.com/tjsgnrla97)" target="_blank">
 김선후<br />(Front-end)
 </a>
 </td>
@@ -422,17 +430,17 @@ ZZAZO 화면설계서로 대체 예정
 </a>
 </td>
 <td align="center">
-<a href="[https://github.com/minwoo9629](https://github.com/minwoo9629)" target="_blank">
+<a href="[https://github.com/brotherweekkim](https://github.com/brotherweekkim)" target="_blank">
 김형주<br />(Back-end)
 </a>
 </td>
 <td align="center">
-<a href="[https://github.com/mindot7](https://github.com/mindot7)" target="_blank">
+<a href="[https://github.com/SeongbaePark1105](https://github.com/SeongbaePark1105)" target="_blank">
 박성배<br />(Back-end)
 </a>
 </td>
 <td align="center">
-<a href="[https://github.com/Youji-Sung](https://github.com/Youji-Sung)">
+<a href="[https://github.com/HangHang13/](https://github.com/HangHang13/)">
 이진행<br />(Back-end)
 </a>
 </td>
@@ -457,6 +465,8 @@ ZZAZO 화면설계서로 대체 예정
 </h2>
 </summary>
 [404 취소 아이콘](https://kor.pngtree.com/freepng/cancel-vector-icon-with-transparent-background_5156945.html)
+[프로필 이미지](https://kor.pngtree.com/freepng/a-group-of-small-animal-expressions_7390459.html?sol=downref&id=bef)
+[마커 이미지](https://kor.pngtree.com/freepng/a-group-of-small-animal-expressions_7390459.html?sol=downref&id=bef)
 </details>
 
 ---
