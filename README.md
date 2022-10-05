@@ -386,8 +386,8 @@ ZZAZO 화면설계서로 대체 예정
 </a>
 </td>
 <td align="center" width="150px">
-<a href="[https://github.com/daisy6365](https://github.com/daisy6365)" target="_blank">
-<a href="https://github.com/daisy6365"><img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/62869982?v=4" alt="김선후 프로필"/></a>
+<a href="[https://github.com/tjsgnrla97](https://github.com/tjsgnrla97)" target="_blank">
+<a href="https://github.com/tjsgnrla97"><img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/62869982?v=4" alt="김선후 프로필"/></a>
 </a>
 </td>
 <td align="center" width="150px">
