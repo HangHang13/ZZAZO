@@ -414,32 +414,32 @@ ZZAZO 화면설계서로 대체 예정
 <tr>
 <td align="center">
 <a href="[https://github.com/rkarud1234](https://github.com/rkarud1234)" target="_blank">
-김갑경<br />(FullStack & 팀장)
-</a>
-</td>
-<td align="center">
-<a href="[https://github.com/win9612](https://github.com/win9612)" target="_blank">
-조민규<br />(Back-end)
+김성수<br />(Front-end & 팀장)
 </a>
 </td>
 <td align="center">
 <a href="[https://github.com/daisy6365](https://github.com/daisy6365)" target="_blank">
-한다빈<br />(Back-end)
+김선후<br />(Front-end)
+</a>
+</td>
+<td align="center">
+<a href="[https://github.com/win9612](https://github.com/win9612)" target="_blank">
+조민규<br />(Front-end)
 </a>
 </td>
 <td align="center">
 <a href="[https://github.com/minwoo9629](https://github.com/minwoo9629)" target="_blank">
-이민우<br />(Front-end)
+김형주<br />(Back-end)
 </a>
 </td>
 <td align="center">
 <a href="[https://github.com/mindot7](https://github.com/mindot7)" target="_blank">
-김민정<br />(Front-end)
+박성배<br />(Back-end)
 </a>
 </td>
 <td align="center">
 <a href="[https://github.com/Youji-Sung](https://github.com/Youji-Sung)">
-성유지<br />(Front-end)
+이진행<br />(Back-end)
 </a>
 </td>
 </tr>
