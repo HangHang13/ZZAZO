@@ -378,9 +378,72 @@ ZZAZO 화면설계서로 대체 예정
     - JWT, Redis를 이용해 로그아웃된 토큰 재사용 불가 처리 구현
     - User 관련 구현(회원가입, 로그인, 로그아웃, 프로필 조회, 프로필 정보 수정, 프로필 이미지 업로드, 프로필 이미지 조회, 유저에 대한 회의 이력 조회)
 
-| 팀원 사진 |  |  |  |  |  |
-| --- | --- | --- | --- | --- | --- |
-| 김성수 | 김선후 | 조민규 | 김형주 | 박성배 | 이진행 |
+<table>
+<tr>
+<td align="center" width="150px">
+<a href="[https://github.com/rkarud1234](https://github.com/rkarud1234)" target="_blank">
+<a href="https://github.com/rkarud1234"><img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/84266499?v=4" alt="김성수 프로필"/></a>
+</a>
+</td>
+<td align="center" width="150px">
+<a href="[https://github.com/daisy6365](https://github.com/daisy6365)" target="_blank">
+<a href="https://github.com/daisy6365"><img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/62869982?v=4" alt="김선후 프로필"/></a>
+</a>
+</td>
+<td align="center" width="150px">
+<a href="[https://github.com/win9612](https://github.com/win9612)" target="_blank">
+<a href="https://github.com/win9612"><img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/64128134?v=4" alt="조민규 프로필"/></a>
+</a>
+</td>
+<td align="center" width="150px">
+<a href="[https://github.com/minwoo9629](https://github.com/minwoo9629)" target="_blank">
+<a href="https://github.com/minwoo9629"><img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/46440898?v=4" alt="김형주 프로필"/></a>
+</a>
+</td>
+<td align="center" width="150px">
+<a href="[https://github.com/mindot7](https://github.com/mindot7)" target="_blank">
+<a href="https://github.com/mindot7"><img height="100px" width="100px" src="README.assets/팀원소개/박성배.png" alt="박성배 프로필"/></a>
+</a>
+</td>
+<td align="center" width="150px">
+<a href="[https://github.com/Youji-Sung](https://github.com/Youji-Sung)" target="_blank">
+<a href="https://github.com/Youji-Sung"><img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/97648544?v=4" alt="이진행 프로필"/></a>
+</a>
+</td>
+</tr>
+<tr>
+<td align="center">
+<a href="[https://github.com/rkarud1234](https://github.com/rkarud1234)" target="_blank">
+김갑경<br />(FullStack & 팀장)
+</a>
+</td>
+<td align="center">
+<a href="[https://github.com/win9612](https://github.com/win9612)" target="_blank">
+조민규<br />(Back-end)
+</a>
+</td>
+<td align="center">
+<a href="[https://github.com/daisy6365](https://github.com/daisy6365)" target="_blank">
+한다빈<br />(Back-end)
+</a>
+</td>
+<td align="center">
+<a href="[https://github.com/minwoo9629](https://github.com/minwoo9629)" target="_blank">
+이민우<br />(Front-end)
+</a>
+</td>
+<td align="center">
+<a href="[https://github.com/mindot7](https://github.com/mindot7)" target="_blank">
+김민정<br />(Front-end)
+</a>
+</td>
+<td align="center">
+<a href="[https://github.com/Youji-Sung](https://github.com/Youji-Sung)">
+성유지<br />(Front-end)
+</a>
+</td>
+</tr>
+</table>
 
 
 | 이름 | 역할 | 개발 내용 |
