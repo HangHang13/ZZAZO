@@ -99,7 +99,7 @@ const RecCard = ({ src, name, address, place_type, target, lat, lng, targetgende
               <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/women.png`} alt="location"></InfoIcon>
             </>
           )}
-          {targetage} 대 {targetgender == "male" ? "남성" : "여성"} 이 많이 이용합니다.
+          {targetage == "만족없음" ? "" : targetage} {targetgender == "male" ? "남성" : "여성"}이 많이 이용합니다.
         </CardTarget>
       </CardBody>
     </Card>

@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 //score : 별점
 const ARRAY = [0, 1, 2, 3, 4];
 
-const ReviewDetail = ({ myrating, modalClose, placeinfo, target, placeid }) => {
+const ReviewDetail = ({ myrating, modalClose, placeinfo, placeid }) => {
   /**카드 이미지 경로 */
   function imgPath(placeinfo) {
     switch (placeinfo.placeUrl) {
@@ -122,8 +122,16 @@ const ReviewDetail = ({ myrating, modalClose, placeinfo, target, placeid }) => {
                     {placeinfo.place_type}
                   </CardInfoItem>
                   <CardInfoItem>
-                    <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/women.png`} alt="location"></InfoIcon>
-                    {target}
+                    {placeinfo.popularGender == "male" ? (
+                      <>
+                        <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/man.png`} alt="location"></InfoIcon>
+                      </>
+                    ) : (
+                      <>
+                        <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/women.png`} alt="location"></InfoIcon>
+                      </>
+                    )}
+                    {placeinfo.popularAge == "만족없음" ? "" : placeinfo.popularAge} {placeinfo.popularGender == "male" ? "남성" : "여성"}이 많이 이용해요.
                   </CardInfoItem>
                   <CardInfoItem>
                     <InfoIcon src={`${process.env.PUBLIC_URL}/assets/card/star.png`} alt="location"></InfoIcon>
