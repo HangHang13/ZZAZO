@@ -294,3 +294,12 @@ class SendEmailSerializer(serializers.Serializer):
 #       a=attrs.get('userRadius')
 #       print(a)
 #       user = User.objects.filter(userEmail=user).update(userRadius=a)
+
+class UserEmailSerializer(serializers.ModelSerializer):
+  class Meta:
+      model = User
+      fields = ('userEmail',)
+  
+  def email(self):
+    return self.data['userEmail']
+    
