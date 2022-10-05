@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from accounts import serializers
 from accounts.serializers import (
     SendPasswordResetEmailSerializer, UserChangePasswordSerializer, UserLoginSerializer, 
-    UserProfileSerializer, UserRegistrationSerializer,UserCategorySerializer, UpdateUserSerializer,UserCategorySerializer)
+    UserProfileSerializer, UserRegistrationSerializer,UserCategorySerializer, UpdateUserSerializer,UserCategorySerializer, UserEmailSerializer)
 from django.contrib.auth import authenticate
 from accounts.renderers import UserRenderer
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -110,13 +110,16 @@ def find_userEmail(request):
   userName = request.data.get('userName')
   userPhone = request.data.get('userPhone')
   userBirth = request.data.get('userBirth')
-  a= User.objects.filter(userBirth=userBirth)
-  print(a)
-  if User.objects.filter(Q(userName=userName) & Q(userPhone=userPhone) & Q(userBirth=userBirth)).exists():
-      user = User.objects.get(userName=userName)
- 
-
-      context = {'code': 200, 'message': "아이디 찾기 성공", 'userEmail' : user.userEmail}
+  user = User.objects.filter(Q(userName=userName) & Q(userPhone=userPhone) & Q(userBirth=userBirth))
+  # 회원가입 시 이메일 고유성
+  if user:
+      # 동명이인 고려를 하지 않음
+      user_emails = UserEmailSerializer(user, many = True) 
+      email_data = []
+      for user_email in user_emails.data:
+        email_data.append(user_email['userEmail'])
+        
+      context = {'code': 200, 'message': "아이디 찾기 성공", 'userEmails' : email_data}
       return Response(context) 
   else:
 

@@ -121,7 +121,8 @@ def place_recommend(request):
     # 약속 장소로 등록한 사람이 많은 곳
     else:
         # 카테고리 사용
-        near_place_list.sort(key= lambda x: (len(Card.objects.filter(place_id = x._id))))
+        # 카테고리에 있으면 1을 리턴 아니면 0을 리턴하는 함수를 만들어서 sort 적용
+        near_place_list.sort(key= lambda x: (len(Card.objects.filter(place_id = x._id)), )) # 함수 하나 추가
     
 
     
