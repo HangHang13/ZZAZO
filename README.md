@@ -153,7 +153,7 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 | :-------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------: |
 |                                                               React                                                               |                                                         Redux                                                         |
 
-| <img src="https://axios-http.com/assets/logo.svg" alt="MUI" width="50px" height="50px" /> | <img src="https://user-images.githubusercontent.com/46440898/185293492-b3242ac5-e146-43f5-a484-0e1aa4d45c3b.png" alt="Styled-Component" width="50px" height="50px"/> |
+| <img src="https://axios-http.com/assets/logo.svg" alt="MUI" width="50px" height="50px" /> | <img src="https://user-images.githubusercontent.com/46440898/185293492-b3242ac5-e146-43f5-a484-0e1aa4d45c3b.png" alt="Styled-Component" display="flex" justify-content="center" width="50px" height="50px"/> |
 | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
 | AXIOS | Styled-Component |
 
