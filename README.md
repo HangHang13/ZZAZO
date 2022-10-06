@@ -1,5 +1,3 @@
-# 최종산출물 정리
-
 # 😋ZZAZO - 약속 장소 추천 서비스
 
 ## **👇ZZAZO 소개👇**
@@ -222,70 +220,40 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 
 ---
 
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/%EC%84%9C%EB%B9%84%EC%8A%A4%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.png](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/%EC%84%9C%EB%B9%84%EC%8A%A4%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.png)
+![아키텍처](https://user-images.githubusercontent.com/97587150/194183070-d84fc638-64d2-4e83-ada1-185f65c0da55.png)
 
-## **✨WebRTC**
-
----
-
-![https://github.com/parkjisu6239/2021_Narang/raw/master/README.assets/image-20210828151835934.png](https://github.com/parkjisu6239/2021_Narang/raw/master/README.assets/image-20210828151835934.png)
-
-![https://github.com/parkjisu6239/2021_Narang/raw/master/README.assets/image-20210828152033949.png](https://github.com/parkjisu6239/2021_Narang/raw/master/README.assets/image-20210828152033949.png)
-
-> WebRTC (Web Real-Time Communication)는 웹 브라우저 간에 플러그인의 도움 없이 서로 통신할 수 있도록 설계된 API이다.
->
-> W3C에서 제시된 초안이며, 음성 통화, 영상 통화, P2P 파일 공유 등으로 활용될 수 있다.
-
-## **✨openVidu[🔗](https://openvidu.io/)**
+## **✨Kakao Maps API[🔗](https://apis.map.kakao.com/)**
 
 ---
 
-![https://github.com/parkjisu6239/2021_Narang/raw/master/README.assets/image-20210828152009951.png](https://github.com/parkjisu6239/2021_Narang/raw/master/README.assets/image-20210828152009951.png)
+![카카오맵api](https://user-images.githubusercontent.com/97587150/194198348-418542c9-2fb2-40b3-97e4-61d15f986383.png)
 
-> OpenVidu is a platform to facilitate the addition of video calls in your web or mobile application. It provides a complete stack of technologies very easy to integrate in your application. Our main goal is to allow developers to add real-time communications to their apps very fast and with low impact in their code.
+> 지도 라이브러리란?
+> Kakao 지도 Javascript API 는 지도와 함께 사용할 수 있는 라이브러리 를 지원하고 있습니다.
+> 라이브러리는 javascript API와 관련되어 있지만 조금 특화된 기능을 묶어둔 것을 말합니다. 이 기능은 추가로 불러와서 사용할 수 있도록 되어있습니다.
+> 현재 사용할 수 있는 라이브러리는 다음과 같습니다.
 
-WebRTC를 보다 간단하게 적용할 수 있고, 다양한 프레임워크와 호환성이 높다는 장점이 있는 openvidu를 사용하여 프로젝트를 진행했습니다.
+> clusterer: 마커를 클러스터링 할 수 있는 클러스터러 라이브러리 입니다.<br/>
+> services: 장소 검색 과 주소-좌표 변환 을 할 수 있는 services 라이브러리 입니다.<br/>
+> drawing: 지도 위에 마커와 그래픽스 객체를 쉽게 그릴 수 있게 그리기 모드를 지원하는 drawing 라이브러리 입니다.
 
-## **✨Web Socket**
-
----
-
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/README%20md%20(%E1%84%8C%E1%85%A1%E1%86%A8%E1%84%8B%E1%85%A5%E1%86%B8%E1%84%8C%E1%85%AE%E1%86%BC)%20d0c797bba6af4fe48dc8f5506790572f/img1.daumcdn.png](<https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/README%20md%20(%E1%84%8C%E1%85%A1%E1%86%A8%E1%84%8B%E1%85%A5%E1%86%B8%E1%84%8C%E1%85%AE%E1%86%BC)%20d0c797bba6af4fe48dc8f5506790572f/img1.daumcdn.png>)
-
-> 웹소켓(WebSocket)은 하나의 TCP 접속에 전이중 통신 채널을 제공하는 컴퓨터 통신 프로토콜이다. 웹소켓 프로토콜은 2011년 IETF에 의해 RFC 6455로 표준화되었으며 웹 IDL의 웹소켓 API는 W3C에 의해 표준화되고 있다. (이미지 출처 : https://kku-jun.tistory.com/17)
-
-일반적인 `Ajax`
- 통신의 `Poling`방식과 다르게, 특정 `end point`(종단점)를 구독하면 종단지점과 연결된 모든 통신을 수신할 수 있으며, 실시간 양방향 소통이 가능합니다. 그래서 실시간 채팅등에 많이 활용되고 있습니다. 저희 또한 채팅 기능 등을 구현함에 있어서 웹소켓을 사용하였습니다.
-
-### **SockJS [🔗](https://github.com/sockjs/sockjs-client)**
-
-> SockJS는 WebSocket과 유사한 객체를 제공하는 브라우저 JavaScript 라이브러리입니다. SockJS는 브라우저와 웹 서버 사이에 짧은 대기 시간, 전이중, 도메인 간 통신 채널을 생성하는 일관된 브라우저 간 Javascript API를 제공합니다.
-
-소켓 통신을 이용하기 위해 사용하는 첫 번째 라이브러리입니다. `SockJS`로 통신에 필요한 `end point` (종단점)로 `socket` 객체를 생성합니다.
-
-### **Stomp.js [🔗](https://github.com/stomp-js/stompjs)**
-
-> 이 라이브러리를 사용하면 WebSocket을 통해 STOMP 브로커에 연결할 수 있습니다. 이 라이브러리는 모든 현재 프로토콜 변형을 포함하여 완전한 STOMP 사양을 지원합니다. 가장 인기 있는 메시징 브로커는 기본적으로 또는 플러그인을 사용하여 WebSocket을 통해 STOMP 및 STOMP를 지원합니다.
-
-소켓 통신을 이용하기 위해서 사용하는 두 번째 라이브러리입니다. `Stomp.js`로 생성된 `socket` 객체로부터 `stompClient`를 생성하고, 연결 및 구독, 전송합니다. FrontEnd에서 소켓을 통해 전송된 내용이 BackEnd에서 동일한 endpoint로 일괄적으로 수신되며, BackEnd에서 이를 다시 FrontEnd로 전달합니다. 채팅 소켓의 경우 추가적인 처리 없이 받은 내용을 그대로 모든 구독자에게 반환합니다.
-
-## **✨Redis**
+## **✨ReactKakaoMapsSDK[🔗](https://react-kakao-maps-sdk.jaeseokim.dev/)**
 
 ---
 
-저희는 Spring Scurity와 JWT를 이용하여 로그인 등의 사용자 인증을 구현하였습니다. Redis에 로그아웃한 사용자의 토큰을 저장하여 로그아웃시킨 사용자의 토큰들을 만료처리하여 해당 토큰으로는 다시 인증할 수 없도록 구현하였습니다.
+![ReactKakaoMapsSDK](https://user-images.githubusercontent.com/97587150/194198861-15d3fe1e-26af-41ae-853a-18e66f705545.png)
 
-프론트에서만 토큰을 지워줬을 경우 만약 토큰이 지워지기전에 탈취를 당했을 경우, 해당 토큰으로 접근이 가능하기 때문에 Redis를 사용하였습니다.
+> 기존 kakao map sdk의 기능들을 리액트 환경에서 컴포넌트화하여 사용할 수 있고 기능구현에 집중할 수 있도록 라이프사이클을 연결시킨 sdk입니다.
+
+리액트 환경에서 컴포넌트 단위로 Kakao map api를 보다 간단하게 적용할 수 있고, 보다 편리하게 기능 융합이 가능하여 사용하였습니다.
 
 ## **✨배포**
 
 ---
 
-Nginx를 웹서버로 하여 수동배포 하였습니다.
-
 자세한 사항은 다음을 참고해주세요.
 
-[빌드 및 배포 가이드](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/blob/master/exec/%EB%B9%8C%EB%93%9C%EB%B0%B0%ED%8F%AC%EA%B0%80%EC%9D%B4%EB%93%9C.md)
+[빌드 및 배포 가이드](exec/CICD%20%EB%A9%94%EB%89%B4%EC%96%BC.md)
 
 ### **✨ EC2 포트 정리**
 
@@ -314,15 +282,16 @@ Nginx를 웹서버로 하여 수동배포 하였습니다.
 
 ---
 
-저희 프로젝트는 `Agile`방식으로 개발을 진행하였고, 매주 월요일 스크럼 회의를 통해 Jira를 사용한 스프린트 일정관리를 하였습니다.
+저희 프로젝트는 `Agile`방식으로 개발을 진행하였고, 매주 월요일 Jira를 사용해 스프린트 일정관리를 하였고 매일 오전과 오후에 스크럼 회의를 진행하여 오전에는 당일 진행할 부분을 이야기하고 토론을 진행했고 오후에는 각 자 당일 진행한 부분을 토론하고 의견제시를 하는 식으로 진행하였습니다. Webex를 이용하여 각 Front, Back 세션을 만들어 각 분야끼리 소통하면서 개발을 진행하였고 `Troble Shooting` 이 발생하였을 경우 모여서 해결하는 방식으로 진행하였습니다.
 
 ## **🎨 화면 설계서**
 
 ---
 
-ZZAZO 화면설계서로 대체 예정
-
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/%ED%99%94%EB%A9%B4%EC%84%A4%EA%B3%84%EC%84%9C.png](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/%ED%99%94%EB%A9%B4%EC%84%A4%EA%B3%84%EC%84%9C.png)
+![화면설계서1](https://user-images.githubusercontent.com/97587150/194183371-58067fe5-08bc-4800-ac93-e786e3726230.png)
+![화면설계서2](https://user-images.githubusercontent.com/97587150/194183372-07ed0ef4-72e0-40b4-b528-8fecf3e72946.png)
+![화면설계서3](https://user-images.githubusercontent.com/97587150/194183374-cb4ca936-d990-48e7-b7bc-39c719b79943.png)
+![화면설계서4](https://user-images.githubusercontent.com/97587150/194183377-cb0733b0-8ed6-4602-9912-141c2b0b4120.png)
 
 ### **✨Git 컨벤션**
 
@@ -417,7 +386,7 @@ ZZAZO 화면설계서로 대체 예정
 </td>
 <td align="center">
 <a href="[https://github.com/brotherweekkim](https://github.com/brotherweekkim)" target="_blank">
-김형주<br />(Back-end)
+김형주<br />(Back-end & Core)
 </a>
 </td>
 <td align="center">
@@ -433,14 +402,14 @@ ZZAZO 화면설계서로 대체 예정
 </tr>
 </table>
 
-| 이름   | 역할               | 개발 내용 |
-| ------ | ------------------ | --------- |
-| 김성수 | (Front-end & 팀장) |           |
-| 김선후 | (Front-end)        |           |
-| 조민규 | (Front-end)        |           |
-| 김형주 | (Back-end)         |           |
-| 박성배 | (Back-end)         |           |
-| 이진행 | (Back-end)         |           |
+| 이름   | 역할               | 개발 내용                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| ------ | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 김성수 | (Front-end & 팀장) |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| 김선후 | (Front-end)        | 와이어프레임 MyPage, Plan, PlanShare, NotFound<br/> Styled-Component를 이용한 CSS-in-JS 방식으로 스타일링 작업<br/> MyPage, UpdateProfile, UpdatePassword, DeleteProfile 페이지 디자인 및 기능 구현<br/> Plan 페이지, Landing 컴포넌트 디자인 및 기능구현<br/> - GPS 기준 좌표설정, 지도 클릭 시 마커 생성, 키워드 검색, 주소-좌표 변환 등<br/> - 기존 바닐라형식 자바스크립트 api 코드 리액트 형식으로 사용.<br/> PlanShare 페이지 디자인 및 기능구현<br/> NotFound 페이지 디자인 및 기능구현<br/> 최종산출물 정리 및 취합 |
+| 조민규 | (Front-end)        |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| 김형주 | (Back-end & Core)  | Place, Reivew, plan API 구현 및 보완<br /> Recommend Algorithm 구현<br/> - 협업 필터링<br /> - 유저 관심 카테고리 필터링                                                                                                                                                                                                                                                                                                                                                                                                    |
+| 박성배 | (Back-end)         | Python selenuim을 이용해 카카오 맵, 구글 크롤링<br/> - KAKAO - 장소에 대한 정보, 별점 및 리뷰<br/> - GOOGLE - 장소에 대한 Image<br/> Place, Reivew, plan API 구현 및 보완                                                                                                                                                                                                                                                                                                                                                   |
+| 이진행 | (Back-end)         | Accounts API 구현 및 보완<br/> - JWT Token, Refresh Token, Access Token 적용<br/> Docker, Jenkins를 이용해 Project 자동배포 적용                                                                                                                                                                                                                                                                                                                                                                                            |
 
 ---
 
