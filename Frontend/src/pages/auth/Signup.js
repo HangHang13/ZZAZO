@@ -239,7 +239,7 @@ const Signup = () => {
 			userEmail: state.userEmail,
 			password: state.password,
 		});
-		console.log(response);
+
 		if (response.status === 200) {
 			// 토큰 두 가지 sessionStorage에 저장
 			const accessToken = response.data.token.access;
