@@ -324,6 +324,6 @@ migrations
 # settings
 
 
-
+.xlsx
 local.py
 secrets.json
