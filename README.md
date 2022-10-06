@@ -68,47 +68,113 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 
 ### **회원가입 - 개인정보**
 
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.gif](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.gif)
+- 회원가입 - 기본정보
+
+![회원가입 - 나머지 정보 입력](https://user-images.githubusercontent.com/97587150/194233844-e19fa7fd-32a5-45d3-9ef7-734529b9f7d2.gif)
+
+- 회원가입 - 비밀번호 입력
+
+![회원가입 - 비밀번호 입력](https://user-images.githubusercontent.com/97587150/194233853-342b8c0e-e6ed-452b-9aea-6443c4839962.gif)
+
+- 회원가입 - 아이디 중복체크 성공
+
+![회원가입 - 아이디 노중복](https://user-images.githubusercontent.com/97587150/194233855-21a2454d-eb85-4fea-a36c-769e0dc2d39d.gif)
+
+- 회원가입 - 아이디 중복체크 실패
+
+![회원가입 - 아이디 중복](https://user-images.githubusercontent.com/97587150/194233858-f33650be-79aa-4740-b208-29e8f3738446.gif)
+
+- 회원가입 - 이메일 인증번호 입력
+
+![회원가입 - 이메일 인증번호 입력](https://user-images.githubusercontent.com/97587150/194233860-ac0b84b6-2e61-4bb6-a4da-63a4521d7d61.gif)
 
 ### **회원가입 - 관심사**
 
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.gif](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.gif)
+![회원가입 - 관심정보 입력](https://user-images.githubusercontent.com/97587150/194234014-3766aa47-c948-414f-a8af-0f4284d2e2f9.gif)
 
 ### 로그인
 
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%EB%A1%9C%EA%B7%B8%EC%9D%B8.gif](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%EB%A1%9C%EA%B7%B8%EC%9D%B8.gif)
+![로그인](https://user-images.githubusercontent.com/97587150/194234077-ed0797ec-2785-4fc5-826e-8d521073b3b5.gif)
 
 ### **마이페이지 - 개인정보 변경**
 
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%ED%94%84%EB%A1%9C%ED%95%84.gif](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%ED%94%84%EB%A1%9C%ED%95%84.gif)
+![마이페이지 - 개인정보 변경](https://user-images.githubusercontent.com/97587150/194234141-7ed9a2dd-b129-4881-81d2-d9e32096d318.gif)
 
 ### **마이페이지 - 비밀번호 변경**
 
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%ED%94%84%EB%A1%9C%ED%95%84.gif](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%ED%94%84%EB%A1%9C%ED%95%84.gif)
+![마이페이지 - 비밀번호 변경](https://user-images.githubusercontent.com/97587150/194234273-41bb1525-4a1c-4371-83a0-c594c361f1f2.gif)
 
 ### **마이페이지 - 계정 탈퇴**
 
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%ED%94%84%EB%A1%9C%ED%95%84.gif](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%ED%94%84%EB%A1%9C%ED%95%84.gif)
+![마이페이지 - 회원 탈퇴](https://user-images.githubusercontent.com/97587150/194234342-19f6382a-ef60-4fb0-88d8-bdd053fc964b.gif)
 
 ### 메인페이지
 
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%EB%B0%A9%EC%83%9D%EC%84%B1%EC%B0%B8%EC%97%AC.gif](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%EB%B0%A9%EC%83%9D%EC%84%B1%EC%B0%B8%EC%97%AC.gif)
+- 메인페이지
+
+![메인](https://user-images.githubusercontent.com/97587150/194234445-934d1f5b-ba6e-4f9b-aaa2-794524b4d7f2.gif)
+
+- 메인페이지 - 약속잡기 바로가기
+
+![메인페이지 - 약속잡기 바로이동](https://user-images.githubusercontent.com/97587150/194234437-2f55d192-3af6-4d6c-914b-ff7e7d2690bd.gif)
 
 ### 약속잡기 - 약속 장소 선택
 
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%EB%B0%A9%EC%83%9D%EC%84%B1%EC%B0%B8%EC%97%AC.gif](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%EB%B0%A9%EC%83%9D%EC%84%B1%EC%B0%B8%EC%97%AC.gif)
+- 약속잡기 - 지정위치
+
+![약속장소선택 - 지정위치](https://user-images.githubusercontent.com/97587150/194234721-96c797d2-f86f-4afe-a361-a1ecd46cbc8e.gif)
+
+- 약속잡기 - 장소검색
+
+![약속장소선택 - 장소검색](https://user-images.githubusercontent.com/97587150/194234738-ca8bb10c-388c-4da6-a9ae-152304138543.gif)
 
 ### 약속잡기 - 약속 카드 생성
 
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%EB%B0%A9%EC%83%9D%EC%84%B1%EC%B0%B8%EC%97%AC.gif](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%EB%B0%A9%EC%83%9D%EC%84%B1%EC%B0%B8%EC%97%AC.gif)
+- 약속카드생성 - 반경 변경
+
+![약속카드생성 - 뱐경 변경](https://user-images.githubusercontent.com/97587150/194234992-238fd282-c47b-48d6-8337-8d1becd36077.gif)
+
+- 약속카드생성 - 이름, 날짜, 시간 입력
+
+![약속카드생성 - 이름,날짜,시간 입력](https://user-images.githubusercontent.com/97587150/194235007-5c051f51-8eea-441f-88c2-35c86a8f44bf.gif)
+
+- 약속카드생성 - 리로드
+
+![약속카드생성 - 리로드](https://user-images.githubusercontent.com/97587150/194234978-96529b0e-3cca-4f55-ac7c-e8f1db0397ab.gif)
+
+- 약속카드생성 - 리뷰 보기
+
+![약속카드생성 - 리뷰 보기](https://user-images.githubusercontent.com/97587150/194234990-86960e68-d5f5-4a98-ba20-dc6a5c8aab84.gif)
+
+- 약속카드생성 - 약속카드 장소추가
+
+![약속카드생성 - 약속카드 장소추가](https://user-images.githubusercontent.com/97587150/194235002-a7e20185-8167-4f75-bb60-2bde5983f753.gif)
+
+- 약속카드생성 - 드래그앤드랍
+
+![약속카드생성 - 드래그앤드랍](https://user-images.githubusercontent.com/97587150/194234962-59069a2a-dbc4-4e10-a18d-8e2fba6e3312.gif)
+
+- 약속카드생성 - 전체 목록 조회
+
+![약속카드생성 - 전체 목록 조회](https://user-images.githubusercontent.com/97587150/194235019-4bb9a4b9-e37c-46c5-94dc-2e5b73da5935.gif)
+
+- 약속카드생성 - 휴지통
+
+![약속카드생성 - 휴지통](https://user-images.githubusercontent.com/97587150/194235021-370e5f56-420e-4d68-a772-00fc69af3b9d.gif)
+
+- 약속카드생성 - 저장
+
+![약속카드생성 - 저장](https://user-images.githubusercontent.com/97587150/194235013-a3d96a40-e423-4bea-b382-718f50486e69.gif)
 
 ### 약속 공유
 
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%EB%B0%A9%EC%83%9D%EC%84%B1%EC%B0%B8%EC%97%AC.gif](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%EB%B0%A9%EC%83%9D%EC%84%B1%EC%B0%B8%EC%97%AC.gif)
+![약속카드생성 - 카톡공유](https://user-images.githubusercontent.com/97587150/194235179-806c26ec-4773-4339-a2c8-7a6016fe919a.gif)
+9.gif)
 
 ### 공유일정확인
 
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%EB%B0%A9%EC%83%9D%EC%84%B1%EC%B0%B8%EC%97%AC.gif](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%EB%B0%A9%EC%83%9D%EC%84%B1%EC%B0%B8%EC%97%AC.gif)
+![약속카드생성 - 카톡공유](https://user-images.githubusercontent.com/97587150/194235179-806c26ec-4773-4339-a2c8-7a6016fe919a.gif)
+9.gif)
 
 ## **✨ 주요 기능**
 
@@ -213,11 +279,9 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 
 ![아키텍처](https://user-images.githubusercontent.com/97587150/194183070-d84fc638-64d2-4e83-ada1-185f65c0da55.png)
 
-## **✨Kakao Maps API[🔗](https://apis.map.kakao.com/)**
+## **✨Kakao API[🔗](https://apis.map.kakao.com/)**
 
 ---
-
-![카카오맵api](https://user-images.githubusercontent.com/97587150/194198348-418542c9-2fb2-40b3-97e4-61d15f986383.png)
 
 > 지도 라이브러리란?
 > Kakao 지도 Javascript API 는 지도와 함께 사용할 수 있는 라이브러리 를 지원하고 있습니다.
@@ -230,7 +294,11 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 
 `services` 라이브러리를 통하여 지도 검색 기능에 대한 전반적인 기능들을 구현하였으며, `drawing` 라이브러리를 통해서 마커간의 동선을 구현하는데 사용하였습니다.
 
-또한 카카오 `Link api`를 통하여 공유하기 기능을 구현하는데 사용하였습니다.
+> 메시지 API는 사용자가 자신 또는 친구에게 카카오톡 메시지를 보내는 기능을 제공합니다. 서비스 정보를 간편하게 메시지로 공유하는 데 사용하는 카카오톡 공유 API, 서비스에서 사용자간 메시지를 보낼 수 있게 해 주는 카카오톡 메시지 API의 두 종류 메시지 API가 있습니다. 메시지 템플릿은 원하는 형태의 메시지와 콘텐츠를 편리하게 구성할 수 있도록 지원합니다.
+
+> 카카오톡이 지원되는 환경이라면 모바일, 데스크톱, 태블릿까지 다양한 플랫폼에서 메시지를 활용할 수 있습니다. 메시지 API로 서비스 콘텐츠를 널리 퍼뜨리고, 사용자의 재방문을 유도해 보세요.
+
+또한 카카오 `메시지 api`를 통하여 공유하기 기능을 구현하는데 사용하였습니다.
 
 ## **✨배포**
 
