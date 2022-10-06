@@ -228,11 +228,9 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 > services: 장소 검색 과 주소-좌표 변환 을 할 수 있는 services 라이브러리 입니다.<br/>
 > drawing: 지도 위에 마커와 그래픽스 객체를 쉽게 그릴 수 있게 그리기 모드를 지원하는 drawing 라이브러리 입니다.
 
-카카오 Link api를 통하여 공유하기 기능을 구현하는데 사용하였습니다.
+`services` 라이브러리를 통하여 지도 검색 기능에 대한 전반적인 기능들을 구현하였으며, `drawing` 라이브러리를 통해서 마커간의 동선을 구현하는데 사용하였습니다.
 
-## **✨ReactKakaoMapsSDK[🔗](https://react-kakao-maps-sdk.jaeseokim.dev/)**
-
----
+또한 카카오 `Link api`를 통하여 공유하기 기능을 구현하는데 사용하였습니다.
 
 ## **✨배포**
 
