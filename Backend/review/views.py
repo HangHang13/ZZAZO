@@ -20,7 +20,7 @@ def place_review_create_or_create_form(request, place_id):
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user, place=place)
             placeScore =  Review.objects.filter(place=place_id).aggregate(placeScore = Avg('score'))
-            place_update.update(placeScore = placeScore['placeScore'])
+            place_update.update(placeScore = round(placeScore['placeScore'],1))
             code = 200
             message = "리뷰 생성"
             res = {
@@ -105,7 +105,7 @@ def place_review_update_or_delete(request, place_id, review_id):
             if serializer.is_valid(raise_exception=True):
                 serializer.save(user=request.user, place=place)
                 placeScore =  Review.objects.filter(place=place_id).aggregate(placeScore = Avg('score'))
-                place_update.update(placeScore = placeScore['placeScore'])
+                place_update.update(placeScore = round(placeScore['placeScore'], 1))
                 code = 200
                 message = "리뷰 수정"
                 res = {
