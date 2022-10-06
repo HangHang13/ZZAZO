@@ -1,5 +1,3 @@
-# 최종산출물 정리
-
 # 😋ZZAZO - 약속 장소 추천 서비스
 
 ## **👇ZZAZO 소개👇**
@@ -222,7 +220,7 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 
 ---
 
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/%EC%84%9C%EB%B9%84%EC%8A%A4%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.png](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/%EC%84%9C%EB%B9%84%EC%8A%A4%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.png)
+![아키텍처](https://user-images.githubusercontent.com/97587150/194183070-d84fc638-64d2-4e83-ada1-185f65c0da55.png)
 
 ## **✨WebRTC**
 
@@ -314,15 +312,16 @@ Nginx를 웹서버로 하여 수동배포 하였습니다.
 
 ---
 
-저희 프로젝트는 `Agile`방식으로 개발을 진행하였고, 매주 월요일 스크럼 회의를 통해 Jira를 사용한 스프린트 일정관리를 하였습니다.
+저희 프로젝트는 `Agile`방식으로 개발을 진행하였고, 매주 월요일 Jira를 사용해 스프린트 일정관리를 하였고 매일 오전과 오후에 스크럼 회의를 진행하여 오전에는 당일 진행할 부분을 이야기하고 토론을 진행했고 오후에는 각 자 당일 진행한 부분을 토론하고 의견제시를 하는 식으로 진행하였습니다. Webex를 이용하여 각 Front, Back 세션을 만들어 각 분야끼리 소통하면서 개발을 진행하였고 `Troble Shooting` 이 발생하였을 경우 모여서 해결하는 방식으로 진행하였습니다.
 
 ## **🎨 화면 설계서**
 
 ---
 
-ZZAZO 화면설계서로 대체 예정
-
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/%ED%99%94%EB%A9%B4%EC%84%A4%EA%B3%84%EC%84%9C.png](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/%ED%99%94%EB%A9%B4%EC%84%A4%EA%B3%84%EC%84%9C.png)
+![화면설계서1](https://user-images.githubusercontent.com/97587150/194183371-58067fe5-08bc-4800-ac93-e786e3726230.png)
+![화면설계서2](https://user-images.githubusercontent.com/97587150/194183372-07ed0ef4-72e0-40b4-b528-8fecf3e72946.png)
+![화면설계서3](https://user-images.githubusercontent.com/97587150/194183374-cb4ca936-d990-48e7-b7bc-39c719b79943.png)
+![화면설계서4](https://user-images.githubusercontent.com/97587150/194183377-cb0733b0-8ed6-4602-9912-141c2b0b4120.png)
 
 ### **✨Git 컨벤션**
 
@@ -417,7 +416,7 @@ ZZAZO 화면설계서로 대체 예정
 </td>
 <td align="center">
 <a href="[https://github.com/brotherweekkim](https://github.com/brotherweekkim)" target="_blank">
-김형주<br />(Back-end)
+김형주<br />(Back-end & Core)
 </a>
 </td>
 <td align="center">
@@ -433,14 +432,14 @@ ZZAZO 화면설계서로 대체 예정
 </tr>
 </table>
 
-| 이름   | 역할               | 개발 내용 |
-| ------ | ------------------ | --------- |
-| 김성수 | (Front-end & 팀장) |           |
-| 김선후 | (Front-end)        |           |
-| 조민규 | (Front-end)        |           |
-| 김형주 | (Back-end)         |           |
-| 박성배 | (Back-end)         |           |
-| 이진행 | (Back-end)         |           |
+| 이름   | 역할               | 개발 내용                                                                                                                                                                 |
+| ------ | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 김성수 | (Front-end & 팀장) |                                                                                                                                                                           |
+| 김선후 | (Front-end)        |                                                                                                                                                                           |
+| 조민규 | (Front-end)        |                                                                                                                                                                           |
+| 김형주 | (Back-end & Core)  | Place, Reivew, plan API 구현 및 보완<br /> Recommend Algorithm 구현<br/> - 협업 필터링<br /> - 유저 관심 카테고리 필터링                                                  |
+| 박성배 | (Back-end)         | Python selenuim을 이용해 카카오 맵, 구글 크롤링<br/> - KAKAO - 장소에 대한 정보, 별점 및 리뷰<br/> - GOOGLE - 장소에 대한 Image<br/> Place, Reivew, plan API 구현 및 보완 |
+| 이진행 | (Back-end)         | Accounts API 구현 및 보완<br/> - JWT Token, Refresh Token, Access Token 적용<br/> Docker, Jenkins를 이용해 Project 자동배포 적용                                          |
 
 ---
 
