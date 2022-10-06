@@ -25,7 +25,7 @@ sys.path.append(BASE_DIR)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-secret_file = os.path.join('./', 'secrets.json')
+secret_file = os.path.abspath('secrets.json')
 
 with open(secret_file) as f:
     secrets = json.loads(f.read())
