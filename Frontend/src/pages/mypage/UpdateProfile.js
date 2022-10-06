@@ -100,7 +100,7 @@ const UpdateProfile = () => {
     year: user.data.Birth !== null ? user.data.userBirth.substr(0, 4) : "0000",
     month: user.data.Birth !== null ? user.data.userBirth.substr(5, 2) : "00",
     day: user.data.Birth !== null ? user.data.userBirth.substr(8, 2) : "00",
-    userNickNameChecked: true,
+    userNickNameChecked: false,
   });
   /**프로필 변경 전 기존 프로필 상태관리*/
   const OriginProfile = {
@@ -113,7 +113,7 @@ const UpdateProfile = () => {
     year: user.data.Birth !== null ? user.data.userBirth.substr(0, 4) : "0000",
     month: user.data.Birth !== null ? user.data.userBirth.substr(5, 2) : "00",
     day: user.data.Birth !== null ? user.data.userBirth.substr(8, 2) : "00",
-    userNickNameChecked: true,
+    userNickNameChecked: false,
   };
   /**프로필 이미지 상태관리*/
   const [profileImgState, setProfileImgState] = useState({
@@ -277,8 +277,6 @@ const UpdateProfile = () => {
     alert("프로필 정보가 변경되었습니다.");
     /**redux 상태갱신*/
     dispatch(storeSetUserProfile({ isLogin: true, data: data }));
-    /**홈화면으로 페이지 갱신*/
-    navigate("/");
   };
 
   //날짜 구하는 로직*/

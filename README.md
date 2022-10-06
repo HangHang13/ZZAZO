@@ -2,9 +2,9 @@
 
 ## **👇ZZAZO 소개👇**
 
-(ucc 영상 혹은 시연영상으로 대체)
-
 ![ZZAZOLOGO.png](https://user-images.githubusercontent.com/97587150/193963230-e4fea809-5924-4ec5-887e-fe30092abfc7.png)
+
+[짜조UCC](https://youtu.be/umfKtU4Rcic)
 
 ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서 더 자세히 보실 수 있습니다.
 
@@ -56,64 +56,56 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 - 이러한 일정과 동선을 계획하는데 어려움을 겪고 힘들어하며 오게 되는 스트레스를 겪게 되는 상황들에 대한 공감대를 통해서 해당 문제에 대한 해결법을 생각해보고자 함.
 - 처음으로 만나게 될 약속 장소를 정하면, 해당 장소에 따른 추천 장소들을 정해주고, 카테고리 별로 장소들을 분류해서 정할 수 있으며 카드 형태로 주어진 장소들을 통한 약속 일정을 만들고, 카카오톡 등을 통해 지인들에게 공유할 수 있는 서비스를 기획하게 됨.
 
-### 목적
+### 기대 효과
 
 - 처음으로 방문하는 약속 장소에 대한 일정을 계획하는 데 편의성 제공
 - 약속 일정을 계획할 시간이 부족한 이들로 하여금 일정 계획 시간 단축
 - 약속 장소를 결정하기 어려운 이들에게 추천 서비스 알고리즘을 통한 약속 장소 제공
 
-### 의의(수정 필요)
-
-- 온라인 공간에서도 조직원 간의 친밀도를 쉽게 향상 시킬 수 있음
-- 친밀도 및 유대감의 증가는 자연스럽게 업무 효율 증가로 이어질 것이라 예측
-
-## ⚡ZZAZO **서비스 화면(GIF로 수정 필요)**
+## ⚡ZZAZO **서비스 화면**
 
 ---
 
-### **회원가입 - 개인정보**
+ZZAZO 전체 서비스 화면은 👉[여기](exec/전체서비스.md)👈에서 더 자세히 보실 수 있습니다.
 
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.gif](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.gif)
+### **회원가입 시 초기 관심사 등록**
 
-### **회원가입 - 관심사**
+![회원가입 - 관심정보 입력](https://user-images.githubusercontent.com/97587150/194234014-3766aa47-c948-414f-a8af-0f4284d2e2f9.gif)
 
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.gif](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.gif)
+### **만남 장소 선택**
 
-### 로그인
+![약속장소선택 - 장소검색](https://user-images.githubusercontent.com/97587150/194234738-ca8bb10c-388c-4da6-a9ae-152304138543.gif)
 
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%EB%A1%9C%EA%B7%B8%EC%9D%B8.gif](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%EB%A1%9C%EA%B7%B8%EC%9D%B8.gif)
+### **약속 카드 생성**
 
-### **마이페이지 - 개인정보 변경**
+- 약속카드에 장소 추가
 
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%ED%94%84%EB%A1%9C%ED%95%84.gif](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%ED%94%84%EB%A1%9C%ED%95%84.gif)
+![약속카드생성 - 약속카드 장소추가](https://user-images.githubusercontent.com/97587150/194235002-a7e20185-8167-4f75-bb60-2bde5983f753.gif)
 
-### **마이페이지 - 비밀번호 변경**
+- 새로고침 (새로 추천받기)
 
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%ED%94%84%EB%A1%9C%ED%95%84.gif](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%ED%94%84%EB%A1%9C%ED%95%84.gif)
+![약속카드생성 - 리로드](https://user-images.githubusercontent.com/97587150/194234978-96529b0e-3cca-4f55-ac7c-e8f1db0397ab.gif)
 
-### **마이페이지 - 계정 탈퇴**
+- 장소 리뷰 확인
 
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%ED%94%84%EB%A1%9C%ED%95%84.gif](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%ED%94%84%EB%A1%9C%ED%95%84.gif)
+![약속카드생성 - 리뷰 보기](https://user-images.githubusercontent.com/97587150/194234990-86960e68-d5f5-4a98-ba20-dc6a5c8aab84.gif)
 
-### 메인페이지
+- 장소 순서 정렬 기능
 
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%EB%B0%A9%EC%83%9D%EC%84%B1%EC%B0%B8%EC%97%AC.gif](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%EB%B0%A9%EC%83%9D%EC%84%B1%EC%B0%B8%EC%97%AC.gif)
+![약속카드생성 - 드래그앤드랍](https://user-images.githubusercontent.com/97587150/194234962-59069a2a-dbc4-4e10-a18d-8e2fba6e3312.gif)
 
-### 약속잡기 - 약속 장소 선택
+- 약속카드 저장
 
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%EB%B0%A9%EC%83%9D%EC%84%B1%EC%B0%B8%EC%97%AC.gif](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%EB%B0%A9%EC%83%9D%EC%84%B1%EC%B0%B8%EC%97%AC.gif)
-
-### 약속잡기 - 약속 카드 생성
-
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%EB%B0%A9%EC%83%9D%EC%84%B1%EC%B0%B8%EC%97%AC.gif](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%EB%B0%A9%EC%83%9D%EC%84%B1%EC%B0%B8%EC%97%AC.gif)
+![약속카드생성 - 저장](https://user-images.githubusercontent.com/97587150/194235013-a3d96a40-e423-4bea-b382-718f50486e69.gif)
 
 ### 약속 공유
 
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%EB%B0%A9%EC%83%9D%EC%84%B1%EC%B0%B8%EC%97%AC.gif](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%EB%B0%A9%EC%83%9D%EC%84%B1%EC%B0%B8%EC%97%AC.gif)
+![약속카드생성 - 카톡공유](https://user-images.githubusercontent.com/97587150/194235179-806c26ec-4773-4339-a2c8-7a6016fe919a.gif)
 
-### 공유일정확인
+### **반응형 웹 디자인 구현**
 
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%EB%B0%A9%EC%83%9D%EC%84%B1%EC%B0%B8%EC%97%AC.gif](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/GIF/%EB%B0%A9%EC%83%9D%EC%84%B1%EC%B0%B8%EC%97%AC.gif)
+![반응형2](https://user-images.githubusercontent.com/97587150/194316664-3c1d8b39-cd82-4813-ac6e-16657c8bf339.gif)
+![반응형1](https://user-images.githubusercontent.com/97587150/194316671-aaa58344-be37-4f2a-a345-995a7270180b.gif)
 
 ## **✨ 주요 기능**
 
@@ -133,6 +125,7 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
   - 세부 장소 추천
     - 점포 리스트 및 리뷰 크롤링
     - 리뷰와 평점 기반 장소 추천
+    - KNN (협업 필터링) 알고리즘을 이용하여 장소 추천
 
 # **Ⅱ. 기술스택**
 
@@ -170,10 +163,6 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
   - redux-persist (6.0.0)
   - redux-thunk (2.4.1)
   - styled-components (5.3.5)
-- **VSCode Extensions**
-  - prettier - code formatter
-  - Reactjs code snippets
-  - Auto Import - ES6, …
 
 🖱**Backend**
 
@@ -193,7 +182,6 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
   - selenuim (4.4.3)
   - PyJWT (2.4.0)
   - djongo (1.3.6)
-- certbot 0.40.0
 
 🖱**BigData**
 
@@ -215,75 +203,118 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 - docker (20.10.18)
 - jenkins 2.361.1
 - Nginx 1.18.0
+- certbot 0.40.0
 
-## **💫 서비스 아키텍처(아래는 예시 수정 예정)**
-
----
-
-![아키텍처](https://user-images.githubusercontent.com/97587150/194183070-d84fc638-64d2-4e83-ada1-185f65c0da55.png)
-
-## **✨WebRTC**
+## **💫 서비스 아키텍처**
 
 ---
 
-![https://github.com/parkjisu6239/2021_Narang/raw/master/README.assets/image-20210828151835934.png](https://github.com/parkjisu6239/2021_Narang/raw/master/README.assets/image-20210828151835934.png)
+![시스템아키텍처](https://user-images.githubusercontent.com/97587150/194245723-bd0c2829-3488-4257-bc66-532f01a70add.png)
 
-![https://github.com/parkjisu6239/2021_Narang/raw/master/README.assets/image-20210828152033949.png](https://github.com/parkjisu6239/2021_Narang/raw/master/README.assets/image-20210828152033949.png)
-
-> WebRTC (Web Real-Time Communication)는 웹 브라우저 간에 플러그인의 도움 없이 서로 통신할 수 있도록 설계된 API이다.
->
-> W3C에서 제시된 초안이며, 음성 통화, 영상 통화, P2P 파일 공유 등으로 활용될 수 있다.
-
-## **✨openVidu[🔗](https://openvidu.io/)**
+## **✨Kakao API[🔗](https://apis.map.kakao.com/)**
 
 ---
 
-![https://github.com/parkjisu6239/2021_Narang/raw/master/README.assets/image-20210828152009951.png](https://github.com/parkjisu6239/2021_Narang/raw/master/README.assets/image-20210828152009951.png)
+> 지도 라이브러리란?
+> Kakao 지도 Javascript API 는 지도와 함께 사용할 수 있는 라이브러리 를 지원하고 있습니다.
+> 라이브러리는 javascript API와 관련되어 있지만 조금 특화된 기능을 묶어둔 것을 말합니다. 이 기능은 추가로 불러와서 사용할 수 있도록 되어있습니다.
+> 현재 사용할 수 있는 라이브러리는 다음과 같습니다.
 
-> OpenVidu is a platform to facilitate the addition of video calls in your web or mobile application. It provides a complete stack of technologies very easy to integrate in your application. Our main goal is to allow developers to add real-time communications to their apps very fast and with low impact in their code.
+> clusterer: 마커를 클러스터링 할 수 있는 클러스터러 라이브러리 입니다.<br/>
+> services: 장소 검색 과 주소-좌표 변환 을 할 수 있는 services 라이브러리 입니다.<br/>
+> drawing: 지도 위에 마커와 그래픽스 객체를 쉽게 그릴 수 있게 그리기 모드를 지원하는 drawing 라이브러리 입니다.
 
-WebRTC를 보다 간단하게 적용할 수 있고, 다양한 프레임워크와 호환성이 높다는 장점이 있는 openvidu를 사용하여 프로젝트를 진행했습니다.
+`services` 라이브러리를 통하여 지도 검색 기능에 대한 전반적인 기능들을 구현하였으며, `drawing` 라이브러리를 통해서 마커간의 동선을 구현하는데 사용하였습니다.
 
-## **✨Web Socket**
+> 메시지 API는 사용자가 자신 또는 친구에게 카카오톡 메시지를 보내는 기능을 제공합니다. 서비스 정보를 간편하게 메시지로 공유하는 데 사용하는 카카오톡 공유 API, 서비스에서 사용자간 메시지를 보낼 수 있게 해 주는 카카오톡 메시지 API의 두 종류 메시지 API가 있습니다. 메시지 템플릿은 원하는 형태의 메시지와 콘텐츠를 편리하게 구성할 수 있도록 지원합니다.
 
----
+> 카카오톡이 지원되는 환경이라면 모바일, 데스크톱, 태블릿까지 다양한 플랫폼에서 메시지를 활용할 수 있습니다. 메시지 API로 서비스 콘텐츠를 널리 퍼뜨리고, 사용자의 재방문을 유도해 보세요.
 
-![https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/README%20md%20(%E1%84%8C%E1%85%A1%E1%86%A8%E1%84%8B%E1%85%A5%E1%86%B8%E1%84%8C%E1%85%AE%E1%86%BC)%20d0c797bba6af4fe48dc8f5506790572f/img1.daumcdn.png](<https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/raw/master/README.asset/README%20md%20(%E1%84%8C%E1%85%A1%E1%86%A8%E1%84%8B%E1%85%A5%E1%86%B8%E1%84%8C%E1%85%AE%E1%86%BC)%20d0c797bba6af4fe48dc8f5506790572f/img1.daumcdn.png>)
+또한 카카오 `메시지 api`를 통하여 공유하기 기능을 구현하는데 사용하였습니다.
 
-> 웹소켓(WebSocket)은 하나의 TCP 접속에 전이중 통신 채널을 제공하는 컴퓨터 통신 프로토콜이다. 웹소켓 프로토콜은 2011년 IETF에 의해 RFC 6455로 표준화되었으며 웹 IDL의 웹소켓 API는 W3C에 의해 표준화되고 있다. (이미지 출처 : https://kku-jun.tistory.com/17)
-
-일반적인 `Ajax`
- 통신의 `Poling`방식과 다르게, 특정 `end point`(종단점)를 구독하면 종단지점과 연결된 모든 통신을 수신할 수 있으며, 실시간 양방향 소통이 가능합니다. 그래서 실시간 채팅등에 많이 활용되고 있습니다. 저희 또한 채팅 기능 등을 구현함에 있어서 웹소켓을 사용하였습니다.
-
-### **SockJS [🔗](https://github.com/sockjs/sockjs-client)**
-
-> SockJS는 WebSocket과 유사한 객체를 제공하는 브라우저 JavaScript 라이브러리입니다. SockJS는 브라우저와 웹 서버 사이에 짧은 대기 시간, 전이중, 도메인 간 통신 채널을 생성하는 일관된 브라우저 간 Javascript API를 제공합니다.
-
-소켓 통신을 이용하기 위해 사용하는 첫 번째 라이브러리입니다. `SockJS`로 통신에 필요한 `end point` (종단점)로 `socket` 객체를 생성합니다.
-
-### **Stomp.js [🔗](https://github.com/stomp-js/stompjs)**
-
-> 이 라이브러리를 사용하면 WebSocket을 통해 STOMP 브로커에 연결할 수 있습니다. 이 라이브러리는 모든 현재 프로토콜 변형을 포함하여 완전한 STOMP 사양을 지원합니다. 가장 인기 있는 메시징 브로커는 기본적으로 또는 플러그인을 사용하여 WebSocket을 통해 STOMP 및 STOMP를 지원합니다.
-
-소켓 통신을 이용하기 위해서 사용하는 두 번째 라이브러리입니다. `Stomp.js`로 생성된 `socket` 객체로부터 `stompClient`를 생성하고, 연결 및 구독, 전송합니다. FrontEnd에서 소켓을 통해 전송된 내용이 BackEnd에서 동일한 endpoint로 일괄적으로 수신되며, BackEnd에서 이를 다시 FrontEnd로 전달합니다. 채팅 소켓의 경우 추가적인 처리 없이 받은 내용을 그대로 모든 구독자에게 반환합니다.
-
-## **✨Redis**
+## **✨** Selenuim
 
 ---
 
-저희는 Spring Scurity와 JWT를 이용하여 로그인 등의 사용자 인증을 구현하였습니다. Redis에 로그아웃한 사용자의 토큰을 저장하여 로그아웃시킨 사용자의 토큰들을 만료처리하여 해당 토큰으로는 다시 인증할 수 없도록 구현하였습니다.
+> Selenuim 이란 ? python에서 웹 사이트 크롤링을 하기 위해 사용 되는 라이브러리입니다.
+> html에서 가져온 데이터는 텍스트 형태의 html 입니다. 텍스트 형태의 데이터에서 원하는 html tag를 추출 할 수 있는 방법은 “BeautifulSoup” 를 이용하여 쉽게 가져올 수 있습니다.
 
-프론트에서만 토큰을 지워줬을 경우 만약 토큰이 지워지기전에 탈취를 당했을 경우, 해당 토큰으로 접근이 가능하기 때문에 Redis를 사용하였습니다.
+<aside>
+💡 BeautifulSoup : 텍스트형태의 데이터에서 원하는 html 태그를 가져올 수 있는 라이브러리
+</aside>
+
+## \***\*✨추천 알고리즘\*\***
+
+### 협업 필터링
+
+---
+
+> 협업필터링 이란? 사용자의 구매 패턴이나 평점을 가지고 다른 사람들의 구매 패턴, 평점을 통해서 추천을 하는 방법입니다. 추가적인 사용자의 개인정보나 아이템의 정보가 없이도 추천할 수 있는게 큰 장점입니다.
+
+### Neighborhood based Collaborative Filtering
+
+---
+
+Neighborhood based Collaborative Filtering은 메모리 기반 알고리즘으로 협업 필터링을 위해 개발된 초기 알고리즘입니다.
+
+- **메모리 기반 알고리즘**(Neighborhood model 기준)은 유저와 아이템에 대한 matrix를 만든 뒤, 유저 **기반** 혹은 아이템 **기반**으로 유사한 객체를 찾은 뒤 빈공간을 추론하는 **알고리즘**입니다.
+
+### KNN 알고리즘
+
+---
+
+K Nearest Neighbors는 가장 유사한 K 명의 Neighbors를 통해서 예측하는 방법입니다.
+
+- 사용자 기반: 나와 비슷한 성향의 사람이 재밌게 본 영화 등을 추천하는 방식이다.
+- 아이템 기반: 아이템에 대한 평가가 유사한 아이템을 추천하는 방식으로 일반적으로 성능이 더 뛰어나다.
+
+협업 필터링 KNN 알고리즘 중 **아이템 기반 추천**으로 구현하였습니다.
+
+### 문제점
+
+---
+
+1. 초기 사용자는 추천을 받지 못한다.
+2. 기존 데이터가 많아야 추천을 받을 수 있다.
+3. 알고리즘 실행 시간이 길다.
+
+### 해결방안
+
+---
+
+1. 초기 사용자는 추천을 받지 못한다.
+   - 초기 사용자는 데이터가 없어서 유사한 사용자를 찾을 수 없습니다.
+   - 따라서 다른 추천을 통해 먼저 데이터를 쌓고 리뷰가 10개 이상인 사용자만 협업 필터링을 적용했습니다.
+   - 다른 추천은 카테고리 일치하는 장소, 다른 사용자들이 많이 방문한 곳, 별점 순으로 장소 추천을 해주었습니다.
+2. 기존 데이터가 많아야 추천을 받을 수 있다.
+   - 기존 데이터가 없어서 카카오맵 리뷰를 크롤링하여 베이스 데이터를 만들었습니다.
+3. 알고리즘 실행 시간이 길다.
+   - 알고리즘 실행 시간이 6분 ~ 15분 정도 소요되었습니다.
+   - 따라서 유저들이 잘 사용하지 않는 새벽 3시에 알고리즘을 한 번 돌리고 DB에 저장해서 알고리즘 결과를 DB에서 꺼내 쓸 수 있도록 만들었습니다.
+
+### 결과
+
+---
+
+- 알고리즘을 통한 예상 별점
+
+![Untitled](https://user-images.githubusercontent.com/97587150/194353488-65f6d761-883e-42f4-8b25-725d66ea2638.png)
+
+- 실제 유저가 준 별점
+
+![Untitled](https://user-images.githubusercontent.com/97587150/194353481-f937f9d6-8a39-4d37-ae64-b2383ec2ac8a.png)
+
+- 약 `80%` 정도 일치하는 것으로 결과가 나왔습니다.
+- MSE 성능 평가 점수는 약 `6.1164`이 나왔습니다.
+- MSE 성능평가: `실제 값`과 `예측값의 차이`를 제곱해 평균한 것
 
 ## **✨배포**
 
 ---
 
-Nginx를 웹서버로 하여 수동배포 하였습니다.
-
 자세한 사항은 다음을 참고해주세요.
 
-[빌드 및 배포 가이드](https://www.notion.so/s07-webmobile1-sub2/S07P12B304/-/blob/master/exec/%EB%B9%8C%EB%93%9C%EB%B0%B0%ED%8F%AC%EA%B0%80%EC%9D%B4%EB%93%9C.md)
+[빌드 및 배포 가이드](exec/CICD%20%EB%A9%94%EB%89%B4%EC%96%BC.md)
 
 ### **✨ EC2 포트 정리**
 
@@ -335,9 +366,21 @@ Nginx를 웹서버로 하여 수동배포 하였습니다.
 
 ---
 
+- Git Flow 전략 사용
+
 ![Git플로우](https://user-images.githubusercontent.com/97587150/193985155-7aa0e73c-38b3-4cee-a2c5-191d34f0b116.png)
 
-자세한 사항은 다음을 참고해 주세요.
+- master 브랜치
+  - 배포되는 브랜치
+- develop 브랜치
+  - 개발이 주로 이루어 지는 브랜치
+- feature 브랜치
+  - develop 에서 분기되는 브랜치
+  - feat/BE or FE/<기능>
+- hotfix 브랜치
+  - develop에서 분기되는 브랜치
+  - 수정이 필요한 경우 사용
+  - fix/BE or FE/<기능>
 
 ### **👨‍👩‍👧 Jira**
 
@@ -361,6 +404,40 @@ Nginx를 웹서버로 하여 수동배포 하였습니다.
 
 ![ERD 전체](https://user-images.githubusercontent.com/97587150/193989105-fcfe4b92-5dc2-4da3-a996-d17f78ca0f97.png)
 
+### **✨ 부하 테스트**
+
+---
+
+### case1#
+
+- 홈 페이지
+- 상황 : 점심시간처럼 사람이 몰리는 시간을 가정하여 부하테스트 실행
+- 만명이 접속했을 때 응답시간 약 9초
+  ![부하테스트-홈 갑자기.PNG](https://user-images.githubusercontent.com/97587150/194354592-8bd6335a-cbab-45a3-b7ee-ef4524e7ffb8.png)
+
+### case2#
+
+- 추천 페이지
+- 상황 : 점심시간처럼 사람이 몰리는 시간을 가정하여 부하테스트 실행
+- 대전광역시 중구 문화1동 근방을 추천받음
+  ![부하테스트 점심시간.png](https://user-images.githubusercontent.com/97587150/194354601-92b92260-f34f-4453-afa1-030a4ae4c741.png)
+- 690 명에서 서버초과
+
+### case3#
+
+- 홈 페이지
+- 상황 : 서버 수정, 배포 후, 사용자가 몰리는 것을 가정하여 부하테스트 실행
+- 초당 2천명씩 추가
+  ![부하테스트-홈 갑자기.PNG](https://user-images.githubusercontent.com/97587150/194354581-c20c1eb1-46ac-4d25-8a70-5111def8ce18.png)
+- 사용자 만명에서 응답시간 약 9초
+
+### 결론
+
+- 사용자가 690명 이상인 경우, 원활한 추천시스템을 활성화시키기 위해서
+- 오토스케일링을 구성
+  - 접속한 유저수가 600명 이상이 넘는 경우,
+  - 인스턴스를 추가 활성화 시키는 방안 모색
+
 ### 👨‍👩‍👧‍👧 **개발 팀 소개**
 
 ---
@@ -368,13 +445,13 @@ Nginx를 웹서버로 하여 수동배포 하였습니다.
 <table>
 <tr>
 <td align="center" width="150px">
-<a href="[https://github.com/rkarud1234](https://github.com/rkarud1234)" target="_blank">
-<a href="https://github.com/rkarud1234"><img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/84266499?v=4" alt="김성수 프로필"/></a>
+<a href="[https://github.com/platycodonv](https://github.com/platycodonv)" target="_blank">
+<a href="https://github.com/platycodonv"><img height="100px" width="100px" src="https://user-images.githubusercontent.com/97587150/194244877-c44c608d-8764-4d06-8843-52f9dfe9caca.png" alt="김성수 프로필"/></a>
 </a>
 </td>
 <td align="center" width="150px">
 <a href="[https://github.com/tjsgnrla97](https://github.com/tjsgnrla97)" target="_blank">
-<a href="https://github.com/tjsgnrla97"><img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/62869982?v=4" alt="김선후 프로필"/></a>
+<a href="https://github.com/tjsgnrla97"><img height="100px" width="100px" src="https://user-images.githubusercontent.com/97587150/194316910-c5a87c9c-4685-4b0a-ae52-eebd2f630a9d.jpg" alt="김선후 프로필"/></a>
 </a>
 </td>
 <td align="center" width="150px">
@@ -384,7 +461,7 @@ Nginx를 웹서버로 하여 수동배포 하였습니다.
 </td>
 <td align="center" width="150px">
 <a href="[https://github.com/brotherweekkim](https://github.com/brotherweekkim)" target="_blank">
-<a href="https://github.com/brotherweekkim"><img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/46440898?v=4" alt="김형주 프로필"/></a>
+<a href="https://github.com/brotherweekkim"><img height="100px" width="100px" src="https://user-images.githubusercontent.com/97587150/194316907-c16834b6-c3a9-4b2c-bec2-d6a088c76bca.jpg" alt="김형주 프로필"/></a>
 </a>
 </td>
 <td align="center" width="150px">
@@ -394,7 +471,7 @@ Nginx를 웹서버로 하여 수동배포 하였습니다.
 </td>
 <td align="center" width="150px">
 <a href="[https://github.com/HangHang13/](https://github.com/HangHang13/)" target="_blank">
-<a href="https://github.com/HangHang13/"><img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/97648544?v=4" alt="이진행 프로필"/></a>
+<a href="https://github.com/HangHang13/"><img height="100px" width="100px" src="https://user-images.githubusercontent.com/97587150/194316901-bf92ae01-54ed-4b95-a230-40e0547b99a0.jpg" alt="이진행 프로필"/></a>
 </a>
 </td>
 </tr>
@@ -426,20 +503,20 @@ Nginx를 웹서버로 하여 수동배포 하였습니다.
 </td>
 <td align="center">
 <a href="[https://github.com/HangHang13/](https://github.com/HangHang13/)">
-이진행<br />(Back-end)
+이진행<br />(Back-end & Infra)
 </a>
 </td>
 </tr>
 </table>
 
-| 이름   | 역할               | 개발 내용                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| ------ | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 김성수 | (Front-end & 팀장) |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| 김선후 | (Front-end)        | 와이어프레임 MyPage, Plan, PlanShare, NotFound<br/> Styled-Component를 이용한 CSS-in-JS 방식으로 스타일링 작업<br/> MyPage, UpdateProfile, UpdatePassword, DeleteProfile 페이지 디자인 및 기능 구현<br/> Plan 페이지, Landing 컴포넌트 디자인 및 기능구현<br/> - GPS 기준 좌표설정, 지도 클릭 시 마커 생성, 키워드 검색, 주소-좌표 변환 등<br/> - 기존 바닐라형식 자바스크립트 api 코드 리액트 형식으로 사용.<br/> PlanShare 페이지 디자인 및 기능구현<br/> NotFound 페이지 디자인 및 기능구현<br/> 최종산출물 정리 및 취합 |
-| 조민규 | (Front-end)        |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| 김형주 | (Back-end & Core)  | Place, Reivew, plan API 구현 및 보완<br /> Recommend Algorithm 구현<br/> - 협업 필터링<br /> - 유저 관심 카테고리 필터링                                                                                                                                                                                                                                                                                                                                                                                                    |
-| 박성배 | (Back-end)         | Python selenuim을 이용해 카카오 맵, 구글 크롤링<br/> - KAKAO - 장소에 대한 정보, 별점 및 리뷰<br/> - GOOGLE - 장소에 대한 Image<br/> Place, Reivew, plan API 구현 및 보완                                                                                                                                                                                                                                                                                                                                                   |
-| 이진행 | (Back-end)         | Accounts API 구현 및 보완<br/> - JWT Token, Refresh Token, Access Token 적용<br/> Docker, Jenkins를 이용해 Project 자동배포 적용                                                                                                                                                                                                                                                                                                                                                                                            |
+| 이름   | 역할               | 개발 내용                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| ------ | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 김성수 | (Front-end & 팀장) | - 와이어 프레임 디자인<br/> - Styled-Component를 이용한 CSS-in-JS 방식으로 스타일링 작업<br/> - 반응형 웹 디자인<br/> - 메인 페이지 디자인<br/> - 장소 상세 보기, 공유일정 장소 상세 보기 모달 구현<br/> - 메인페이지 추천 기능 구현<br/> - 공유 일정 리스트 Carousel 구현<br/> - 리뷰 작성 및 수정 구현                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| 김선후 | (Front-end)        | - 와이어프레임 MyPage, Plan, PlanShare, NotFound<br/> - Styled-Component를 이용한 CSS-in-JS 방식으로 스타일링 작업<br/> - 반응형 웹 디자인<br/> - MyPage, UpdateProfile, UpdatePassword, DeleteProfile 페이지 디자인 및 기능 구현<br/> - ProfileImageListContent 모달 컴포넌트 구현<br/> - ProfileTitle, TabItem 컴포넌트 구현<br/> - Plan 페이지, Landing 컴포넌트 디자인 및 기능구현<br/> - Landing - GPS 기준 좌표설정<br/> - Landing - 지도 클릭 시 마커 생성<br/> - Landing - 키워드 검색<br/> - Landing - 주소-좌표 변환<br/> - Landing - 기존 바닐라형식 자바스크립트 api 코드 리액트 형식으로 사용.<br/> - PlanShare 페이지 디자인 및 기능구현<br/> - PlanShare - Redux를 활용한 위치 정보 상태 관리, 위치 정보 저장 기능 구현<br/> - NotFound 페이지 디자인 및 기능구현 |
+| 조민규 | (Front-end)        | - 와이어프레임 디자인<br/> - 초기 스켈레톤 구조 설계 및 작성<br/> - Styled-Component를 이용한 CSS-in-JS 방식으로 스타일링 작성<br/> - 반응형 웹 디자인<br/> - 회원가입 페이지 개발<br/> - 아이디 / 비밀번호 찾기 페이지 개발<br/> - 로그인 페이지 개발<br/> - 약속카드 생성 페이지 개발<br/> - 공유일정 리스트 페이지 개발<br/> - 로그인 - Redux를 활용한 회원 정보 상태 관리, 아이디 저장 기능 구현<br/> - 로그인 - Axios Interceptor를 활용한 API 요청 전후 access token, refresh token 확인<br/> - 약속카드 생성 - 반경 설정 SeekBar 구현<br/> - 약속카드 생성 - 장소카드 Drag&Drop 기능 구현<br/> - 약속카드 생성 - 휴지통 기능 구현<br/> - 약속카드 생성 - 카카오맵을 활용한 약속카드 마커 생성 및 동선 표시<br/> - 로딩스피너 구현                                         |
+| 김형주 | (Back-end & Core)  | - API 문서 작성<br/> - Place API 구현 및 보완<br/> - 반경 내 Place 조회 API 구현<br/>- 짜조 홈페이지 API 구현<br/> - place recommend API 구현 <br/> - Review API 구현 및 보완<br/> - 리뷰 작성 폼 API 구현<br/> - 리뷰 생성, 수정, 삭제 API 구현<br/> - Plan API 구현 및 보완<br/> - 몽고DB, MariaDB연결 및 보완<br/> - 협업 필터링으로 Recommend Algorithm 구현 <br/> - 추천 알고리즘 결과물 몽고 DB에 저장<br/> - 유저 관심 카테고리 중심 Recommend Algorithm 구현<br/> - 장소 별점 중심 Recommend Algorithm 구현<br/> - 많이 방문한 장소 중심 Recommend Algorithm 구현<br/> - LOCUST 를 활용해 부하테스트 실행                                                                                                                                                                |
+| 박성배 | (Back-end)         | - Python selenuim을 이용해 카카오맵, 구글 크롤링<br/> 1. KAKAO (장소,카테고리,별점,리뷰,리뷰 내용,주소,카카오 API 를 이용하여 위도, 경도 값)<br/> 2. GOOGLE (MongoDB에 저장된 주소를 바탕으로 이미지 크롤링)<br/> - Place API 구현 및 보완<br/> - 장소에 자주 사용하는 연령, 성별 API 구현 <br/> - Review API 구현 및 보완<br/> - 별점 수정 API 구현<br/> - Plan API 구현 및 보완<br/> - 장소에 자주 사용하는 연령, 성별 API 구현<br/> - 약속 생성, 수정, 삭제 API 구현<br/> - MongoDB, MariaDB 연결<br/> - django DB router 설정 <br/> - LOCUST 를 활용해 부하테스트 실행                                                                                                                                                                                                       |
+| 이진행 | (Back-end & Infra) | - DRF 구현<br/> - django swagger 구현<br/> - Accounts API 구현 및 보완<br/> - 로그인/로그아웃 API 구현<br/> - JWT Token, Refresh Token, Access Token <br/> - 회원 가입/ 회원 탈퇴 API 구현 <br/>- 회원 정보 수정 API 구현<br/> - 이메일, 닉네임 유효성검사 API 구현<br/> - 이메일 인증 API 구현 <br/> - 아이디 / 비밀번호 찾기 API 구현<br/> - 비밀번호 찾으면 비밀번호 난수로 변경 API 구현<br/> - LOCUST 를 활용해 부하테스트 실행 <br/> - Infra <br/>- 시스템 아키텍쳐 구성<br/> - Jenkins pipeline 설정 <br/>- Docker 설정<br/>- HTTPS 적용<br/>- CI-CD 구현                                                                                                                                                                                                                 |
 
 ---
 

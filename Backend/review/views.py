@@ -1,5 +1,3 @@
-from django.shortcuts import render
-from django.shortcuts import get_object_or_404
 from django.db.models import Avg
 
 from rest_framework import status
@@ -16,12 +14,13 @@ from place.serializers.place import PlaceSerializer
 
 def place_review_create_or_create_form(request, place_id):
     place = Place.objects.using('place').get(_id = place_id)
-
-    
+    place_update = Place.objects.using('place').filter(_id = place_id)
     def review_create():
         serializer = ReviewCreateSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user, place=place)
+            placeScore =  Review.objects.filter(place=place_id).aggregate(placeScore = Avg('score'))
+            place_update.update(placeScore = round(placeScore['placeScore'],1))
             code = 200
             message = "리뷰 생성"
             res = {
@@ -39,11 +38,8 @@ def place_review_create_or_create_form(request, place_id):
             }
             return Response(res)
     def review_create_form():
-        user_review = Review.objects.filter(user = request.user, place_id = place_id)
         placeSerializer = PlaceSerializer(place)
-        placeScore =  Review.objects.filter(place=place_id).aggregate(placeScore = Avg('score'))
         placeData = (dict(placeSerializer.data))
-        placeData.update(placeScore)
         if request.user.id != None:
             user_review = Review.objects.filter(user = request.user, place_id = place_id)
             if user_review:
@@ -100,11 +96,14 @@ def place_review_create_or_create_form(request, place_id):
 def place_review_update_or_delete(request, place_id, review_id):
     review = Review.objects.get(pk = review_id, place_id = place_id)
     place = Place.objects.using('place').get(_id = place_id)
+    place_update = Place.objects.using('place').filter(_id = place_id)
     def review_update():
         if request.user.id == review.user_id:
             serializer = ReviewCreateSerializer(instance=review, data=request.data)
             if serializer.is_valid(raise_exception=True):
                 serializer.save(user=request.user, place=place)
+                placeScore =  Review.objects.filter(place=place_id).aggregate(placeScore = Avg('score'))
+                place_update.update(placeScore = round(placeScore['placeScore'], 1))
                 code = 200
                 message = "리뷰 수정"
                 res = {
