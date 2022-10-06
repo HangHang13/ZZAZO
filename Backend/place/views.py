@@ -10,6 +10,8 @@ from ZZAZO.settings.prod import mongo
 
 from plan.models import Card
 from place.models import Place
+from accounts.models import Category
+
 from django.db.models import Q
 from django.db import connection
 from haversine import haversine
@@ -93,7 +95,21 @@ def place_recommend(request):
     username = 'S07P22B307'
     password= mongo
     
+    def category():
+        result = []
+        # 유저 카테고리를 가져온다.
+        categorys = Category.objects.filter(user = request.user)
+        for category in categorys:
+            result.append(str(category))
+        return result
     
+    def category_in(category_list, place_id):
+        place_obj = Place.objects.get(_id = place_id)
+        if place_obj.secondCategory in category_list:
+            return 1
+        else:
+            return 0
+        
     
     longitude = float(request.data['longitude'])
     latitude  = float(request.data['latitude'])
@@ -121,9 +137,10 @@ def place_recommend(request):
     # 약속 장소로 등록한 사람이 많은 곳
     else:
         # 카테고리 사용
+        category_list = category()
         # 카테고리에 있으면 1을 리턴 아니면 0을 리턴하는 함수를 만들어서 sort 적용
-        near_place_list.sort(key= lambda x: (len(Card.objects.filter(place_id = x._id)), )) # 함수 하나 추가
-    
+        near_place_list.sort(key = lambda x: (-category_in(category_list, x._id), len(Card.objects.filter(place_id = x._id)))) # 함수 하나 추가
+
 
     
     serializer = PlaceListSerializer(near_place_list, many=True)
