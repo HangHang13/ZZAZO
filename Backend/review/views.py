@@ -39,9 +39,7 @@ def place_review_create_or_create_form(request, place_id):
             return Response(res)
     def review_create_form():
         placeSerializer = PlaceSerializer(place)
-        placeScore =  Review.objects.filter(place=place_id).aggregate(placeScore = Avg('score'))
         placeData = (dict(placeSerializer.data))
-        placeData.update(placeScore)
         if request.user.id != None:
             user_review = Review.objects.filter(user = request.user, place_id = place_id)
             if user_review:
