@@ -165,10 +165,6 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
   - redux-persist (6.0.0)
   - redux-thunk (2.4.1)
   - styled-components (5.3.5)
-- **VSCode Extensions**
-  - prettier - code formatter
-  - Reactjs code snippets
-  - Auto Import - ES6, …
 
 🖱**Backend**
 
@@ -188,7 +184,6 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
   - selenuim (4.4.3)
   - PyJWT (2.4.0)
   - djongo (1.3.6)
-- certbot 0.40.0
 
 🖱**BigData**
 
@@ -210,8 +205,9 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 - docker (20.10.18)
 - jenkins 2.361.1
 - Nginx 1.18.0
+- certbot 0.40.0
 
-## **💫 서비스 아키텍처(아래는 예시 수정 예정)**
+## **💫 서비스 아키텍처**
 
 ---
 
@@ -232,15 +228,11 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 > services: 장소 검색 과 주소-좌표 변환 을 할 수 있는 services 라이브러리 입니다.<br/>
 > drawing: 지도 위에 마커와 그래픽스 객체를 쉽게 그릴 수 있게 그리기 모드를 지원하는 drawing 라이브러리 입니다.
 
+카카오 Link api를 통하여 공유하기 기능을 구현하는데 사용하였습니다.
+
 ## **✨ReactKakaoMapsSDK[🔗](https://react-kakao-maps-sdk.jaeseokim.dev/)**
 
 ---
-
-![ReactKakaoMapsSDK](https://user-images.githubusercontent.com/97587150/194198861-15d3fe1e-26af-41ae-853a-18e66f705545.png)
-
-> 기존 kakao map sdk의 기능들을 리액트 환경에서 컴포넌트화하여 사용할 수 있고 기능구현에 집중할 수 있도록 라이프사이클을 연결시킨 sdk입니다.
-
-리액트 환경에서 컴포넌트 단위로 Kakao map api를 보다 간단하게 적용할 수 있고, 보다 편리하게 기능 융합이 가능하여 사용하였습니다.
 
 ## **✨배포**
 
@@ -338,6 +330,10 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 
 ![ERD 전체](https://user-images.githubusercontent.com/97587150/193989105-fcfe4b92-5dc2-4da3-a996-d17f78ca0f97.png)
 
+### **✨ 부하 테스트**
+
+---
+
 ### 👨‍👩‍👧‍👧 **개발 팀 소개**
 
 ---
@@ -403,20 +399,20 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 </td>
 <td align="center">
 <a href="[https://github.com/HangHang13/](https://github.com/HangHang13/)">
-이진행<br />(Back-end)
+이진행<br />(Back-end & Infra)
 </a>
 </td>
 </tr>
 </table>
 
-| 이름   | 역할               | 개발 내용                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| ------ | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 김성수 | (Front-end & 팀장) |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| 김선후 | (Front-end)        | 와이어프레임 MyPage, Plan, PlanShare, NotFound<br/> Styled-Component를 이용한 CSS-in-JS 방식으로 스타일링 작업<br/> MyPage, UpdateProfile, UpdatePassword, DeleteProfile 페이지 디자인 및 기능 구현<br/> ProfileImageListContent 모달 컴포넌트 구현<br/>ProfileTitle, TabItem 컴포넌트 구현<br/> Plan 페이지, Landing 컴포넌트 디자인 및 기능구현<br/> Landing - GPS 기준 좌표설정<br/>Landing - 지도 클릭 시 마커 생성<br/>Landing - 키워드 검색<br/>Landing - 주소-좌표 변환<br/>Landing - 기존 바닐라형식 자바스크립트 api 코드 리액트 형식으로 사용.<br/> PlanShare 페이지 디자인 및 기능구현<br/> PlanShare - Redux를 활용한 위치 정보 상태 관리, 위치 정보 저장 기능 구현<br/> NotFound 페이지 디자인 및 기능구현<br/> 최종산출물 정리 및 취합 |
-| 조민규 | (Front-end)        | 와이어프레임 디자인<br/> 초기 스켈레톤 구조 설계 및 작성<br/> Styled-Component를 이용한 CSS-in-JS 방식으로 스타일링 작성<br/> 회원가입 페이지 개발<br/> 아이디 / 비밀번호 찾기 페이지 개발<br/> 로그인 페이지 개발<br/> 약속카드 생성 페이지 개발<br/> 공유일정 리스트 페이지 개발<br/> 로그인 - Redux를 활용한 회원 정보 상태 관리, 아이디 저장 기능 구현<br/> 로그인 - Axios Interceptor를 활용한 API 요청 전후 access token, refresh token 확인<br/> 약속카드 생성 - 반경 설정 SeekBar 구현<br/> 약속카드 생성 - 장소카드 Drag&Drop 기능 구현<br/> 약속카드 생성 - 휴지통 기능 구현<br/> 약속카드 생성 - 카카오맵을 활용한 약속카드 마커 생성 및 동선 표시<br/> 로딩스피너 구현                                                                   |
-| 김형주 | (Back-end & Core)  | Place, Reivew, plan API 구현 및 보완<br /> Recommend Algorithm 구현<br/> - 협업 필터링<br /> - 유저 관심 카테고리 필터링                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| 박성배 | (Back-end)         | Python selenuim을 이용해 카카오 맵, 구글 크롤링<br/> - KAKAO - 장소에 대한 정보, 별점 및 리뷰<br/> - GOOGLE - 장소에 대한 Image<br/> Place, Reivew, plan API 구현 및 보완                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| 이진행 | (Back-end)         | Accounts API 구현 및 보완<br/> - JWT Token, Refresh Token, Access Token 적용<br/> Docker, Jenkins를 이용해 Project 자동배포 적용                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| 이름   | 역할               | 개발 내용                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| ------ | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 김성수 | (Front-end & 팀장) |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| 김선후 | (Front-end)        | - 와이어프레임 MyPage, Plan, PlanShare, NotFound<br/> - Styled-Component를 이용한 CSS-in-JS 방식으로 스타일링 작업<br/> - 반응형 웹 디자인<br/> - MyPage, UpdateProfile, UpdatePassword, DeleteProfile 페이지 디자인 및 기능 구현<br/> - ProfileImageListContent 모달 컴포넌트 구현<br/> - ProfileTitle, TabItem 컴포넌트 구현<br/> - Plan 페이지, Landing 컴포넌트 디자인 및 기능구현<br/> - Landing - GPS 기준 좌표설정<br/> - Landing - 지도 클릭 시 마커 생성<br/> - Landing - 키워드 검색<br/> - Landing - 주소-좌표 변환<br/> - Landing - 기존 바닐라형식 자바스크립트 api 코드 리액트 형식으로 사용.<br/> - PlanShare 페이지 디자인 및 기능구현<br/> - PlanShare - Redux를 활용한 위치 정보 상태 관리, 위치 정보 저장 기능 구현<br/> - NotFound 페이지 디자인 및 기능구현<br/> - 최종산출물 정리 및 취합 |
+| 조민규 | (Front-end)        | - 와이어프레임 디자인<br/> - 초기 스켈레톤 구조 설계 및 작성<br/> - Styled-Component를 이용한 CSS-in-JS 방식으로 스타일링 작성<br/> - 반응형 웹 디자인<br/> - 회원가입 페이지 개발<br/> - 아이디 / 비밀번호 찾기 페이지 개발<br/> - 로그인 페이지 개발<br/> - 약속카드 생성 페이지 개발<br/> - 공유일정 리스트 페이지 개발<br/> - 로그인 - Redux를 활용한 회원 정보 상태 관리, 아이디 저장 기능 구현<br/> - 로그인 - Axios Interceptor를 활용한 API 요청 전후 access token, refresh token 확인<br/> - 약속카드 생성 - 반경 설정 SeekBar 구현<br/> - 약속카드 생성 - 장소카드 Drag&Drop 기능 구현<br/> - 약속카드 생성 - 휴지통 기능 구현<br/> - 약속카드 생성 - 카카오맵을 활용한 약속카드 마커 생성 및 동선 표시<br/> - 로딩스피너 구현                                                                        |
+| 김형주 | (Back-end & Core)  | - Place, Reivew, plan API 구현 및 보완<br /> - Recommend Algorithm 구현<br/> - 협업 필터링<br /> - 유저 관심 카테고리 필터링                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| 박성배 | (Back-end)         | - Python selenuim을 이용해 카카오 맵, 구글 크롤링<br/> - KAKAO - 장소에 대한 정보, 별점 및 리뷰<br/> - GOOGLE - 장소에 대한 Image<br/> - Place, Reivew, plan API 구현 및 보완                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| 이진행 | (Back-end & Infra) | - Accounts API 구현 및 보완<br/> - JWT Token, Refresh Token, Access Token 적용<br/> - Docker, Jenkins를 이용해 Project 자동배포 적용                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 
 ---
 
