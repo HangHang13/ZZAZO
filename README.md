@@ -172,7 +172,7 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 
 ### 공유일정확인
 
-![약속카드생성 - 카톡공유](https://user-images.githubusercontent.com/97587150/194235179-806c26ec-4773-4339-a2c8-7a6016fe919a.gif)
+![공유일정확인](https://user-images.githubusercontent.com/97587150/194249814-950eb8bb-e1f1-4905-afa1-c8d5057b5d4c.gif)
 
 ## **✨ 주요 기능**
 
@@ -275,7 +275,7 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 
 ---
 
-![아키텍처](https://user-images.githubusercontent.com/97587150/194183070-d84fc638-64d2-4e83-ada1-185f65c0da55.png)
+![시스템아키텍처](https://user-images.githubusercontent.com/97587150/194245723-bd0c2829-3488-4257-bc66-532f01a70add.png)
 
 ## **✨Kakao API[🔗](https://apis.map.kakao.com/)**
 
