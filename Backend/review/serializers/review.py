@@ -11,7 +11,7 @@ class ReviewCreateSerializer(serializers.ModelSerializer):
     class PlaceSerializer(serializers.ModelSerializer):
         class Meta:
             model = Place
-            fields = ('_id', )
+            fields = ('_id')
     user = UserSerializer(read_only = True)
     place = PlaceSerializer(read_only = True)
     class Meta:
