@@ -2,9 +2,9 @@
 
 ## **👇ZZAZO 소개👇**
 
-(ucc 영상 혹은 시연영상으로 대체)
-
 ![ZZAZOLOGO.png](https://user-images.githubusercontent.com/97587150/193963230-e4fea809-5924-4ec5-887e-fe30092abfc7.png)
+
+[짜조UCC](https://youtu.be/umfKtU4Rcic)
 
 ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서 더 자세히 보실 수 있습니다.
 
@@ -62,107 +62,39 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 - 약속 일정을 계획할 시간이 부족한 이들로 하여금 일정 계획 시간 단축
 - 약속 장소를 결정하기 어려운 이들에게 추천 서비스 알고리즘을 통한 약속 장소 제공
 
-## ⚡ZZAZO **서비스 화면(GIF로 수정 필요)**
+## ⚡ZZAZO **서비스 화면**
 
 ---
 
-### **회원가입 - 개인정보**
+ZZAZO 전체 서비스 화면은 👉[여기](exec/전체서비스.md)👈에서 더 자세히 보실 수 있습니다.
 
-- 회원가입 - 기본정보
-
-![회원가입 - 나머지 정보 입력](https://user-images.githubusercontent.com/97587150/194233844-e19fa7fd-32a5-45d3-9ef7-734529b9f7d2.gif)
-
-- 회원가입 - 비밀번호 입력
-
-![회원가입 - 비밀번호 입력](https://user-images.githubusercontent.com/97587150/194233853-342b8c0e-e6ed-452b-9aea-6443c4839962.gif)
-
-- 회원가입 - 아이디 중복체크 성공
-
-![회원가입 - 아이디 노중복](https://user-images.githubusercontent.com/97587150/194233855-21a2454d-eb85-4fea-a36c-769e0dc2d39d.gif)
-
-- 회원가입 - 아이디 중복체크 실패
-
-![회원가입 - 아이디 중복](https://user-images.githubusercontent.com/97587150/194233858-f33650be-79aa-4740-b208-29e8f3738446.gif)
-
-- 회원가입 - 이메일 인증번호 입력
-
-![회원가입 - 이메일 인증번호 입력](https://user-images.githubusercontent.com/97587150/194233860-ac0b84b6-2e61-4bb6-a4da-63a4521d7d61.gif)
-
-### **회원가입 - 관심사**
+### **회원가입 시 초기 관심사 등록**
 
 ![회원가입 - 관심정보 입력](https://user-images.githubusercontent.com/97587150/194234014-3766aa47-c948-414f-a8af-0f4284d2e2f9.gif)
 
-### 로그인
-
-![로그인](https://user-images.githubusercontent.com/97587150/194234077-ed0797ec-2785-4fc5-826e-8d521073b3b5.gif)
-
-### **마이페이지 - 개인정보 변경**
-
-![마이페이지 - 개인정보 변경](https://user-images.githubusercontent.com/97587150/194234141-7ed9a2dd-b129-4881-81d2-d9e32096d318.gif)
-
-### **마이페이지 - 비밀번호 변경**
-
-![마이페이지 - 비밀번호 변경](https://user-images.githubusercontent.com/97587150/194234273-41bb1525-4a1c-4371-83a0-c594c361f1f2.gif)
-
-### **마이페이지 - 계정 탈퇴**
-
-![마이페이지 - 회원 탈퇴](https://user-images.githubusercontent.com/97587150/194234342-19f6382a-ef60-4fb0-88d8-bdd053fc964b.gif)
-
-### 메인페이지
-
-- 메인페이지
-
-![메인](https://user-images.githubusercontent.com/97587150/194234445-934d1f5b-ba6e-4f9b-aaa2-794524b4d7f2.gif)
-
-- 메인페이지 - 약속잡기 바로가기
-
-![메인페이지 - 약속잡기 바로이동](https://user-images.githubusercontent.com/97587150/194234437-2f55d192-3af6-4d6c-914b-ff7e7d2690bd.gif)
-
-### 약속잡기 - 약속 장소 선택
-
-- 약속잡기 - 지정위치
-
-![약속장소선택 - 지정위치](https://user-images.githubusercontent.com/97587150/194234721-96c797d2-f86f-4afe-a361-a1ecd46cbc8e.gif)
-
-- 약속잡기 - 장소검색
+### **만남 장소 선택**
 
 ![약속장소선택 - 장소검색](https://user-images.githubusercontent.com/97587150/194234738-ca8bb10c-388c-4da6-a9ae-152304138543.gif)
 
-### 약속잡기 - 약속 카드 생성
+### **약속 카드 생성**
 
-- 약속카드생성 - 반경 변경
-
-![약속카드생성 - 뱐경 변경](https://user-images.githubusercontent.com/97587150/194234992-238fd282-c47b-48d6-8337-8d1becd36077.gif)
-
-- 약속카드생성 - 이름, 날짜, 시간 입력
-
-![약속카드생성 - 이름,날짜,시간 입력](https://user-images.githubusercontent.com/97587150/194235007-5c051f51-8eea-441f-88c2-35c86a8f44bf.gif)
-
-- 약속카드생성 - 리로드
-
-![약속카드생성 - 리로드](https://user-images.githubusercontent.com/97587150/194234978-96529b0e-3cca-4f55-ac7c-e8f1db0397ab.gif)
-
-- 약속카드생성 - 리뷰 보기
-
-![약속카드생성 - 리뷰 보기](https://user-images.githubusercontent.com/97587150/194234990-86960e68-d5f5-4a98-ba20-dc6a5c8aab84.gif)
-
-- 약속카드생성 - 약속카드 장소추가
+- 약속카드에 장소 추가
 
 ![약속카드생성 - 약속카드 장소추가](https://user-images.githubusercontent.com/97587150/194235002-a7e20185-8167-4f75-bb60-2bde5983f753.gif)
 
-- 약속카드생성 - 드래그앤드랍
+- 새로고침 (새로 추천받기)
+
+![약속카드생성 - 리로드](https://user-images.githubusercontent.com/97587150/194234978-96529b0e-3cca-4f55-ac7c-e8f1db0397ab.gif)
+
+- 장소 리뷰 확인
+
+![약속카드생성 - 리뷰 보기](https://user-images.githubusercontent.com/97587150/194234990-86960e68-d5f5-4a98-ba20-dc6a5c8aab84.gif)
+
+- 장소 순서 정렬 기능
 
 ![약속카드생성 - 드래그앤드랍](https://user-images.githubusercontent.com/97587150/194234962-59069a2a-dbc4-4e10-a18d-8e2fba6e3312.gif)
 
-- 약속카드생성 - 전체 목록 조회
-
-![약속카드생성 - 전체 목록 조회](https://user-images.githubusercontent.com/97587150/194235019-4bb9a4b9-e37c-46c5-94dc-2e5b73da5935.gif)
-
-- 약속카드생성 - 휴지통
-
-![약속카드생성 - 휴지통](https://user-images.githubusercontent.com/97587150/194235021-370e5f56-420e-4d68-a772-00fc69af3b9d.gif)
-
-- 약속카드생성 - 저장
+- 약속카드 저장
 
 ![약속카드생성 - 저장](https://user-images.githubusercontent.com/97587150/194235013-a3d96a40-e423-4bea-b382-718f50486e69.gif)
 
@@ -170,9 +102,10 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 
 ![약속카드생성 - 카톡공유](https://user-images.githubusercontent.com/97587150/194235179-806c26ec-4773-4339-a2c8-7a6016fe919a.gif)
 
-### 공유일정확인
+### **반응형 웹 디자인 구현**
 
-![공유일정확인](https://user-images.githubusercontent.com/97587150/194249814-950eb8bb-e1f1-4905-afa1-c8d5057b5d4c.gif)
+![반응형2](https://user-images.githubusercontent.com/97587150/194316664-3c1d8b39-cd82-4813-ac6e-16657c8bf339.gif)
+![반응형1](https://user-images.githubusercontent.com/97587150/194316671-aaa58344-be37-4f2a-a345-995a7270180b.gif)
 
 ## **✨ 주요 기능**
 
@@ -192,6 +125,7 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
   - 세부 장소 추천
     - 점포 리스트 및 리뷰 크롤링
     - 리뷰와 평점 기반 장소 추천
+    - KNN (협업 필터링) 알고리즘을 이용하여 장소 추천
 
 # **Ⅱ. 기술스택**
 
@@ -298,6 +232,82 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 
 또한 카카오 `메시지 api`를 통하여 공유하기 기능을 구현하는데 사용하였습니다.
 
+## **✨** Selenuim
+
+---
+
+> Selenuim 이란 ? python에서 웹 사이트 크롤링을 하기 위해 사용 되는 라이브러리입니다.
+> html에서 가져온 데이터는 텍스트 형태의 html 입니다. 텍스트 형태의 데이터에서 원하는 html tag를 추출 할 수 있는 방법은 “BeautifulSoup” 를 이용하여 쉽게 가져올 수 있습니다.
+
+<aside>
+💡 BeautifulSoup : 텍스트형태의 데이터에서 원하는 html 태그를 가져올 수 있는 라이브러리
+</aside>
+
+## \***\*✨추천 알고리즘\*\***
+
+### 협업 필터링
+
+---
+
+> 협업필터링 이란? 사용자의 구매 패턴이나 평점을 가지고 다른 사람들의 구매 패턴, 평점을 통해서 추천을 하는 방법입니다. 추가적인 사용자의 개인정보나 아이템의 정보가 없이도 추천할 수 있는게 큰 장점입니다.
+
+### Neighborhood based Collaborative Filtering
+
+---
+
+Neighborhood based Collaborative Filtering은 메모리 기반 알고리즘으로 협업 필터링을 위해 개발된 초기 알고리즘입니다.
+
+- **메모리 기반 알고리즘**(Neighborhood model 기준)은 유저와 아이템에 대한 matrix를 만든 뒤, 유저 **기반** 혹은 아이템 **기반**으로 유사한 객체를 찾은 뒤 빈공간을 추론하는 **알고리즘**입니다.
+
+### KNN 알고리즘
+
+---
+
+K Nearest Neighbors는 가장 유사한 K 명의 Neighbors를 통해서 예측하는 방법입니다.
+
+- 사용자 기반: 나와 비슷한 성향의 사람이 재밌게 본 영화 등을 추천하는 방식이다.
+- 아이템 기반: 아이템에 대한 평가가 유사한 아이템을 추천하는 방식으로 일반적으로 성능이 더 뛰어나다.
+
+협업 필터링 KNN 알고리즘 중 **아이템 기반 추천**으로 구현하였습니다.
+
+### 문제점
+
+---
+
+1. 초기 사용자는 추천을 받지 못한다.
+2. 기존 데이터가 많아야 추천을 받을 수 있다.
+3. 알고리즘 실행 시간이 길다.
+
+### 해결방안
+
+---
+
+1. 초기 사용자는 추천을 받지 못한다.
+   - 초기 사용자는 데이터가 없어서 유사한 사용자를 찾을 수 없습니다.
+   - 따라서 다른 추천을 통해 먼저 데이터를 쌓고 리뷰가 10개 이상인 사용자만 협업 필터링을 적용했습니다.
+   - 다른 추천은 카테고리 일치하는 장소, 다른 사용자들이 많이 방문한 곳, 별점 순으로 장소 추천을 해주었습니다.
+2. 기존 데이터가 많아야 추천을 받을 수 있다.
+   - 기존 데이터가 없어서 카카오맵 리뷰를 크롤링하여 베이스 데이터를 만들었습니다.
+3. 알고리즘 실행 시간이 길다.
+   - 알고리즘 실행 시간이 6분 ~ 15분 정도 소요되었습니다.
+   - 따라서 유저들이 잘 사용하지 않는 새벽 3시에 알고리즘을 한 번 돌리고 DB에 저장해서 알고리즘 결과를 DB에서 꺼내 쓸 수 있도록 만들었습니다.
+
+### 결과
+
+---
+
+- 알고리즘을 통한 예상 별점
+
+![Untitled](https://user-images.githubusercontent.com/97587150/194353488-65f6d761-883e-42f4-8b25-725d66ea2638.png)
+
+- 실제 유저가 준 별점
+
+![Untitled](https://user-images.githubusercontent.com/97587150/194353481-f937f9d6-8a39-4d37-ae64-b2383ec2ac8a.png)
+
+- 약 `80%` 정도 일치하는 것으로 결과가 나왔습니다.
+- MSE 성능 평가 점수는 약 `6.1164`이 나왔습니다.
+- MSE 성능평가: `실제 값`과 `예측값의 차이`를 제곱해 평균한 것
+
 ## **✨배포**
 
 ---
@@ -398,6 +408,36 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 
 ---
 
+### case1#
+
+- 홈 페이지
+- 상황 : 점심시간처럼 사람이 몰리는 시간을 가정하여 부하테스트 실행
+- 만명이 접속했을 때 응답시간 약 9초
+  ![부하테스트-홈 갑자기.PNG](https://user-images.githubusercontent.com/97587150/194354592-8bd6335a-cbab-45a3-b7ee-ef4524e7ffb8.png)
+
+### case2#
+
+- 추천 페이지
+- 상황 : 점심시간처럼 사람이 몰리는 시간을 가정하여 부하테스트 실행
+- 대전광역시 중구 문화1동 근방을 추천받음
+  ![부하테스트 점심시간.png](https://user-images.githubusercontent.com/97587150/194354601-92b92260-f34f-4453-afa1-030a4ae4c741.png)
+- 690 명에서 서버초과
+
+### case3#
+
+- 홈 페이지
+- 상황 : 서버 수정, 배포 후, 사용자가 몰리는 것을 가정하여 부하테스트 실행
+- 초당 2천명씩 추가
+  ![부하테스트-홈 갑자기.PNG](https://user-images.githubusercontent.com/97587150/194354581-c20c1eb1-46ac-4d25-8a70-5111def8ce18.png)
+- 사용자 만명에서 응답시간 약 9초
+
+### 결론
+
+- 사용자가 690명 이상인 경우, 원활한 추천시스템을 활성화시키기 위해서
+- 오토스케일링을 구성
+  - 접속한 유저수가 600명 이상이 넘는 경우,
+  - 인스턴스를 추가 활성화 시키는 방안 모색
+
 ### 👨‍👩‍👧‍👧 **개발 팀 소개**
 
 ---
@@ -411,7 +451,7 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 </td>
 <td align="center" width="150px">
 <a href="[https://github.com/tjsgnrla97](https://github.com/tjsgnrla97)" target="_blank">
-<a href="https://github.com/tjsgnrla97"><img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/62869982?v=4" alt="김선후 프로필"/></a>
+<a href="https://github.com/tjsgnrla97"><img height="100px" width="100px" src="https://user-images.githubusercontent.com/97587150/194316910-c5a87c9c-4685-4b0a-ae52-eebd2f630a9d.jpg" alt="김선후 프로필"/></a>
 </a>
 </td>
 <td align="center" width="150px">
@@ -421,7 +461,7 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 </td>
 <td align="center" width="150px">
 <a href="[https://github.com/brotherweekkim](https://github.com/brotherweekkim)" target="_blank">
-<a href="https://github.com/brotherweekkim"><img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/46440898?v=4" alt="김형주 프로필"/></a>
+<a href="https://github.com/brotherweekkim"><img height="100px" width="100px" src="https://user-images.githubusercontent.com/97587150/194316907-c16834b6-c3a9-4b2c-bec2-d6a088c76bca.jpg" alt="김형주 프로필"/></a>
 </a>
 </td>
 <td align="center" width="150px">
@@ -431,7 +471,7 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 </td>
 <td align="center" width="150px">
 <a href="[https://github.com/HangHang13/](https://github.com/HangHang13/)" target="_blank">
-<a href="https://github.com/HangHang13/"><img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/97648544?v=4" alt="이진행 프로필"/></a>
+<a href="https://github.com/HangHang13/"><img height="100px" width="100px" src="https://user-images.githubusercontent.com/97587150/194316901-bf92ae01-54ed-4b95-a230-40e0547b99a0.jpg" alt="이진행 프로필"/></a>
 </a>
 </td>
 </tr>
@@ -469,14 +509,14 @@ ZZAZO 시연 시나리오는 👉[여기](exec/시연시나리오.md)👈에서
 </tr>
 </table>
 
-| 이름   | 역할               | 개발 내용                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| ------ | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 김성수 | (Front-end & 팀장) | - 와이어 프레임 디자인<br/> - Styled-Component를 이용한 CSS-in-JS 방식으로 스타일링 작업<br/> - 반응형 웹 디자인<br/> - 메인 페이지 디자인<br/> - 장소 상세 보기, 공유일정 장소 상세 보기 모달 구현<br/> - 메인페이지 추천 기능 구현<br/> - 공유 일정 리스트 Carousel 구현<br/> - 리뷰 작성 및 수정 구현<br/> - PPT제작<br/> - 일정 관리<br/> - 프로젝트 발표                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| 김선후 | (Front-end)        | - 와이어프레임 MyPage, Plan, PlanShare, NotFound<br/> - Styled-Component를 이용한 CSS-in-JS 방식으로 스타일링 작업<br/> - 반응형 웹 디자인<br/> - MyPage, UpdateProfile, UpdatePassword, DeleteProfile 페이지 디자인 및 기능 구현<br/> - ProfileImageListContent 모달 컴포넌트 구현<br/> - ProfileTitle, TabItem 컴포넌트 구현<br/> - Plan 페이지, Landing 컴포넌트 디자인 및 기능구현<br/> - Landing - GPS 기준 좌표설정<br/> - Landing - 지도 클릭 시 마커 생성<br/> - Landing - 키워드 검색<br/> - Landing - 주소-좌표 변환<br/> - Landing - 기존 바닐라형식 자바스크립트 api 코드 리액트 형식으로 사용.<br/> - PlanShare 페이지 디자인 및 기능구현<br/> - PlanShare - Redux를 활용한 위치 정보 상태 관리, 위치 정보 저장 기능 구현<br/> - NotFound 페이지 디자인 및 기능구현<br/> - 최종산출물 정리 및 취합 |
-| 조민규 | (Front-end)        | - 와이어프레임 디자인<br/> - 초기 스켈레톤 구조 설계 및 작성<br/> - Styled-Component를 이용한 CSS-in-JS 방식으로 스타일링 작성<br/> - 반응형 웹 디자인<br/> - 회원가입 페이지 개발<br/> - 아이디 / 비밀번호 찾기 페이지 개발<br/> - 로그인 페이지 개발<br/> - 약속카드 생성 페이지 개발<br/> - 공유일정 리스트 페이지 개발<br/> - 로그인 - Redux를 활용한 회원 정보 상태 관리, 아이디 저장 기능 구현<br/> - 로그인 - Axios Interceptor를 활용한 API 요청 전후 access token, refresh token 확인<br/> - 약속카드 생성 - 반경 설정 SeekBar 구현<br/> - 약속카드 생성 - 장소카드 Drag&Drop 기능 구현<br/> - 약속카드 생성 - 휴지통 기능 구현<br/> - 약속카드 생성 - 카카오맵을 활용한 약속카드 마커 생성 및 동선 표시<br/> - 로딩스피너 구현                                                                        |
-| 김형주 | (Back-end & Core)  | - API 문서 작성<br/> - Place API 구현 및 보완<br/> - 반경 내 Place 조회 API 구현<br/>- 짜조 홈페이지 구현<br/> - place recommend API 구현 <br/> - Review API 구현 및 보완<br/> - 리뷰 작성 폼 API 구현<br/> - 리뷰 생성, 수정, 삭제 API 구현<br/> - Plan API 구현 및 보완<br/> - 몽고DB, MariaDB연결 및 보완<br/> - 협업 필터링으로 Recommend Algorithm 구현 <br/> - 추천 알고리즘 결과물 몽고 DB에 저장<br/> - 유저 관심 카테고리 중심 Recommend Algorithm 구현<br/> - 장소 별점 중심 Recommend Algorithm 구현<br/> - 많이 방문한 장소 중심 Recommend Algorithm 구현<br/> - LOCUST 를 활용해 부하테스트 실행                                                                                                                                                                                                   |
-| 박성배 | (Back-end)         | - Python selenuim을 이용해 카카오 맵, 구글 크롤링<br/> - KAKAO (장소,카테고리,별점,리뷰,리뷰 내용,주소,카카오 API 를 이용하여 위도, 경도 값)<br/> - GOOGLE (MongoDB에 저장된 주소를 바탕으로 이미지 크롤링)<br/> - Place API 구현 및 보완<br/> - 장소에 자주 사용하는 연령, 성별 API 구현 <br/> - Review API 구현 및 보완<br/> - 별점 수정 API 구현<br/> - Plan API 구현 및 보완<br/> - 장소에 자주 사용하는 연령, 성별 API 구현<br/> - 약속 생성, 수정, 삭제 API 구현<br/> - MongoDB, MariaDB 연결<br/> - django DB router 설정 <br/> - LOCUST 를 활용해 부하테스트 실행                                                                                                                                                                                                                                       |
-| 이진행 | (Back-end & Infra) | - DRF 구현<br/> - django swagger 구현<br/> - Accounts API 구현 및 보완<br/> - 로그인/로그아웃 구현<br/> - JWT Token, Refresh Token, Access Token <br/> - 회원 가입/ 회원 탈퇴 구현 <br/>- 회원 정보 수정 구현<br/> - 이메일, 닉네임 유효성검사 구현<br/> - 이메일 인증 구현 <br/> - 아이디 / 비밀번호 찾기 구현<br/> - 비밀번호 찾으면 비밀번호 난수로 변경 구현<br/> - LOCUST 를 활용해 부하테스트 실행 <br/> - Infra <br/>- 시스템 아키텍쳐 구성<br/> - Jenkins pipeline 설정 <br/>- Docker 설정<br/>- HTTPS 적용<br/>- CI-CD 구현                                                                                                                                                                                                                                                                            |
+| 이름   | 역할               | 개발 내용                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| ------ | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 김성수 | (Front-end & 팀장) | - 와이어 프레임 디자인<br/> - Styled-Component를 이용한 CSS-in-JS 방식으로 스타일링 작업<br/> - 반응형 웹 디자인<br/> - 메인 페이지 디자인<br/> - 장소 상세 보기, 공유일정 장소 상세 보기 모달 구현<br/> - 메인페이지 추천 기능 구현<br/> - 공유 일정 리스트 Carousel 구현<br/> - 리뷰 작성 및 수정 구현                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| 김선후 | (Front-end)        | - 와이어프레임 MyPage, Plan, PlanShare, NotFound<br/> - Styled-Component를 이용한 CSS-in-JS 방식으로 스타일링 작업<br/> - 반응형 웹 디자인<br/> - MyPage, UpdateProfile, UpdatePassword, DeleteProfile 페이지 디자인 및 기능 구현<br/> - ProfileImageListContent 모달 컴포넌트 구현<br/> - ProfileTitle, TabItem 컴포넌트 구현<br/> - Plan 페이지, Landing 컴포넌트 디자인 및 기능구현<br/> - Landing - GPS 기준 좌표설정<br/> - Landing - 지도 클릭 시 마커 생성<br/> - Landing - 키워드 검색<br/> - Landing - 주소-좌표 변환<br/> - Landing - 기존 바닐라형식 자바스크립트 api 코드 리액트 형식으로 사용.<br/> - PlanShare 페이지 디자인 및 기능구현<br/> - PlanShare - Redux를 활용한 위치 정보 상태 관리, 위치 정보 저장 기능 구현<br/> - NotFound 페이지 디자인 및 기능구현 |
+| 조민규 | (Front-end)        | - 와이어프레임 디자인<br/> - 초기 스켈레톤 구조 설계 및 작성<br/> - Styled-Component를 이용한 CSS-in-JS 방식으로 스타일링 작성<br/> - 반응형 웹 디자인<br/> - 회원가입 페이지 개발<br/> - 아이디 / 비밀번호 찾기 페이지 개발<br/> - 로그인 페이지 개발<br/> - 약속카드 생성 페이지 개발<br/> - 공유일정 리스트 페이지 개발<br/> - 로그인 - Redux를 활용한 회원 정보 상태 관리, 아이디 저장 기능 구현<br/> - 로그인 - Axios Interceptor를 활용한 API 요청 전후 access token, refresh token 확인<br/> - 약속카드 생성 - 반경 설정 SeekBar 구현<br/> - 약속카드 생성 - 장소카드 Drag&Drop 기능 구현<br/> - 약속카드 생성 - 휴지통 기능 구현<br/> - 약속카드 생성 - 카카오맵을 활용한 약속카드 마커 생성 및 동선 표시<br/> - 로딩스피너 구현                                         |
+| 김형주 | (Back-end & Core)  | - API 문서 작성<br/> - Place API 구현 및 보완<br/> - 반경 내 Place 조회 API 구현<br/>- 짜조 홈페이지 API 구현<br/> - place recommend API 구현 <br/> - Review API 구현 및 보완<br/> - 리뷰 작성 폼 API 구현<br/> - 리뷰 생성, 수정, 삭제 API 구현<br/> - Plan API 구현 및 보완<br/> - 몽고DB, MariaDB연결 및 보완<br/> - 협업 필터링으로 Recommend Algorithm 구현 <br/> - 추천 알고리즘 결과물 몽고 DB에 저장<br/> - 유저 관심 카테고리 중심 Recommend Algorithm 구현<br/> - 장소 별점 중심 Recommend Algorithm 구현<br/> - 많이 방문한 장소 중심 Recommend Algorithm 구현<br/> - LOCUST 를 활용해 부하테스트 실행                                                                                                                                                                |
+| 박성배 | (Back-end)         | - Python selenuim을 이용해 카카오맵, 구글 크롤링<br/> 1. KAKAO (장소,카테고리,별점,리뷰,리뷰 내용,주소,카카오 API 를 이용하여 위도, 경도 값)<br/> 2. GOOGLE (MongoDB에 저장된 주소를 바탕으로 이미지 크롤링)<br/> - Place API 구현 및 보완<br/> - 장소에 자주 사용하는 연령, 성별 API 구현 <br/> - Review API 구현 및 보완<br/> - 별점 수정 API 구현<br/> - Plan API 구현 및 보완<br/> - 장소에 자주 사용하는 연령, 성별 API 구현<br/> - 약속 생성, 수정, 삭제 API 구현<br/> - MongoDB, MariaDB 연결<br/> - django DB router 설정 <br/> - LOCUST 를 활용해 부하테스트 실행                                                                                                                                                                                                       |
+| 이진행 | (Back-end & Infra) | - DRF 구현<br/> - django swagger 구현<br/> - Accounts API 구현 및 보완<br/> - 로그인/로그아웃 API 구현<br/> - JWT Token, Refresh Token, Access Token <br/> - 회원 가입/ 회원 탈퇴 API 구현 <br/>- 회원 정보 수정 API 구현<br/> - 이메일, 닉네임 유효성검사 API 구현<br/> - 이메일 인증 API 구현 <br/> - 아이디 / 비밀번호 찾기 API 구현<br/> - 비밀번호 찾으면 비밀번호 난수로 변경 API 구현<br/> - LOCUST 를 활용해 부하테스트 실행 <br/> - Infra <br/>- 시스템 아키텍쳐 구성<br/> - Jenkins pipeline 설정 <br/>- Docker 설정<br/>- HTTPS 적용<br/>- CI-CD 구현                                                                                                                                                                                                                 |
 
 ---
 

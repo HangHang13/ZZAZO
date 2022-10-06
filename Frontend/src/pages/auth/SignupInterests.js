@@ -84,10 +84,9 @@ const SignupInterests = () => {
 		const newForm = {
 			categoryName: form.userCategory,
 		};
-		console.log(newForm);
 		const response = await saveCategories(newForm);
-		console.log(response);
 		setLoading(false);
+
 		if (response.code === 200 || response.code === 201) {
 			alert("회원가입이 완료되었습니다.");
 			navigate("/");

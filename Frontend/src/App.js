@@ -21,11 +21,6 @@ import PlanMakeCard from "./pages/plan/PlanMakeCard";
 import PlanShare from "./pages/planshare/PlanShare";
 
 function App() {
-	const onHandleLogOut = () => {
-		dispatch(storeLogout());
-		navigate("/");
-	};
-
 	useEffect(() => {
 		Kakao.init(process.env.REACT_APP_KAKAOLINK_API_KEY);
 	}, []);
