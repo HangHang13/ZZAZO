@@ -243,7 +243,7 @@ ZZAZO 전체 서비스 화면은 👉[여기](exec/전체서비스.md)👈에�
 💡 BeautifulSoup : 텍스트형태의 데이터에서 원하는 html 태그를 가져올 수 있는 라이브러리
 </aside>
 
-## \***\*✨추천 알고리즘\*\***
+## **✨추천 알고리즘**
 
 ### 협업 필터링
 
@@ -413,7 +413,7 @@ K Nearest Neighbors는 가장 유사한 K 명의 Neighbors를 통해서 예측�
 - 홈 페이지
 - 상황 : 점심시간처럼 사람이 몰리는 시간을 가정하여 부하테스트 실행
 - 만명이 접속했을 때 응답시간 약 9초
-  ![부하테스트-홈 갑자기.PNG](https://user-images.githubusercontent.com/97587150/194354592-8bd6335a-cbab-45a3-b7ee-ef4524e7ffb8.png)
+  ![부하테스트-홈 갑자기.PNG](https://user-images.githubusercontent.com/97587150/194446145-fa62bfd0-ffc8-43a1-bc9b-3e5ad1c53e34.png)
 
 ### case2#
 
