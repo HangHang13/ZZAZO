@@ -34,6 +34,8 @@
 - Nginx 1.18.0
   - 설정파일은 frontend의 dockerfile 및 <frontend_root>/conf/conf.d 에서 관리
 
+  
+
 ### Deploy
 
 - Jenkins 2.361.1
@@ -50,7 +52,8 @@
 
 
 
-
+- 주의해야할 점은 우분투에 nginx를 설치하는 것이 아니라
+- 프론트 엔드가 담긴 도커의 nginx으로 접근해야하는 것임
 
 
 
@@ -147,11 +150,8 @@
    - etc/letsencrypt/live/도메인폴더 에
    - cert.pem , chain.pem, fullchain.pem privkey.pem 있는지 확인한다.
 
-4. ec2에 Nginx를 설치한다
+   
 
-   ```bash
-   sudo apt-get install nginx
-   ```
 
 ## Frontend 설정
 
@@ -652,6 +652,9 @@ echo "Run backend"
 
 
 ## DB 설정 (필수는 아님)
+
+- 필수가 아닌 이유는 어차피 다른 서버로 sql과 통신하므로 docker 화 시킬 필요가 없음
+- docker 화 하는 이유는 포트로 접근하여 세부적인 통제를 할 수 있도록 하기 위함(이마저도 워크벤치, 몽고콤패스 등을 사용해서 관리할 수 있으므로 DB를 docker화 하지 안아도 됨)
 
 ### 1. mariaDB
 
