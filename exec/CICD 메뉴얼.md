@@ -501,15 +501,8 @@ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
 ## 젠킨스 프로젝트 설정
 
-- 디렉토리 설정
-
-```bash
-cd 
-
-mkdir B307
-cd B307
-git clone 레파지토리
-```
+- 디렉토리는 var/jenkins/workspace에서 이루어진다.
+- 사용할 깃을 우분투에 따로 clone 할 필요는 없음!
 
 
 
