@@ -7,13 +7,6 @@ from django.conf import settings
 from django.utils import timezone
 # from django.utils.translation import ugettext_lazy as _
 class UserManager(BaseUserManager):
-    # def create_user(self, userEmail, username, password, alias=None):
-    #     user = self.model(
-    #     userEmail = self.normalize_userEmail(userEmail),
-    #             username = username,)
-    #     user.set_password(password)
-    #     user.save()
-    #     return user
     def create_user(self, userEmail, userName, userNickName, userBirth, userPhone,userGender, password=None, password2=None):
         user = self.model(
         userEmail = self.normalize_email(userEmail),
@@ -28,8 +21,6 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, userEmail, userName, userNickName, userBirth, userPhone,userGender, password=None, password2=None):
-        # extra_fields.setdefault('is_active', True)
-        # extra_fields.setdefault('is_staff', True)
         user = self.model(
         userEmail = self.normalize_email(userEmail),
                 userName = userName,
@@ -42,26 +33,7 @@ class UserManager(BaseUserManager):
         user.set_password(password)
         user.save()
         return user
-    #     user = self.create_user(
-    #         userEmail=userEmail,
-    #         password=password,
-    #         nickname=nickname,
-    #     )
-
-    #     user.is_superuser = True
-    #     user.save(using=self._db)
-    #     return user
-    # def create_superuser(self, userEmail, userName, password):
-    #     self.create_user(userEmail, userName, password)
-    #     user = self.model(
-    #     userEmail = self.normalize_email(userEmail),
-    #             userName = userName,)
-    #     user.is_staff()
-    #     user.is_superuser = True
-    #     user.save()
-    #     return user
-
-##카테고리는 엄밀하지 않음
+    
 
 class Category(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name='category')

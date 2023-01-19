@@ -11,13 +11,13 @@ from rest_framework.response import Response
 
 class UserCategorySerializer(serializers.ModelSerializer):
   categoryName = serializers.CharField(max_length=100)
-  # categoryNumber = serializers.IntegerField()
+
   class Meta:
     model = Category
     fields = ('id','categoryName',)
   def validate(self, attrs):
     categoryName = attrs.get('categoryName')
-    # categoryNumber = attrs.get('categoryNumber')
+    
   
     return attrs
   def create(self,validate_data):

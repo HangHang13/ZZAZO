@@ -24,22 +24,9 @@ from drf_yasg.utils import swagger_auto_schema
 
 test_param = openapi.Parameter('test', openapi.IN_QUERY, description="test manual param", type=openapi.TYPE_BOOLEAN)
 
-# .is_valid(raise_exception=True)
 class Create_category(APIView):
   renderer_classes = [UserRenderer]
   permission_classes = [IsAuthenticated]
-  
-  # 회원가입 할 때 유저 생성이 아직 안 되어 있음
-
-  # 1. 만약 한 번에 보내주면 지금 유저 모델에 컬럼을 하나 추가해서 카테고리를 저장해둔다. => 개인 정보 수정에 영향이 있을 수 있다? - 형주, 진행
-  
-  # 2. 분할해서 하려면 다음을 눌렀을 때 회원가입 API과 로그인 API이 된 채로 관심정보를 선택하고 관심정보를 저장한다. - 성배
-  
-  # 3. 프론트에 대가리 박고 카테고리를 없앤다.
-  
-  # 4. 가입하고 추가할 수 있게 페이지를 옮긴다. 프론트 작업 필요
-  
-  # 어떤 방식으로 할까요
   
   @swagger_auto_schema(operation_summary='회원 카테고리 생성',request_body=serializers.UserCategorySerializer)
   def post(self, request, format=None):
@@ -71,10 +58,7 @@ def getchceck_email(request):
   print(token)
   if EmailCheck.objects.filter(emailToken=token).exists():
     expiretime = EmailCheck.objects.get(emailToken=token)
-    # then = datetime(expiretime.created)
-    # expire = expiretime.created.strftime("%H:%M:%S")
     ti = expiretime.created.strftime('%Y-%m-%d %H:%M:%S')
-    # .strftime('%D :%H:%M:%S')
     res={"code" : 200, "생성시간" : ti}
     return Response(res)
   else:
@@ -84,22 +68,9 @@ def getchceck_email(request):
 
 class Getcheck_email(APIView):
   permission_classes = [AllowAny,]
-  # renderer_classes = [UserRenderer]
-  # def post(self, request, format=None):
-  #   EmailCheck.objects.filter(emailToken=request.data)
-  #   print(request.data)
-  #   res= request.data
-  #   return Response({res})
 
   def post(self, request, format=None):
       return Response("ok")
-#이메일 인증 확인
-# {
-# "userName": String,
-# ”userPhone” : String,
-# "userBirth" : String,
-# }
-# def verificationEmail() 
 
 
 #아이디 찾기
@@ -232,9 +203,6 @@ class UserLoginView(APIView):
     password = serializer.data.get('password')
     print(username, password)
 
-    # user = User.objects.get(userEmail=username)
-    # print(user.check_password(f'{password}'))
-   
    
     user = authenticate(username = username, password = f'{password}')
     print('유저',user)
@@ -371,14 +339,6 @@ class SendPasswordResetEmailView(APIView):
       return Response({'code': 401, "message": "비밀번호 찾기 실패"}, status=status.HTTP_401_UNAUTHORIZED)
     
 
-# class UserPasswordResetView(APIView):
-#   renderer_classes = [UserRenderer]
-#   def post(self, request, uid, token, format=None):
-#     serializer = UserPasswordResetSerializer(data=request.data, context={'uid':uid, 'token':token})
-#     serializer.is_valid(raise_exception=True)
-#     return Response({'msg':'Password Reset Successfully'}, status=status.HTTP_200_OK)
-
-
 
 #이메일 인증번호 전송
 import random
@@ -387,7 +347,6 @@ import string
 @api_view(['POST'])
 def chceck_email(request, userEmail):
   
-  # userEmail = request.data.get('userEmail')
 
   token  = "".join([random.choice(string.ascii_letters) for _ in range(10)]) # 섞어서
 
@@ -407,40 +366,3 @@ def chceck_email(request, userEmail):
     }
   Util.send_email(data)
   return Response(res)
-
-# @permission_classes([AllowAny])
-# @csrf_exempt
-
-
-# 반경만 변경하는 API를 만드려고 했으나 실패함
-# class UserChangeRadiusView(APIView):
-#   renderer_classes = [UserRenderer]
-#   permission_classes = [IsAuthenticated]
-#   @swagger_auto_schema(operation_summary='회원 반경 수정', request_body=serializers.UpdateUserSerializer)
-#   def post(self, request, format=None):
-#     # serializer = UpdateUserSerializer
-#     serializer = UpdateRadiusSerializer(data=request.data, context={'user':request.user})
- 
-#     serializer.is_valid(raise_exception=True)
-
-#     code = 200
-#     message = "반경 수정"
-#     res = {
-#         "code": code,
-#         "message": message,
-#         }
-#     return Response(res)
-  
-  
-# @api_view(['POST'])
-# def update_radius(request):
-#   # radius = request.data['userRadius']
-#   serializer = UpdateRadiusSerializer(context={'user':request.user}, data=request.data)
-#   serializer.is_valid(raise_exception=True)
-#   code = 200
-#   message = "반경 수정"
-#   res = {
-#       "code": code,
-#       "message": message,
-#       }
-#   return Response(res)

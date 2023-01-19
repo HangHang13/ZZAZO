@@ -9,8 +9,6 @@ from accounts.models import User
 
 
 class UserCreationForm(forms.ModelForm):
-    """A form for creating new users. Includes all the required
-    fields, plus a repeated password."""
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
 
 
@@ -35,10 +33,6 @@ class UserCreationForm(forms.ModelForm):
 
 
 class UserChangeForm(forms.ModelForm):
-    """A form for updating users. Includes all the fields on
-    the user, but replaces the password field with admin's
-    disabled password hash display field.
-    """
     password = ReadOnlyPasswordHashField()
 
     class Meta:
@@ -47,13 +41,10 @@ class UserChangeForm(forms.ModelForm):
 
 
 class UserAdmin(BaseUserAdmin):
-    # The forms to add and change user instances
+
     form = UserChangeForm
     add_form = UserCreationForm
 
-    # The fields to be used in displaying the User model.
-    # These override the definitions on the base UserAdmin
-    # that reference specific fields on auth.User.
     list_display = ('userEmail',)
     list_filter = ('is_staff',)
     fieldsets = (
@@ -61,8 +52,7 @@ class UserAdmin(BaseUserAdmin):
         ('Personal info', {'fields': ('userBirth',)}),
         ('Permissions', {'fields': ('is_staff',)}),
     )
-    # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
-    # overrides get_fieldsets to use this attribute when creating a user.
+
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
@@ -73,9 +63,5 @@ class UserAdmin(BaseUserAdmin):
     ordering = ('userEmail',)
     filter_horizontal = ()
 
-
-# Now register the new UserAdmin...
 admin.site.register(User, UserAdmin)
-# ... and, since we're not using Django's built-in permissions,
-# unregister the Group model from admin.
 admin.site.unregister(Group)
